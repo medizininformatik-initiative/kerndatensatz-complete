@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fall - MII Profile Differential</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .header .breadcrumb {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        .header .breadcrumb a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .header .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .profile-selector {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .profile-selector select {
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .profile-header {
+            background: #ecf0f1;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #bdc3c7;
+        }
+
+        .profile-header:hover {
+            background: #dfe4e8;
+        }
+
+        .profile-header.expanded {
+            background: #3498db;
+            color: white;
+        }
+
+        .profile-header .title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .profile-header .indicator {
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .profile-header.expanded .indicator {
+            transform: rotate(90deg);
+        }
+
+        .profile-body {
+            display: none;
+            padding: 1.5rem;
+        }
+
+        .profile-body.expanded {
+            display: block;
+        }
+
+        .profile-info {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .profile-info p {
+            margin: 0.3rem 0;
+        }
+
+        .profile-info .label {
+            font-weight: 600;
+            color: #7f8c8d;
+            display: inline-block;
+            width: 120px;
+        }
+
+        .two-panel {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 1.5rem;
+            min-height: 400px;
+        }
+
+        .elements-panel {
+            border-right: 1px solid #ddd;
+            padding-right: 1rem;
+        }
+
+        .elements-list {
+            list-style: none;
+        }
+
+        .element-item {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            background: #f8f9fa;
+            border-left: 3px solid #95a5a6;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .element-item:hover {
+            background: #e9ecef;
+            transform: translateX(4px);
+        }
+
+        .element-item.active {
+            background: #3498db;
+            color: white;
+            border-left-color: #2980b9;
+        }
+
+        .element-item .path {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .element-item .badges {
+            margin-top: 0.3rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.75rem;
+            border-radius: 3px;
+            margin-right: 0.3rem;
+            font-weight: 600;
+        }
+
+        .badge-ms {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .badge-ext {
+            background: #9b59b6;
+            color: white;
+        }
+
+        .badge-card {
+            background: #f39c12;
+            color: white;
+        }
+
+        .badge-slice {
+            background: #16a085;
+            color: white;
+        }
+
+        .details-panel {
+            padding-left: 1rem;
+        }
+
+        .details-empty {
+            color: #95a5a6;
+            font-style: italic;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .detail-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-section h3 {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #3498db;
+        }
+
+        .detail-row {
+            padding: 0.5rem 0;
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 1rem;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #7f8c8d;
+        }
+
+        .detail-value {
+            color: #2c3e50;
+        }
+
+        .detail-value code {
+            background: #ecf0f1;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .type-list, .constraint-list {
+            list-style: none;
+        }
+
+        .type-item, .constraint-item {
+            background: #f8f9fa;
+            padding: 0.5rem;
+            margin: 0.3rem 0;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .binding-info {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 0.75rem;
+            border-radius: 4px;
+        }
+
+        .no-profiles {
+            text-align: center;
+            padding: 3rem;
+            color: #95a5a6;
+        }
+
+        @media (max-width: 1024px) {
+            .two-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .elements-panel {
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>MII Profile Differential: Fall</h1>
+        <div class="breadcrumb">
+            <a href="index.html">← All Modules</a> / fall
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="profile-selector">
+            <select id="profileSelect" onchange="selectProfile(this.value)">
+                <option value="">Select a profile...</option>
+                <option value="mii-pr-fall-kontakt-gesundheitseinrichtung">MII PR Fall Kontakt mit einer Gesundheitseinrichtung (Encounter)</option>
+<option value="mii-pr-fall-kontakt-gesundheitseinrichtung">MII PR Fall Kontakt mit einer Gesundheitseinrichtung (Encounter)</option>
+            </select>
+        </div>
+
+        <div id="profilesContainer">
+            
+        <div class="profile-card" id="profile-mii-pr-fall-kontakt-gesundheitseinrichtung" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-fall-kontakt-gesundheitseinrichtung')">
+                <div class="title">MII PR Fall Kontakt mit einer Gesundheitseinrichtung</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Fall_KontaktGesundheitseinrichtung</p>
+                    <p><span class="label">Type:</span> Encounter</p>
+                    <p><span class="label">Base Definition:</span> Encounter</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.1</p>
+                    <p><span class="label">Elements:</span> 60 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 0)">
+                    <div class="path">id</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 1)">
+                    <div class="path">meta</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 2)">
+                    <div class="path">meta.source</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 3)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 4)">
+                    <div class="path">extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 5)">
+                    <div class="path">extension.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 6)">
+                    <div class="path">extension.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 7)">
+                    <div class="path">extension.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 8)">
+                    <div class="path">extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 9)">
+                    <div class="path">extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 10)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 11)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 12)">
+                    <div class="path">identifier.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 13)">
+                    <div class="path">identifier.type.coding</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 14)">
+                    <div class="path">identifier.type.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="15"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 15)">
+                    <div class="path">identifier.type.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="16"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 16)">
+                    <div class="path">identifier.type.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="17"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 17)">
+                    <div class="path">identifier.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="18"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 18)">
+                    <div class="path">identifier.value</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="19"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 19)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="20"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 20)">
+                    <div class="path">class</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="21"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 21)">
+                    <div class="path">type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="22"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 22)">
+                    <div class="path">type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="23"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 23)">
+                    <div class="path">type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="24"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 24)">
+                    <div class="path">serviceType</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="25"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 25)">
+                    <div class="path">serviceType.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="26"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 26)">
+                    <div class="path">serviceType.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="27"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 27)">
+                    <div class="path">serviceType.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="28"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 28)">
+                    <div class="path">serviceType.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="29"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 29)">
+                    <div class="path">serviceType.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="30"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 30)">
+                    <div class="path">serviceType.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="31"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 31)">
+                    <div class="path">serviceType.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="32"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 32)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="33"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 33)">
+                    <div class="path">period</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="34"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 34)">
+                    <div class="path">period.start</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="35"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 35)">
+                    <div class="path">period.end</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="36"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 36)">
+                    <div class="path">diagnosis</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="37"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 37)">
+                    <div class="path">diagnosis.condition</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="38"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 38)">
+                    <div class="path">diagnosis.use</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="39"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 39)">
+                    <div class="path">diagnosis.use.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="40"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 40)">
+                    <div class="path">diagnosis.use.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="41"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 41)">
+                    <div class="path">diagnosis.use.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="42"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 42)">
+                    <div class="path">diagnosis.rank</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="43"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 43)">
+                    <div class="path">hospitalization</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="44"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 44)">
+                    <div class="path">hospitalization.admitSource</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="45"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 45)">
+                    <div class="path">hospitalization.dischargeDisposition</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="46"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 46)">
+                    <div class="path">hospitalization.dischargeDisposition.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="47"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 47)">
+                    <div class="path">location</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="48"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 48)">
+                    <div class="path">location.physicalType</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="49"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 49)">
+                    <div class="path">location</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="50"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 50)">
+                    <div class="path">location.status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="51"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 51)">
+                    <div class="path">location.physicalType</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="52"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 52)">
+                    <div class="path">location</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="53"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 53)">
+                    <div class="path">location.status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="54"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 54)">
+                    <div class="path">location.physicalType</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="55"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 55)">
+                    <div class="path">location</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="56"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 56)">
+                    <div class="path">location.status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="57"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 57)">
+                    <div class="path">location.physicalType</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="58"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 58)">
+                    <div class="path">serviceProvider</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="59"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 59)">
+                    <div class="path">partOf</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-fall-kontakt-gesundheitseinrichtung">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-fall-kontakt-gesundheitseinrichtung" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-fall-kontakt-gesundheitseinrichtung')">
+                <div class="title">MII PR Fall Kontakt mit einer Gesundheitseinrichtung</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Fall_KontaktGesundheitseinrichtung</p>
+                    <p><span class="label">Type:</span> Encounter</p>
+                    <p><span class="label">Base Definition:</span> Encounter</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.1</p>
+                    <p><span class="label">Elements:</span> 60 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 0)">
+                    <div class="path">id</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 1)">
+                    <div class="path">meta</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 2)">
+                    <div class="path">meta.source</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 3)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 4)">
+                    <div class="path">extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 5)">
+                    <div class="path">extension.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 6)">
+                    <div class="path">extension.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 7)">
+                    <div class="path">extension.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 8)">
+                    <div class="path">extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 9)">
+                    <div class="path">extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 10)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 11)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 12)">
+                    <div class="path">identifier.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 13)">
+                    <div class="path">identifier.type.coding</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 14)">
+                    <div class="path">identifier.type.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="15"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 15)">
+                    <div class="path">identifier.type.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="16"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 16)">
+                    <div class="path">identifier.type.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="17"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 17)">
+                    <div class="path">identifier.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="18"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 18)">
+                    <div class="path">identifier.value</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="19"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 19)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="20"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 20)">
+                    <div class="path">class</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="21"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 21)">
+                    <div class="path">type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="22"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 22)">
+                    <div class="path">type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="23"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 23)">
+                    <div class="path">type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="24"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 24)">
+                    <div class="path">serviceType</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="25"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 25)">
+                    <div class="path">serviceType.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="26"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 26)">
+                    <div class="path">serviceType.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="27"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 27)">
+                    <div class="path">serviceType.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="28"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 28)">
+                    <div class="path">serviceType.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="29"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 29)">
+                    <div class="path">serviceType.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="30"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 30)">
+                    <div class="path">serviceType.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="31"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 31)">
+                    <div class="path">serviceType.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="32"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 32)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="33"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 33)">
+                    <div class="path">period</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="34"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 34)">
+                    <div class="path">period.start</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="35"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 35)">
+                    <div class="path">period.end</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="36"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 36)">
+                    <div class="path">diagnosis</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="37"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 37)">
+                    <div class="path">diagnosis.condition</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="38"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 38)">
+                    <div class="path">diagnosis.use</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="39"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 39)">
+                    <div class="path">diagnosis.use.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="40"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 40)">
+                    <div class="path">diagnosis.use.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="41"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 41)">
+                    <div class="path">diagnosis.use.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="42"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 42)">
+                    <div class="path">diagnosis.rank</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="43"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 43)">
+                    <div class="path">hospitalization</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="44"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 44)">
+                    <div class="path">hospitalization.admitSource</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="45"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 45)">
+                    <div class="path">hospitalization.dischargeDisposition</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="46"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 46)">
+                    <div class="path">hospitalization.dischargeDisposition.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="47"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 47)">
+                    <div class="path">location</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="48"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 48)">
+                    <div class="path">location.physicalType</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="49"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 49)">
+                    <div class="path">location</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="50"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 50)">
+                    <div class="path">location.status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="51"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 51)">
+                    <div class="path">location.physicalType</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="52"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 52)">
+                    <div class="path">location</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="53"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 53)">
+                    <div class="path">location.status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="54"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 54)">
+                    <div class="path">location.physicalType</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="55"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 55)">
+                    <div class="path">location</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="56"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 56)">
+                    <div class="path">location.status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="57"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 57)">
+                    <div class="path">location.physicalType</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="58"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 58)">
+                    <div class="path">serviceProvider</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-fall-kontakt-gesundheitseinrichtung"
+                    data-element="59"
+                    onclick="selectElement('mii-pr-fall-kontakt-gesundheitseinrichtung', 59)">
+                    <div class="path">partOf</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-fall-kontakt-gesundheitseinrichtung">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        </div>
+    </div>
+
+    <script>
+        // Embedded profile data
+        const profileData = {"mii-pr-fall-kontakt-gesundheitseinrichtung": {"id": "mii-pr-fall-kontakt-gesundheitseinrichtung", "url": "https://www.medizininformatik-initiative.de/fhir/core/modul-fall/StructureDefinition/KontaktGesundheitseinrichtung", "name": "MII_PR_Fall_KontaktGesundheitseinrichtung", "title": "MII PR Fall Kontakt mit einer Gesundheitseinrichtung", "status": "active", "description": "Kontakt zu einer Einrichtung, Abteilung oder Versorgungsstelle", "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Encounter", "type": "Encounter", "module": "fall", "version": "2025.0.1", "differential": [{"path": "Encounter.id", "short": "", "definition": "Angabe OPTIONAL, vom Server automatisch vergebene system-abhängige ID", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Encounter.meta", "short": "", "definition": "Angabe OPTIONAL zur Provenance und zum Profil", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Encounter.meta.source", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Encounter.meta.profile", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Encounter.extension", "short": "Aufnahmegrund", "definition": "OPTIONAL, Aufnahmegrund entsprechend Schlüssel 1 der Anlage 2 der Datenübermittlung nach § 301 Abs. 3 SGB V", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Extension", "profile": ["http://fhir.de/StructureDefinition/Aufnahmegrund"]}], "isExtension": true, "sliceName": "Aufnahmegrund"}, {"path": "Encounter.extension.extension", "short": "1. und 2. Stelle", "definition": "OPTIONAL, Aufnahmegrund (1. und 2. Stelle), Datenübermittlung nach § 301 Abs. 3 SGB V.", "min": null, "max": null, "mustSupport": true, "isModifier": false, "isExtension": true, "sliceName": "ErsteUndZweiteStelle"}, {"path": "Encounter.extension.extension", "short": "3. Stelle", "definition": "OPTIONAL, Aufnahmegrund (3. Stelle), Datenübermittlung nach § 301 Abs. 3 SGB V.", "min": null, "max": null, "mustSupport": true, "isModifier": false, "isExtension": true, "sliceName": "DritteStelle"}, {"path": "Encounter.extension.extension", "short": "4. Stelle", "definition": "OPTIONAL, Aufnahmegrund (4. Stelle), Datenübermittlung nach § 301 Abs. 3 SGB V.", "min": null, "max": null, "mustSupport": true, "isModifier": false, "isExtension": true, "sliceName": "VierteStelle"}, {"path": "Encounter.extension", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": false, "isModifier": false, "type": [{"code": "Extension", "profile": ["http://hl7.org/fhir/5.0/StructureDefinition/extension-Encounter.plannedStartDate"]}], "isExtension": true, "sliceName": "plannedStartDate"}, {"path": "Encounter.extension", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": false, "isModifier": false, "type": [{"code": "Extension", "profile": ["http://hl7.org/fhir/5.0/StructureDefinition/extension-Encounter.plannedEndDate"]}], "isExtension": true, "sliceName": "plannedEndDate"}, {"path": "Encounter.identifier", "short": "Identifikator", "definition": "Kennung/en, unter der/denen dieser Kontakt bekannt ist.", "min": null, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "Encounter.identifier", "short": "Aufnahmenummer", "definition": "OPTIONAL, Aufnahmenummer/Fallnummer, die Patient:innen bei der Planung einer Aufnahme oder bei der Aufnahme selbst bekommt. \nGenerell SOLLTE die Aufnahmenummer in allen Encounter-Ressourcen unabhängig von der Kontaktebene und dem Kontakttyp angegeben werden. \nAls Gründe würden dagegen sprechen, wenn die Aufnahmenummer nur in einem Encounter der Encounter-Hierarchie angegeben werden kann. \nIn diesem Fall SOLL auf die korrekte Encounter-Verlinkung über .partOf geachtet werden, \nsowie dass jeder Encounter einen eigenständigen Identifier mit unterschiedlichen Systemen enthält.", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "Aufnahmenummer"}, {"path": "Encounter.identifier.type", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "binding": {"strength": "extensible", "valueSet": "https://www.medizininformatik-initiative.de/fhir/core/modul-fall/ValueSet/identifier-type-codes", "description": ""}}, {"path": "Encounter.identifier.type.coding", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": false, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "Encounter.identifier.type.coding", "short": "", "definition": "", "min": 1, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "vn-type"}, {"path": "Encounter.identifier.type.coding.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Encounter.identifier.type.coding.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Encounter.identifier.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Encounter.identifier.value", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Encounter.status", "short": "Status", "definition": "VERPFLICHTEND, required Binding auf http://fhir.de/ValueSet/EncounterStatusDe", "min": null, "max": null, "mustSupport": true, "isModifier": false, "binding": {"strength": "required", "valueSet": "http://fhir.de/ValueSet/EncounterStatusDe", "description": ""}}, {"path": "Encounter.class", "short": "Kontaktklasse", "definition": "VERPFLICHTEND, Kontaktklasse. Required Binding auf http://fhir.de/ValueSet/EncounterClassDE. \nKlassifizierung des Kontaktes in stationär, ambulant, teilstationär oder andere.", "min": null, "max": null, "mustSupport": true, "isModifier": false, "binding": {"strength": "required", "valueSet": "http://fhir.de/ValueSet/EncounterClassDE", "description": ""}}, {"path": "Encounter.type", "short": "Kontakttyp", "definition": "Spezifischer Typ des Kontaktes", "min": null, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "Encounter.type", "short": "Kontaktebene", "definition": "OPTIONAL, Unterscheidung der Kontakt-Hierarchieebenen Einrichtungskontakt, Abteilungskontakt, Versorgungsstellenkontakt. \nDie Gliederung gilt für stationäre Kontakte. Required Binding auf http://fhir.de/ValueSet/kontaktebene-de", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "binding": {"strength": "required", "valueSet": "http://fhir.de/ValueSet/kontaktebene-de", "description": "Kontaktebene"}, "sliceName": "Kontaktebene"}, {"path": "Encounter.type", "short": "Kontaktart", "definition": "OPTIONAL, Differenzierung zwischen verschiedenen Arten von Kontakten (z.B. vorstationär, nachstationär, intensivstationär). \nRequired Binding auf http://fhir.de/ValueSet/kontaktart-de", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "binding": {"strength": "required", "valueSet": "http://fhir.de/ValueSet/kontaktart-de", "description": ""}, "sliceName": "KontaktArt"}, {"path": "Encounter.serviceType", "short": "Fachabteilung", "definition": "Die Fachdisziplin bzw. Fachabteilung wird durch einen vierstelligen Fachabteilungsschlüssel klassifiziert.", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Encounter.serviceType.coding", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "Encounter.serviceType.coding", "short": "Fachabteilungsschlüssel", "definition": "OPTIONAL, required Binding auf http://fhir.de/ValueSet/dkgev/Fachabteilungsschluessel\nFachabteilungen gemäß Anhang 1 der BPflV in der am 31.12.2003 geltenden Fassung", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "binding": {"strength": "required", "valueSet": "http://fhir.de/ValueSet/dkgev/Fachabteilungsschluessel", "description": ""}, "sliceName": "Fachabteilungsschluessel"}, {"path": "Encounter.serviceType.coding.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Encounter.serviceType.coding.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Encounter.serviceType.coding", "short": "Erweiterter Fachabteilungsschlüssel", "definition": "OPTIONAL, required Binding auf http://fhir.de/ValueSet/dkgev/Fachabteilungsschluessel-erweitert\nFachabteilungen gemäß Anhang 1 der BPflV in der am 31.12.2003 geltenden Fassung inkl. Spezialisierungen.", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "binding": {"strength": "required", "valueSet": "http://fhir.de/ValueSet/dkgev/Fachabteilungsschluessel-erweitert", "description": ""}, "sliceName": "ErweiterterFachabteilungsschluessel"}, {"path": "Encounter.serviceType.coding.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Encounter.serviceType.coding.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Encounter.subject", "short": "Patientenidentifikator", "definition": "VERPFLICHTEND, Referenz auf Patient:in.", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Encounter.period", "short": "Zeitraum des Kontaktes", "definition": "Beginn- und Endzeitpunkt des Kontaktes. \n    DARF NICHT vorhanden sein, kann OPTIONAL oder VERPFLICHTEND sein, \n    abhängig vom Status des Kontaktes - siehe Invarianten auf Ebene Encounter.", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Encounter.period.start", "short": "Beginndatum", "definition": "Start des Kontaktzeitraums. DARF NICHT vorhanden sein, kann OPTIONAL oder VERPFLICHTEND sein, \nabhängig vom Status des Kontaktes - siehe Invarianten auf Ebene Encounter.", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Encounter.period.end", "short": "Enddatum", "definition": "Ende des Kontaktzeitraums. DARF NICHT vorhanden sein, kann OPTIONAL oder VERPFLICHTEND sein, \nabhängig vom Status des Kontaktes - siehe Invarianten auf Ebene Encounter.", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Encounter.diagnosis", "short": "Diagnosen", "definition": "OPTIONAL, Angaben zu Diagnosen", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Encounter.diagnosis.condition", "short": "Referenz zu Diagnose-Ressource", "definition": "VERPFLICHTEND, wenn Diagnosedaten angegeben werden, dann MUSS diese referenziert werden. \nEs SOLLTE nur die Primärdiagnose referenziert werden.", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Encounter.diagnosis.use", "short": "Diagnosetyp", "definition": "Attribute wie Aufnahme- oder Entlassdiagnose sind immer im Kontext eines stationären Aufenthaltes zu betrachten\nund werden daher als Eigenschaft des Encounters modelliert. \nVERPFLICHTEND mindestens die Angabe eines Codings. EMPFOHLEN ist die Angabe mittels Diagnosetyp- und DiagnosesubTyp-Coding. \nWeitere Codings OPTIONAL. Extensible Binding auf `http://hl7.org/fhir/ValueSet/diagnosis-role`", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "binding": {"strength": "extensible", "valueSet": "https://www.medizininformatik-initiative.de/fhir/core/modul-fall/ValueSet/mii-vs-fall-diagnosis-use", "description": ""}}, {"path": "Encounter.diagnosis.use.coding", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "Encounter.diagnosis.use.coding", "short": "Diagnosetyp", "definition": "Einweisungs-/Überweisungsdiagnose | Behandlungsrelevante Diagnosen", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "binding": {"strength": "required", "valueSet": "http://fhir.de/ValueSet/DiagnoseTyp", "description": ""}, "sliceName": "Diagnosetyp"}, {"path": "Encounter.diagnosis.use.coding", "short": "Diagnosesubtyp", "definition": "Operationsdiagnose | Abteilung Hauptdiagnose | Todesursache | Infektionsschutzdiagnose +", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "binding": {"strength": "required", "valueSet": "http://fhir.de/ValueSet/Diagnosesubtyp", "description": ""}, "sliceName": "DiagnosesubTyp"}, {"path": "Encounter.diagnosis.rank", "short": "Rangfolge", "definition": "OPTIONAL, Rangfolge der Diagnose", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Encounter.hospitalization", "short": "Klinikaufenthalt", "definition": "OPTIONAL, Details zur Aufnahme und Entlassung", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Encounter.hospitalization.admitSource", "short": "Aufnahmeanlass", "definition": "VERPFLICHTEND, Aufnahmeanlass. Preferred Binding auf http://fhir.de/ValueSet/dgkev/Aufnahmeanlass", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "binding": {"strength": "preferred", "valueSet": "http://fhir.de/ValueSet/dgkev/Aufnahmeanlass", "description": ""}}, {"path": "Encounter.hospitalization.dischargeDisposition", "short": "Entlassung", "definition": "OPTIONAL Daten zur Entlassung", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Encounter.hospitalization.dischargeDisposition.extension", "short": "Entlassungsgrund", "definition": "OPTIONAL, Entlassungs-/Verlegungsgrund nach § 301 Abs. 3 SGB V", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Extension", "profile": ["http://fhir.de/StructureDefinition/Entlassungsgrund"]}], "isExtension": true, "sliceName": "Entlassungsgrund"}, {"path": "Encounter.location", "short": "Kontaktort", "definition": "OPTIONAL, Details zum Kontaktort wie Zimmer, Bett, Station", "min": null, "max": null, "mustSupport": false, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "physicalType"}, {"type": "pattern", "path": "status"}], "rules": "open", "description": ""}}, {"path": "Encounter.location.physicalType", "short": "Kontaktorttyp", "definition": "SOLL, extensible Binding auf https://www.medizininformatik-initiative.de/fhir/core/modul-fall/ValueSet/location-physical-type", "min": null, "max": null, "mustSupport": false, "isModifier": false, "binding": {"strength": "extensible", "valueSet": "https://www.medizininformatik-initiative.de/fhir/core/modul-fall/ValueSet/location-physical-type", "description": ""}}, {"path": "Encounter.location", "short": "Zimmer", "definition": "Von Patient oder Patientin während des Kontaktes belegtes Zimmer auf einer Station.", "min": 0, "max": "1", "mustSupport": false, "isModifier": false, "sliceName": "Zimmer"}, {"path": "Encounter.location.status", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Encounter.location.physicalType", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": false, "isModifier": false}, {"path": "Encounter.location", "short": "Bett", "definition": "Von Patient oder Patientin während des Kontaktes belegter Bettenstellplatz.", "min": 0, "max": "1", "mustSupport": false, "isModifier": false, "sliceName": "Bett"}, {"path": "Encounter.location.status", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Encounter.location.physicalType", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": false, "isModifier": false}, {"path": "Encounter.location", "short": "Station", "definition": "Die Station, auf welcher der Patient oder die Patientin während des Kontaktes behandelt wurde.", "min": 0, "max": "1", "mustSupport": false, "isModifier": false, "sliceName": "Station"}, {"path": "Encounter.location.status", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Encounter.location.physicalType", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": false, "isModifier": false}, {"path": "Encounter.serviceProvider", "short": "Leistungserbringer", "definition": "OPTIONAL. Leistungserbringer, der für den Kontakt verantwortlich ist. \nReferenz auf eine Organisation", "min": null, "max": null, "mustSupport": false, "isModifier": false}, {"path": "Encounter.partOf", "short": "Teil von Kontakt", "definition": "OPTIONAL. Abbildung der Hierarchie zwischen Kontaktebenen durch Referenz auf weitere Kontakte, \nwenn bspw. ein Versorgungsstellenkontakt Teil eines Abteilungskontaktes \noder ein Abteilungskontakt Teil eines Einrichtungskontaktes ist.", "min": null, "max": null, "mustSupport": true, "isModifier": false}], "elementCount": 60, "parentName": "Encounter"}};
+
+        let currentProfileId = null;
+        let currentElementIndex = null;
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-select first profile if available
+            const profiles = Object.keys(profileData);
+            if (profiles.length > 0) {
+                selectProfile(profiles[0]);
+            }
+        });
+
+        function selectProfile(profileId) {
+            if (!profileId) return;
+
+            currentProfileId = profileId;
+
+            // Hide all profiles
+            document.querySelectorAll('.profile-card').forEach(card => {
+                card.style.display = 'none';
+            });
+
+            // Show selected profile
+            const profileCard = document.getElementById('profile-' + profileId);
+            if (profileCard) {
+                profileCard.style.display = 'block';
+                // Auto-expand if collapsed
+                const body = profileCard.querySelector('.profile-body');
+                const header = profileCard.querySelector('.profile-header');
+                if (body && !body.classList.contains('expanded')) {
+                    toggleProfile(profileId);
+                }
+            }
+
+            // Update selector
+            document.getElementById('profileSelect').value = profileId;
+
+            // Clear element selection
+            clearElementSelection();
+        }
+
+        function toggleProfile(profileId) {
+            const card = document.getElementById('profile-' + profileId);
+            if (!card) return;
+
+            const header = card.querySelector('.profile-header');
+            const body = card.querySelector('.profile-body');
+
+            if (body.classList.contains('expanded')) {
+                body.classList.remove('expanded');
+                header.classList.remove('expanded');
+            } else {
+                body.classList.add('expanded');
+                header.classList.add('expanded');
+            }
+        }
+
+        function selectElement(profileId, elementIndex) {
+            currentElementIndex = elementIndex;
+
+            // Update active state
+            document.querySelectorAll('.element-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            const elementItem = document.querySelector(`[data-profile="${profileId}"][data-element="${elementIndex}"]`);
+            if (elementItem) {
+                elementItem.classList.add('active');
+            }
+
+            // Show element details
+            const detailsPanel = document.getElementById('details-' + profileId);
+            if (detailsPanel) {
+                const profile = profileData[profileId];
+                const element = profile.differential[elementIndex];
+                detailsPanel.innerHTML = renderElementDetails(element);
+            }
+        }
+
+        function clearElementSelection() {
+            document.querySelectorAll('.element-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            if (currentProfileId) {
+                const detailsPanel = document.getElementById('details-' + currentProfileId);
+                if (detailsPanel) {
+                    detailsPanel.innerHTML = '<div class="details-empty">Click an element on the left to see details</div>';
+                }
+            }
+        }
+
+        function renderElementDetails(element) {
+            let html = '<div class="detail-section">';
+            html += '<h3>' + escapeHtml(element.path) + '</h3>';
+
+            // Cardinality
+            if (element.min !== undefined || element.max !== undefined) {
+                html += '<div class="detail-row">';
+                html += '<div class="detail-label">Cardinality</div>';
+                html += '<div class="detail-value"><code>' + (element.min ?? '') + '..' + (element.max ?? '') + '</code>';
+                if (element.mustSupport) {
+                    html += ' <span class="badge badge-ms">Must Support</span>';
+                }
+                html += '</div></div>';
+            }
+
+            // Short description
+            if (element.short) {
+                html += '<div class="detail-row">';
+                html += '<div class="detail-label">Short</div>';
+                html += '<div class="detail-value">' + escapeHtml(element.short) + '</div>';
+                html += '</div>';
+            }
+
+            // Definition
+            if (element.definition) {
+                html += '<div class="detail-row">';
+                html += '<div class="detail-label">Definition</div>';
+                html += '<div class="detail-value">' + escapeHtml(element.definition) + '</div>';
+                html += '</div>';
+            }
+
+            html += '</div>';
+
+            // Types
+            if (element.type && element.type.length > 0) {
+                html += '<div class="detail-section">';
+                html += '<h3>Type Constraints</h3>';
+                html += '<ul class="type-list">';
+                element.type.forEach(type => {
+                    html += '<li class="type-item">';
+                    html += '<strong>Code:</strong> ' + escapeHtml(type.code);
+                    if (type.profile) {
+                        html += '<br><strong>Profile:</strong> ' + renderUrls(type.profile);
+                    }
+                    if (type.targetProfile) {
+                        html += '<br><strong>Target Profile:</strong> ' + renderUrls(type.targetProfile);
+                    }
+                    html += '</li>';
+                });
+                html += '</ul></div>';
+            }
+
+            // Binding
+            if (element.binding) {
+                html += '<div class="detail-section">';
+                html += '<h3>Terminology Binding</h3>';
+                html += '<div class="binding-info">';
+                html += '<div><strong>Strength:</strong> ' + escapeHtml(element.binding.strength) + '</div>';
+                html += '<div><strong>ValueSet:</strong> <code>' + escapeHtml(element.binding.valueSet) + '</code></div>';
+                if (element.binding.description) {
+                    html += '<div><strong>Description:</strong> ' + escapeHtml(element.binding.description) + '</div>';
+                }
+                html += '</div></div>';
+            }
+
+            // Constraints
+            if (element.constraints && element.constraints.length > 0) {
+                html += '<div class="detail-section">';
+                html += '<h3>Constraints</h3>';
+                html += '<ul class="constraint-list">';
+                element.constraints.forEach(c => {
+                    html += '<li class="constraint-item">';
+                    html += '<strong>' + escapeHtml(c.key) + '</strong> (' + escapeHtml(c.severity) + ')<br>';
+                    html += escapeHtml(c.human);
+                    if (c.expression) {
+                        html += '<br><code>' + escapeHtml(c.expression) + '</code>';
+                    }
+                    html += '</li>';
+                });
+                html += '</ul></div>';
+            }
+
+            // Slicing
+            if (element.slicing) {
+                html += '<div class="detail-section">';
+                html += '<h3>Slicing Information</h3>';
+                html += '<div class="detail-row">';
+                html += '<div class="detail-label">Rules</div>';
+                html += '<div class="detail-value"><code>' + escapeHtml(element.slicing.rules) + '</code></div>';
+                html += '</div>';
+                if (element.slicing.description) {
+                    html += '<div class="detail-row">';
+                    html += '<div class="detail-label">Description</div>';
+                    html += '<div class="detail-value">' + escapeHtml(element.slicing.description) + '</div>';
+                    html += '</div>';
+                }
+                html += '</div>';
+            }
+
+            return html;
+        }
+
+        function renderUrls(urls) {
+            if (Array.isArray(urls)) {
+                return urls.map(url => '<code>' + escapeHtml(url) + '</code>').join(', ');
+            }
+            return '<code>' + escapeHtml(urls) + '</code>';
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>

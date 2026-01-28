@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laborbefund - MII Profile Differential</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .header .breadcrumb {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        .header .breadcrumb a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .header .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .profile-selector {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .profile-selector select {
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .profile-header {
+            background: #ecf0f1;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #bdc3c7;
+        }
+
+        .profile-header:hover {
+            background: #dfe4e8;
+        }
+
+        .profile-header.expanded {
+            background: #3498db;
+            color: white;
+        }
+
+        .profile-header .title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .profile-header .indicator {
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .profile-header.expanded .indicator {
+            transform: rotate(90deg);
+        }
+
+        .profile-body {
+            display: none;
+            padding: 1.5rem;
+        }
+
+        .profile-body.expanded {
+            display: block;
+        }
+
+        .profile-info {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .profile-info p {
+            margin: 0.3rem 0;
+        }
+
+        .profile-info .label {
+            font-weight: 600;
+            color: #7f8c8d;
+            display: inline-block;
+            width: 120px;
+        }
+
+        .two-panel {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 1.5rem;
+            min-height: 400px;
+        }
+
+        .elements-panel {
+            border-right: 1px solid #ddd;
+            padding-right: 1rem;
+        }
+
+        .elements-list {
+            list-style: none;
+        }
+
+        .element-item {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            background: #f8f9fa;
+            border-left: 3px solid #95a5a6;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .element-item:hover {
+            background: #e9ecef;
+            transform: translateX(4px);
+        }
+
+        .element-item.active {
+            background: #3498db;
+            color: white;
+            border-left-color: #2980b9;
+        }
+
+        .element-item .path {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .element-item .badges {
+            margin-top: 0.3rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.75rem;
+            border-radius: 3px;
+            margin-right: 0.3rem;
+            font-weight: 600;
+        }
+
+        .badge-ms {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .badge-ext {
+            background: #9b59b6;
+            color: white;
+        }
+
+        .badge-card {
+            background: #f39c12;
+            color: white;
+        }
+
+        .badge-slice {
+            background: #16a085;
+            color: white;
+        }
+
+        .details-panel {
+            padding-left: 1rem;
+        }
+
+        .details-empty {
+            color: #95a5a6;
+            font-style: italic;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .detail-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-section h3 {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #3498db;
+        }
+
+        .detail-row {
+            padding: 0.5rem 0;
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 1rem;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #7f8c8d;
+        }
+
+        .detail-value {
+            color: #2c3e50;
+        }
+
+        .detail-value code {
+            background: #ecf0f1;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .type-list, .constraint-list {
+            list-style: none;
+        }
+
+        .type-item, .constraint-item {
+            background: #f8f9fa;
+            padding: 0.5rem;
+            margin: 0.3rem 0;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .binding-info {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 0.75rem;
+            border-radius: 4px;
+        }
+
+        .no-profiles {
+            text-align: center;
+            padding: 3rem;
+            color: #95a5a6;
+        }
+
+        @media (max-width: 1024px) {
+            .two-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .elements-panel {
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>MII Profile Differential: Laborbefund</h1>
+        <div class="breadcrumb">
+            <a href="index.html">← All Modules</a> / laborbefund
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="profile-selector">
+            <select id="profileSelect" onchange="selectProfile(this.value)">
+                <option value="">Select a profile...</option>
+                <option value="mii-pr-labor-laboranforderung">MII PR Labor Laboranforderung (ServiceRequest)</option>
+<option value="mii-pr-labor-laborbefund">MII PR Labor Laborbefund (DiagnosticReport)</option>
+<option value="mii-pr-labor-laboruntersuchung">MII PR Labor Laboruntersuchung (Observation)</option>
+            </select>
+        </div>
+
+        <div id="profilesContainer">
+            
+        <div class="profile-card" id="profile-mii-pr-labor-laboranforderung" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-labor-laboranforderung')">
+                <div class="title">MII PR Labor Laboranforderung</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Labor_Laboranforderung</p>
+                    <p><span class="label">Type:</span> ServiceRequest</p>
+                    <p><span class="label">Base Definition:</span> ServiceRequest</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.1</p>
+                    <p><span class="label">Elements:</span> 28 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 0)">
+                    <div class="path">id</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 1)">
+                    <div class="path">meta</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 2)">
+                    <div class="path">meta.source</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 3)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 4)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 5)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 6)">
+                    <div class="path">identifier.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 7)">
+                    <div class="path">identifier.type.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 8)">
+                    <div class="path">identifier.type.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 9)">
+                    <div class="path">identifier.type.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 10)">
+                    <div class="path">identifier.type.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 11)">
+                    <div class="path">identifier.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 12)">
+                    <div class="path">identifier.value</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 13)">
+                    <div class="path">identifier.assigner</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 14)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="15"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 15)">
+                    <div class="path">intent</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="16"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 16)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="17"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 17)">
+                    <div class="path">category.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="18"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 18)">
+                    <div class="path">category.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="19"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 19)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="20"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 20)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="21"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 21)">
+                    <div class="path">encounter</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="22"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 22)">
+                    <div class="path">authoredOn</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="23"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 23)">
+                    <div class="path">specimen</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="24"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 24)">
+                    <div class="path">specimen.reference</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="25"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 25)">
+                    <div class="path">specimen.identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="26"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 26)">
+                    <div class="path">bodySite</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboranforderung"
+                    data-element="27"
+                    onclick="selectElement('mii-pr-labor-laboranforderung', 27)">
+                    <div class="path">patientInstruction</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-labor-laboranforderung">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-labor-laborbefund" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-labor-laborbefund')">
+                <div class="title">MII PR Labor Laborbefund</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Labor_Laborbefund</p>
+                    <p><span class="label">Type:</span> DiagnosticReport</p>
+                    <p><span class="label">Base Definition:</span> DiagnosticReport</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.1</p>
+                    <p><span class="label">Elements:</span> 36 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 0)">
+                    <div class="path">id</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 1)">
+                    <div class="path">meta</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 2)">
+                    <div class="path">meta.source</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 3)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 4)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 5)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 6)">
+                    <div class="path">identifier.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 7)">
+                    <div class="path">identifier.type.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 8)">
+                    <div class="path">identifier.type.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 9)">
+                    <div class="path">identifier.type.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 10)">
+                    <div class="path">identifier.type.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 11)">
+                    <div class="path">identifier.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 12)">
+                    <div class="path">identifier.value</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 13)">
+                    <div class="path">identifier.assigner</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 14)">
+                    <div class="path">basedOn</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="15"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 15)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="16"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 16)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="17"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 17)">
+                    <div class="path">category.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="18"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 18)">
+                    <div class="path">category.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="19"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 19)">
+                    <div class="path">category.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="20"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 20)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="21"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 21)">
+                    <div class="path">code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="22"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 22)">
+                    <div class="path">code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="23"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 23)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="24"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 24)">
+                    <div class="path">encounter</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="25"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 25)">
+                    <div class="path">effective[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="26"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 26)">
+                    <div class="path">effective[x].extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="27"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 27)">
+                    <div class="path">issued</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="28"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 28)">
+                    <div class="path">performer</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="29"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 29)">
+                    <div class="path">performer.reference</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="30"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 30)">
+                    <div class="path">performer.identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="31"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 31)">
+                    <div class="path">specimen</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="32"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 32)">
+                    <div class="path">specimen.reference</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="33"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 33)">
+                    <div class="path">specimen.identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="34"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 34)">
+                    <div class="path">result</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laborbefund"
+                    data-element="35"
+                    onclick="selectElement('mii-pr-labor-laborbefund', 35)">
+                    <div class="path">conclusion</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-labor-laborbefund">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-labor-laboruntersuchung" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-labor-laboruntersuchung')">
+                <div class="title">MII PR Labor Laboruntersuchung</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Labor_Laboruntersuchung</p>
+                    <p><span class="label">Type:</span> Observation</p>
+                    <p><span class="label">Base Definition:</span> Observation</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.1</p>
+                    <p><span class="label">Elements:</span> 49 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 0)">
+                    <div class="path">id</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 1)">
+                    <div class="path">meta</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 2)">
+                    <div class="path">meta.source</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 3)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 4)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 5)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 6)">
+                    <div class="path">identifier.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 7)">
+                    <div class="path">identifier.type.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 8)">
+                    <div class="path">identifier.type.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 9)">
+                    <div class="path">identifier.type.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 10)">
+                    <div class="path">identifier.type.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 11)">
+                    <div class="path">identifier.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 12)">
+                    <div class="path">identifier.value</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 13)">
+                    <div class="path">identifier.assigner</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 14)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="15"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 15)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="16"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 16)">
+                    <div class="path">category.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="17"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 17)">
+                    <div class="path">category.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="18"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 18)">
+                    <div class="path">category.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="19"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 19)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="20"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 20)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="21"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 21)">
+                    <div class="path">encounter</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="22"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 22)">
+                    <div class="path">effective[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="23"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 23)">
+                    <div class="path">effective[x].extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="24"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 24)">
+                    <div class="path">issued</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="25"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 25)">
+                    <div class="path">value[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="26"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 26)">
+                    <div class="path">value[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="27"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 27)">
+                    <div class="path">value[x].extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="28"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 28)">
+                    <div class="path">value[x].value</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="29"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 29)">
+                    <div class="path">value[x].value.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="30"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 30)">
+                    <div class="path">value[x].unit</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="31"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 31)">
+                    <div class="path">value[x].system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="32"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 32)">
+                    <div class="path">value[x].code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="33"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 33)">
+                    <div class="path">value[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="34"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 34)">
+                    <div class="path">value[x].coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="35"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 35)">
+                    <div class="path">value[x].coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="36"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 36)">
+                    <div class="path">value[x].coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="37"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 37)">
+                    <div class="path">value[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="38"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 38)">
+                    <div class="path">value[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="39"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 39)">
+                    <div class="path">dataAbsentReason</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="40"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 40)">
+                    <div class="path">interpretation</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="41"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 41)">
+                    <div class="path">note</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="42"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 42)">
+                    <div class="path">bodySite</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="43"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 43)">
+                    <div class="path">method</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="44"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 44)">
+                    <div class="path">specimen</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="45"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 45)">
+                    <div class="path">specimen.reference</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="46"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 46)">
+                    <div class="path">specimen.identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="47"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 47)">
+                    <div class="path">device</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-labor-laboruntersuchung"
+                    data-element="48"
+                    onclick="selectElement('mii-pr-labor-laboruntersuchung', 48)">
+                    <div class="path">referenceRange</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-labor-laboruntersuchung">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        </div>
+    </div>
+
+    <script>
+        // Embedded profile data
+        const profileData = {"mii-pr-labor-laboranforderung": {"id": "mii-pr-labor-laboranforderung", "url": "https://www.medizininformatik-initiative.de/fhir/core/modul-labor/StructureDefinition/ServiceRequestLab", "name": "MII_PR_Labor_Laboranforderung", "title": "MII PR Labor Laboranforderung", "status": "active", "description": "Dieses Profil beschreibt eine Laboranforderung in der Medizininformatik-Initiative.", "baseDefinition": "http://hl7.org/fhir/StructureDefinition/ServiceRequest", "type": "ServiceRequest", "module": "laborbefund", "version": "2025.0.1", "differential": [{"path": "ServiceRequest.id", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.meta", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.meta.source", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.meta.profile", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.identifier", "short": "Identifikator", "definition": "Kennung/en, unter der/denen diese Laboranforderung bekannt ist.", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "type"}], "rules": "open", "description": ""}}, {"path": "ServiceRequest.identifier", "short": "", "definition": "", "min": 1, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "anforderung"}, {"path": "ServiceRequest.identifier.type", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.identifier.type.coding", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "value", "path": "system"}], "rules": "open", "description": ""}}, {"path": "ServiceRequest.identifier.type.coding", "short": "", "definition": "", "min": 1, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "placerv2"}, {"path": "ServiceRequest.identifier.type.coding.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.identifier.type.coding.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.identifier.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.identifier.value", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.identifier.assigner", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.status", "short": "Status", "definition": "Der Status der Laboranforderung.", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.intent", "short": "Intention", "definition": "Auftrag", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.category", "short": "Kategorie", "definition": "Klassifikation als Laborauftrag", "min": 1, "max": "1", "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.category.coding", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "ServiceRequest.category.coding", "short": "", "definition": "", "min": 1, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "laboratory"}, {"path": "ServiceRequest.code", "short": "Code", "definition": "Ein LOINC Code für den Laborparameter bzw. Labortest, der beauftragt wurde.", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "binding": {"strength": "example", "valueSet": "https://www.medizininformatik-initiative.de/fhir/core/modul-labor/ValueSet/ValueSetOrderCodes", "description": ""}}, {"path": "ServiceRequest.subject", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.encounter", "short": "Fall oder Kontakt", "definition": "Fall oder Kontakt, bei dem der Laborauftrag gestellt wurde.", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.authoredOn", "short": "Anforderungsdatum", "definition": "Das Datum, an dem der Laborauftrag ursprünglich verfasst wurde.", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.specimen", "short": "Probenmaterial", "definition": "Eine oder mehrere Bioproben, die der Labortest verwendet.", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.specimen.reference", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.specimen.identifier", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.bodySite", "short": "", "definition": "", "min": null, "max": "0", "mustSupport": false, "isModifier": false}, {"path": "ServiceRequest.patientInstruction", "short": "", "definition": "", "min": null, "max": "0", "mustSupport": false, "isModifier": false}], "elementCount": 28, "parentName": "ServiceRequest"}, "mii-pr-labor-laborbefund": {"id": "mii-pr-labor-laborbefund", "url": "https://www.medizininformatik-initiative.de/fhir/core/modul-labor/StructureDefinition/DiagnosticReportLab", "name": "MII_PR_Labor_Laborbefund", "title": "MII PR Labor Laborbefund", "status": "active", "description": "Dieses Profil beschreibt einen Laborbefund in der Medizininformatik-Initiative.", "baseDefinition": "http://hl7.org/fhir/StructureDefinition/DiagnosticReport", "type": "DiagnosticReport", "module": "laborbefund", "version": "2025.0.1", "differential": [{"path": "DiagnosticReport.id", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.meta", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.meta.source", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.meta.profile", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.identifier", "short": "Identifikator", "definition": "Kennung/en, unter der/denen dieser Laborbefund bekannt ist.", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "type"}], "rules": "open", "description": ""}}, {"path": "DiagnosticReport.identifier", "short": "", "definition": "", "min": 1, "max": "1", "mustSupport": false, "isModifier": false, "sliceName": "befund"}, {"path": "DiagnosticReport.identifier.type", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.identifier.type.coding", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "value", "path": "system"}], "rules": "open", "description": ""}}, {"path": "DiagnosticReport.identifier.type.coding", "short": "", "definition": "", "min": 1, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "fillerV2"}, {"path": "DiagnosticReport.identifier.type.coding.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.identifier.type.coding.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.identifier.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.identifier.value", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.identifier.assigner", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.basedOn", "short": "Basiert auf", "definition": "Bezug zum Laborauftrag, auf dem dieser Laborbefund basiert.", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.status", "short": "Status", "definition": "registriert | teilweise | vorläufig | final", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.category", "short": "Kategorie", "definition": "Klassifikation des Befunds als Laborbefund", "min": 1, "max": "1", "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.category.coding", "short": "", "definition": "", "min": 2, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "DiagnosticReport.category.coding", "short": "", "definition": "", "min": 1, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "loinc-lab"}, {"path": "DiagnosticReport.category.coding", "short": "", "definition": "", "min": 1, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "diagnostic-service-sections"}, {"path": "DiagnosticReport.code", "short": "Code", "definition": "LOINC Code zur Identifikation des Befunds als Laborbefund.", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.code.coding", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "DiagnosticReport.code.coding", "short": "", "definition": "", "min": 1, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "loinc-labReport"}, {"path": "DiagnosticReport.subject", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.encounter", "short": "Fall oder Kontakt", "definition": "Fall oder Kontakt, bei dem der Laborbefund erstellt wurde.", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.effective[x]", "short": "Klinisches Bezugsdatum", "definition": "Zeitpunkt, zu dem die gemessene Eigenschaft im Probenmaterial (e.g. Analytkonzentration) mutmaßlich der Eigenschaft im Patienten entsprach. \nWenn der Zeitpunkt der Probenentnahme angegeben ist, wird meist dieser Zeitpunkt verwendet. \nAndernfalls wird zumeist behelfsmäßig der Probeneingang im Labor gewählt. \nDieses Element ist wichtig um verschiedene Analysen im Zeitverlauf sortieren zu können.", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "dateTime"}]}, {"path": "DiagnosticReport.effective[x].extension", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Extension", "profile": ["https://www.medizininformatik-initiative.de/fhir/core/modul-labor/StructureDefinition/QuelleKlinischesBezugsdatum"]}], "isExtension": true, "sliceName": "QuelleKlinischesBezugsdatum"}, {"path": "DiagnosticReport.issued", "short": "Dokumentationsdatum", "definition": "Zeitpunkt, an dem der Laborbefund dokumentiert wurde.", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.performer", "short": "Ausführende*r", "definition": "Verantwortliche Person oder Organisation, die für die Ausstellung des Befunds verantwortlich ist.", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.performer.reference", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.performer.identifier", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.specimen", "short": "Probenmaterial", "definition": "Bioproben, auf denen dieser Laborbefund basiert.", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.specimen.reference", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.specimen.identifier", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.result", "short": "Ergebnis", "definition": "Laborergebnisse, die Teil dieses Laborbefunds sind.", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.conclusion", "short": "Schlussfolgerung", "definition": "Klinische Schlussfolgerung/Interpretation der Testergebnisse", "min": null, "max": null, "mustSupport": true, "isModifier": false}], "elementCount": 36, "parentName": "DiagnosticReport"}, "mii-pr-labor-laboruntersuchung": {"id": "mii-pr-labor-laboruntersuchung", "url": "https://www.medizininformatik-initiative.de/fhir/core/modul-labor/StructureDefinition/ObservationLab", "name": "MII_PR_Labor_Laboruntersuchung", "title": "MII PR Labor Laboruntersuchung", "status": "active", "description": "Dieses Profil beschreibt eine Laborergebnis in der Medizininformatik-Initiative.", "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation", "type": "Observation", "module": "laborbefund", "version": "2025.0.1", "differential": [{"path": "Observation.id", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.meta", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.meta.source", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.meta.profile", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.identifier", "short": "Identifikator", "definition": "Kennung/en, unter der/denen diese Laboruntersuchung bekannt ist.", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "type"}], "rules": "open", "description": ""}}, {"path": "Observation.identifier", "short": "", "definition": "", "min": 1, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "analyseBefundCode"}, {"path": "Observation.identifier.type", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "binding": {"strength": "extensible", "valueSet": "https://www.medizininformatik-initiative.de/fhir/core/modul-labor/ValueSet/mii-vs-labor-identifier-type-codes", "description": ""}}, {"path": "Observation.identifier.type.coding", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "value", "path": "system"}], "rules": "open", "description": ""}}, {"path": "Observation.identifier.type.coding", "short": "", "definition": "", "min": 1, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "observationInstanceV2"}, {"path": "Observation.identifier.type.coding.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.identifier.type.coding.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.identifier.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.identifier.value", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.identifier.assigner", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.status", "short": "Status", "definition": "abgeschlossen", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.category", "short": "Kategorie", "definition": "Klassifikation in diagnostischen Fachbereich und Gruppe der Laboruntersuchung", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.category.coding", "short": "", "definition": "", "min": 2, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "Observation.category.coding", "short": "", "definition": "", "min": 1, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "loinc-observation"}, {"path": "Observation.category.coding", "short": "", "definition": "", "min": 1, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "observation-category"}, {"path": "Observation.code", "short": "Code", "definition": "Ein LOINC Code für den Laborparameter bzw. Labortest, der durchgeführt wurde.", "min": null, "max": null, "mustSupport": true, "isModifier": false, "binding": {"strength": "preferred", "valueSet": "http://hl7.org/fhir/uv/ips/ValueSet/results-laboratory-observations-uv-ips", "description": "Intensional Value Set Definition: LOINC {  {    STATUS in {ACTIVE}    CLASSTYPE in {1}    CLASS exclude {CHALSKIN, H&P.HX.LAB, H&P.HX, NR STATS, PATH.PROTOCOLS.*}  } }"}}, {"path": "Observation.subject", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.encounter", "short": "Fall oder Kontakt", "definition": "Fall oder Kontakt, bei dem die Laboruntersuchung durchgeführt wurde.", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.effective[x]", "short": "Untersuchungszeitpunkt", "definition": "Zeitpunkt des Beginns der Untersuchung", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "dateTime"}], "constraints": [{"key": "mii-lab-1", "severity": "error", "human": "Datetime must be at least to day", "expression": "($this as dateTime).hasValue() implies ($this as dateTime).toString().length() >= 8"}]}, {"path": "Observation.effective[x].extension", "short": "Quelle klinisches Bezugsdatum", "definition": "Datum der Probenentnahme | Datum des Eingangs der Probe im Labor", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Extension", "profile": ["https://www.medizininformatik-initiative.de/fhir/core/modul-labor/StructureDefinition/QuelleKlinischesBezugsdatum"]}], "isExtension": true, "sliceName": "QuelleKlinischesBezugsdatum"}, {"path": "Observation.issued", "short": "Dokumentationsdatum", "definition": "Zeitpunkt, an dem das Ergebnis der Laboruntersuchung dokumentiert wurde", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.value[x]", "short": "Messwert", "definition": "Wert der Analyse", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Quantity"}, {"code": "CodeableConcept"}, {"code": "Range"}, {"code": "Ratio"}], "slicing": {"discriminator": [{"type": "type", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "Observation.value[x]", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Quantity"}], "sliceName": "valueQuantity"}, {"path": "Observation.value[x].extension", "short": "", "definition": "", "min": 0, "max": "*", "mustSupport": false, "isModifier": false, "type": [{"code": "Extension", "profile": ["http://hl7.org/fhir/StructureDefinition/iso21090-PQ-translation"]}], "isExtension": true, "sliceName": "pqTranslation"}, {"path": "Observation.value[x].value", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.value[x].value.extension", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Extension", "profile": ["http://hl7.org/fhir/StructureDefinition/quantity-precision"]}], "isExtension": true, "sliceName": "quantityPrecision"}, {"path": "Observation.value[x].unit", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.value[x].system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.value[x].code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.value[x]", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "CodeableConcept"}], "sliceName": "valueCodeableConcept"}, {"path": "Observation.value[x].coding", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.value[x].coding.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.value[x].coding.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.value[x]", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Range"}], "sliceName": "valueRange"}, {"path": "Observation.value[x]", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Ratio"}], "sliceName": "valueRatio"}, {"path": "Observation.dataAbsentReason", "short": "Grund für fehlende Daten", "definition": "unbekannt | maskiert | nicht anwendbar | Fehler | nicht durchgeführt", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.interpretation", "short": "Interpretation", "definition": "Eine kategorische Bewertung des Messwertes. Zum Beispiel hoch, niedrig, normal.", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.note", "short": "Hinweis", "definition": "Zusätzliche Informationen zur Laboruntersuchung als Freitext.", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.bodySite", "short": "", "definition": "", "min": null, "max": "0", "mustSupport": false, "isModifier": false}, {"path": "Observation.method", "short": "Untersuchungsmethode", "definition": "Konkrete Untersuchungsmethode, wenn der verwendete LOINC-Code für den Laborparameter keine Methode enthält.", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.specimen", "short": "Probenmaterial", "definition": "Probe, auf deren Basis die Laboruntersuchungen angefertigt werden", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.specimen.reference", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.specimen.identifier", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.device", "short": "Gerät", "definition": "Gerät, das zur Generierung der Messwerte verwendet wurde.", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.referenceRange", "short": "Referenzbereich", "definition": "Bereich, in dem der Messwert als normal oder empfohlen betrachtet wird.", "min": null, "max": null, "mustSupport": true, "isModifier": false}], "elementCount": 49, "parentName": "Observation"}};
+
+        let currentProfileId = null;
+        let currentElementIndex = null;
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-select first profile if available
+            const profiles = Object.keys(profileData);
+            if (profiles.length > 0) {
+                selectProfile(profiles[0]);
+            }
+        });
+
+        function selectProfile(profileId) {
+            if (!profileId) return;
+
+            currentProfileId = profileId;
+
+            // Hide all profiles
+            document.querySelectorAll('.profile-card').forEach(card => {
+                card.style.display = 'none';
+            });
+
+            // Show selected profile
+            const profileCard = document.getElementById('profile-' + profileId);
+            if (profileCard) {
+                profileCard.style.display = 'block';
+                // Auto-expand if collapsed
+                const body = profileCard.querySelector('.profile-body');
+                const header = profileCard.querySelector('.profile-header');
+                if (body && !body.classList.contains('expanded')) {
+                    toggleProfile(profileId);
+                }
+            }
+
+            // Update selector
+            document.getElementById('profileSelect').value = profileId;
+
+            // Clear element selection
+            clearElementSelection();
+        }
+
+        function toggleProfile(profileId) {
+            const card = document.getElementById('profile-' + profileId);
+            if (!card) return;
+
+            const header = card.querySelector('.profile-header');
+            const body = card.querySelector('.profile-body');
+
+            if (body.classList.contains('expanded')) {
+                body.classList.remove('expanded');
+                header.classList.remove('expanded');
+            } else {
+                body.classList.add('expanded');
+                header.classList.add('expanded');
+            }
+        }
+
+        function selectElement(profileId, elementIndex) {
+            currentElementIndex = elementIndex;
+
+            // Update active state
+            document.querySelectorAll('.element-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            const elementItem = document.querySelector(`[data-profile="${profileId}"][data-element="${elementIndex}"]`);
+            if (elementItem) {
+                elementItem.classList.add('active');
+            }
+
+            // Show element details
+            const detailsPanel = document.getElementById('details-' + profileId);
+            if (detailsPanel) {
+                const profile = profileData[profileId];
+                const element = profile.differential[elementIndex];
+                detailsPanel.innerHTML = renderElementDetails(element);
+            }
+        }
+
+        function clearElementSelection() {
+            document.querySelectorAll('.element-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            if (currentProfileId) {
+                const detailsPanel = document.getElementById('details-' + currentProfileId);
+                if (detailsPanel) {
+                    detailsPanel.innerHTML = '<div class="details-empty">Click an element on the left to see details</div>';
+                }
+            }
+        }
+
+        function renderElementDetails(element) {
+            let html = '<div class="detail-section">';
+            html += '<h3>' + escapeHtml(element.path) + '</h3>';
+
+            // Cardinality
+            if (element.min !== undefined || element.max !== undefined) {
+                html += '<div class="detail-row">';
+                html += '<div class="detail-label">Cardinality</div>';
+                html += '<div class="detail-value"><code>' + (element.min ?? '') + '..' + (element.max ?? '') + '</code>';
+                if (element.mustSupport) {
+                    html += ' <span class="badge badge-ms">Must Support</span>';
+                }
+                html += '</div></div>';
+            }
+
+            // Short description
+            if (element.short) {
+                html += '<div class="detail-row">';
+                html += '<div class="detail-label">Short</div>';
+                html += '<div class="detail-value">' + escapeHtml(element.short) + '</div>';
+                html += '</div>';
+            }
+
+            // Definition
+            if (element.definition) {
+                html += '<div class="detail-row">';
+                html += '<div class="detail-label">Definition</div>';
+                html += '<div class="detail-value">' + escapeHtml(element.definition) + '</div>';
+                html += '</div>';
+            }
+
+            html += '</div>';
+
+            // Types
+            if (element.type && element.type.length > 0) {
+                html += '<div class="detail-section">';
+                html += '<h3>Type Constraints</h3>';
+                html += '<ul class="type-list">';
+                element.type.forEach(type => {
+                    html += '<li class="type-item">';
+                    html += '<strong>Code:</strong> ' + escapeHtml(type.code);
+                    if (type.profile) {
+                        html += '<br><strong>Profile:</strong> ' + renderUrls(type.profile);
+                    }
+                    if (type.targetProfile) {
+                        html += '<br><strong>Target Profile:</strong> ' + renderUrls(type.targetProfile);
+                    }
+                    html += '</li>';
+                });
+                html += '</ul></div>';
+            }
+
+            // Binding
+            if (element.binding) {
+                html += '<div class="detail-section">';
+                html += '<h3>Terminology Binding</h3>';
+                html += '<div class="binding-info">';
+                html += '<div><strong>Strength:</strong> ' + escapeHtml(element.binding.strength) + '</div>';
+                html += '<div><strong>ValueSet:</strong> <code>' + escapeHtml(element.binding.valueSet) + '</code></div>';
+                if (element.binding.description) {
+                    html += '<div><strong>Description:</strong> ' + escapeHtml(element.binding.description) + '</div>';
+                }
+                html += '</div></div>';
+            }
+
+            // Constraints
+            if (element.constraints && element.constraints.length > 0) {
+                html += '<div class="detail-section">';
+                html += '<h3>Constraints</h3>';
+                html += '<ul class="constraint-list">';
+                element.constraints.forEach(c => {
+                    html += '<li class="constraint-item">';
+                    html += '<strong>' + escapeHtml(c.key) + '</strong> (' + escapeHtml(c.severity) + ')<br>';
+                    html += escapeHtml(c.human);
+                    if (c.expression) {
+                        html += '<br><code>' + escapeHtml(c.expression) + '</code>';
+                    }
+                    html += '</li>';
+                });
+                html += '</ul></div>';
+            }
+
+            // Slicing
+            if (element.slicing) {
+                html += '<div class="detail-section">';
+                html += '<h3>Slicing Information</h3>';
+                html += '<div class="detail-row">';
+                html += '<div class="detail-label">Rules</div>';
+                html += '<div class="detail-value"><code>' + escapeHtml(element.slicing.rules) + '</code></div>';
+                html += '</div>';
+                if (element.slicing.description) {
+                    html += '<div class="detail-row">';
+                    html += '<div class="detail-label">Description</div>';
+                    html += '<div class="detail-value">' + escapeHtml(element.slicing.description) + '</div>';
+                    html += '</div>';
+                }
+                html += '</div>';
+            }
+
+            return html;
+        }
+
+        function renderUrls(urls) {
+            if (Array.isArray(urls)) {
+                return urls.map(url => '<code>' + escapeHtml(url) + '</code>').join(', ');
+            }
+            return '<code>' + escapeHtml(urls) + '</code>';
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>

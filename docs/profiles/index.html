@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MII Profile Differentials - Module Index</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .module-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .module-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+        }
+
+        .module-card h2 {
+            color: #2c3e50;
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .module-card .stats {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .module-card .badge {
+            background: #3498db;
+            color: white;
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 3rem;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>MII Profile Differentials</h1>
+            <p>Medizininformatik Initiative - FHIR Profile Visualization</p>
+        </div>
+
+        <div class="modules-grid">
+
+            <a href="bildgebung.html" class="module-card">
+                <h2>Bildgebung</h2>
+                <div class="stats">
+                    <div class="badge">11 Profiles</div>
+                </div>
+            </a>
+        
+            <a href="biobank.html" class="module-card">
+                <h2>Biobank</h2>
+                <div class="stats">
+                    <div class="badge">12 Profiles</div>
+                </div>
+            </a>
+        
+            <a href="diagnose.html" class="module-card">
+                <h2>Diagnose</h2>
+                <div class="stats">
+                    <div class="badge">2 Profiles</div>
+                </div>
+            </a>
+        
+            <a href="fall.html" class="module-card">
+                <h2>Fall</h2>
+                <div class="stats">
+                    <div class="badge">2 Profiles</div>
+                </div>
+            </a>
+        
+            <a href="laborbefund.html" class="module-card">
+                <h2>Laborbefund</h2>
+                <div class="stats">
+                    <div class="badge">3 Profiles</div>
+                </div>
+            </a>
+        
+            <a href="medikation.html" class="module-card">
+                <h2>Medikation</h2>
+                <div class="stats">
+                    <div class="badge">10 Profiles</div>
+                </div>
+            </a>
+        
+            <a href="meta.html" class="module-card">
+                <h2>Meta</h2>
+                <div class="stats">
+                    <div class="badge">3 Profiles</div>
+                </div>
+            </a>
+        
+            <a href="molgen.html" class="module-card">
+                <h2>Molgen</h2>
+                <div class="stats">
+                    <div class="badge">14 Profiles</div>
+                </div>
+            </a>
+        
+            <a href="onkologie.html" class="module-card">
+                <h2>Onkologie</h2>
+                <div class="stats">
+                    <div class="badge">37 Profiles</div>
+                </div>
+            </a>
+        
+            <a href="patho.html" class="module-card">
+                <h2>Patho</h2>
+                <div class="stats">
+                    <div class="badge">16 Profiles</div>
+                </div>
+            </a>
+        
+            <a href="person.html" class="module-card">
+                <h2>Person</h2>
+                <div class="stats">
+                    <div class="badge">8 Profiles</div>
+                </div>
+            </a>
+        
+            <a href="prozedur.html" class="module-card">
+                <h2>Prozedur</h2>
+                <div class="stats">
+                    <div class="badge">2 Profiles</div>
+                </div>
+            </a>
+        
+            <a href="studie.html" class="module-card">
+                <h2>Studie</h2>
+                <div class="stats">
+                    <div class="badge">5 Profiles</div>
+                </div>
+            </a>
+        
+        </div>
+
+        <div class="footer">
+            <p>Generated from MII Kerndatensatz 2025.0.x</p>
+        </div>
+    </div>
+</body>
+</html>

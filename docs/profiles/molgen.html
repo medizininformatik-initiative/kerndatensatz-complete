@@ -1,0 +1,2855 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Molgen - MII Profile Differential</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .header .breadcrumb {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        .header .breadcrumb a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .header .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .profile-selector {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .profile-selector select {
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .profile-header {
+            background: #ecf0f1;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #bdc3c7;
+        }
+
+        .profile-header:hover {
+            background: #dfe4e8;
+        }
+
+        .profile-header.expanded {
+            background: #3498db;
+            color: white;
+        }
+
+        .profile-header .title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .profile-header .indicator {
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .profile-header.expanded .indicator {
+            transform: rotate(90deg);
+        }
+
+        .profile-body {
+            display: none;
+            padding: 1.5rem;
+        }
+
+        .profile-body.expanded {
+            display: block;
+        }
+
+        .profile-info {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .profile-info p {
+            margin: 0.3rem 0;
+        }
+
+        .profile-info .label {
+            font-weight: 600;
+            color: #7f8c8d;
+            display: inline-block;
+            width: 120px;
+        }
+
+        .two-panel {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 1.5rem;
+            min-height: 400px;
+        }
+
+        .elements-panel {
+            border-right: 1px solid #ddd;
+            padding-right: 1rem;
+        }
+
+        .elements-list {
+            list-style: none;
+        }
+
+        .element-item {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            background: #f8f9fa;
+            border-left: 3px solid #95a5a6;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .element-item:hover {
+            background: #e9ecef;
+            transform: translateX(4px);
+        }
+
+        .element-item.active {
+            background: #3498db;
+            color: white;
+            border-left-color: #2980b9;
+        }
+
+        .element-item .path {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .element-item .badges {
+            margin-top: 0.3rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.75rem;
+            border-radius: 3px;
+            margin-right: 0.3rem;
+            font-weight: 600;
+        }
+
+        .badge-ms {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .badge-ext {
+            background: #9b59b6;
+            color: white;
+        }
+
+        .badge-card {
+            background: #f39c12;
+            color: white;
+        }
+
+        .badge-slice {
+            background: #16a085;
+            color: white;
+        }
+
+        .details-panel {
+            padding-left: 1rem;
+        }
+
+        .details-empty {
+            color: #95a5a6;
+            font-style: italic;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .detail-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-section h3 {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #3498db;
+        }
+
+        .detail-row {
+            padding: 0.5rem 0;
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 1rem;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #7f8c8d;
+        }
+
+        .detail-value {
+            color: #2c3e50;
+        }
+
+        .detail-value code {
+            background: #ecf0f1;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .type-list, .constraint-list {
+            list-style: none;
+        }
+
+        .type-item, .constraint-item {
+            background: #f8f9fa;
+            padding: 0.5rem;
+            margin: 0.3rem 0;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .binding-info {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 0.75rem;
+            border-radius: 4px;
+        }
+
+        .no-profiles {
+            text-align: center;
+            padding: 3rem;
+            color: #95a5a6;
+        }
+
+        @media (max-width: 1024px) {
+            .two-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .elements-panel {
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>MII Profile Differential: Molgen</h1>
+        <div class="breadcrumb">
+            <a href="index.html">← All Modules</a> / molgen
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="profile-selector">
+            <select id="profileSelect" onchange="selectProfile(this.value)">
+                <option value="">Select a profile...</option>
+                <option value="mii-pr-molgen-anforderung-gentischer-test">MII PR MolGen Anforderung genetischer Test (ServiceRequest)</option>
+<option value="mii-pr-molgen-diagnostische-implikation">MII PR MolGen Diagnostische Implikation (Observation)</option>
+<option value="mii-pr-molgen-empfohlene-folgemassnahme">MII PR MolGen Empfohlene Folgemaßnahme (Task)</option>
+<option value="mii-pr-molgen-ergebnis-zusammenfassung">MII PR MolGen Ergebnis Zusammenfassung (Observation)</option>
+<option value="mii-pr-molgen-familienanamnese">MII PR MolGen Familienanamnese (FamilyMemberHistory)</option>
+<option value="mii-pr-molgen-genotyp">MII PR MolGen Genotyp (Observation)</option>
+<option value="mii-pr-molgen-medikationsempfehlung">MII PR MolGen Medikationsempfehlung (Task)</option>
+<option value="mii-pr-molgen-mikrosatelliteninstabilitaet">MII PR MolGen Mikrosatelliteninstabilität (Observation)</option>
+<option value="mii-pr-molgen-molekulargenetischer-befundbericht">MII PR MolGen Molekulargenetischer Befundbericht (DiagnosticReport)</option>
+<option value="mii-pr-molgen-mutationslast">MII PR MolGen Mutationslast (Observation)</option>
+<option value="mii-pr-molgen-polygener-risiko-score">MII PR MolGen Polygener Risiko Score (RiskAssessment)</option>
+<option value="mii-pr-molgen-therapeutische-implikation">MII PR MolGen Therapeutische Implikation (Observation)</option>
+<option value="mii-pr-molgen-untersuchte-region">MII PR MolGen Untersuchte Region (Observation)</option>
+<option value="mii-pr-molgen-variante">MII PR MolGen Variante (Observation)</option>
+            </select>
+        </div>
+
+        <div id="profilesContainer">
+            
+        <div class="profile-card" id="profile-mii-pr-molgen-anforderung-gentischer-test" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-molgen-anforderung-gentischer-test')">
+                <div class="title">MII PR MolGen Anforderung genetischer Test</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_MolGen_AnforderungGenetischerTest</p>
+                    <p><span class="label">Type:</span> ServiceRequest</p>
+                    <p><span class="label">Base Definition:</span> ServiceRequest</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.0</p>
+                    <p><span class="label">Elements:</span> 12 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-anforderung-gentischer-test"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-molgen-anforderung-gentischer-test', 0)">
+                    <div class="path">basedOn</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-anforderung-gentischer-test"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-molgen-anforderung-gentischer-test', 1)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-anforderung-gentischer-test"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-molgen-anforderung-gentischer-test', 2)">
+                    <div class="path">code.text</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-anforderung-gentischer-test"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-molgen-anforderung-gentischer-test', 3)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-anforderung-gentischer-test"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-molgen-anforderung-gentischer-test', 4)">
+                    <div class="path">encounter</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-anforderung-gentischer-test"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-molgen-anforderung-gentischer-test', 5)">
+                    <div class="path">authoredOn</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-anforderung-gentischer-test"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-molgen-anforderung-gentischer-test', 6)">
+                    <div class="path">requester</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-anforderung-gentischer-test"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-molgen-anforderung-gentischer-test', 7)">
+                    <div class="path">reasonCode</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-anforderung-gentischer-test"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-molgen-anforderung-gentischer-test', 8)">
+                    <div class="path">reasonReference</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-anforderung-gentischer-test"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-molgen-anforderung-gentischer-test', 9)">
+                    <div class="path">supportingInfo</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-anforderung-gentischer-test"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-molgen-anforderung-gentischer-test', 10)">
+                    <div class="path">supportingInfo</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-anforderung-gentischer-test"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-molgen-anforderung-gentischer-test', 11)">
+                    <div class="path">note</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-molgen-anforderung-gentischer-test">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-molgen-diagnostische-implikation" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-molgen-diagnostische-implikation')">
+                <div class="title">MII PR MolGen Diagnostische Implikation</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_MolGen_DiagnostischeImplikation</p>
+                    <p><span class="label">Type:</span> Observation</p>
+                    <p><span class="label">Base Definition:</span> diagnostic-implication</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.0</p>
+                    <p><span class="label">Elements:</span> 14 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-diagnostische-implikation"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-molgen-diagnostische-implikation', 0)">
+                    <div class="path">extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-diagnostische-implikation"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-molgen-diagnostische-implikation', 1)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-diagnostische-implikation"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-molgen-diagnostische-implikation', 2)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-diagnostische-implikation"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-molgen-diagnostische-implikation', 3)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-diagnostische-implikation"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-molgen-diagnostische-implikation', 4)">
+                    <div class="path">encounter</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-diagnostische-implikation"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-molgen-diagnostische-implikation', 5)">
+                    <div class="path">derivedFrom</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-diagnostische-implikation"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-molgen-diagnostische-implikation', 6)">
+                    <div class="path">derivedFrom</div>
+                    <div class="badges"><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-diagnostische-implikation"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-molgen-diagnostische-implikation', 7)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-diagnostische-implikation"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-molgen-diagnostische-implikation', 8)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-diagnostische-implikation"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-molgen-diagnostische-implikation', 9)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-diagnostische-implikation"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-molgen-diagnostische-implikation', 10)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-diagnostische-implikation"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-molgen-diagnostische-implikation', 11)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-diagnostische-implikation"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-molgen-diagnostische-implikation', 12)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-diagnostische-implikation"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-molgen-diagnostische-implikation', 13)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-molgen-diagnostische-implikation">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-molgen-empfohlene-folgemassnahme" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-molgen-empfohlene-folgemassnahme')">
+                <div class="title">MII PR MolGen Empfohlene Folgemaßnahme</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_MolGen_EmpfohleneFolgemassnahme</p>
+                    <p><span class="label">Type:</span> Task</p>
+                    <p><span class="label">Base Definition:</span> followup-recommendation</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.0</p>
+                    <p><span class="label">Elements:</span> 7 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-empfohlene-folgemassnahme"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-molgen-empfohlene-folgemassnahme', 0)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-empfohlene-folgemassnahme"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-molgen-empfohlene-folgemassnahme', 1)">
+                    <div class="path">intent</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-empfohlene-folgemassnahme"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-molgen-empfohlene-folgemassnahme', 2)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-empfohlene-folgemassnahme"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-molgen-empfohlene-folgemassnahme', 3)">
+                    <div class="path">for</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-empfohlene-folgemassnahme"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-molgen-empfohlene-folgemassnahme', 4)">
+                    <div class="path">encounter</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-empfohlene-folgemassnahme"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-molgen-empfohlene-folgemassnahme', 5)">
+                    <div class="path">reasonCode</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-empfohlene-folgemassnahme"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-molgen-empfohlene-folgemassnahme', 6)">
+                    <div class="path">reasonReference</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-molgen-empfohlene-folgemassnahme">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-molgen-ergebnis-zusammenfassung" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-molgen-ergebnis-zusammenfassung')">
+                <div class="title">MII PR MolGen Ergebnis Zusammenfassung</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_MolGen_ErgebnisZusammenfassung</p>
+                    <p><span class="label">Type:</span> Observation</p>
+                    <p><span class="label">Base Definition:</span> overall-interpretation</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.0</p>
+                    <p><span class="label">Elements:</span> 7 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-ergebnis-zusammenfassung"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-molgen-ergebnis-zusammenfassung', 0)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-ergebnis-zusammenfassung"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-molgen-ergebnis-zusammenfassung', 1)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-ergebnis-zusammenfassung"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-molgen-ergebnis-zusammenfassung', 2)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-ergebnis-zusammenfassung"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-molgen-ergebnis-zusammenfassung', 3)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-ergebnis-zusammenfassung"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-molgen-ergebnis-zusammenfassung', 4)">
+                    <div class="path">encounter</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-ergebnis-zusammenfassung"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-molgen-ergebnis-zusammenfassung', 5)">
+                    <div class="path">value[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-ergebnis-zusammenfassung"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-molgen-ergebnis-zusammenfassung', 6)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-molgen-ergebnis-zusammenfassung">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-molgen-familienanamnese" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-molgen-familienanamnese')">
+                <div class="title">MII PR MolGen Familienanamnese</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_MolGen_Familienanamnese</p>
+                    <p><span class="label">Type:</span> FamilyMemberHistory</p>
+                    <p><span class="label">Base Definition:</span> FamilyMemberHistory</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.0</p>
+                    <p><span class="label">Elements:</span> 43 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 0)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 1)">
+                    <div class="path">patient</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 2)">
+                    <div class="path">date</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 3)">
+                    <div class="path">relationship</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 4)">
+                    <div class="path">relationship.coding</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 5)">
+                    <div class="path">relationship.coding</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 6)">
+                    <div class="path">relationship.coding.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 7)">
+                    <div class="path">relationship.coding.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 8)">
+                    <div class="path">relationship.coding.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 9)">
+                    <div class="path">relationship.coding</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 10)">
+                    <div class="path">sex</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 11)">
+                    <div class="path">reasonCode</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 12)">
+                    <div class="path">reasonCode.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 13)">
+                    <div class="path">reasonCode.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 14)">
+                    <div class="path">reasonCode.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="15"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 15)">
+                    <div class="path">reasonCode.coding.version</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="16"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 16)">
+                    <div class="path">reasonCode.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="17"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 17)">
+                    <div class="path">reasonCode.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="18"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 18)">
+                    <div class="path">reasonCode.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="19"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 19)">
+                    <div class="path">reasonCode.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="20"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 20)">
+                    <div class="path">reasonCode.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="21"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 21)">
+                    <div class="path">reasonCode.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="22"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 22)">
+                    <div class="path">reasonCode.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="23"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 23)">
+                    <div class="path">reasonCode.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="24"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 24)">
+                    <div class="path">reasonCode.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="25"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 25)">
+                    <div class="path">reasonCode.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="26"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 26)">
+                    <div class="path">reasonReference</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="27"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 27)">
+                    <div class="path">condition</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="28"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 28)">
+                    <div class="path">condition.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="29"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 29)">
+                    <div class="path">condition.code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="30"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 30)">
+                    <div class="path">condition.code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="31"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 31)">
+                    <div class="path">condition.code.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="32"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 32)">
+                    <div class="path">condition.code.coding.version</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="33"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 33)">
+                    <div class="path">condition.code.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="34"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 34)">
+                    <div class="path">condition.code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="35"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 35)">
+                    <div class="path">condition.code.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="36"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 36)">
+                    <div class="path">condition.code.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="37"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 37)">
+                    <div class="path">condition.code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="38"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 38)">
+                    <div class="path">condition.code.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="39"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 39)">
+                    <div class="path">condition.code.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="40"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 40)">
+                    <div class="path">condition.code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="41"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 41)">
+                    <div class="path">condition.code.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-familienanamnese"
+                    data-element="42"
+                    onclick="selectElement('mii-pr-molgen-familienanamnese', 42)">
+                    <div class="path">condition.code.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-molgen-familienanamnese">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-molgen-genotyp" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-molgen-genotyp')">
+                <div class="title">MII PR MolGen Genotyp</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_MolGen_Genotyp</p>
+                    <p><span class="label">Type:</span> Observation</p>
+                    <p><span class="label">Base Definition:</span> genotype</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.0</p>
+                    <p><span class="label">Elements:</span> 12 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-genotyp"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-molgen-genotyp', 0)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-genotyp"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-molgen-genotyp', 1)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-genotyp"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-molgen-genotyp', 2)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-genotyp"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-molgen-genotyp', 3)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-genotyp"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-molgen-genotyp', 4)">
+                    <div class="path">encounter</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-genotyp"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-molgen-genotyp', 5)">
+                    <div class="path">value[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-genotyp"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-molgen-genotyp', 6)">
+                    <div class="path">derivedFrom</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-genotyp"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-molgen-genotyp', 7)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-genotyp"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-molgen-genotyp', 8)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-genotyp"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-molgen-genotyp', 9)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-genotyp"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-molgen-genotyp', 10)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-genotyp"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-molgen-genotyp', 11)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-molgen-genotyp">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-molgen-medikationsempfehlung" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-molgen-medikationsempfehlung')">
+                <div class="title">MII PR MolGen Medikationsempfehlung</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_MolGen_Medikationsempfehlung</p>
+                    <p><span class="label">Type:</span> Task</p>
+                    <p><span class="label">Base Definition:</span> medication-recommendation</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.0</p>
+                    <p><span class="label">Elements:</span> 7 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-medikationsempfehlung"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-molgen-medikationsempfehlung', 0)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-medikationsempfehlung"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-molgen-medikationsempfehlung', 1)">
+                    <div class="path">intent</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-medikationsempfehlung"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-molgen-medikationsempfehlung', 2)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-medikationsempfehlung"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-molgen-medikationsempfehlung', 3)">
+                    <div class="path">for</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-medikationsempfehlung"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-molgen-medikationsempfehlung', 4)">
+                    <div class="path">encounter</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-medikationsempfehlung"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-molgen-medikationsempfehlung', 5)">
+                    <div class="path">reasonCode</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-medikationsempfehlung"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-molgen-medikationsempfehlung', 6)">
+                    <div class="path">reasonReference</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-molgen-medikationsempfehlung">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-molgen-mikrosatelliteninstabilitaet" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-molgen-mikrosatelliteninstabilitaet')">
+                <div class="title">MII PR MolGen Mikrosatelliteninstabilität</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_MolGen_Mikrosatelliteninstabilitaet</p>
+                    <p><span class="label">Type:</span> Observation</p>
+                    <p><span class="label">Base Definition:</span> msi</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.0</p>
+                    <p><span class="label">Elements:</span> 8 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-mikrosatelliteninstabilitaet"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-molgen-mikrosatelliteninstabilitaet', 0)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-mikrosatelliteninstabilitaet"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-molgen-mikrosatelliteninstabilitaet', 1)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-mikrosatelliteninstabilitaet"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-molgen-mikrosatelliteninstabilitaet', 2)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-mikrosatelliteninstabilitaet"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-molgen-mikrosatelliteninstabilitaet', 3)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-mikrosatelliteninstabilitaet"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-molgen-mikrosatelliteninstabilitaet', 4)">
+                    <div class="path">encounter</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-mikrosatelliteninstabilitaet"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-molgen-mikrosatelliteninstabilitaet', 5)">
+                    <div class="path">value[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-mikrosatelliteninstabilitaet"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-molgen-mikrosatelliteninstabilitaet', 6)">
+                    <div class="path">value[x]</div>
+                    <div class="badges"><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-mikrosatelliteninstabilitaet"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-molgen-mikrosatelliteninstabilitaet', 7)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-molgen-mikrosatelliteninstabilitaet">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-molgen-molekulargenetischer-befundbericht" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-molgen-molekulargenetischer-befundbericht')">
+                <div class="title">MII PR MolGen Molekulargenetischer Befundbericht</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_MolGen_MolekulargenetischerBefundbericht</p>
+                    <p><span class="label">Type:</span> DiagnosticReport</p>
+                    <p><span class="label">Base Definition:</span> genomics-report</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.0</p>
+                    <p><span class="label">Elements:</span> 27 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 0)">
+                    <div class="path">extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 1)">
+                    <div class="path">extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 2)">
+                    <div class="path">extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 3)">
+                    <div class="path">extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 4)">
+                    <div class="path">extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 5)">
+                    <div class="path">extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 6)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 7)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 8)">
+                    <div class="path">encounter</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 9)">
+                    <div class="path">issued</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 10)">
+                    <div class="path">performer</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 11)">
+                    <div class="path">resultsInterpreter</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 12)">
+                    <div class="path">specimen</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 13)">
+                    <div class="path">result</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 14)">
+                    <div class="path">result</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="15"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 15)">
+                    <div class="path">result</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="16"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 16)">
+                    <div class="path">result</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="17"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 17)">
+                    <div class="path">result</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="18"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 18)">
+                    <div class="path">result</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="19"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 19)">
+                    <div class="path">result</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="20"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 20)">
+                    <div class="path">result</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="21"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 21)">
+                    <div class="path">result</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="22"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 22)">
+                    <div class="path">result</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="23"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 23)">
+                    <div class="path">result</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="24"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 24)">
+                    <div class="path">media</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="25"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 25)">
+                    <div class="path">conclusion</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-molekulargenetischer-befundbericht"
+                    data-element="26"
+                    onclick="selectElement('mii-pr-molgen-molekulargenetischer-befundbericht', 26)">
+                    <div class="path">conclusionCode</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-molgen-molekulargenetischer-befundbericht">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-molgen-mutationslast" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-molgen-mutationslast')">
+                <div class="title">MII PR MolGen Mutationslast</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_MolGen_Mutationslast</p>
+                    <p><span class="label">Type:</span> Observation</p>
+                    <p><span class="label">Base Definition:</span> tmb</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.0</p>
+                    <p><span class="label">Elements:</span> 10 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-mutationslast"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-molgen-mutationslast', 0)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-mutationslast"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-molgen-mutationslast', 1)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-mutationslast"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-molgen-mutationslast', 2)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-mutationslast"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-molgen-mutationslast', 3)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-mutationslast"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-molgen-mutationslast', 4)">
+                    <div class="path">encounter</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-mutationslast"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-molgen-mutationslast', 5)">
+                    <div class="path">value[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-mutationslast"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-molgen-mutationslast', 6)">
+                    <div class="path">value[x]</div>
+                    <div class="badges"><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-mutationslast"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-molgen-mutationslast', 7)">
+                    <div class="path">specimen</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-mutationslast"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-molgen-mutationslast', 8)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-mutationslast"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-molgen-mutationslast', 9)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-molgen-mutationslast">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-molgen-polygener-risiko-score" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-molgen-polygener-risiko-score')">
+                <div class="title">MII PR MolGen Polygener Risiko Score</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_MolGen_PolygenerRisikoScore</p>
+                    <p><span class="label">Type:</span> RiskAssessment</p>
+                    <p><span class="label">Base Definition:</span> RiskAssessment</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.0</p>
+                    <p><span class="label">Elements:</span> 15 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-polygener-risiko-score"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-molgen-polygener-risiko-score', 0)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-polygener-risiko-score"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-molgen-polygener-risiko-score', 1)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-polygener-risiko-score"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-molgen-polygener-risiko-score', 2)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-polygener-risiko-score"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-molgen-polygener-risiko-score', 3)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-polygener-risiko-score"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-molgen-polygener-risiko-score', 4)">
+                    <div class="path">encounter</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-polygener-risiko-score"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-molgen-polygener-risiko-score', 5)">
+                    <div class="path">occurrence[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-polygener-risiko-score"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-molgen-polygener-risiko-score', 6)">
+                    <div class="path">condition</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-polygener-risiko-score"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-molgen-polygener-risiko-score', 7)">
+                    <div class="path">basis</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-polygener-risiko-score"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-molgen-polygener-risiko-score', 8)">
+                    <div class="path">prediction</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-polygener-risiko-score"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-molgen-polygener-risiko-score', 9)">
+                    <div class="path">prediction.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-polygener-risiko-score"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-molgen-polygener-risiko-score', 10)">
+                    <div class="path">prediction.outcome</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-polygener-risiko-score"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-molgen-polygener-risiko-score', 11)">
+                    <div class="path">prediction.probability[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-polygener-risiko-score"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-molgen-polygener-risiko-score', 12)">
+                    <div class="path">prediction.qualitativeRisk</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-polygener-risiko-score"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-molgen-polygener-risiko-score', 13)">
+                    <div class="path">prediction.relativeRisk</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-polygener-risiko-score"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-molgen-polygener-risiko-score', 14)">
+                    <div class="path">prediction.when[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-molgen-polygener-risiko-score">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-molgen-therapeutische-implikation" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-molgen-therapeutische-implikation')">
+                <div class="title">MII PR MolGen Therapeutische Implikation</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_MolGen_TherapeutischeImplikation</p>
+                    <p><span class="label">Type:</span> Observation</p>
+                    <p><span class="label">Base Definition:</span> therapeutic-implication</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.0</p>
+                    <p><span class="label">Elements:</span> 15 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-therapeutische-implikation"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-molgen-therapeutische-implikation', 0)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-therapeutische-implikation"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-molgen-therapeutische-implikation', 1)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-therapeutische-implikation"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-molgen-therapeutische-implikation', 2)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-therapeutische-implikation"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-molgen-therapeutische-implikation', 3)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-therapeutische-implikation"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-molgen-therapeutische-implikation', 4)">
+                    <div class="path">encounter</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-therapeutische-implikation"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-molgen-therapeutische-implikation', 5)">
+                    <div class="path">derivedFrom</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-therapeutische-implikation"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-molgen-therapeutische-implikation', 6)">
+                    <div class="path">derivedFrom</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-therapeutische-implikation"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-molgen-therapeutische-implikation', 7)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-therapeutische-implikation"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-molgen-therapeutische-implikation', 8)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-therapeutische-implikation"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-molgen-therapeutische-implikation', 9)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-therapeutische-implikation"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-molgen-therapeutische-implikation', 10)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-therapeutische-implikation"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-molgen-therapeutische-implikation', 11)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-therapeutische-implikation"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-molgen-therapeutische-implikation', 12)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-therapeutische-implikation"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-molgen-therapeutische-implikation', 13)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-therapeutische-implikation"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-molgen-therapeutische-implikation', 14)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-molgen-therapeutische-implikation">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-molgen-untersuchte-region" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-molgen-untersuchte-region')">
+                <div class="title">MII PR MolGen Untersuchte Region</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_MolGen_UntersuchteRegion</p>
+                    <p><span class="label">Type:</span> Observation</p>
+                    <p><span class="label">Base Definition:</span> region-studied</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.0</p>
+                    <p><span class="label">Elements:</span> 16 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-untersuchte-region"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-molgen-untersuchte-region', 0)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-untersuchte-region"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-molgen-untersuchte-region', 1)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-untersuchte-region"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-molgen-untersuchte-region', 2)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-untersuchte-region"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-molgen-untersuchte-region', 3)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-untersuchte-region"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-molgen-untersuchte-region', 4)">
+                    <div class="path">encounter</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-untersuchte-region"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-molgen-untersuchte-region', 5)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-untersuchte-region"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-molgen-untersuchte-region', 6)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-untersuchte-region"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-molgen-untersuchte-region', 7)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-untersuchte-region"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-molgen-untersuchte-region', 8)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-untersuchte-region"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-molgen-untersuchte-region', 9)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-untersuchte-region"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-molgen-untersuchte-region', 10)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-untersuchte-region"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-molgen-untersuchte-region', 11)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-untersuchte-region"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-molgen-untersuchte-region', 12)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-untersuchte-region"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-molgen-untersuchte-region', 13)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-untersuchte-region"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-molgen-untersuchte-region', 14)">
+                    <div class="path">component.code</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-untersuchte-region"
+                    data-element="15"
+                    onclick="selectElement('mii-pr-molgen-untersuchte-region', 15)">
+                    <div class="path">component.value[x]</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-molgen-untersuchte-region">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-molgen-variante" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-molgen-variante')">
+                <div class="title">MII PR MolGen Variante</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_MolGen_Variante</p>
+                    <p><span class="label">Type:</span> Observation</p>
+                    <p><span class="label">Base Definition:</span> variant</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.0</p>
+                    <p><span class="label">Elements:</span> 43 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-molgen-variante', 0)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-molgen-variante', 1)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-molgen-variante', 2)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-molgen-variante', 3)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-molgen-variante', 4)">
+                    <div class="path">value[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-molgen-variante', 5)">
+                    <div class="path">method</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-molgen-variante', 6)">
+                    <div class="path">specimen</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-molgen-variante', 7)">
+                    <div class="path">device</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-molgen-variante', 8)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-molgen-variante', 9)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-molgen-variante', 10)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-molgen-variante', 11)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-molgen-variante', 12)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-molgen-variante', 13)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-molgen-variante', 14)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="15"
+                    onclick="selectElement('mii-pr-molgen-variante', 15)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="16"
+                    onclick="selectElement('mii-pr-molgen-variante', 16)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="17"
+                    onclick="selectElement('mii-pr-molgen-variante', 17)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="18"
+                    onclick="selectElement('mii-pr-molgen-variante', 18)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="19"
+                    onclick="selectElement('mii-pr-molgen-variante', 19)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="20"
+                    onclick="selectElement('mii-pr-molgen-variante', 20)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="21"
+                    onclick="selectElement('mii-pr-molgen-variante', 21)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="22"
+                    onclick="selectElement('mii-pr-molgen-variante', 22)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="23"
+                    onclick="selectElement('mii-pr-molgen-variante', 23)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="24"
+                    onclick="selectElement('mii-pr-molgen-variante', 24)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="25"
+                    onclick="selectElement('mii-pr-molgen-variante', 25)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="26"
+                    onclick="selectElement('mii-pr-molgen-variante', 26)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="27"
+                    onclick="selectElement('mii-pr-molgen-variante', 27)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="28"
+                    onclick="selectElement('mii-pr-molgen-variante', 28)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="29"
+                    onclick="selectElement('mii-pr-molgen-variante', 29)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="30"
+                    onclick="selectElement('mii-pr-molgen-variante', 30)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="31"
+                    onclick="selectElement('mii-pr-molgen-variante', 31)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="32"
+                    onclick="selectElement('mii-pr-molgen-variante', 32)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="33"
+                    onclick="selectElement('mii-pr-molgen-variante', 33)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="34"
+                    onclick="selectElement('mii-pr-molgen-variante', 34)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="35"
+                    onclick="selectElement('mii-pr-molgen-variante', 35)">
+                    <div class="path">component.code</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="36"
+                    onclick="selectElement('mii-pr-molgen-variante', 36)">
+                    <div class="path">component.value[x]</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="37"
+                    onclick="selectElement('mii-pr-molgen-variante', 37)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="38"
+                    onclick="selectElement('mii-pr-molgen-variante', 38)">
+                    <div class="path">component.code</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="39"
+                    onclick="selectElement('mii-pr-molgen-variante', 39)">
+                    <div class="path">component.value[x]</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="40"
+                    onclick="selectElement('mii-pr-molgen-variante', 40)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="41"
+                    onclick="selectElement('mii-pr-molgen-variante', 41)">
+                    <div class="path">component.code</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-molgen-variante"
+                    data-element="42"
+                    onclick="selectElement('mii-pr-molgen-variante', 42)">
+                    <div class="path">component.value[x]</div>
+                    <div class="badges"></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-molgen-variante">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        </div>
+    </div>
+
+    <script>
+        // Embedded profile data
+        const profileData = {"mii-pr-molgen-anforderung-gentischer-test": {"id": "mii-pr-molgen-anforderung-gentischer-test", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/anforderung-genetischer-test", "name": "MII_PR_MolGen_AnforderungGenetischerTest", "title": "MII PR MolGen Anforderung genetischer Test", "status": "active", "description": "Der Laborauftrag oder die Anfrage, die die Durchführung des genetischen Tests auslöst.", "baseDefinition": "http://hl7.org/fhir/StructureDefinition/ServiceRequest", "type": "ServiceRequest", "module": "molgen", "version": "2025.0.0", "differential": [{"path": "ServiceRequest.basedOn", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.code.text", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false}, {"path": "ServiceRequest.subject", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Patient", "http://hl7.org/fhir/StructureDefinition/Group"]}]}, {"path": "ServiceRequest.encounter", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.authoredOn", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.requester", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.reasonCode", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.reasonReference", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.supportingInfo", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "profile", "path": "resolve()"}], "rules": "open", "description": ""}}, {"path": "ServiceRequest.supportingInfo", "short": "", "definition": "", "min": 0, "max": "*", "mustSupport": false, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/familienanamnese"]}], "sliceName": "familienanamnese"}, {"path": "ServiceRequest.note", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}], "elementCount": 12, "parentName": "ServiceRequest"}, "mii-pr-molgen-diagnostische-implikation": {"id": "mii-pr-molgen-diagnostische-implikation", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/diagnostische-implikation", "name": "MII_PR_MolGen_DiagnostischeImplikation", "title": "MII PR MolGen Diagnostische Implikation", "status": "active", "description": "Dieses Profil beschreibt den Zusammenhang zwischen einem oder mehreren Genotyp/Haplotyp/Varianten und Beweisen für oder gegen eine bestimmte Krankheit.", "baseDefinition": "http://hl7.org/fhir/uv/genomics-reporting/StructureDefinition/diagnostic-implication", "type": "Observation", "module": "molgen", "version": "2025.0.0", "differential": [{"path": "Observation.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "isExtension": true, "sliceName": "related-artifact"}, {"path": "Observation.category", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.subject", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Patient", "http://hl7.org/fhir/StructureDefinition/Group"]}]}, {"path": "Observation.encounter", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.derivedFrom", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.derivedFrom", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/variante"]}], "sliceName": "variant"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "conclusion-string"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "evidence-level"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "predicted-phenotype"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "mode-of-inheritance"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "clinical-significance"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "functional-effect"}], "elementCount": 14, "parentName": "diagnostic-implication"}, "mii-pr-molgen-empfohlene-folgemassnahme": {"id": "mii-pr-molgen-empfohlene-folgemassnahme", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/empfohlene-folgemassnahme", "name": "MII_PR_MolGen_EmpfohleneFolgemassnahme", "title": "MII PR MolGen Empfohlene Folgemaßnahme", "status": "active", "description": "Das Profil dieser Task Ressource beschreibt die empfohlenen Folgemaßnahmen.", "baseDefinition": "http://hl7.org/fhir/uv/genomics-reporting/StructureDefinition/followup-recommendation", "type": "Task", "module": "molgen", "version": "2025.0.0", "differential": [{"path": "Task.status", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Task.intent", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Task.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Task.for", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Patient"]}]}, {"path": "Task.encounter", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Task.reasonCode", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Task.reasonReference", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/therapeutische-implikation"]}]}], "elementCount": 7, "parentName": "followup-recommendation"}, "mii-pr-molgen-ergebnis-zusammenfassung": {"id": "mii-pr-molgen-ergebnis-zusammenfassung", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/ergebnis-zusammenfassung", "name": "MII_PR_MolGen_ErgebnisZusammenfassung", "title": "MII PR MolGen Ergebnis Zusammenfassung", "status": "active", "description": "Mit diesem Profil kann das Labor das zusammenfassende Ergebnis des Tests deklarieren (z. B. Positiv, Negativ, Unbekannt).", "baseDefinition": "http://hl7.org/fhir/uv/genomics-reporting/StructureDefinition/overall-interpretation", "type": "Observation", "module": "molgen", "version": "2025.0.0", "differential": [{"path": "Observation.status", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.category", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.subject", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Patient", "http://hl7.org/fhir/StructureDefinition/Group"]}]}, {"path": "Observation.encounter", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.value[x]", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "conclusion-string"}], "elementCount": 7, "parentName": "overall-interpretation"}, "mii-pr-molgen-familienanamnese": {"id": "mii-pr-molgen-familienanamnese", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/familienanamnese", "name": "MII_PR_MolGen_Familienanamnese", "title": "MII PR MolGen Familienanamnese", "status": "active", "description": "Dieses Profil beschreibt die Familienanamnese eines Patienten im Kontext von genetischen Analysen.", "baseDefinition": "http://hl7.org/fhir/StructureDefinition/FamilyMemberHistory", "type": "FamilyMemberHistory", "module": "molgen", "version": "2025.0.0", "differential": [{"path": "FamilyMemberHistory.status", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "FamilyMemberHistory.patient", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "FamilyMemberHistory.date", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "FamilyMemberHistory.relationship", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "FamilyMemberHistory.relationship.coding", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": false, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "FamilyMemberHistory.relationship.coding", "short": "", "definition": "", "min": 1, "max": "1", "mustSupport": false, "isModifier": false, "binding": {"strength": "required", "valueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/ValueSet/mii-vs-molgen-family-member-snomed", "description": ""}, "sliceName": "snomed"}, {"path": "FamilyMemberHistory.relationship.coding.extension", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Extension", "profile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/mii-ex-molgen-verwandtschaftsgrad"]}], "isExtension": true, "sliceName": "Verwandtschaftsgrad"}, {"path": "FamilyMemberHistory.relationship.coding.extension", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Extension", "profile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/mii-ex-molgen-verwandtschaftsverhaeltnis"]}], "isExtension": true, "sliceName": "Verwandtschaftsverhaeltnis"}, {"path": "FamilyMemberHistory.relationship.coding.extension", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Extension", "profile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/mii-ex-molgen-familiare-linie"]}], "isExtension": true, "sliceName": "FamiliareLinie"}, {"path": "FamilyMemberHistory.relationship.coding", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": false, "isModifier": false, "binding": {"strength": "required", "valueSet": "http://terminology.hl7.org/ValueSet/v3-PersonalRelationshipRoleType", "description": ""}, "sliceName": "v3-RoleCode"}, {"path": "FamilyMemberHistory.sex", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "FamilyMemberHistory.reasonCode", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "FamilyMemberHistory.reasonCode.coding", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "FamilyMemberHistory.reasonCode.coding", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Coding", "profile": ["http://fhir.de/StructureDefinition/CodingICD10GM"]}], "binding": {"strength": "required", "valueSet": "http://fhir.de/ValueSet/bfarm/icd-10-gm", "description": ""}, "sliceName": "icd10-gm"}, {"path": "FamilyMemberHistory.reasonCode.coding.system", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "FamilyMemberHistory.reasonCode.coding.version", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "FamilyMemberHistory.reasonCode.coding.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "FamilyMemberHistory.reasonCode.coding", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Coding", "profile": ["http://fhir.de/StructureDefinition/CodingAlphaID"]}], "binding": {"strength": "required", "valueSet": "http://fhir.de/ValueSet/bfarm/alpha-id", "description": ""}, "sliceName": "alpha-id"}, {"path": "FamilyMemberHistory.reasonCode.coding.system", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "FamilyMemberHistory.reasonCode.coding.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "FamilyMemberHistory.reasonCode.coding", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "binding": {"strength": "required", "valueSet": "https://www.medizininformatik-initiative.de/fhir/core/modul-diagnose/ValueSet/diagnoses-sct", "description": ""}, "sliceName": "sct"}, {"path": "FamilyMemberHistory.reasonCode.coding.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "FamilyMemberHistory.reasonCode.coding.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "FamilyMemberHistory.reasonCode.coding", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "orphanet"}, {"path": "FamilyMemberHistory.reasonCode.coding.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "FamilyMemberHistory.reasonCode.coding.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "FamilyMemberHistory.reasonReference", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "FamilyMemberHistory.condition", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "FamilyMemberHistory.condition.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "FamilyMemberHistory.condition.code.coding", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "FamilyMemberHistory.condition.code.coding", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Coding", "profile": ["http://fhir.de/StructureDefinition/CodingICD10GM"]}], "binding": {"strength": "required", "valueSet": "http://fhir.de/ValueSet/bfarm/icd-10-gm", "description": ""}, "sliceName": "icd10-gm"}, {"path": "FamilyMemberHistory.condition.code.coding.system", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "FamilyMemberHistory.condition.code.coding.version", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "FamilyMemberHistory.condition.code.coding.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "FamilyMemberHistory.condition.code.coding", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Coding", "profile": ["http://fhir.de/StructureDefinition/CodingAlphaID"]}], "binding": {"strength": "required", "valueSet": "http://fhir.de/ValueSet/bfarm/alpha-id", "description": ""}, "sliceName": "alpha-id"}, {"path": "FamilyMemberHistory.condition.code.coding.system", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "FamilyMemberHistory.condition.code.coding.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "FamilyMemberHistory.condition.code.coding", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "binding": {"strength": "required", "valueSet": "https://www.medizininformatik-initiative.de/fhir/core/modul-diagnose/ValueSet/diagnoses-sct", "description": ""}, "sliceName": "sct"}, {"path": "FamilyMemberHistory.condition.code.coding.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "FamilyMemberHistory.condition.code.coding.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "FamilyMemberHistory.condition.code.coding", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "orphanet"}, {"path": "FamilyMemberHistory.condition.code.coding.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "FamilyMemberHistory.condition.code.coding.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}], "elementCount": 43, "parentName": "FamilyMemberHistory"}, "mii-pr-molgen-genotyp": {"id": "mii-pr-molgen-genotyp", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/genotyp", "name": "MII_PR_MolGen_Genotyp", "title": "MII PR MolGen Genotyp", "status": "active", "description": "Dieses Profil beschreibt die Feststellung eines bestimmten Genotyps auf der Grundlage einer oder mehrerer Varianten oder Haplotypen.", "baseDefinition": "http://hl7.org/fhir/uv/genomics-reporting/StructureDefinition/genotype", "type": "Observation", "module": "molgen", "version": "2025.0.0", "differential": [{"path": "Observation.status", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.category", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.subject", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Patient", "http://hl7.org/fhir/StructureDefinition/Group"]}]}, {"path": "Observation.encounter", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.value[x]", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.derivedFrom", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "conclusion-string"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "gene-studied"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "cytogenetic-location"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "reference-sequence-assembly"}], "elementCount": 12, "parentName": "genotype"}, "mii-pr-molgen-medikationsempfehlung": {"id": "mii-pr-molgen-medikationsempfehlung", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/medikationsempfehlung", "name": "MII_PR_MolGen_Medikationsempfehlung", "title": "MII PR MolGen Medikationsempfehlung", "status": "active", "description": "Das Profil dieser Task Ressource dient dazu, auf der Grundlage der genetischen Ergebnisse medikamanetöse Maßnahmen vorzuschlagen.", "baseDefinition": "http://hl7.org/fhir/uv/genomics-reporting/StructureDefinition/medication-recommendation", "type": "Task", "module": "molgen", "version": "2025.0.0", "differential": [{"path": "Task.status", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Task.intent", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Task.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Task.for", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Patient"]}]}, {"path": "Task.encounter", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Task.reasonCode", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Task.reasonReference", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/therapeutische-implikation"]}]}], "elementCount": 7, "parentName": "medication-recommendation"}, "mii-pr-molgen-mikrosatelliteninstabilitaet": {"id": "mii-pr-molgen-mikrosatelliteninstabilitaet", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/mikrosatelliteninstabilitaet", "name": "MII_PR_MolGen_Mikrosatelliteninstabilitaet", "title": "MII PR MolGen Mikrosatelliteninstabilität", "status": "active", "description": "Mikrosatelliteninstabilität (MSI) ist ein Zustand genetischer Hypermutabilität (Neigung zu Mutationen), der aus einer gestörten DNA-Mismatch-Reparatur (MMR) resultiert.", "baseDefinition": "http://hl7.org/fhir/uv/genomics-reporting/StructureDefinition/msi", "type": "Observation", "module": "molgen", "version": "2025.0.0", "differential": [{"path": "Observation.status", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.category", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.subject", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Patient", "http://hl7.org/fhir/StructureDefinition/Group"]}]}, {"path": "Observation.encounter", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.value[x]", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.value[x]", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "type": [{"code": "CodeableConcept"}], "sliceName": "valueCodeableConcept"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "conclusion-string"}], "elementCount": 8, "parentName": "msi"}, "mii-pr-molgen-molekulargenetischer-befundbericht": {"id": "mii-pr-molgen-molekulargenetischer-befundbericht", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/molekulargenetischer-befundbericht", "name": "MII_PR_MolGen_MolekulargenetischerBefundbericht", "title": "MII PR MolGen Molekulargenetischer Befundbericht", "status": "active", "description": "Der DiagnosticReport ist zentraler Bestandteil aller genetischen Befundberichte und enthält Metadaten über den gesamten Bericht sowie alle relevanten Informationen, die im Rahmen der molekulargenetischen Analyse gefunden wurden.", "baseDefinition": "http://hl7.org/fhir/uv/genomics-reporting/StructureDefinition/genomics-report", "type": "DiagnosticReport", "module": "molgen", "version": "2025.0.0", "differential": [{"path": "DiagnosticReport.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "isExtension": true, "sliceName": "genomics-artifact"}, {"path": "DiagnosticReport.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "isExtension": true, "sliceName": "genomics-file"}, {"path": "DiagnosticReport.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Extension", "profile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/empfohlene-massnahme"]}], "isExtension": true, "sliceName": "recommended-action"}, {"path": "DiagnosticReport.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "isExtension": true, "sliceName": "genomics-risk-assessment"}, {"path": "DiagnosticReport.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "isExtension": true, "sliceName": "coded-note"}, {"path": "DiagnosticReport.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "isExtension": true, "sliceName": "supporting-info"}, {"path": "DiagnosticReport.status", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.subject", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Patient", "http://hl7.org/fhir/StructureDefinition/Group"]}]}, {"path": "DiagnosticReport.encounter", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.issued", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.performer", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.resultsInterpreter", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.specimen", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.result", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.result", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/ergebnis-zusammenfassung"]}], "sliceName": "overall"}, {"path": "DiagnosticReport.result", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/diagnostische-implikation"]}], "sliceName": "diagnostic-implication"}, {"path": "DiagnosticReport.result", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/therapeutische-implikation"]}], "sliceName": "therapeutic-implication"}, {"path": "DiagnosticReport.result", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/variante"]}], "sliceName": "variant"}, {"path": "DiagnosticReport.result", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "sequence-phase-relation"}, {"path": "DiagnosticReport.result", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/untersuchte-region"]}], "sliceName": "region-studied"}, {"path": "DiagnosticReport.result", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/genotyp"]}], "sliceName": "genotype"}, {"path": "DiagnosticReport.result", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "haplotype"}, {"path": "DiagnosticReport.result", "short": "", "definition": "", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/mutationslast"]}], "sliceName": "tumor-mutation-burden"}, {"path": "DiagnosticReport.result", "short": "", "definition": "", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/mikrosatelliteninstabilitaet"]}], "sliceName": "microsatellite-instability"}, {"path": "DiagnosticReport.media", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.conclusion", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.conclusionCode", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}], "elementCount": 27, "parentName": "genomics-report"}, "mii-pr-molgen-mutationslast": {"id": "mii-pr-molgen-mutationslast", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/mutationslast", "name": "MII_PR_MolGen_Mutationslast", "title": "MII PR MolGen Mutationslast", "status": "active", "description": "Dieses Profil beschreibt die Gesamtzahl der in der DNA von Krebszellen gefundenen Mutationen.", "baseDefinition": "http://hl7.org/fhir/uv/genomics-reporting/StructureDefinition/tmb", "type": "Observation", "module": "molgen", "version": "2025.0.0", "differential": [{"path": "Observation.status", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.category", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.subject", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Patient", "http://hl7.org/fhir/StructureDefinition/Group"]}]}, {"path": "Observation.encounter", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.value[x]", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.value[x]", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "type": [{"code": "Quantity"}], "sliceName": "valueQuantity"}, {"path": "Observation.specimen", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "conclusion-string"}], "elementCount": 10, "parentName": "tmb"}, "mii-pr-molgen-polygener-risiko-score": {"id": "mii-pr-molgen-polygener-risiko-score", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/polygener-risiko-score", "name": "MII_PR_MolGen_PolygenerRisikoScore", "title": "MII PR MolGen Polygener Risiko Score", "status": "active", "description": "Profil für Polygenen Risiko Score", "baseDefinition": "http://hl7.org/fhir/StructureDefinition/RiskAssessment", "type": "RiskAssessment", "module": "molgen", "version": "2025.0.0", "differential": [{"path": "RiskAssessment.identifier", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "RiskAssessment.status", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "RiskAssessment.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "RiskAssessment.subject", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "RiskAssessment.encounter", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "RiskAssessment.occurrence[x]", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "RiskAssessment.condition", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "RiskAssessment.basis", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "RiskAssessment.prediction", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "RiskAssessment.prediction.extension", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Extension", "profile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/risk-assessment-einflussfaktor"]}], "isExtension": true, "sliceName": "whenCodeableConcept"}, {"path": "RiskAssessment.prediction.outcome", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "RiskAssessment.prediction.probability[x]", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "RiskAssessment.prediction.qualitativeRisk", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "RiskAssessment.prediction.relativeRisk", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "RiskAssessment.prediction.when[x]", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}], "elementCount": 15, "parentName": "RiskAssessment"}, "mii-pr-molgen-therapeutische-implikation": {"id": "mii-pr-molgen-therapeutische-implikation", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/therapeutische-implikation", "name": "MII_PR_MolGen_TherapeutischeImplikation", "title": "MII PR MolGen Therapeutische Implikation", "status": "active", "description": "Dieses Profil beschreibt den möglichen Einfluss genetischer Merkmale auf eine medikamentöse oder nicht-medikamentöse Therapie.", "baseDefinition": "http://hl7.org/fhir/uv/genomics-reporting/StructureDefinition/therapeutic-implication", "type": "Observation", "module": "molgen", "version": "2025.0.0", "differential": [{"path": "Observation.status", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.category", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.subject", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Patient", "http://hl7.org/fhir/StructureDefinition/Group"]}]}, {"path": "Observation.encounter", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.derivedFrom", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.derivedFrom", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/variante"]}], "sliceName": "variant"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "conclusion-string"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "evidence-level"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "prognosis"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "phenotypic-treatment-context"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "medication-assessed"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "therapy-assessed"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "predicted-therapeutic-implication"}], "elementCount": 15, "parentName": "therapeutic-implication"}, "mii-pr-molgen-untersuchte-region": {"id": "mii-pr-molgen-untersuchte-region", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/untersuchte-region", "name": "MII_PR_MolGen_UntersuchteRegion", "title": "MII PR MolGen Untersuchte Region", "status": "active", "description": "Dieses Profil beschreibt die Region oder die Regionen, die im Rahmen dieses Befundberichts untersucht wurden.", "baseDefinition": "http://hl7.org/fhir/uv/genomics-reporting/StructureDefinition/region-studied", "type": "Observation", "module": "molgen", "version": "2025.0.0", "differential": [{"path": "Observation.status", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.category", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.subject", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Patient", "http://hl7.org/fhir/StructureDefinition/Group"]}]}, {"path": "Observation.encounter", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "conclusion-string"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "gene-studied"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "gene-mutations"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "region-description"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "region-coverage"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "ranges-examined"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "genomic-ref-seq"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "uncallable-regions"}, {"path": "Observation.component", "short": "Reference Transcript", "definition": "NCBI's RefSeq ('NM_...'), Ensembl ('ENST...'), and LRG ('LRG...' plus 't1' to indicate transcript)", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "transcript-ref-seq"}, {"path": "Observation.component.code", "short": "51958-7", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false}, {"path": "Observation.component.value[x]", "short": "Versioned transcript reference sequence identifier", "definition": "", "min": 1, "max": null, "mustSupport": false, "isModifier": false, "type": [{"code": "CodeableConcept"}], "binding": {"strength": "example", "valueSet": "", "description": "Multiple bindings acceptable (NCBI or LRG)"}}], "elementCount": 16, "parentName": "region-studied"}, "mii-pr-molgen-variante": {"id": "mii-pr-molgen-variante", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/StructureDefinition/variante", "name": "MII_PR_MolGen_Variante", "title": "MII PR MolGen Variante", "status": "active", "description": "Dieses Profil ermöglicht eine vollständige Beschreibung der gefundenen Variante unter Verwendung von Eigenschaften aus einer Vielzahl von Testmethoden.", "baseDefinition": "http://hl7.org/fhir/uv/genomics-reporting/StructureDefinition/variant", "type": "Observation", "module": "molgen", "version": "2025.0.0", "differential": [{"path": "Observation.status", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.category", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.subject", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Patient", "http://hl7.org/fhir/StructureDefinition/Group"]}]}, {"path": "Observation.value[x]", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.method", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.specimen", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.device", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "conclusion-string"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "gene-studied"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "cytogenetic-location"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "reference-sequence-assembly"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "coding-hgvs"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "genomic-hgvs"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "genomic-ref-seq"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "transcript-ref-seq"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "exact-start-end"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "inner-start-end"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "outer-start-end"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "ref-allele"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "alt-allele"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "coding-change-type"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "genomic-source-class"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "sample-allelic-frequency"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "allelic-read-depth"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "allelic-state"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "variant-inheritance"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "variation-code"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "chromosome-identifier"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "protein-hgvs"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "amino-acid-change-type"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "molecular-consequence"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "copy-number"}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "sliceName": "variant-confidence-status"}, {"path": "Observation.component", "short": "DNA region name [Identifier]", "definition": "A human readable name for the region of interest. Typically Exon #, Intron # or other.", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "sliceName": "dna-region"}, {"path": "Observation.component.code", "short": "47999-8", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false}, {"path": "Observation.component.value[x]", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": false, "isModifier": false, "type": [{"code": "string"}]}, {"path": "Observation.component", "short": "Gene fusion transcript details in Blood or Tissue by Molecular genetics method Narrative", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "gene-fusion"}, {"path": "Observation.component.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false}, {"path": "Observation.component.value[x]", "short": "HGNC recommends for products of gene translocations or fusions (format GENESYMBOL1::GENESYMBOL2) and readthrough transcripts (format GENESYMBOL1-GENESYMBOL2)", "definition": "", "min": 1, "max": null, "mustSupport": false, "isModifier": false, "type": [{"code": "CodeableConcept"}], "binding": {"strength": "extensible", "valueSet": "http://hl7.org/fhir/uv/genomics-reporting/ValueSet/hgnc-vs", "description": ""}}, {"path": "Observation.component", "short": "Laboratory device Detection limit", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "detection-limit"}, {"path": "Observation.component.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false}, {"path": "Observation.component.value[x]", "short": "Usually reported as percentage.", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "type": [{"code": "Quantity"}]}], "elementCount": 43, "parentName": "variant"}};
+
+        let currentProfileId = null;
+        let currentElementIndex = null;
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-select first profile if available
+            const profiles = Object.keys(profileData);
+            if (profiles.length > 0) {
+                selectProfile(profiles[0]);
+            }
+        });
+
+        function selectProfile(profileId) {
+            if (!profileId) return;
+
+            currentProfileId = profileId;
+
+            // Hide all profiles
+            document.querySelectorAll('.profile-card').forEach(card => {
+                card.style.display = 'none';
+            });
+
+            // Show selected profile
+            const profileCard = document.getElementById('profile-' + profileId);
+            if (profileCard) {
+                profileCard.style.display = 'block';
+                // Auto-expand if collapsed
+                const body = profileCard.querySelector('.profile-body');
+                const header = profileCard.querySelector('.profile-header');
+                if (body && !body.classList.contains('expanded')) {
+                    toggleProfile(profileId);
+                }
+            }
+
+            // Update selector
+            document.getElementById('profileSelect').value = profileId;
+
+            // Clear element selection
+            clearElementSelection();
+        }
+
+        function toggleProfile(profileId) {
+            const card = document.getElementById('profile-' + profileId);
+            if (!card) return;
+
+            const header = card.querySelector('.profile-header');
+            const body = card.querySelector('.profile-body');
+
+            if (body.classList.contains('expanded')) {
+                body.classList.remove('expanded');
+                header.classList.remove('expanded');
+            } else {
+                body.classList.add('expanded');
+                header.classList.add('expanded');
+            }
+        }
+
+        function selectElement(profileId, elementIndex) {
+            currentElementIndex = elementIndex;
+
+            // Update active state
+            document.querySelectorAll('.element-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            const elementItem = document.querySelector(`[data-profile="${profileId}"][data-element="${elementIndex}"]`);
+            if (elementItem) {
+                elementItem.classList.add('active');
+            }
+
+            // Show element details
+            const detailsPanel = document.getElementById('details-' + profileId);
+            if (detailsPanel) {
+                const profile = profileData[profileId];
+                const element = profile.differential[elementIndex];
+                detailsPanel.innerHTML = renderElementDetails(element);
+            }
+        }
+
+        function clearElementSelection() {
+            document.querySelectorAll('.element-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            if (currentProfileId) {
+                const detailsPanel = document.getElementById('details-' + currentProfileId);
+                if (detailsPanel) {
+                    detailsPanel.innerHTML = '<div class="details-empty">Click an element on the left to see details</div>';
+                }
+            }
+        }
+
+        function renderElementDetails(element) {
+            let html = '<div class="detail-section">';
+            html += '<h3>' + escapeHtml(element.path) + '</h3>';
+
+            // Cardinality
+            if (element.min !== undefined || element.max !== undefined) {
+                html += '<div class="detail-row">';
+                html += '<div class="detail-label">Cardinality</div>';
+                html += '<div class="detail-value"><code>' + (element.min ?? '') + '..' + (element.max ?? '') + '</code>';
+                if (element.mustSupport) {
+                    html += ' <span class="badge badge-ms">Must Support</span>';
+                }
+                html += '</div></div>';
+            }
+
+            // Short description
+            if (element.short) {
+                html += '<div class="detail-row">';
+                html += '<div class="detail-label">Short</div>';
+                html += '<div class="detail-value">' + escapeHtml(element.short) + '</div>';
+                html += '</div>';
+            }
+
+            // Definition
+            if (element.definition) {
+                html += '<div class="detail-row">';
+                html += '<div class="detail-label">Definition</div>';
+                html += '<div class="detail-value">' + escapeHtml(element.definition) + '</div>';
+                html += '</div>';
+            }
+
+            html += '</div>';
+
+            // Types
+            if (element.type && element.type.length > 0) {
+                html += '<div class="detail-section">';
+                html += '<h3>Type Constraints</h3>';
+                html += '<ul class="type-list">';
+                element.type.forEach(type => {
+                    html += '<li class="type-item">';
+                    html += '<strong>Code:</strong> ' + escapeHtml(type.code);
+                    if (type.profile) {
+                        html += '<br><strong>Profile:</strong> ' + renderUrls(type.profile);
+                    }
+                    if (type.targetProfile) {
+                        html += '<br><strong>Target Profile:</strong> ' + renderUrls(type.targetProfile);
+                    }
+                    html += '</li>';
+                });
+                html += '</ul></div>';
+            }
+
+            // Binding
+            if (element.binding) {
+                html += '<div class="detail-section">';
+                html += '<h3>Terminology Binding</h3>';
+                html += '<div class="binding-info">';
+                html += '<div><strong>Strength:</strong> ' + escapeHtml(element.binding.strength) + '</div>';
+                html += '<div><strong>ValueSet:</strong> <code>' + escapeHtml(element.binding.valueSet) + '</code></div>';
+                if (element.binding.description) {
+                    html += '<div><strong>Description:</strong> ' + escapeHtml(element.binding.description) + '</div>';
+                }
+                html += '</div></div>';
+            }
+
+            // Constraints
+            if (element.constraints && element.constraints.length > 0) {
+                html += '<div class="detail-section">';
+                html += '<h3>Constraints</h3>';
+                html += '<ul class="constraint-list">';
+                element.constraints.forEach(c => {
+                    html += '<li class="constraint-item">';
+                    html += '<strong>' + escapeHtml(c.key) + '</strong> (' + escapeHtml(c.severity) + ')<br>';
+                    html += escapeHtml(c.human);
+                    if (c.expression) {
+                        html += '<br><code>' + escapeHtml(c.expression) + '</code>';
+                    }
+                    html += '</li>';
+                });
+                html += '</ul></div>';
+            }
+
+            // Slicing
+            if (element.slicing) {
+                html += '<div class="detail-section">';
+                html += '<h3>Slicing Information</h3>';
+                html += '<div class="detail-row">';
+                html += '<div class="detail-label">Rules</div>';
+                html += '<div class="detail-value"><code>' + escapeHtml(element.slicing.rules) + '</code></div>';
+                html += '</div>';
+                if (element.slicing.description) {
+                    html += '<div class="detail-row">';
+                    html += '<div class="detail-label">Description</div>';
+                    html += '<div class="detail-value">' + escapeHtml(element.slicing.description) + '</div>';
+                    html += '</div>';
+                }
+                html += '</div>';
+            }
+
+            return html;
+        }
+
+        function renderUrls(urls) {
+            if (Array.isArray(urls)) {
+                return urls.map(url => '<code>' + escapeHtml(url) + '</code>').join(', ');
+            }
+            return '<code>' + escapeHtml(urls) + '</code>';
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>

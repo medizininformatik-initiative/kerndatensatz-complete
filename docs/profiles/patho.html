@@ -1,0 +1,2685 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patho - MII Profile Differential</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .header .breadcrumb {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        .header .breadcrumb a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .header .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .profile-selector {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .profile-selector select {
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .profile-header {
+            background: #ecf0f1;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #bdc3c7;
+        }
+
+        .profile-header:hover {
+            background: #dfe4e8;
+        }
+
+        .profile-header.expanded {
+            background: #3498db;
+            color: white;
+        }
+
+        .profile-header .title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .profile-header .indicator {
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .profile-header.expanded .indicator {
+            transform: rotate(90deg);
+        }
+
+        .profile-body {
+            display: none;
+            padding: 1.5rem;
+        }
+
+        .profile-body.expanded {
+            display: block;
+        }
+
+        .profile-info {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .profile-info p {
+            margin: 0.3rem 0;
+        }
+
+        .profile-info .label {
+            font-weight: 600;
+            color: #7f8c8d;
+            display: inline-block;
+            width: 120px;
+        }
+
+        .two-panel {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 1.5rem;
+            min-height: 400px;
+        }
+
+        .elements-panel {
+            border-right: 1px solid #ddd;
+            padding-right: 1rem;
+        }
+
+        .elements-list {
+            list-style: none;
+        }
+
+        .element-item {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            background: #f8f9fa;
+            border-left: 3px solid #95a5a6;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .element-item:hover {
+            background: #e9ecef;
+            transform: translateX(4px);
+        }
+
+        .element-item.active {
+            background: #3498db;
+            color: white;
+            border-left-color: #2980b9;
+        }
+
+        .element-item .path {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .element-item .badges {
+            margin-top: 0.3rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.75rem;
+            border-radius: 3px;
+            margin-right: 0.3rem;
+            font-weight: 600;
+        }
+
+        .badge-ms {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .badge-ext {
+            background: #9b59b6;
+            color: white;
+        }
+
+        .badge-card {
+            background: #f39c12;
+            color: white;
+        }
+
+        .badge-slice {
+            background: #16a085;
+            color: white;
+        }
+
+        .details-panel {
+            padding-left: 1rem;
+        }
+
+        .details-empty {
+            color: #95a5a6;
+            font-style: italic;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .detail-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-section h3 {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #3498db;
+        }
+
+        .detail-row {
+            padding: 0.5rem 0;
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 1rem;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #7f8c8d;
+        }
+
+        .detail-value {
+            color: #2c3e50;
+        }
+
+        .detail-value code {
+            background: #ecf0f1;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .type-list, .constraint-list {
+            list-style: none;
+        }
+
+        .type-item, .constraint-item {
+            background: #f8f9fa;
+            padding: 0.5rem;
+            margin: 0.3rem 0;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .binding-info {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 0.75rem;
+            border-radius: 4px;
+        }
+
+        .no-profiles {
+            text-align: center;
+            padding: 3rem;
+            color: #95a5a6;
+        }
+
+        @media (max-width: 1024px) {
+            .two-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .elements-panel {
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>MII Profile Differential: Patho</h1>
+        <div class="breadcrumb">
+            <a href="index.html">← All Modules</a> / patho
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="profile-selector">
+            <select id="profileSelect" onchange="selectProfile(this.value)">
+                <option value="">Select a profile...</option>
+                <option value="mii-pr-patho-active-problems-list">MII PR Patho Active Problems List (List)</option>
+<option value="mii-pr-patho-additional-specified-grouper">MII PR Patho Additional Specified Grouper (Observation)</option>
+<option value="mii-pr-patho-attached-image">MII PR Patho Attached Image (Media)</option>
+<option value="mii-pr-patho-base-observation">MII PR Patho Base Observation (Observation)</option>
+<option value="mii-pr-patho-composition">MII PR Patho Composition (Composition)</option>
+<option value="mii-pr-patho-diagnostic-conclusion-grouper">MII PR Patho Diagnostic Conclusion Grouper (Observation)</option>
+<option value="mii-pr-patho-finding">MII PR Patho Finding (Observation)</option>
+<option value="mii-pr-patho-history-of-present-illness">MII PR Patho History Of Present Illness (List)</option>
+<option value="mii-pr-patho-intraoperative-grouper">MII PR Patho Intraoperative Grouper (Observation)</option>
+<option value="mii-pr-patho-macroscopic-grouper">MII PR Patho Macroscopic Grouper (Observation)</option>
+<option value="mii-pr-patho-microscopic-grouper">MII PR Patho Microscopic Grouper (Observation)</option>
+<option value="mii-pr-patho-problem-list-item">MII PR Patho Problem List Item (Condition)</option>
+<option value="mii-pr-patho-report">MII PR Patho Report (DiagnosticReport)</option>
+<option value="mii-pr-patho-section-grouper">MII PR Patho Section Grouper (Observation)</option>
+<option value="mii-pr-patho-service-request">MII PR Patho Service Request (ServiceRequest)</option>
+<option value="mii-pr-patho-specimen">MII PR Patho Specimen (Specimen)</option>
+            </select>
+        </div>
+
+        <div id="profilesContainer">
+            
+        <div class="profile-card" id="profile-mii-pr-patho-active-problems-list" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-patho-active-problems-list')">
+                <div class="title">MII PR Patho Active Problems List</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Patho_Active_Problems_List</p>
+                    <p><span class="label">Type:</span> List</p>
+                    <p><span class="label">Base Definition:</span> List</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.2</p>
+                    <p><span class="label">Elements:</span> 10 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-active-problems-list"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-patho-active-problems-list', 0)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-active-problems-list"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-patho-active-problems-list', 1)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-active-problems-list"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-patho-active-problems-list', 2)">
+                    <div class="path">mode</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-active-problems-list"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-patho-active-problems-list', 3)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-active-problems-list"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-patho-active-problems-list', 4)">
+                    <div class="path">code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-active-problems-list"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-patho-active-problems-list', 5)">
+                    <div class="path">code.coding.system</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-active-problems-list"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-patho-active-problems-list', 6)">
+                    <div class="path">code.coding.code</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-active-problems-list"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-patho-active-problems-list', 7)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-active-problems-list"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-patho-active-problems-list', 8)">
+                    <div class="path">entry</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-active-problems-list"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-patho-active-problems-list', 9)">
+                    <div class="path">entry.item</div>
+                    <div class="badges"></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-patho-active-problems-list">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-patho-additional-specified-grouper" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-patho-additional-specified-grouper')">
+                <div class="title">MII PR Patho Additional Specified Grouper</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Patho_Additional_Specified_Grouper</p>
+                    <p><span class="label">Type:</span> Observation</p>
+                    <p><span class="label">Base Definition:</span> patho-section-grouper</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.2</p>
+                    <p><span class="label">Elements:</span> 1 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-additional-specified-grouper"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-patho-additional-specified-grouper', 0)">
+                    <div class="path">code</div>
+                    <div class="badges"></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-patho-additional-specified-grouper">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-patho-attached-image" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-patho-attached-image')">
+                <div class="title">MII PR Patho Attached Image</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Patho_Attached_Image</p>
+                    <p><span class="label">Type:</span> Media</p>
+                    <p><span class="label">Base Definition:</span> Media</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.2</p>
+                    <p><span class="label">Elements:</span> 12 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-attached-image"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-patho-attached-image', 0)">
+                    <div class="path">id</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-attached-image"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-patho-attached-image', 1)">
+                    <div class="path">meta.lastUpdated</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-attached-image"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-patho-attached-image', 2)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-attached-image"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-patho-attached-image', 3)">
+                    <div class="path">text</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-attached-image"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-patho-attached-image', 4)">
+                    <div class="path">partOf</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-attached-image"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-patho-attached-image', 5)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-attached-image"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-patho-attached-image', 6)">
+                    <div class="path">type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-attached-image"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-patho-attached-image', 7)">
+                    <div class="path">type.coding</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-attached-image"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-patho-attached-image', 8)">
+                    <div class="path">type.coding</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-attached-image"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-patho-attached-image', 9)">
+                    <div class="path">modality</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-attached-image"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-patho-attached-image', 10)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-attached-image"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-patho-attached-image', 11)">
+                    <div class="path">content</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-patho-attached-image">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-patho-base-observation" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-patho-base-observation')">
+                <div class="title">MII PR Patho Base Observation</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Patho_Base_Observation</p>
+                    <p><span class="label">Type:</span> Observation</p>
+                    <p><span class="label">Base Definition:</span> Observation</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.2</p>
+                    <p><span class="label">Elements:</span> 30 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-patho-base-observation', 0)">
+                    <div class="path">id</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-patho-base-observation', 1)">
+                    <div class="path">meta.lastUpdated</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-patho-base-observation', 2)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-patho-base-observation', 3)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-patho-base-observation', 4)">
+                    <div class="path">basedOn</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-patho-base-observation', 5)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-patho-base-observation', 6)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-patho-base-observation', 7)">
+                    <div class="path">category.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-patho-base-observation', 8)">
+                    <div class="path">category.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-patho-base-observation', 9)">
+                    <div class="path">category.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-patho-base-observation', 10)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-patho-base-observation', 11)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-patho-base-observation', 12)">
+                    <div class="path">code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-patho-base-observation', 13)">
+                    <div class="path">code.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-patho-base-observation', 14)">
+                    <div class="path">code.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="15"
+                    onclick="selectElement('mii-pr-patho-base-observation', 15)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="16"
+                    onclick="selectElement('mii-pr-patho-base-observation', 16)">
+                    <div class="path">effective[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="17"
+                    onclick="selectElement('mii-pr-patho-base-observation', 17)">
+                    <div class="path">bodySite</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="18"
+                    onclick="selectElement('mii-pr-patho-base-observation', 18)">
+                    <div class="path">bodySite.coding</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="19"
+                    onclick="selectElement('mii-pr-patho-base-observation', 19)">
+                    <div class="path">bodySite.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="20"
+                    onclick="selectElement('mii-pr-patho-base-observation', 20)">
+                    <div class="path">bodySite.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="21"
+                    onclick="selectElement('mii-pr-patho-base-observation', 21)">
+                    <div class="path">method</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="22"
+                    onclick="selectElement('mii-pr-patho-base-observation', 22)">
+                    <div class="path">specimen</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="23"
+                    onclick="selectElement('mii-pr-patho-base-observation', 23)">
+                    <div class="path">hasMember</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="24"
+                    onclick="selectElement('mii-pr-patho-base-observation', 24)">
+                    <div class="path">derivedFrom</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="25"
+                    onclick="selectElement('mii-pr-patho-base-observation', 25)">
+                    <div class="path">derivedFrom</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="26"
+                    onclick="selectElement('mii-pr-patho-base-observation', 26)">
+                    <div class="path">derivedFrom</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="27"
+                    onclick="selectElement('mii-pr-patho-base-observation', 27)">
+                    <div class="path">component.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="28"
+                    onclick="selectElement('mii-pr-patho-base-observation', 28)">
+                    <div class="path">component.value[x]</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-base-observation"
+                    data-element="29"
+                    onclick="selectElement('mii-pr-patho-base-observation', 29)">
+                    <div class="path">component.dataAbsentReason</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-patho-base-observation">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-patho-composition" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-patho-composition')">
+                <div class="title">MII PR Patho Composition</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Patho_Composition</p>
+                    <p><span class="label">Type:</span> Composition</p>
+                    <p><span class="label">Base Definition:</span> ISiKBerichtSubSysteme</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.2</p>
+                    <p><span class="label">Elements:</span> 31 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-patho-composition', 0)">
+                    <div class="path">meta.lastUpdated</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-patho-composition', 1)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-patho-composition', 2)">
+                    <div class="path">extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-patho-composition', 3)">
+                    <div class="path">identifier.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-patho-composition', 4)">
+                    <div class="path">identifier.type.coding</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-patho-composition', 5)">
+                    <div class="path">type.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-patho-composition', 6)">
+                    <div class="path">type.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-patho-composition', 7)">
+                    <div class="path">type.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-patho-composition', 8)">
+                    <div class="path">category.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-patho-composition', 9)">
+                    <div class="path">encounter</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-patho-composition', 10)">
+                    <div class="path">author</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-patho-composition', 11)">
+                    <div class="path">attester</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-patho-composition', 12)">
+                    <div class="path">attester</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-patho-composition', 13)">
+                    <div class="path">attester.mode</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-patho-composition', 14)">
+                    <div class="path">attester.party</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="15"
+                    onclick="selectElement('mii-pr-patho-composition', 15)">
+                    <div class="path">attester</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="16"
+                    onclick="selectElement('mii-pr-patho-composition', 16)">
+                    <div class="path">attester.mode</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="17"
+                    onclick="selectElement('mii-pr-patho-composition', 17)">
+                    <div class="path">attester.party</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="18"
+                    onclick="selectElement('mii-pr-patho-composition', 18)">
+                    <div class="path">custodian</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="19"
+                    onclick="selectElement('mii-pr-patho-composition', 19)">
+                    <div class="path">relatesTo</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="20"
+                    onclick="selectElement('mii-pr-patho-composition', 20)">
+                    <div class="path">relatesTo.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="21"
+                    onclick="selectElement('mii-pr-patho-composition', 21)">
+                    <div class="path">relatesTo.target[x]</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="22"
+                    onclick="selectElement('mii-pr-patho-composition', 22)">
+                    <div class="path">relatesTo.target[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="23"
+                    onclick="selectElement('mii-pr-patho-composition', 23)">
+                    <div class="path">event</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="24"
+                    onclick="selectElement('mii-pr-patho-composition', 24)">
+                    <div class="path">section</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="25"
+                    onclick="selectElement('mii-pr-patho-composition', 25)">
+                    <div class="path">section.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="26"
+                    onclick="selectElement('mii-pr-patho-composition', 26)">
+                    <div class="path">section.code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="27"
+                    onclick="selectElement('mii-pr-patho-composition', 27)">
+                    <div class="path">section.entry</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="28"
+                    onclick="selectElement('mii-pr-patho-composition', 28)">
+                    <div class="path">section</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="29"
+                    onclick="selectElement('mii-pr-patho-composition', 29)">
+                    <div class="path">section.code.coding</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-composition"
+                    data-element="30"
+                    onclick="selectElement('mii-pr-patho-composition', 30)">
+                    <div class="path">section.entry</div>
+                    <div class="badges"></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-patho-composition">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-patho-diagnostic-conclusion-grouper" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-patho-diagnostic-conclusion-grouper')">
+                <div class="title">MII PR Patho Diagnostic Conclusion Grouper</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Patho_Diagnostic_Conclusion_Grouper</p>
+                    <p><span class="label">Type:</span> Observation</p>
+                    <p><span class="label">Base Definition:</span> patho-section-grouper</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.2</p>
+                    <p><span class="label">Elements:</span> 4 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-diagnostic-conclusion-grouper"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-patho-diagnostic-conclusion-grouper', 0)">
+                    <div class="path">code</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-diagnostic-conclusion-grouper"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-patho-diagnostic-conclusion-grouper', 1)">
+                    <div class="path">note</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-diagnostic-conclusion-grouper"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-patho-diagnostic-conclusion-grouper', 2)">
+                    <div class="path">derivedFrom</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-diagnostic-conclusion-grouper"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-patho-diagnostic-conclusion-grouper', 3)">
+                    <div class="path">derivedFrom</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-patho-diagnostic-conclusion-grouper">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-patho-finding" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-patho-finding')">
+                <div class="title">MII PR Patho Finding</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Patho_Finding</p>
+                    <p><span class="label">Type:</span> Observation</p>
+                    <p><span class="label">Base Definition:</span> patho-base-observation</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.2</p>
+                    <p><span class="label">Elements:</span> 3 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-finding"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-patho-finding', 0)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-finding"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-patho-finding', 1)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-finding"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-patho-finding', 2)">
+                    <div class="path">value[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-patho-finding">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-patho-history-of-present-illness" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-patho-history-of-present-illness')">
+                <div class="title">MII PR Patho History Of Present Illness</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Patho_History_Of_Present_Illness</p>
+                    <p><span class="label">Type:</span> List</p>
+                    <p><span class="label">Base Definition:</span> List</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.2</p>
+                    <p><span class="label">Elements:</span> 10 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-history-of-present-illness"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-patho-history-of-present-illness', 0)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-history-of-present-illness"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-patho-history-of-present-illness', 1)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-history-of-present-illness"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-patho-history-of-present-illness', 2)">
+                    <div class="path">mode</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-history-of-present-illness"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-patho-history-of-present-illness', 3)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-history-of-present-illness"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-patho-history-of-present-illness', 4)">
+                    <div class="path">code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-history-of-present-illness"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-patho-history-of-present-illness', 5)">
+                    <div class="path">code.coding.system</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-history-of-present-illness"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-patho-history-of-present-illness', 6)">
+                    <div class="path">code.coding.code</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-history-of-present-illness"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-patho-history-of-present-illness', 7)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-history-of-present-illness"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-patho-history-of-present-illness', 8)">
+                    <div class="path">entry</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-history-of-present-illness"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-patho-history-of-present-illness', 9)">
+                    <div class="path">entry.item</div>
+                    <div class="badges"></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-patho-history-of-present-illness">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-patho-intraoperative-grouper" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-patho-intraoperative-grouper')">
+                <div class="title">MII PR Patho Intraoperative Grouper</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Patho_Intraoperative_Grouper</p>
+                    <p><span class="label">Type:</span> Observation</p>
+                    <p><span class="label">Base Definition:</span> patho-section-grouper</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.2</p>
+                    <p><span class="label">Elements:</span> 1 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-intraoperative-grouper"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-patho-intraoperative-grouper', 0)">
+                    <div class="path">code</div>
+                    <div class="badges"></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-patho-intraoperative-grouper">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-patho-macroscopic-grouper" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-patho-macroscopic-grouper')">
+                <div class="title">MII PR Patho Macroscopic Grouper</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Patho_Macroscopic_Grouper</p>
+                    <p><span class="label">Type:</span> Observation</p>
+                    <p><span class="label">Base Definition:</span> patho-section-grouper</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.2</p>
+                    <p><span class="label">Elements:</span> 1 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-macroscopic-grouper"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-patho-macroscopic-grouper', 0)">
+                    <div class="path">code</div>
+                    <div class="badges"></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-patho-macroscopic-grouper">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-patho-microscopic-grouper" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-patho-microscopic-grouper')">
+                <div class="title">MII PR Patho Microscopic Grouper</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Patho_Microscopic_Grouper</p>
+                    <p><span class="label">Type:</span> Observation</p>
+                    <p><span class="label">Base Definition:</span> patho-section-grouper</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.2</p>
+                    <p><span class="label">Elements:</span> 1 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-microscopic-grouper"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-patho-microscopic-grouper', 0)">
+                    <div class="path">code</div>
+                    <div class="badges"></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-patho-microscopic-grouper">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-patho-problem-list-item" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-patho-problem-list-item')">
+                <div class="title">MII PR Patho Problem List Item</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Patho_Problem_List_Item</p>
+                    <p><span class="label">Type:</span> Condition</p>
+                    <p><span class="label">Base Definition:</span> Condition</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.2</p>
+                    <p><span class="label">Elements:</span> 10 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-problem-list-item"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-patho-problem-list-item', 0)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-problem-list-item"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-patho-problem-list-item', 1)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-problem-list-item"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-patho-problem-list-item', 2)">
+                    <div class="path">category.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-problem-list-item"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-patho-problem-list-item', 3)">
+                    <div class="path">category.coding.system</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-problem-list-item"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-patho-problem-list-item', 4)">
+                    <div class="path">category.coding.code</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-problem-list-item"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-patho-problem-list-item', 5)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-problem-list-item"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-patho-problem-list-item', 6)">
+                    <div class="path">code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-problem-list-item"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-patho-problem-list-item', 7)">
+                    <div class="path">code.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-problem-list-item"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-patho-problem-list-item', 8)">
+                    <div class="path">code.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-problem-list-item"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-patho-problem-list-item', 9)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-patho-problem-list-item">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-patho-report" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-patho-report')">
+                <div class="title">MII PR Patho Report</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Patho_Report</p>
+                    <p><span class="label">Type:</span> DiagnosticReport</p>
+                    <p><span class="label">Base Definition:</span> DiagnosticReport</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.2</p>
+                    <p><span class="label">Elements:</span> 40 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-patho-report', 0)">
+                    <div class="path">id</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-patho-report', 1)">
+                    <div class="path">meta.lastUpdated</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-patho-report', 2)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-patho-report', 3)">
+                    <div class="path">text</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-patho-report', 4)">
+                    <div class="path">extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-patho-report', 5)">
+                    <div class="path">extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-patho-report', 6)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-patho-report', 7)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-patho-report', 8)">
+                    <div class="path">identifier.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-patho-report', 9)">
+                    <div class="path">identifier.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-patho-report', 10)">
+                    <div class="path">identifier.value</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-patho-report', 11)">
+                    <div class="path">basedOn</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-patho-report', 12)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-patho-report', 13)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-patho-report', 14)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="15"
+                    onclick="selectElement('mii-pr-patho-report', 15)">
+                    <div class="path">code.coding</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="16"
+                    onclick="selectElement('mii-pr-patho-report', 16)">
+                    <div class="path">code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="17"
+                    onclick="selectElement('mii-pr-patho-report', 17)">
+                    <div class="path">code.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="18"
+                    onclick="selectElement('mii-pr-patho-report', 18)">
+                    <div class="path">code.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="19"
+                    onclick="selectElement('mii-pr-patho-report', 19)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="20"
+                    onclick="selectElement('mii-pr-patho-report', 20)">
+                    <div class="path">encounter</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="21"
+                    onclick="selectElement('mii-pr-patho-report', 21)">
+                    <div class="path">effective[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="22"
+                    onclick="selectElement('mii-pr-patho-report', 22)">
+                    <div class="path">performer</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="23"
+                    onclick="selectElement('mii-pr-patho-report', 23)">
+                    <div class="path">specimen</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="24"
+                    onclick="selectElement('mii-pr-patho-report', 24)">
+                    <div class="path">result</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="25"
+                    onclick="selectElement('mii-pr-patho-report', 25)">
+                    <div class="path">result</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="26"
+                    onclick="selectElement('mii-pr-patho-report', 26)">
+                    <div class="path">result.reference</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="27"
+                    onclick="selectElement('mii-pr-patho-report', 27)">
+                    <div class="path">result</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="28"
+                    onclick="selectElement('mii-pr-patho-report', 28)">
+                    <div class="path">result.reference</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="29"
+                    onclick="selectElement('mii-pr-patho-report', 29)">
+                    <div class="path">result</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="30"
+                    onclick="selectElement('mii-pr-patho-report', 30)">
+                    <div class="path">result.reference</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="31"
+                    onclick="selectElement('mii-pr-patho-report', 31)">
+                    <div class="path">result</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="32"
+                    onclick="selectElement('mii-pr-patho-report', 32)">
+                    <div class="path">result.reference</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="33"
+                    onclick="selectElement('mii-pr-patho-report', 33)">
+                    <div class="path">result</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="34"
+                    onclick="selectElement('mii-pr-patho-report', 34)">
+                    <div class="path">result.reference</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="35"
+                    onclick="selectElement('mii-pr-patho-report', 35)">
+                    <div class="path">imagingStudy</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="36"
+                    onclick="selectElement('mii-pr-patho-report', 36)">
+                    <div class="path">media</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="37"
+                    onclick="selectElement('mii-pr-patho-report', 37)">
+                    <div class="path">media.link</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="38"
+                    onclick="selectElement('mii-pr-patho-report', 38)">
+                    <div class="path">conclusionCode</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-report"
+                    data-element="39"
+                    onclick="selectElement('mii-pr-patho-report', 39)">
+                    <div class="path">presentedForm</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-patho-report">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-patho-section-grouper" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-patho-section-grouper')">
+                <div class="title">MII PR Patho Section Grouper</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Patho_Section_Grouper</p>
+                    <p><span class="label">Type:</span> Observation</p>
+                    <p><span class="label">Base Definition:</span> patho-base-observation</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.2</p>
+                    <p><span class="label">Elements:</span> 3 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-section-grouper"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-patho-section-grouper', 0)">
+                    <div class="path">text</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-section-grouper"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-patho-section-grouper', 1)">
+                    <div class="path">hasMember</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-section-grouper"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-patho-section-grouper', 2)">
+                    <div class="path">hasMember</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-patho-section-grouper">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-patho-service-request" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-patho-service-request')">
+                <div class="title">MII PR Patho Service Request</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Patho_Service_Request</p>
+                    <p><span class="label">Type:</span> ServiceRequest</p>
+                    <p><span class="label">Base Definition:</span> ServiceRequest</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.2</p>
+                    <p><span class="label">Elements:</span> 36 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-patho-service-request', 0)">
+                    <div class="path">meta.lastUpdated</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-patho-service-request', 1)">
+                    <div class="path">meta.source</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-patho-service-request', 2)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-patho-service-request', 3)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-patho-service-request', 4)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-patho-service-request', 5)">
+                    <div class="path">identifier.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-patho-service-request', 6)">
+                    <div class="path">identifier.type.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-patho-service-request', 7)">
+                    <div class="path">identifier.type.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-patho-service-request', 8)">
+                    <div class="path">identifier.type.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-patho-service-request', 9)">
+                    <div class="path">identifier.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-patho-service-request', 10)">
+                    <div class="path">identifier.value</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-patho-service-request', 11)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-patho-service-request', 12)">
+                    <div class="path">identifier.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-patho-service-request', 13)">
+                    <div class="path">identifier.type.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-patho-service-request', 14)">
+                    <div class="path">identifier.type.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="15"
+                    onclick="selectElement('mii-pr-patho-service-request', 15)">
+                    <div class="path">identifier.type.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="16"
+                    onclick="selectElement('mii-pr-patho-service-request', 16)">
+                    <div class="path">identifier.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="17"
+                    onclick="selectElement('mii-pr-patho-service-request', 17)">
+                    <div class="path">identifier.value</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="18"
+                    onclick="selectElement('mii-pr-patho-service-request', 18)">
+                    <div class="path">requisition</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="19"
+                    onclick="selectElement('mii-pr-patho-service-request', 19)">
+                    <div class="path">requisition.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="20"
+                    onclick="selectElement('mii-pr-patho-service-request', 20)">
+                    <div class="path">requisition.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="21"
+                    onclick="selectElement('mii-pr-patho-service-request', 21)">
+                    <div class="path">requisition.value</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="22"
+                    onclick="selectElement('mii-pr-patho-service-request', 22)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="23"
+                    onclick="selectElement('mii-pr-patho-service-request', 23)">
+                    <div class="path">intent</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="24"
+                    onclick="selectElement('mii-pr-patho-service-request', 24)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="25"
+                    onclick="selectElement('mii-pr-patho-service-request', 25)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="26"
+                    onclick="selectElement('mii-pr-patho-service-request', 26)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="27"
+                    onclick="selectElement('mii-pr-patho-service-request', 27)">
+                    <div class="path">encounter</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="28"
+                    onclick="selectElement('mii-pr-patho-service-request', 28)">
+                    <div class="path">requester</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="29"
+                    onclick="selectElement('mii-pr-patho-service-request', 29)">
+                    <div class="path">performer</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="30"
+                    onclick="selectElement('mii-pr-patho-service-request', 30)">
+                    <div class="path">reasonCode</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="31"
+                    onclick="selectElement('mii-pr-patho-service-request', 31)">
+                    <div class="path">supportingInfo</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="32"
+                    onclick="selectElement('mii-pr-patho-service-request', 32)">
+                    <div class="path">supportingInfo</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="33"
+                    onclick="selectElement('mii-pr-patho-service-request', 33)">
+                    <div class="path">supportingInfo</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="34"
+                    onclick="selectElement('mii-pr-patho-service-request', 34)">
+                    <div class="path">supportingInfo</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-service-request"
+                    data-element="35"
+                    onclick="selectElement('mii-pr-patho-service-request', 35)">
+                    <div class="path">specimen</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-patho-service-request">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-patho-specimen" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-patho-specimen')">
+                <div class="title">MII PR Patho Specimen</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Patho_Specimen</p>
+                    <p><span class="label">Type:</span> Specimen</p>
+                    <p><span class="label">Base Definition:</span> SpecimenCore</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.2</p>
+                    <p><span class="label">Elements:</span> 14 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-specimen"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-patho-specimen', 0)">
+                    <div class="path">id</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-specimen"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-patho-specimen', 1)">
+                    <div class="path">meta.lastUpdated</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-specimen"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-patho-specimen', 2)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-specimen"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-patho-specimen', 3)">
+                    <div class="path">text</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-specimen"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-patho-specimen', 4)">
+                    <div class="path">accessionIdentifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-specimen"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-patho-specimen', 5)">
+                    <div class="path">request</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-specimen"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-patho-specimen', 6)">
+                    <div class="path">collection.method</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-specimen"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-patho-specimen', 7)">
+                    <div class="path">collection.bodySite.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-specimen"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-patho-specimen', 8)">
+                    <div class="path">collection.bodySite.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-specimen"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-patho-specimen', 9)">
+                    <div class="path">processing</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-specimen"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-patho-specimen', 10)">
+                    <div class="path">processing.procedure</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-specimen"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-patho-specimen', 11)">
+                    <div class="path">processing</div>
+                    <div class="badges"><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-specimen"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-patho-specimen', 12)">
+                    <div class="path">processing.additive</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-patho-specimen"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-patho-specimen', 13)">
+                    <div class="path">container.type</div>
+                    <div class="badges"></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-patho-specimen">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        </div>
+    </div>
+
+    <script>
+        // Embedded profile data
+        const profileData = {"mii-pr-patho-active-problems-list": {"id": "mii-pr-patho-active-problems-list", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-active-problems-list", "name": "MII_PR_Patho_Active_Problems_List", "title": "MII PR Patho Active Problems List", "status": "active", "description": "List of conditions currently being monitored for the patient", "baseDefinition": "http://hl7.org/fhir/StructureDefinition/List", "type": "List", "module": "patho", "version": "2025.0.2", "differential": [{"path": "List.meta.profile", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "List.status", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "List.mode", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "List.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "List.code.coding", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "List.code.coding.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": false, "isModifier": false}, {"path": "List.code.coding.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": false, "isModifier": false}, {"path": "List.subject", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "List.entry", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "List.entry.item", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-problem-list-item"]}]}], "elementCount": 10, "parentName": "List"}, "mii-pr-patho-additional-specified-grouper": {"id": "mii-pr-patho-additional-specified-grouper", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-additional-specified-grouper", "name": "MII_PR_Patho_Additional_Specified_Grouper", "title": "MII PR Patho Additional Specified Grouper", "status": "active", "description": "Based on IHE PaLM APSR - Grouper for additional specified Observations", "baseDefinition": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-section-grouper", "type": "Observation", "module": "patho", "version": "2025.0.2", "differential": [{"path": "Observation.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false}], "elementCount": 1, "parentName": "patho-section-grouper"}, "mii-pr-patho-attached-image": {"id": "mii-pr-patho-attached-image", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-attached-image", "name": "MII_PR_Patho_Attached_Image", "title": "MII PR Patho Attached Image", "status": "active", "description": "Profile for attached images", "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Media", "type": "Media", "module": "patho", "version": "2025.0.2", "differential": [{"path": "Media.id", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Media.meta.lastUpdated", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Media.meta.profile", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Media.text", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Media.partOf", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Media"]}]}, {"path": "Media.status", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Media.type", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Media.type.coding", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": false, "isModifier": false, "slicing": {"discriminator": [{"type": "value", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "Media.type.coding", "short": "", "definition": "", "min": 1, "max": "1", "mustSupport": false, "isModifier": false, "sliceName": "image"}, {"path": "Media.modality", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "binding": {"strength": "extensible", "valueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/ValueSet/mii-vs-patho-media-modality-snomed-ct", "description": ""}}, {"path": "Media.subject", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-specimen"]}]}, {"path": "Media.content", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}], "elementCount": 12, "parentName": "Media"}, "mii-pr-patho-base-observation": {"id": "mii-pr-patho-base-observation", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-base-observation", "name": "MII_PR_Patho_Base_Observation", "title": "MII PR Patho Base Observation", "status": "active", "description": "Abstract Observation to define common features of a main pathology observation", "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation", "type": "Observation", "module": "patho", "version": "2025.0.2", "differential": [{"path": "Observation.id", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.meta.lastUpdated", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.meta.profile", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.identifier", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.basedOn", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/ServiceRequest"]}]}, {"path": "Observation.status", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.category", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "Observation.category.coding", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.category.coding.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.category.coding.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.category", "short": "", "definition": "", "min": 1, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "laboratory-category"}, {"path": "Observation.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.code.coding", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "binding": {"strength": "preferred", "valueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/ValueSet/mii-vs-patho-all-loinc", "description": ""}}, {"path": "Observation.code.coding.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.code.coding.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.subject", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Patient"]}]}, {"path": "Observation.effective[x]", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "dateTime"}]}, {"path": "Observation.bodySite", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.bodySite.coding", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "Observation.bodySite.coding", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "binding": {"strength": "required", "valueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-biobank/ValueSet/sct-body-structures", "description": ""}, "sliceName": "sct"}, {"path": "Observation.bodySite.coding.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.method", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.specimen", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.hasMember", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.derivedFrom", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "type", "path": "$this.resolve()"}], "rules": "open", "description": ""}}, {"path": "Observation.derivedFrom", "short": "", "definition": "", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-attached-image"]}], "sliceName": "attached-image"}, {"path": "Observation.derivedFrom", "short": "", "definition": "", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/ImagingStudy"]}], "sliceName": "dicom-image"}, {"path": "Observation.component.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.component.value[x]", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "type": [{"code": "Quantity"}, {"code": "CodeableConcept"}, {"code": "string"}, {"code": "Ratio"}]}, {"path": "Observation.component.dataAbsentReason", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}], "elementCount": 30, "parentName": "Observation"}, "mii-pr-patho-composition": {"id": "mii-pr-patho-composition", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-composition", "name": "MII_PR_Patho_Composition", "title": "MII PR Patho Composition", "status": "active", "description": "Composition as a template for pathology report as a FHIR-Document", "baseDefinition": "https://gematik.de/fhir/isik/StructureDefinition/ISiKBerichtSubSysteme", "type": "Composition", "module": "patho", "version": "2025.0.2", "differential": [{"path": "Composition.meta.lastUpdated", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.meta.profile", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.extension", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Extension", "profile": ["http://hl7.org/fhir/StructureDefinition/composition-clinicaldocument-versionNumber"]}], "isExtension": true, "sliceName": "document-version"}, {"path": "Composition.identifier.type", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.identifier.type.coding", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false}, {"path": "Composition.type.coding", "short": "", "definition": "", "min": 1, "max": "*", "mustSupport": true, "isModifier": false, "binding": {"strength": "extensible", "valueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/ValueSet/mii-vs-patho-composition-type-loinc", "description": ""}, "sliceName": "LOINC-patho"}, {"path": "Composition.type.coding.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.type.coding.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.category.coding", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "binding": {"strength": "extensible", "valueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/ValueSet/mii-vs-patho-report-category-hl7", "description": ""}, "sliceName": "HL7-patho"}, {"path": "Composition.encounter", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": false, "isModifier": false}, {"path": "Composition.author", "short": "Author can only be of type Practitioner or Organization", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://gematik.de/fhir/isik/StructureDefinition/ISiKPersonImGesundheitsberuf", "http://hl7.org/fhir/StructureDefinition/Organization"]}]}, {"path": "Composition.attester", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "value", "path": "$this.mode"}], "rules": "open", "description": ""}}, {"path": "Composition.attester", "short": "", "definition": "", "min": 1, "max": "*", "mustSupport": true, "isModifier": false, "sliceName": "legal"}, {"path": "Composition.attester.mode", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false}, {"path": "Composition.attester.party", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Practitioner", "http://hl7.org/fhir/StructureDefinition/Organization"]}]}, {"path": "Composition.attester", "short": "", "definition": "", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "sliceName": "content-validator"}, {"path": "Composition.attester.mode", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false}, {"path": "Composition.attester.party", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Practitioner", "http://hl7.org/fhir/StructureDefinition/Organization"]}]}, {"path": "Composition.custodian", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.relatesTo", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.relatesTo.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.relatesTo.target[x]", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "slicing": {"discriminator": [{"type": "type", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "Composition.relatesTo.target[x]", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Composition"]}], "sliceName": "targetReference"}, {"path": "Composition.event", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.section", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this.code.coding"}], "rules": "open", "description": ""}}, {"path": "Composition.section.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.section.code.coding", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "binding": {"strength": "required", "valueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/ValueSet/mii-vs-patho-all-loinc", "description": ""}}, {"path": "Composition.section.entry", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.section", "short": "", "definition": "", "min": 1, "max": "*", "mustSupport": true, "isModifier": false, "sliceName": "patho-diagnostic-report"}, {"path": "Composition.section.code.coding", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false}, {"path": "Composition.section.entry", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-report"]}]}], "elementCount": 31, "parentName": "ISiKBerichtSubSysteme"}, "mii-pr-patho-diagnostic-conclusion-grouper": {"id": "mii-pr-patho-diagnostic-conclusion-grouper", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-diagnostic-conclusion-grouper", "name": "MII_PR_Patho_Diagnostic_Conclusion_Grouper", "title": "MII PR Patho Diagnostic Conclusion Grouper", "status": "active", "description": "Grouper profile to collect Diagnostic Conclusion information", "baseDefinition": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-section-grouper", "type": "Observation", "module": "patho", "version": "2025.0.2", "differential": [{"path": "Observation.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false}, {"path": "Observation.note", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.derivedFrom", "short": "", "definition": "", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-section-grouper"]}], "sliceName": "grouper-observation"}, {"path": "Observation.derivedFrom", "short": "", "definition": "", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse"]}], "sliceName": "questionnaire-response"}], "elementCount": 4, "parentName": "patho-section-grouper"}, "mii-pr-patho-finding": {"id": "mii-pr-patho-finding", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-finding", "name": "MII_PR_Patho_Finding", "title": "MII PR Patho Finding", "status": "active", "description": "Instantiable Observation to describe a generic pathology finding", "baseDefinition": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-base-observation", "type": "Observation", "module": "patho", "version": "2025.0.2", "differential": [{"path": "Observation.category", "short": "", "definition": "", "min": 2, "max": null, "mustSupport": false, "isModifier": false}, {"path": "Observation.category", "short": "", "definition": "", "min": 1, "max": "1", "mustSupport": true, "isModifier": false, "binding": {"strength": "required", "valueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/ValueSet/mii-vs-patho-section-types-loinc", "description": ""}, "sliceName": "section-type"}, {"path": "Observation.value[x]", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Quantity"}, {"code": "CodeableConcept"}, {"code": "string"}, {"code": "Ratio"}]}], "elementCount": 3, "parentName": "patho-base-observation"}, "mii-pr-patho-history-of-present-illness": {"id": "mii-pr-patho-history-of-present-illness", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-history-of-present-illness", "name": "MII_PR_Patho_History_Of_Present_Illness", "title": "MII PR Patho History Of Present Illness", "status": "active", "description": "List profile for 'History of Present Illness'", "baseDefinition": "http://hl7.org/fhir/StructureDefinition/List", "type": "List", "module": "patho", "version": "2025.0.2", "differential": [{"path": "List.meta.profile", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "List.status", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "List.mode", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "List.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "List.code.coding", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "List.code.coding.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": false, "isModifier": false}, {"path": "List.code.coding.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": false, "isModifier": false}, {"path": "List.subject", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "List.entry", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "List.entry.item", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-problem-list-item"]}]}], "elementCount": 10, "parentName": "List"}, "mii-pr-patho-intraoperative-grouper": {"id": "mii-pr-patho-intraoperative-grouper", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-intraoperative-grouper", "name": "MII_PR_Patho_Intraoperative_Grouper", "title": "MII PR Patho Intraoperative Grouper", "status": "active", "description": "Based on IHE PaLM APSR - Intraoperative Observation Section", "baseDefinition": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-section-grouper", "type": "Observation", "module": "patho", "version": "2025.0.2", "differential": [{"path": "Observation.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false}], "elementCount": 1, "parentName": "patho-section-grouper"}, "mii-pr-patho-macroscopic-grouper": {"id": "mii-pr-patho-macroscopic-grouper", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-macroscopic-grouper", "name": "MII_PR_Patho_Macroscopic_Grouper", "title": "MII PR Patho Macroscopic Grouper", "status": "active", "description": "Based on IHE PaLM APSR - Macroscopic Observation Finding", "baseDefinition": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-section-grouper", "type": "Observation", "module": "patho", "version": "2025.0.2", "differential": [{"path": "Observation.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false}], "elementCount": 1, "parentName": "patho-section-grouper"}, "mii-pr-patho-microscopic-grouper": {"id": "mii-pr-patho-microscopic-grouper", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-microscopic-grouper", "name": "MII_PR_Patho_Microscopic_Grouper", "title": "MII PR Patho Microscopic Grouper", "status": "active", "description": "Based on IHE PaLM APSR - Microscopic Observation Finding", "baseDefinition": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-section-grouper", "type": "Observation", "module": "patho", "version": "2025.0.2", "differential": [{"path": "Observation.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false}], "elementCount": 1, "parentName": "patho-section-grouper"}, "mii-pr-patho-problem-list-item": {"id": "mii-pr-patho-problem-list-item", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-problem-list-item", "name": "MII_PR_Patho_Problem_List_Item", "title": "MII PR Patho Problem List Item", "status": "active", "description": "Condition profile for problem list item", "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Condition", "type": "Condition", "module": "patho", "version": "2025.0.2", "differential": [{"path": "Condition.meta.profile", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Condition.category", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Condition.category.coding", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Condition.category.coding.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": false, "isModifier": false}, {"path": "Condition.category.coding.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": false, "isModifier": false}, {"path": "Condition.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "binding": {"strength": "extensible", "valueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/ValueSet/mii-vs-patho-problem-list-snomed-ct", "description": ""}}, {"path": "Condition.code.coding", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Condition.code.coding.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Condition.code.coding.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Condition.subject", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Patient"]}]}], "elementCount": 10, "parentName": "Condition"}, "mii-pr-patho-report": {"id": "mii-pr-patho-report", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-report", "name": "MII_PR_Patho_Report", "title": "MII PR Patho Report", "status": "active", "description": "Defines the general pathology report structure for German hospitals with the defined terms by the Medical Informatics Initiative", "baseDefinition": "http://hl7.org/fhir/StructureDefinition/DiagnosticReport", "type": "DiagnosticReport", "module": "patho", "version": "2025.0.2", "differential": [{"path": "DiagnosticReport.id", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.meta.lastUpdated", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.meta.profile", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.text", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "slicing": {"discriminator": [{"type": "value", "path": "url"}], "rules": "open", "description": ""}, "isExtension": true}, {"path": "DiagnosticReport.extension", "short": "", "definition": "", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "type": [{"code": "Extension", "profile": ["http://hl7.org/fhir/StructureDefinition/workflow-relatedArtifact"]}], "isExtension": true, "sliceName": "related-report"}, {"path": "DiagnosticReport.identifier", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this.type"}], "rules": "open", "description": ""}}, {"path": "DiagnosticReport.identifier", "short": "", "definition": "", "min": 1, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "Set-ID"}, {"path": "DiagnosticReport.identifier.type", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.identifier.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.identifier.value", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.basedOn", "short": "Reference to respective MII_PR_Patho_Service_Request", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-service-request"]}]}, {"path": "DiagnosticReport.status", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.category", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "binding": {"strength": "extensible", "valueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/ValueSet/mii-vs-patho-report-category-hl7", "description": ""}}, {"path": "DiagnosticReport.code", "short": "Pathology report code", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.code.coding", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": false, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "DiagnosticReport.code.coding", "short": "", "definition": "", "min": 1, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "pathology-report"}, {"path": "DiagnosticReport.code.coding.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.code.coding.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.subject", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Patient"]}]}, {"path": "DiagnosticReport.encounter", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.effective[x]", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "dateTime"}]}, {"path": "DiagnosticReport.performer", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.specimen", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.result", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "value", "path": "resolve().code"}], "rules": "closed", "description": ""}}, {"path": "DiagnosticReport.result", "short": "Reference to intraoperative Observation grouper(s)", "definition": "", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-intraoperative-grouper"]}], "sliceName": "intraoperative-observations"}, {"path": "DiagnosticReport.result.reference", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.result", "short": "Reference to macroscopic Observation grouper(s)", "definition": "", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-macroscopic-grouper"]}], "sliceName": "macroscopic-observations"}, {"path": "DiagnosticReport.result.reference", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.result", "short": "Reference to microscopic Observation grouper(s)", "definition": "", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-microscopic-grouper"]}], "sliceName": "microscopic-observations"}, {"path": "DiagnosticReport.result.reference", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.result", "short": "Reference to any additional Observation grouper(s)", "definition": "", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-additional-specified-grouper"]}], "sliceName": "additional-observations"}, {"path": "DiagnosticReport.result.reference", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.result", "short": "Reference to the 'Diagnostic Conclusion' grouper(s)", "definition": "", "min": 1, "max": "*", "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-diagnostic-conclusion-grouper"]}], "sliceName": "diagnostic-conclusion"}, {"path": "DiagnosticReport.result.reference", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.imagingStudy", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.media", "short": "Reference to single attached images", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.media.link", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-attached-image"]}]}, {"path": "DiagnosticReport.conclusionCode", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.presentedForm", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}], "elementCount": 40, "parentName": "DiagnosticReport"}, "mii-pr-patho-section-grouper": {"id": "mii-pr-patho-section-grouper", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-section-grouper", "name": "MII_PR_Patho_Section_Grouper", "title": "MII PR Patho Section Grouper", "status": "active", "description": "Grouper profile for pathological findings", "baseDefinition": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-base-observation", "type": "Observation", "module": "patho", "version": "2025.0.2", "differential": [{"path": "Observation.text", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.hasMember", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "slicing": {"discriminator": [{"type": "type", "path": "$this.resolve()"}], "rules": "open", "description": "Reference to pathology findings"}}, {"path": "Observation.hasMember", "short": "", "definition": "", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-finding"]}], "sliceName": "pathology-finding"}], "elementCount": 3, "parentName": "patho-base-observation"}, "mii-pr-patho-service-request": {"id": "mii-pr-patho-service-request", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-service-request", "name": "MII_PR_Patho_Service_Request", "title": "MII PR Patho Service Request", "status": "active", "description": "Order for the analysis of a sample or a group of samples.", "baseDefinition": "http://hl7.org/fhir/StructureDefinition/ServiceRequest", "type": "ServiceRequest", "module": "patho", "version": "2025.0.2", "differential": [{"path": "ServiceRequest.meta.lastUpdated", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.meta.source", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.meta.profile", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.identifier", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this.type"}], "rules": "open", "description": "Contains slices for the request's placer- and filler IDs based on type.coding pattern"}}, {"path": "ServiceRequest.identifier", "short": "Placer identifier", "definition": "Identifier for the placer of the pathology request", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "Placer-ID"}, {"path": "ServiceRequest.identifier.type", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.identifier.type.coding", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.identifier.type.coding.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.identifier.type.coding.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.identifier.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.identifier.value", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.identifier", "short": "Filler Identifier", "definition": "Identifier for the filler of the pathology request", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "Filler-ID"}, {"path": "ServiceRequest.identifier.type", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.identifier.type.coding", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.identifier.type.coding.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.identifier.type.coding.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.identifier.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.identifier.value", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.requisition", "short": "Composite or group identifier", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.requisition.type", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.requisition.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.requisition.value", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.status", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.intent", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.category", "short": "", "definition": "", "min": 1, "max": "1", "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "binding": {"strength": "preferred", "valueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/ValueSet/mii-vs-patho-service-request-snomed-ct", "description": ""}}, {"path": "ServiceRequest.subject", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Patient"]}]}, {"path": "ServiceRequest.encounter", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.requester", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Practitioner", "http://hl7.org/fhir/StructureDefinition/Organization"]}]}, {"path": "ServiceRequest.performer", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Practitioner"]}]}, {"path": "ServiceRequest.reasonCode", "short": "Coded representation of the reason for referral", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.supportingInfo", "short": "Reference to history of present illness (anamnesis), active problems and diagnostic data", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this.resolve()"}], "rules": "open", "description": ""}}, {"path": "ServiceRequest.supportingInfo", "short": "", "definition": "", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Condition"]}], "sliceName": "codedCondition"}, {"path": "ServiceRequest.supportingInfo", "short": "", "definition": "", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-history-of-present-illness"]}], "sliceName": "anamnesis"}, {"path": "ServiceRequest.supportingInfo", "short": "List of possible problems that should be analyzed", "definition": "", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-active-problems-list"]}], "sliceName": "activeProblems"}, {"path": "ServiceRequest.specimen", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}], "elementCount": 36, "parentName": "ServiceRequest"}, "mii-pr-patho-specimen": {"id": "mii-pr-patho-specimen", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-specimen", "name": "MII_PR_Patho_Specimen", "title": "MII PR Patho Specimen", "status": "active", "description": "Pathology specimen (based on Biobank module)", "baseDefinition": "https://www.medizininformatik-initiative.de/fhir/ext/modul-biobank/StructureDefinition/SpecimenCore", "type": "Specimen", "module": "patho", "version": "2025.0.2", "differential": [{"path": "Specimen.id", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Specimen.meta.lastUpdated", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Specimen.meta.profile", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Specimen.text", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Specimen.accessionIdentifier", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Specimen.request", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-service-request"]}]}, {"path": "Specimen.collection.method", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "binding": {"strength": "extensible", "valueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/ValueSet/mii-vs-patho-collection-method-snomed-ct", "description": ""}}, {"path": "Specimen.collection.bodySite.extension", "short": "", "definition": "", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "type": [{"code": "Extension", "profile": ["http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-body-location-qualifier"]}], "isExtension": true, "sliceName": "locationQualifier"}, {"path": "Specimen.collection.bodySite.extension", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Extension", "profile": ["http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-laterality-qualifier"]}], "isExtension": true, "sliceName": "lateralityQualifier"}, {"path": "Specimen.processing", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false}, {"path": "Specimen.processing.procedure", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "binding": {"strength": "extensible", "valueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/ValueSet/mii-vs-patho-processing-procedure-snomed-ct", "description": ""}}, {"path": "Specimen.processing", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "sliceName": "lagerprozess"}, {"path": "Specimen.processing.additive", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-biobank/StructureDefinition/Substance"]}]}, {"path": "Specimen.container.type", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "binding": {"strength": "required", "valueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/ValueSet/mii-vs-patho-container-type-snomed-ct", "description": ""}}], "elementCount": 14, "parentName": "SpecimenCore"}};
+
+        let currentProfileId = null;
+        let currentElementIndex = null;
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-select first profile if available
+            const profiles = Object.keys(profileData);
+            if (profiles.length > 0) {
+                selectProfile(profiles[0]);
+            }
+        });
+
+        function selectProfile(profileId) {
+            if (!profileId) return;
+
+            currentProfileId = profileId;
+
+            // Hide all profiles
+            document.querySelectorAll('.profile-card').forEach(card => {
+                card.style.display = 'none';
+            });
+
+            // Show selected profile
+            const profileCard = document.getElementById('profile-' + profileId);
+            if (profileCard) {
+                profileCard.style.display = 'block';
+                // Auto-expand if collapsed
+                const body = profileCard.querySelector('.profile-body');
+                const header = profileCard.querySelector('.profile-header');
+                if (body && !body.classList.contains('expanded')) {
+                    toggleProfile(profileId);
+                }
+            }
+
+            // Update selector
+            document.getElementById('profileSelect').value = profileId;
+
+            // Clear element selection
+            clearElementSelection();
+        }
+
+        function toggleProfile(profileId) {
+            const card = document.getElementById('profile-' + profileId);
+            if (!card) return;
+
+            const header = card.querySelector('.profile-header');
+            const body = card.querySelector('.profile-body');
+
+            if (body.classList.contains('expanded')) {
+                body.classList.remove('expanded');
+                header.classList.remove('expanded');
+            } else {
+                body.classList.add('expanded');
+                header.classList.add('expanded');
+            }
+        }
+
+        function selectElement(profileId, elementIndex) {
+            currentElementIndex = elementIndex;
+
+            // Update active state
+            document.querySelectorAll('.element-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            const elementItem = document.querySelector(`[data-profile="${profileId}"][data-element="${elementIndex}"]`);
+            if (elementItem) {
+                elementItem.classList.add('active');
+            }
+
+            // Show element details
+            const detailsPanel = document.getElementById('details-' + profileId);
+            if (detailsPanel) {
+                const profile = profileData[profileId];
+                const element = profile.differential[elementIndex];
+                detailsPanel.innerHTML = renderElementDetails(element);
+            }
+        }
+
+        function clearElementSelection() {
+            document.querySelectorAll('.element-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            if (currentProfileId) {
+                const detailsPanel = document.getElementById('details-' + currentProfileId);
+                if (detailsPanel) {
+                    detailsPanel.innerHTML = '<div class="details-empty">Click an element on the left to see details</div>';
+                }
+            }
+        }
+
+        function renderElementDetails(element) {
+            let html = '<div class="detail-section">';
+            html += '<h3>' + escapeHtml(element.path) + '</h3>';
+
+            // Cardinality
+            if (element.min !== undefined || element.max !== undefined) {
+                html += '<div class="detail-row">';
+                html += '<div class="detail-label">Cardinality</div>';
+                html += '<div class="detail-value"><code>' + (element.min ?? '') + '..' + (element.max ?? '') + '</code>';
+                if (element.mustSupport) {
+                    html += ' <span class="badge badge-ms">Must Support</span>';
+                }
+                html += '</div></div>';
+            }
+
+            // Short description
+            if (element.short) {
+                html += '<div class="detail-row">';
+                html += '<div class="detail-label">Short</div>';
+                html += '<div class="detail-value">' + escapeHtml(element.short) + '</div>';
+                html += '</div>';
+            }
+
+            // Definition
+            if (element.definition) {
+                html += '<div class="detail-row">';
+                html += '<div class="detail-label">Definition</div>';
+                html += '<div class="detail-value">' + escapeHtml(element.definition) + '</div>';
+                html += '</div>';
+            }
+
+            html += '</div>';
+
+            // Types
+            if (element.type && element.type.length > 0) {
+                html += '<div class="detail-section">';
+                html += '<h3>Type Constraints</h3>';
+                html += '<ul class="type-list">';
+                element.type.forEach(type => {
+                    html += '<li class="type-item">';
+                    html += '<strong>Code:</strong> ' + escapeHtml(type.code);
+                    if (type.profile) {
+                        html += '<br><strong>Profile:</strong> ' + renderUrls(type.profile);
+                    }
+                    if (type.targetProfile) {
+                        html += '<br><strong>Target Profile:</strong> ' + renderUrls(type.targetProfile);
+                    }
+                    html += '</li>';
+                });
+                html += '</ul></div>';
+            }
+
+            // Binding
+            if (element.binding) {
+                html += '<div class="detail-section">';
+                html += '<h3>Terminology Binding</h3>';
+                html += '<div class="binding-info">';
+                html += '<div><strong>Strength:</strong> ' + escapeHtml(element.binding.strength) + '</div>';
+                html += '<div><strong>ValueSet:</strong> <code>' + escapeHtml(element.binding.valueSet) + '</code></div>';
+                if (element.binding.description) {
+                    html += '<div><strong>Description:</strong> ' + escapeHtml(element.binding.description) + '</div>';
+                }
+                html += '</div></div>';
+            }
+
+            // Constraints
+            if (element.constraints && element.constraints.length > 0) {
+                html += '<div class="detail-section">';
+                html += '<h3>Constraints</h3>';
+                html += '<ul class="constraint-list">';
+                element.constraints.forEach(c => {
+                    html += '<li class="constraint-item">';
+                    html += '<strong>' + escapeHtml(c.key) + '</strong> (' + escapeHtml(c.severity) + ')<br>';
+                    html += escapeHtml(c.human);
+                    if (c.expression) {
+                        html += '<br><code>' + escapeHtml(c.expression) + '</code>';
+                    }
+                    html += '</li>';
+                });
+                html += '</ul></div>';
+            }
+
+            // Slicing
+            if (element.slicing) {
+                html += '<div class="detail-section">';
+                html += '<h3>Slicing Information</h3>';
+                html += '<div class="detail-row">';
+                html += '<div class="detail-label">Rules</div>';
+                html += '<div class="detail-value"><code>' + escapeHtml(element.slicing.rules) + '</code></div>';
+                html += '</div>';
+                if (element.slicing.description) {
+                    html += '<div class="detail-row">';
+                    html += '<div class="detail-label">Description</div>';
+                    html += '<div class="detail-value">' + escapeHtml(element.slicing.description) + '</div>';
+                    html += '</div>';
+                }
+                html += '</div>';
+            }
+
+            return html;
+        }
+
+        function renderUrls(urls) {
+            if (Array.isArray(urls)) {
+                return urls.map(url => '<code>' + escapeHtml(url) + '</code>').join(', ');
+            }
+            return '<code>' + escapeHtml(urls) + '</code>';
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>

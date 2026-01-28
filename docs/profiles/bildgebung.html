@@ -1,0 +1,2330 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bildgebung - MII Profile Differential</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .header .breadcrumb {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        .header .breadcrumb a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .header .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .profile-selector {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .profile-selector select {
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .profile-header {
+            background: #ecf0f1;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #bdc3c7;
+        }
+
+        .profile-header:hover {
+            background: #dfe4e8;
+        }
+
+        .profile-header.expanded {
+            background: #3498db;
+            color: white;
+        }
+
+        .profile-header .title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .profile-header .indicator {
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .profile-header.expanded .indicator {
+            transform: rotate(90deg);
+        }
+
+        .profile-body {
+            display: none;
+            padding: 1.5rem;
+        }
+
+        .profile-body.expanded {
+            display: block;
+        }
+
+        .profile-info {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .profile-info p {
+            margin: 0.3rem 0;
+        }
+
+        .profile-info .label {
+            font-weight: 600;
+            color: #7f8c8d;
+            display: inline-block;
+            width: 120px;
+        }
+
+        .two-panel {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 1.5rem;
+            min-height: 400px;
+        }
+
+        .elements-panel {
+            border-right: 1px solid #ddd;
+            padding-right: 1rem;
+        }
+
+        .elements-list {
+            list-style: none;
+        }
+
+        .element-item {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            background: #f8f9fa;
+            border-left: 3px solid #95a5a6;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .element-item:hover {
+            background: #e9ecef;
+            transform: translateX(4px);
+        }
+
+        .element-item.active {
+            background: #3498db;
+            color: white;
+            border-left-color: #2980b9;
+        }
+
+        .element-item .path {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .element-item .badges {
+            margin-top: 0.3rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.75rem;
+            border-radius: 3px;
+            margin-right: 0.3rem;
+            font-weight: 600;
+        }
+
+        .badge-ms {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .badge-ext {
+            background: #9b59b6;
+            color: white;
+        }
+
+        .badge-card {
+            background: #f39c12;
+            color: white;
+        }
+
+        .badge-slice {
+            background: #16a085;
+            color: white;
+        }
+
+        .details-panel {
+            padding-left: 1rem;
+        }
+
+        .details-empty {
+            color: #95a5a6;
+            font-style: italic;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .detail-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-section h3 {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #3498db;
+        }
+
+        .detail-row {
+            padding: 0.5rem 0;
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 1rem;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #7f8c8d;
+        }
+
+        .detail-value {
+            color: #2c3e50;
+        }
+
+        .detail-value code {
+            background: #ecf0f1;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .type-list, .constraint-list {
+            list-style: none;
+        }
+
+        .type-item, .constraint-item {
+            background: #f8f9fa;
+            padding: 0.5rem;
+            margin: 0.3rem 0;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .binding-info {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 0.75rem;
+            border-radius: 4px;
+        }
+
+        .no-profiles {
+            text-align: center;
+            padding: 3rem;
+            color: #95a5a6;
+        }
+
+        @media (max-width: 1024px) {
+            .two-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .elements-panel {
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>MII Profile Differential: Bildgebung</h1>
+        <div class="breadcrumb">
+            <a href="index.html">← All Modules</a> / bildgebung
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="profile-selector">
+            <select id="profileSelect" onchange="selectProfile(this.value)">
+                <option value="">Select a profile...</option>
+                <option value="mii-pr-bildgebung-anforderung-bildgebung">MII PR Bildgebung Anforderung Bildgebung (ServiceRequest)</option>
+<option value="mii-pr-bildgebung-behandlungsempfehlung">MII PR Bildgebung Behandlungsempfehlung (CarePlan)</option>
+<option value="mii-pr-bildgebung-bildgebungsprozedur">MII PR Bildgebung Bildgebungsprozedur (Procedure)</option>
+<option value="mii-pr-bildgebung-bildgebungsstudie">MII PR Bildgebung Bildgebungsstudie (ImagingStudy)</option>
+<option value="mii-pr-bildgebung-geraet">MII PR Bildgebung Gerät (Device)</option>
+<option value="mii-pr-bildgebung-koerperstruktur">MII PR Bildgebung Körperstruktur (BodyStructure)</option>
+<option value="mii-pr-bildgebung-kontrastmittelgabe">MII PR Bildgebung Konstrastmittelgabe (MedicationAdministration)</option>
+<option value="mii-pr-bildgebung-radiologische-befundungsprozedur">MII PR Bildgebung Radiologische Befundungsprozedur (Procedure)</option>
+<option value="mii-pr-bildgebung-radiologische-beobachtung">MII PR Bildgebung Radiologische Beobachtung (Observation)</option>
+<option value="mii-pr-bildgebung-radiologischer-befund">MII PR Bildgebung Radiologischer Befund (DiagnosticReport)</option>
+<option value="mii-pr-bildgebung-semistrukt-befundbericht">MII PR Bildgebung Semistrukturierter Befundbericht (Composition)</option>
+            </select>
+        </div>
+
+        <div id="profilesContainer">
+            
+        <div class="profile-card" id="profile-mii-pr-bildgebung-anforderung-bildgebung" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-bildgebung-anforderung-bildgebung')">
+                <div class="title">MII PR Bildgebung Anforderung Bildgebung</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Bildgebung_Anforderung_Bildgebung</p>
+                    <p><span class="label">Type:</span> ServiceRequest</p>
+                    <p><span class="label">Base Definition:</span> ServiceRequest</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.0</p>
+                    <p><span class="label">Elements:</span> 20 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-anforderung-bildgebung"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-bildgebung-anforderung-bildgebung', 0)">
+                    <div class="path">id</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-anforderung-bildgebung"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-bildgebung-anforderung-bildgebung', 1)">
+                    <div class="path">meta</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-anforderung-bildgebung"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-bildgebung-anforderung-bildgebung', 2)">
+                    <div class="path">meta.source</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-anforderung-bildgebung"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-bildgebung-anforderung-bildgebung', 3)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-anforderung-bildgebung"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-bildgebung-anforderung-bildgebung', 4)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-anforderung-bildgebung"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-bildgebung-anforderung-bildgebung', 5)">
+                    <div class="path">intent</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-anforderung-bildgebung"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-bildgebung-anforderung-bildgebung', 6)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-anforderung-bildgebung"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-bildgebung-anforderung-bildgebung', 7)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-anforderung-bildgebung"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-bildgebung-anforderung-bildgebung', 8)">
+                    <div class="path">code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-anforderung-bildgebung"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-bildgebung-anforderung-bildgebung', 9)">
+                    <div class="path">code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-anforderung-bildgebung"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-bildgebung-anforderung-bildgebung', 10)">
+                    <div class="path">code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-anforderung-bildgebung"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-bildgebung-anforderung-bildgebung', 11)">
+                    <div class="path">code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-anforderung-bildgebung"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-bildgebung-anforderung-bildgebung', 12)">
+                    <div class="path">code.coding.code</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-anforderung-bildgebung"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-bildgebung-anforderung-bildgebung', 13)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-anforderung-bildgebung"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-bildgebung-anforderung-bildgebung', 14)">
+                    <div class="path">encounter</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-anforderung-bildgebung"
+                    data-element="15"
+                    onclick="selectElement('mii-pr-bildgebung-anforderung-bildgebung', 15)">
+                    <div class="path">authoredOn</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-anforderung-bildgebung"
+                    data-element="16"
+                    onclick="selectElement('mii-pr-bildgebung-anforderung-bildgebung', 16)">
+                    <div class="path">requester</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-anforderung-bildgebung"
+                    data-element="17"
+                    onclick="selectElement('mii-pr-bildgebung-anforderung-bildgebung', 17)">
+                    <div class="path">reasonCode</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-anforderung-bildgebung"
+                    data-element="18"
+                    onclick="selectElement('mii-pr-bildgebung-anforderung-bildgebung', 18)">
+                    <div class="path">reasonReference</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-anforderung-bildgebung"
+                    data-element="19"
+                    onclick="selectElement('mii-pr-bildgebung-anforderung-bildgebung', 19)">
+                    <div class="path">supportingInfo</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-bildgebung-anforderung-bildgebung">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-bildgebung-behandlungsempfehlung" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-bildgebung-behandlungsempfehlung')">
+                <div class="title">MII PR Bildgebung Behandlungsempfehlung</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Bildgebung_Behandlungsempfehlung</p>
+                    <p><span class="label">Type:</span> CarePlan</p>
+                    <p><span class="label">Base Definition:</span> CarePlan</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.0</p>
+                    <p><span class="label">Elements:</span> 9 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-behandlungsempfehlung"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-bildgebung-behandlungsempfehlung', 0)">
+                    <div class="path">id</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-behandlungsempfehlung"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-bildgebung-behandlungsempfehlung', 1)">
+                    <div class="path">meta</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-behandlungsempfehlung"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-bildgebung-behandlungsempfehlung', 2)">
+                    <div class="path">meta.source</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-behandlungsempfehlung"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-bildgebung-behandlungsempfehlung', 3)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-behandlungsempfehlung"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-bildgebung-behandlungsempfehlung', 4)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-behandlungsempfehlung"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-bildgebung-behandlungsempfehlung', 5)">
+                    <div class="path">intent</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-behandlungsempfehlung"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-bildgebung-behandlungsempfehlung', 6)">
+                    <div class="path">description</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-behandlungsempfehlung"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-bildgebung-behandlungsempfehlung', 7)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-behandlungsempfehlung"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-bildgebung-behandlungsempfehlung', 8)">
+                    <div class="path">supportingInfo</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-bildgebung-behandlungsempfehlung">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-bildgebung-bildgebungsprozedur" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-bildgebung-bildgebungsprozedur')">
+                <div class="title">MII PR Bildgebung Bildgebungsprozedur</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Bildgebung_Bildgebungsprozedur</p>
+                    <p><span class="label">Type:</span> Procedure</p>
+                    <p><span class="label">Base Definition:</span> Procedure</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.0</p>
+                    <p><span class="label">Elements:</span> 6 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsprozedur"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsprozedur', 0)">
+                    <div class="path">basedOn</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsprozedur"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsprozedur', 1)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsprozedur"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsprozedur', 2)">
+                    <div class="path">category.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsprozedur"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsprozedur', 3)">
+                    <div class="path">code</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsprozedur"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsprozedur', 4)">
+                    <div class="path">code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsprozedur"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsprozedur', 5)">
+                    <div class="path">subject</div>
+                    <div class="badges"></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-bildgebung-bildgebungsprozedur">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-bildgebung-bildgebungsstudie" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-bildgebung-bildgebungsstudie')">
+                <div class="title">MII PR Bildgebung Bildgebungsstudie</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Bildgebung_Bildgebungsstudie</p>
+                    <p><span class="label">Type:</span> ImagingStudy</p>
+                    <p><span class="label">Base Definition:</span> ImagingStudy</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.0</p>
+                    <p><span class="label">Elements:</span> 42 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 0)">
+                    <div class="path">id</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 1)">
+                    <div class="path">meta</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 2)">
+                    <div class="path">meta.source</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 3)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 4)">
+                    <div class="path">extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 5)">
+                    <div class="path">extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 6)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 7)">
+                    <div class="path">modality</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 8)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 9)">
+                    <div class="path">encounter</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 10)">
+                    <div class="path">started</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 11)">
+                    <div class="path">basedOn</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 12)">
+                    <div class="path">endpoint</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 13)">
+                    <div class="path">numberOfSeries</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 14)">
+                    <div class="path">numberOfInstances</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="15"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 15)">
+                    <div class="path">procedureReference</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="16"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 16)">
+                    <div class="path">reasonReference</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="17"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 17)">
+                    <div class="path">description</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="18"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 18)">
+                    <div class="path">series</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="19"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 19)">
+                    <div class="path">series.extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="20"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 20)">
+                    <div class="path">series.extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="21"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 21)">
+                    <div class="path">series.extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="22"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 22)">
+                    <div class="path">series.extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="23"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 23)">
+                    <div class="path">series.extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="24"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 24)">
+                    <div class="path">series.extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="25"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 25)">
+                    <div class="path">series.extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="26"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 26)">
+                    <div class="path">series.uid</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="27"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 27)">
+                    <div class="path">series.number</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="28"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 28)">
+                    <div class="path">series.modality</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="29"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 29)">
+                    <div class="path">series.description</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="30"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 30)">
+                    <div class="path">series.numberOfInstances</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="31"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 31)">
+                    <div class="path">series.bodySite</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="32"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 32)">
+                    <div class="path">series.laterality</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="33"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 33)">
+                    <div class="path">series.started</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="34"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 34)">
+                    <div class="path">series.performer</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="35"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 35)">
+                    <div class="path">series.performer.actor</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="36"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 36)">
+                    <div class="path">series.instance</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="37"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 37)">
+                    <div class="path">series.instance.extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="38"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 38)">
+                    <div class="path">series.instance.extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="39"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 39)">
+                    <div class="path">series.instance.uid</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="40"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 40)">
+                    <div class="path">series.instance.sopClass</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-bildgebungsstudie"
+                    data-element="41"
+                    onclick="selectElement('mii-pr-bildgebung-bildgebungsstudie', 41)">
+                    <div class="path">series.instance.number</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-bildgebung-bildgebungsstudie">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-bildgebung-geraet" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-bildgebung-geraet')">
+                <div class="title">MII PR Bildgebung Gerät</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Bildgebung_Geraet</p>
+                    <p><span class="label">Type:</span> Device</p>
+                    <p><span class="label">Base Definition:</span> Device</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.0</p>
+                    <p><span class="label">Elements:</span> 7 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-geraet"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-bildgebung-geraet', 0)">
+                    <div class="path">id</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-geraet"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-bildgebung-geraet', 1)">
+                    <div class="path">meta</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-geraet"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-bildgebung-geraet', 2)">
+                    <div class="path">meta.source</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-geraet"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-bildgebung-geraet', 3)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-geraet"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-bildgebung-geraet', 4)">
+                    <div class="path">manufacturer</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-geraet"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-bildgebung-geraet', 5)">
+                    <div class="path">deviceName</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-geraet"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-bildgebung-geraet', 6)">
+                    <div class="path">deviceName.type</div>
+                    <div class="badges"></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-bildgebung-geraet">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-bildgebung-koerperstruktur" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-bildgebung-koerperstruktur')">
+                <div class="title">MII PR Bildgebung Körperstruktur</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Bildgebung_Koerperstruktur</p>
+                    <p><span class="label">Type:</span> BodyStructure</p>
+                    <p><span class="label">Base Definition:</span> BodyStructure</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.0</p>
+                    <p><span class="label">Elements:</span> 8 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-koerperstruktur"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-bildgebung-koerperstruktur', 0)">
+                    <div class="path">id</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-koerperstruktur"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-bildgebung-koerperstruktur', 1)">
+                    <div class="path">meta</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-koerperstruktur"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-bildgebung-koerperstruktur', 2)">
+                    <div class="path">meta.source</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-koerperstruktur"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-bildgebung-koerperstruktur', 3)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-koerperstruktur"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-bildgebung-koerperstruktur', 4)">
+                    <div class="path">morphology</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-koerperstruktur"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-bildgebung-koerperstruktur', 5)">
+                    <div class="path">location</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-koerperstruktur"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-bildgebung-koerperstruktur', 6)">
+                    <div class="path">locationQualifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-koerperstruktur"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-bildgebung-koerperstruktur', 7)">
+                    <div class="path">patient</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-bildgebung-koerperstruktur">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-bildgebung-kontrastmittelgabe" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-bildgebung-kontrastmittelgabe')">
+                <div class="title">MII PR Bildgebung Konstrastmittelgabe</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Bildgebung_Kontrastmittelgabe</p>
+                    <p><span class="label">Type:</span> MedicationAdministration</p>
+                    <p><span class="label">Base Definition:</span> MedicationAdministration</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.0</p>
+                    <p><span class="label">Elements:</span> 7 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-kontrastmittelgabe"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-bildgebung-kontrastmittelgabe', 0)">
+                    <div class="path">partOf</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-kontrastmittelgabe"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-bildgebung-kontrastmittelgabe', 1)">
+                    <div class="path">status</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-kontrastmittelgabe"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-bildgebung-kontrastmittelgabe', 2)">
+                    <div class="path">medication[x]</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-kontrastmittelgabe"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-bildgebung-kontrastmittelgabe', 3)">
+                    <div class="path">subject</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-kontrastmittelgabe"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-bildgebung-kontrastmittelgabe', 4)">
+                    <div class="path">effective[x]</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-kontrastmittelgabe"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-bildgebung-kontrastmittelgabe', 5)">
+                    <div class="path">dosage</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-kontrastmittelgabe"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-bildgebung-kontrastmittelgabe', 6)">
+                    <div class="path">dosage.dose</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-bildgebung-kontrastmittelgabe">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-bildgebung-radiologische-befundungsprozedur" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-bildgebung-radiologische-befundungsprozedur')">
+                <div class="title">MII PR Bildgebung Radiologische Befundungsprozedur</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Bildgebung_Radiologische_Befundungsprozedur</p>
+                    <p><span class="label">Type:</span> Procedure</p>
+                    <p><span class="label">Base Definition:</span> Procedure</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.0</p>
+                    <p><span class="label">Elements:</span> 4 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologische-befundungsprozedur"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-bildgebung-radiologische-befundungsprozedur', 0)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologische-befundungsprozedur"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-bildgebung-radiologische-befundungsprozedur', 1)">
+                    <div class="path">code</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologische-befundungsprozedur"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-bildgebung-radiologische-befundungsprozedur', 2)">
+                    <div class="path">subject</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologische-befundungsprozedur"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-bildgebung-radiologische-befundungsprozedur', 3)">
+                    <div class="path">report</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-bildgebung-radiologische-befundungsprozedur">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-bildgebung-radiologische-beobachtung" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-bildgebung-radiologische-beobachtung')">
+                <div class="title">MII PR Bildgebung Radiologische Beobachtung</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Bildgebung_Radiologische_Beobachtung</p>
+                    <p><span class="label">Type:</span> Observation</p>
+                    <p><span class="label">Base Definition:</span> Observation</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.0</p>
+                    <p><span class="label">Elements:</span> 20 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologische-beobachtung"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-bildgebung-radiologische-beobachtung', 0)">
+                    <div class="path">id</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologische-beobachtung"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-bildgebung-radiologische-beobachtung', 1)">
+                    <div class="path">meta</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologische-beobachtung"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-bildgebung-radiologische-beobachtung', 2)">
+                    <div class="path">meta.source</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologische-beobachtung"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-bildgebung-radiologische-beobachtung', 3)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologische-beobachtung"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-bildgebung-radiologische-beobachtung', 4)">
+                    <div class="path">extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologische-beobachtung"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-bildgebung-radiologische-beobachtung', 5)">
+                    <div class="path">extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologische-beobachtung"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-bildgebung-radiologische-beobachtung', 6)">
+                    <div class="path">extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologische-beobachtung"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-bildgebung-radiologische-beobachtung', 7)">
+                    <div class="path">extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologische-beobachtung"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-bildgebung-radiologische-beobachtung', 8)">
+                    <div class="path">extension.value[x]</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologische-beobachtung"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-bildgebung-radiologische-beobachtung', 9)">
+                    <div class="path">partOf</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologische-beobachtung"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-bildgebung-radiologische-beobachtung', 10)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologische-beobachtung"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-bildgebung-radiologische-beobachtung', 11)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologische-beobachtung"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-bildgebung-radiologische-beobachtung', 12)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologische-beobachtung"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-bildgebung-radiologische-beobachtung', 13)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologische-beobachtung"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-bildgebung-radiologische-beobachtung', 14)">
+                    <div class="path">issued</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologische-beobachtung"
+                    data-element="15"
+                    onclick="selectElement('mii-pr-bildgebung-radiologische-beobachtung', 15)">
+                    <div class="path">value[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologische-beobachtung"
+                    data-element="16"
+                    onclick="selectElement('mii-pr-bildgebung-radiologische-beobachtung', 16)">
+                    <div class="path">bodySite</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologische-beobachtung"
+                    data-element="17"
+                    onclick="selectElement('mii-pr-bildgebung-radiologische-beobachtung', 17)">
+                    <div class="path">hasMember</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologische-beobachtung"
+                    data-element="18"
+                    onclick="selectElement('mii-pr-bildgebung-radiologische-beobachtung', 18)">
+                    <div class="path">derivedFrom</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologische-beobachtung"
+                    data-element="19"
+                    onclick="selectElement('mii-pr-bildgebung-radiologische-beobachtung', 19)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-bildgebung-radiologische-beobachtung">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-bildgebung-radiologischer-befund" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-bildgebung-radiologischer-befund')">
+                <div class="title">MII PR Bildgebung Radiologischer Befund</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Bildgebung_Radiologischer_Befund</p>
+                    <p><span class="label">Type:</span> DiagnosticReport</p>
+                    <p><span class="label">Base Definition:</span> DiagnosticReport</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.0</p>
+                    <p><span class="label">Elements:</span> 35 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 0)">
+                    <div class="path">id</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 1)">
+                    <div class="path">meta</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 2)">
+                    <div class="path">meta.source</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 3)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 4)">
+                    <div class="path">extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 5)">
+                    <div class="path">extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 6)">
+                    <div class="path">extension.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 7)">
+                    <div class="path">extension.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 8)">
+                    <div class="path">extension.extension.value[x]</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 9)">
+                    <div class="path">basedOn</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 10)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 11)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 12)">
+                    <div class="path">category.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 13)">
+                    <div class="path">category.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 14)">
+                    <div class="path">category.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="15"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 15)">
+                    <div class="path">category.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="16"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 16)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="17"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 17)">
+                    <div class="path">code.coding</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="18"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 18)">
+                    <div class="path">code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="19"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 19)">
+                    <div class="path">code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="20"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 20)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="21"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 21)">
+                    <div class="path">encounter</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="22"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 22)">
+                    <div class="path">effective[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="23"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 23)">
+                    <div class="path">effective[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="24"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 24)">
+                    <div class="path">effective[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="25"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 25)">
+                    <div class="path">issued</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="26"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 26)">
+                    <div class="path">result</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="27"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 27)">
+                    <div class="path">imagingStudy</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="28"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 28)">
+                    <div class="path">conclusion</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="29"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 29)">
+                    <div class="path">conclusionCode</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="30"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 30)">
+                    <div class="path">conclusionCode.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="31"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 31)">
+                    <div class="path">conclusionCode.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="32"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 32)">
+                    <div class="path">conclusionCode.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="33"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 33)">
+                    <div class="path">conclusionCode.coding.code</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-radiologischer-befund"
+                    data-element="34"
+                    onclick="selectElement('mii-pr-bildgebung-radiologischer-befund', 34)">
+                    <div class="path">presentedForm</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-bildgebung-radiologischer-befund">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-bildgebung-semistrukt-befundbericht" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-bildgebung-semistrukt-befundbericht')">
+                <div class="title">MII PR Bildgebung Semistrukturierter Befundbericht</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Bildgebung_Semistrukt_Befundbericht</p>
+                    <p><span class="label">Type:</span> Composition</p>
+                    <p><span class="label">Base Definition:</span> Composition</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.0</p>
+                    <p><span class="label">Elements:</span> 24 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-semistrukt-befundbericht"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-bildgebung-semistrukt-befundbericht', 0)">
+                    <div class="path">id</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-semistrukt-befundbericht"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-bildgebung-semistrukt-befundbericht', 1)">
+                    <div class="path">meta</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-semistrukt-befundbericht"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-bildgebung-semistrukt-befundbericht', 2)">
+                    <div class="path">meta.source</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-semistrukt-befundbericht"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-bildgebung-semistrukt-befundbericht', 3)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-semistrukt-befundbericht"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-bildgebung-semistrukt-befundbericht', 4)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-semistrukt-befundbericht"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-bildgebung-semistrukt-befundbericht', 5)">
+                    <div class="path">type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-semistrukt-befundbericht"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-bildgebung-semistrukt-befundbericht', 6)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-semistrukt-befundbericht"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-bildgebung-semistrukt-befundbericht', 7)">
+                    <div class="path">date</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-semistrukt-befundbericht"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-bildgebung-semistrukt-befundbericht', 8)">
+                    <div class="path">author</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-semistrukt-befundbericht"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-bildgebung-semistrukt-befundbericht', 9)">
+                    <div class="path">title</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-semistrukt-befundbericht"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-bildgebung-semistrukt-befundbericht', 10)">
+                    <div class="path">section</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-semistrukt-befundbericht"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-bildgebung-semistrukt-befundbericht', 11)">
+                    <div class="path">section.title</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-semistrukt-befundbericht"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-bildgebung-semistrukt-befundbericht', 12)">
+                    <div class="path">section.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-semistrukt-befundbericht"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-bildgebung-semistrukt-befundbericht', 13)">
+                    <div class="path">section.author</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-semistrukt-befundbericht"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-bildgebung-semistrukt-befundbericht', 14)">
+                    <div class="path">section.text</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-semistrukt-befundbericht"
+                    data-element="15"
+                    onclick="selectElement('mii-pr-bildgebung-semistrukt-befundbericht', 15)">
+                    <div class="path">section.entry</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-semistrukt-befundbericht"
+                    data-element="16"
+                    onclick="selectElement('mii-pr-bildgebung-semistrukt-befundbericht', 16)">
+                    <div class="path">section.section</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-semistrukt-befundbericht"
+                    data-element="17"
+                    onclick="selectElement('mii-pr-bildgebung-semistrukt-befundbericht', 17)">
+                    <div class="path">section</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-semistrukt-befundbericht"
+                    data-element="18"
+                    onclick="selectElement('mii-pr-bildgebung-semistrukt-befundbericht', 18)">
+                    <div class="path">section.title</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-semistrukt-befundbericht"
+                    data-element="19"
+                    onclick="selectElement('mii-pr-bildgebung-semistrukt-befundbericht', 19)">
+                    <div class="path">section.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-semistrukt-befundbericht"
+                    data-element="20"
+                    onclick="selectElement('mii-pr-bildgebung-semistrukt-befundbericht', 20)">
+                    <div class="path">section.author</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-semistrukt-befundbericht"
+                    data-element="21"
+                    onclick="selectElement('mii-pr-bildgebung-semistrukt-befundbericht', 21)">
+                    <div class="path">section.text</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-semistrukt-befundbericht"
+                    data-element="22"
+                    onclick="selectElement('mii-pr-bildgebung-semistrukt-befundbericht', 22)">
+                    <div class="path">section.entry</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-bildgebung-semistrukt-befundbericht"
+                    data-element="23"
+                    onclick="selectElement('mii-pr-bildgebung-semistrukt-befundbericht', 23)">
+                    <div class="path">section.section</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-bildgebung-semistrukt-befundbericht">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        </div>
+    </div>
+
+    <script>
+        // Embedded profile data
+        const profileData = {"mii-pr-bildgebung-anforderung-bildgebung": {"id": "mii-pr-bildgebung-anforderung-bildgebung", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-pr-bildgebung-anforderung-bildgebung", "name": "MII_PR_Bildgebung_Anforderung_Bildgebung", "title": "MII PR Bildgebung Anforderung Bildgebung", "status": "active", "description": "Profil zur Anforderung einer Bildgebung.", "baseDefinition": "http://hl7.org/fhir/StructureDefinition/ServiceRequest", "type": "ServiceRequest", "module": "bildgebung", "version": "2025.0.0", "differential": [{"path": "ServiceRequest.id", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.meta", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.meta.source", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.meta.profile", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.status", "short": "Status", "definition": "Entwurf | Aktiv | Wartend | Widerrufen | Abgeschlossen | Fehlerhafte Eingabe | Unbekannt", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.intent", "short": "Absicht", "definition": "Vorschlag | Plan | Anweisung | Erstverordnung | Reflexverordnung | Füllverordnung | Beispielverordnung | Option", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.category", "short": "Kategorie", "definition": "Kategorie der Serviceanforderung", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.code", "short": "Kode", "definition": "Kode der Serviceanforderung in LOINC, RadLex oder SNOMED CT", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.code.coding", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "ServiceRequest.code.coding", "short": "", "definition": "", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "sliceName": "loinc"}, {"path": "ServiceRequest.code.coding", "short": "", "definition": "", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "sliceName": "radlex"}, {"path": "ServiceRequest.code.coding", "short": "", "definition": "", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "sliceName": "sct"}, {"path": "ServiceRequest.code.coding.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "binding": {"strength": "preferred", "valueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/ValueSet/mii-vs-bildgebung-service-request-coding", "description": ""}}, {"path": "ServiceRequest.subject", "short": "Person", "definition": "Person, auf die sich die Anforderung bezieht", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Patient"]}]}, {"path": "ServiceRequest.encounter", "short": "Versorgungsstellenkontakt", "definition": "Referenz auf den Versorgungsstellenkontakt", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.authoredOn", "short": "Erstellungszeitpunkt", "definition": "Erstellungszeitpunkt der Anforderung", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.requester", "short": "Anforderer", "definition": "Person, die die Anforderung erstellt", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.reasonCode", "short": "Anforderungsgrund", "definition": "kodierter Grund für die Anforderung", "min": null, "max": null, "mustSupport": true, "isModifier": false, "binding": {"strength": "preferred", "valueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/ValueSet/mii-vs-bildgebung-service-request-reason", "description": ""}}, {"path": "ServiceRequest.reasonReference", "short": "Anforderungbezug", "definition": "Grund, auf den sich die Anforderung bezieht", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ServiceRequest.supportingInfo", "short": "Zusatzinformation", "definition": "Zusätzliche Informationen zur Anforderung", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/DiagnosticReport", "http://hl7.org/fhir/StructureDefinition/ImagingStudy"]}]}], "elementCount": 20, "parentName": "ServiceRequest"}, "mii-pr-bildgebung-behandlungsempfehlung": {"id": "mii-pr-bildgebung-behandlungsempfehlung", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-pr-bildgebung-behandlungsempfehlung", "name": "MII_PR_Bildgebung_Behandlungsempfehlung", "title": "MII PR Bildgebung Behandlungsempfehlung", "status": "active", "description": "Diese Profil beschreibt die ärztliche Behandlungsempfehlung einer Person. Sie unterstützt den radiologischen Befund mit Zusatzinformation", "baseDefinition": "http://hl7.org/fhir/StructureDefinition/CarePlan", "type": "CarePlan", "module": "bildgebung", "version": "2025.0.0", "differential": [{"path": "CarePlan.id", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "CarePlan.meta", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "CarePlan.meta.source", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "CarePlan.meta.profile", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "CarePlan.status", "short": "Status", "definition": "Entwurf | Aktiv | Wartend | Widerrufen | Abgeschlossen | Fehlerhafte Eingabe | Unbekannt", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "CarePlan.intent", "short": "Absicht", "definition": "Vorschlag | Plan | Anordnung | Option | Richtlinie", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "CarePlan.description", "short": "Beschreibung", "definition": "Freitextbeschreibung der Behandlungsempfehlung", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "CarePlan.subject", "short": "Person", "definition": "Person, auf die sich die Behandlungsempfehlung bezieht", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Patient"]}]}, {"path": "CarePlan.supportingInfo", "short": "Zusatzinformation", "definition": "Zusatzinformation für einen Befundbericht", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-pr-bildgebung-radiologischer-befund"]}]}], "elementCount": 9, "parentName": "CarePlan"}, "mii-pr-bildgebung-bildgebungsprozedur": {"id": "mii-pr-bildgebung-bildgebungsprozedur", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-pr-bildgebung-bildgebungsprozedur", "name": "MII_PR_Bildgebung_Bildgebungsprozedur", "title": "MII PR Bildgebung Bildgebungsprozedur", "status": "active", "description": "Beschreibt die Tätigkeiten, wie eine Bildgebung ausgeführt wird.", "baseDefinition": "https://www.medizininformatik-initiative.de/fhir/core/modul-prozedur/StructureDefinition/Procedure", "type": "Procedure", "module": "bildgebung", "version": "2025.0.0", "differential": [{"path": "Procedure.basedOn", "short": "Basiert auf", "definition": "Basiert auf einem Anforderung", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-pr-bildgebung-anforderung-bildgebung"]}]}, {"path": "Procedure.category", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": false, "isModifier": false}, {"path": "Procedure.category.coding", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Procedure.code", "short": "", "definition": "Code aus LOINC", "min": null, "max": null, "mustSupport": false, "isModifier": false}, {"path": "Procedure.code.coding", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "loinc"}, {"path": "Procedure.subject", "short": "Person", "definition": "Person, auf die sich die Prozedur bezieht", "min": null, "max": null, "mustSupport": false, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Patient"]}]}], "elementCount": 6, "parentName": "Procedure"}, "mii-pr-bildgebung-bildgebungsstudie": {"id": "mii-pr-bildgebung-bildgebungsstudie", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-pr-bildgebung-bildgebungsstudie", "name": "MII_PR_Bildgebung_Bildgebungsstudie", "title": "MII PR Bildgebung Bildgebungsstudie", "status": "active", "description": "Dieses Profil beschreibt die Bildgebung anhand der DICOM-Metadaten auf Studien-, Serien- sowie Instanzen-Ebene der jeweiligen DICOM-Studie.", "baseDefinition": "http://hl7.org/fhir/StructureDefinition/ImagingStudy", "type": "ImagingStudy", "module": "bildgebung", "version": "2025.0.0", "differential": [{"path": "ImagingStudy.id", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ImagingStudy.meta", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ImagingStudy.meta.source", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ImagingStudy.meta.profile", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ImagingStudy.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "slicing": {"discriminator": [{"type": "value", "path": "url"}], "rules": "open", "description": ""}, "isExtension": true}, {"path": "ImagingStudy.extension", "short": "Bildgebungsgrund", "definition": "Bildgebungsgrund aus DICOM-Header", "min": 0, "max": "1", "mustSupport": false, "isModifier": false, "type": [{"code": "Extension", "profile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-ex-bildgebung-bildgebungsgrund"]}], "isExtension": true, "sliceName": "bildgebungsgrund"}, {"path": "ImagingStudy.status", "short": "Status", "definition": "Angemeldet | Verfügbar | Abgebrochen | fehlerhafte Eingabe | Unbekannt", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ImagingStudy.modality", "short": "Modalität", "definition": "Modalität der Studie", "min": null, "max": null, "mustSupport": true, "isModifier": false, "binding": {"strength": "required", "valueSet": "http://dicom.nema.org/medical/dicom/current/output/chtml/part16/sect_CID_33.html", "description": ""}}, {"path": "ImagingStudy.subject", "short": "Person", "definition": "Person, auf die sich die Studie bezieht", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Patient"]}]}, {"path": "ImagingStudy.encounter", "short": "Versorgungsstellenkontakt", "definition": "Referenz auf eine Fall-Ressource", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ImagingStudy.started", "short": "Startzeit", "definition": "Startzeit der Studie", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ImagingStudy.basedOn", "short": "Basiert auf", "definition": "Basiert auf einer Anforderung", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ImagingStudy.endpoint", "short": "Endpunkt", "definition": "DICOM-Endpunkt", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ImagingStudy.numberOfSeries", "short": "Serienanzahl", "definition": "Anzahl der Serien in der Studie", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ImagingStudy.numberOfInstances", "short": "Instanzanzahl", "definition": "Anzahl der Instanzen in der Studie", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ImagingStudy.procedureReference", "short": "Bildgebungsprozedur", "definition": "Referenz auf die Bildgebungsprozedur", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ImagingStudy.reasonReference", "short": "Bildgebungsgrund", "definition": "Referenz auf den Bildgebungsgrund", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ImagingStudy.description", "short": "Studienbeschreibung", "definition": "Beschreibung der Studie", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ImagingStudy.series", "short": "Serienebene", "definition": "einzelne Bildserie einer Studie", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ImagingStudy.series.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "slicing": {"discriminator": [{"type": "value", "path": "url"}], "rules": "open", "description": ""}, "isExtension": true}, {"path": "ImagingStudy.series.extension", "short": "Modalität CT", "definition": "Bildgebungsmodalität CT", "min": 0, "max": "1", "mustSupport": false, "isModifier": false, "type": [{"code": "Extension", "profile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-ex-bildgebung-modalitaet-ct"]}], "isExtension": true, "sliceName": "modalitätCT"}, {"path": "ImagingStudy.series.extension", "short": "Modalität MG CR DX", "definition": "Bildgebungsmodalität MG, CR und DX", "min": 0, "max": "1", "mustSupport": false, "isModifier": false, "type": [{"code": "Extension", "profile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-ex-bildgebung-modalitaet-mg-cr-dx"]}], "isExtension": true, "sliceName": "modalitätMG_CR_DX"}, {"path": "ImagingStudy.series.extension", "short": "Modalität MR", "definition": "Bildgebungsmodalität MR", "min": 0, "max": "1", "mustSupport": false, "isModifier": false, "type": [{"code": "Extension", "profile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-ex-bildgebung-modalitaet-mr"]}], "isExtension": true, "sliceName": "modalitätMR"}, {"path": "ImagingStudy.series.extension", "short": "Modalität PT", "definition": "Bildgebungsmodalität PT", "min": 0, "max": "1", "mustSupport": false, "isModifier": false, "type": [{"code": "Extension", "profile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-ex-bildgebung-modalitaet-pt"]}], "isExtension": true, "sliceName": "modalitätPT"}, {"path": "ImagingStudy.series.extension", "short": "Modalität NM", "definition": "Bildgebungsmodalität NM", "min": 0, "max": "1", "mustSupport": false, "isModifier": false, "type": [{"code": "Extension", "profile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-ex-bildgebung-modalitaet-nm"]}], "isExtension": true, "sliceName": "modalitätNM"}, {"path": "ImagingStudy.series.extension", "short": "Kontrastmittel", "definition": "Kontrastmittelgabe", "min": 0, "max": "1", "mustSupport": false, "isModifier": false, "type": [{"code": "Extension", "profile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-ex-bildgebung-kontrastmittel"]}], "isExtension": true, "sliceName": "kontrastmittel"}, {"path": "ImagingStudy.series.uid", "short": "SerienUID", "definition": "UID einer Serie", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ImagingStudy.series.number", "short": "Nummer", "definition": "Nummer der Serie", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ImagingStudy.series.modality", "short": "Modalität", "definition": "Modalität der Serie", "min": null, "max": null, "mustSupport": true, "isModifier": false, "binding": {"strength": "required", "valueSet": "http://dicom.nema.org/medical/dicom/current/output/chtml/part16/sect_CID_33.html", "description": ""}}, {"path": "ImagingStudy.series.description", "short": "Serienbeschreibung", "definition": "Beschreibung der aktuellen Serie", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ImagingStudy.series.numberOfInstances", "short": "Instanzanzahl", "definition": "Anzahl der Instanzen in der aktuellen Serie", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ImagingStudy.series.bodySite", "short": "Anatomie", "definition": "betrachtete Anatomie der Serie", "min": null, "max": null, "mustSupport": true, "isModifier": false, "binding": {"strength": "required", "valueSet": "http://hl7.org/fhir/ValueSet/body-site", "description": ""}}, {"path": "ImagingStudy.series.laterality", "short": "Lateralität", "definition": "Lateralität der betrachteten Anatomie dieser Serie", "min": null, "max": null, "mustSupport": true, "isModifier": false, "binding": {"strength": "required", "valueSet": "http://dicom.nema.org/medical/dicom/current/output/chtml/part16/sect_CID_244.html", "description": ""}}, {"path": "ImagingStudy.series.started", "short": "Startzeit", "definition": "Aufnahmestartzeit der Serie", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ImagingStudy.series.performer", "short": "Durchführender", "definition": "Durchführender der Serie. Hier speziell das Gerät", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ImagingStudy.series.performer.actor", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-pr-bildgebung-geraet"]}]}, {"path": "ImagingStudy.series.instance", "short": "Instanzebene", "definition": "Instanzebene der Serie", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ImagingStudy.series.instance.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "slicing": {"discriminator": [{"type": "value", "path": "url"}], "rules": "open", "description": ""}, "isExtension": true}, {"path": "ImagingStudy.series.instance.extension", "short": "Instanzdetails", "definition": "Details der jeweilige Instanz", "min": 0, "max": "1", "mustSupport": false, "isModifier": false, "type": [{"code": "Extension", "profile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-ex-bildgebung-instanz-details"]}], "isExtension": true, "sliceName": "InstanceDetails"}, {"path": "ImagingStudy.series.instance.uid", "short": "Instanz UID", "definition": "SOP Instanz UID", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "ImagingStudy.series.instance.sopClass", "short": "SOP Klasse", "definition": "SOP Klasse", "min": null, "max": null, "mustSupport": true, "isModifier": false, "binding": {"strength": "required", "valueSet": "http://dicom.nema.org/medical/dicom/current/output/chtml/part04/sect_B.5.html", "description": ""}}, {"path": "ImagingStudy.series.instance.number", "short": "Instanznummer", "definition": "Nummer der aktuellen Instanz", "min": null, "max": null, "mustSupport": true, "isModifier": false}], "elementCount": 42, "parentName": "ImagingStudy"}, "mii-pr-bildgebung-geraet": {"id": "mii-pr-bildgebung-geraet", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-pr-bildgebung-geraet", "name": "MII_PR_Bildgebung_Geraet", "title": "MII PR Bildgebung Gerät", "status": "active", "description": "Dieses Profil beschreibt das genutzte Gerät in der radiologischer Bildgebung. Es bietet die Möglichkeit, Informationen über das Gerät strukturiert abzubilden.", "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Device", "type": "Device", "module": "bildgebung", "version": "2025.0.0", "differential": [{"path": "Device.id", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Device.meta", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Device.meta.source", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Device.meta.profile", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Device.manufacturer", "short": "Hersteller", "definition": "Hersteller des Aufnahmegeräts", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Device.deviceName", "short": "Gerätename", "definition": "Name und Modell des Aufnahmegeräts", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Device.deviceName.type", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "binding": {"strength": "required", "valueSet": "http://hl7.org/fhir/ValueSet/device-nametype", "description": ""}}], "elementCount": 7, "parentName": "Device"}, "mii-pr-bildgebung-koerperstruktur": {"id": "mii-pr-bildgebung-koerperstruktur", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-pr-bildgebung-koerperstruktur", "name": "MII_PR_Bildgebung_Koerperstruktur", "title": "MII PR Bildgebung Körperstruktur", "status": "active", "description": "Dieses Profil beschreibt die dargestellte Körperstrukturen nach Morphologie und Lokalisation.", "baseDefinition": "http://hl7.org/fhir/StructureDefinition/BodyStructure", "type": "BodyStructure", "module": "bildgebung", "version": "2025.0.0", "differential": [{"path": "BodyStructure.id", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "BodyStructure.meta", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "BodyStructure.meta.source", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "BodyStructure.meta.profile", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "BodyStructure.morphology", "short": "Morphologie", "definition": "Morphologie der Körperstruktur", "min": null, "max": null, "mustSupport": true, "isModifier": false, "binding": {"strength": "preferred", "valueSet": "http://hl7.org/fhir/ValueSet/bodystructure-code", "description": ""}}, {"path": "BodyStructure.location", "short": "Lokalisation", "definition": "Lokalisation der Körperstruktur im Bild", "min": null, "max": null, "mustSupport": true, "isModifier": false, "binding": {"strength": "preferred", "valueSet": "http://hl7.org/fhir/ValueSet/body-site", "description": ""}}, {"path": "BodyStructure.locationQualifier", "short": "nähere Lokalisation", "definition": "explizite Beschreibung der Lokalisation", "min": null, "max": null, "mustSupport": true, "isModifier": false, "binding": {"strength": "preferred", "valueSet": "http://hl7.org/fhir/ValueSet/bodystructure-relative-location", "description": ""}}, {"path": "BodyStructure.patient", "short": "Person", "definition": "Person, an der sich die untersuchte Körperstruktur befindet", "min": null, "max": null, "mustSupport": true, "isModifier": false}], "elementCount": 8, "parentName": "BodyStructure"}, "mii-pr-bildgebung-kontrastmittelgabe": {"id": "mii-pr-bildgebung-kontrastmittelgabe", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-pr-bildgebung-kontrastmittelgabe", "name": "MII_PR_Bildgebung_Kontrastmittelgabe", "title": "MII PR Bildgebung Konstrastmittelgabe", "status": "active", "description": "Dieses Profil bietet die Möglichkeit die Kontrastmittelgabe aus dem RIS zu erfassen und ist somit die Alternative zu der Erfassung der Kontrastmittelgabe aus den DICOM-Metadaten.", "baseDefinition": "https://www.medizininformatik-initiative.de/fhir/core/modul-medikation/StructureDefinition/MedicationAdministration", "type": "MedicationAdministration", "module": "bildgebung", "version": "2025.0.0", "differential": [{"path": "MedicationAdministration.partOf", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false}, {"path": "MedicationAdministration.status", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false}, {"path": "MedicationAdministration.medication[x]", "short": "", "definition": "Medikation, die verarbreicht wurde. Code oder Referenz auf Medication-Objekt.", "min": null, "max": null, "mustSupport": false, "isModifier": false}, {"path": "MedicationAdministration.subject", "short": "Person", "definition": "Person, an der sich die untersuchte Körperstruktur befindet", "min": null, "max": null, "mustSupport": false, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Patient"]}]}, {"path": "MedicationAdministration.effective[x]", "short": "", "definition": "Zeitpunkt oder Zeitraum in dem die Medikation verabreicht wurde.", "min": null, "max": null, "mustSupport": false, "isModifier": false, "type": [{"code": "Period"}]}, {"path": "MedicationAdministration.dosage", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": false, "isModifier": false}, {"path": "MedicationAdministration.dosage.dose", "short": "", "definition": "Dosis der Medikamentenverabreichung.", "min": 1, "max": null, "mustSupport": false, "isModifier": false}], "elementCount": 7, "parentName": "MedicationAdministration"}, "mii-pr-bildgebung-radiologische-befundungsprozedur": {"id": "mii-pr-bildgebung-radiologische-befundungsprozedur", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-pr-bildgebung-radiologische-befundungsprozedur", "name": "MII_PR_Bildgebung_Radiologische_Befundungsprozedur", "title": "MII PR Bildgebung Radiologische Befundungsprozedur", "status": "active", "description": "Diese Profil beschreibt die radiologische Befundungsprozedur. Es legt fest, dass es sich hierbei um eine reine diagnostische Prozedur handelt", "baseDefinition": "https://www.medizininformatik-initiative.de/fhir/core/modul-prozedur/StructureDefinition/Procedure", "type": "Procedure", "module": "bildgebung", "version": "2025.0.0", "differential": [{"path": "Procedure.category", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": false, "isModifier": false}, {"path": "Procedure.code", "short": "", "definition": "ode aus OPS - Operationen- und Prozedurenschlüssel, SNOMED CT oder andere.", "min": null, "max": null, "mustSupport": false, "isModifier": false}, {"path": "Procedure.subject", "short": "Person", "definition": "Person, auf die sich die Befundungprozedur bezieht", "min": null, "max": null, "mustSupport": false, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Patient"]}]}, {"path": "Procedure.report", "short": "Bericht", "definition": "Referenz auf den Bericht", "min": 1, "max": null, "mustSupport": true, "isModifier": false}], "elementCount": 4, "parentName": "Procedure"}, "mii-pr-bildgebung-radiologische-beobachtung": {"id": "mii-pr-bildgebung-radiologische-beobachtung", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-pr-bildgebung-radiologische-beobachtung", "name": "MII_PR_Bildgebung_Radiologische_Beobachtung", "title": "MII PR Bildgebung Radiologische Beobachtung", "status": "active", "description": "Dieses Profil beschreibt den Befund/eine Beobachtung in der radiologischer Bildgebung. Es bietet die Möglichkeit strukturiert Beobachtungen abzubilden und den Befundbericht zu ergänzen.", "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation", "type": "Observation", "module": "bildgebung", "version": "2025.0.0", "differential": [{"path": "Observation.id", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.meta", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.meta.source", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.meta.profile", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "slicing": {"discriminator": [{"type": "value", "path": "url"}], "rules": "open", "description": ""}, "isExtension": true}, {"path": "Observation.extension", "short": "Serien UID", "definition": "UID einer DICOM-Serie", "min": 0, "max": "1", "mustSupport": false, "isModifier": false, "type": [{"code": "Extension", "profile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-ex-bildgebung-series-uid"]}], "isExtension": true, "sliceName": "SeriesUID"}, {"path": "Observation.extension", "short": "SOP Instanz UID", "definition": "UID einer SOP Instanz", "min": 0, "max": "1", "mustSupport": false, "isModifier": false, "type": [{"code": "Extension", "profile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-ex-bildgebung-sop-instanz-uid"]}], "isExtension": true, "sliceName": "SOPInstanzUID"}, {"path": "Observation.extension", "short": "Körperstruktur", "definition": "Referenz auf eine Körperstruktur", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "type": [{"code": "Extension", "profile": ["http://hl7.org/fhir/5.0/StructureDefinition/extension-Observation.bodyStructure"]}], "isExtension": true, "sliceName": "bodyStructure"}, {"path": "Observation.extension.value[x]", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-pr-bildgebung-koerperstruktur"]}], "isExtension": true}, {"path": "Observation.partOf", "short": "Teil von", "definition": "Teil einer Befundungprozedur", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-pr-bildgebung-radiologische-befundungsprozedur"]}]}, {"path": "Observation.status", "short": "Status", "definition": "angemeldet | vorläufig | endgültig | geändert | korrigiert | abgebrochen | fehlerhafte Eingabe | unbekannt", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.category", "short": "Kategorie", "definition": "Klassifikation in diagnostischen Fachbereich und Gruppe", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.code", "short": "Code", "definition": "Ein Code für die zu befundende Beoabchtung", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.subject", "short": "Person", "definition": "Person, auf die sich die Beobachtung bezieht", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Patient"]}]}, {"path": "Observation.issued", "short": "Dokumentationsdatum", "definition": "Zeitpunkt, an dem das Ergebnis der Laboruntersuchung dokumentiert wurde", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.value[x]", "short": "Messwert", "definition": "Wert der Analyse", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.bodySite", "short": "Anatomie", "definition": "betrachtete Anatomie der Beobachtung", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.hasMember", "short": "weitere Beobachtungen", "definition": "Referenzierung weiterer Beobachtungen", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Observation"]}]}, {"path": "Observation.derivedFrom", "short": "abgeleitet", "definition": "Abgeleitet von ImagingStudy, ect.", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.component", "short": "Bestandteile", "definition": "detailierte Bestandteile der Beobachtung", "min": null, "max": null, "mustSupport": true, "isModifier": false}], "elementCount": 20, "parentName": "Observation"}, "mii-pr-bildgebung-radiologischer-befund": {"id": "mii-pr-bildgebung-radiologischer-befund", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-pr-bildgebung-radiologischer-befund", "name": "MII_PR_Bildgebung_Radiologischer_Befund", "title": "MII PR Bildgebung Radiologischer Befund", "status": "active", "description": "Diese Ressource beschreibt einen radiologischen Befund", "baseDefinition": "http://hl7.org/fhir/StructureDefinition/DiagnosticReport", "type": "DiagnosticReport", "module": "bildgebung", "version": "2025.0.0", "differential": [{"path": "DiagnosticReport.id", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.meta", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.meta.source", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.meta.profile", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "slicing": {"discriminator": [{"type": "value", "path": "url"}], "rules": "open", "description": ""}, "isExtension": true}, {"path": "DiagnosticReport.extension", "short": "Zusatzinformation", "definition": "Zusatzinformation zum Befundbericht", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "type": [{"code": "Extension", "profile": ["http://hl7.org/fhir/5.0/StructureDefinition/extension-DiagnosticReport.supportingInfo"]}], "isExtension": true, "sliceName": "supportingInfo"}, {"path": "DiagnosticReport.extension.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "isExtension": true, "sliceName": "type"}, {"path": "DiagnosticReport.extension.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "isExtension": true, "sliceName": "reference"}, {"path": "DiagnosticReport.extension.extension.value[x]", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/DiagnosticReport", "http://hl7.org/fhir/StructureDefinition/Procedure"]}], "isExtension": true}, {"path": "DiagnosticReport.basedOn", "short": "Anforderung", "definition": "Anforderung, die den Befundbericht ausgelöst hat", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-pr-bildgebung-anforderung-bildgebung", "http://hl7.org/fhir/StructureDefinition/CarePlan"]}]}, {"path": "DiagnosticReport.status", "short": "Status", "definition": "angemeldet | unvollständig | vorläufig | endgültig | geändert | korrigiert | angefügt | abgebrochen | fehlerhafte Eingabe | unbekannt", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.category", "short": "Kategorie", "definition": "Kategorie des Befundberichts", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.category.coding", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "DiagnosticReport.category.coding", "short": "", "definition": "", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "sliceName": "loinc"}, {"path": "DiagnosticReport.category.coding", "short": "", "definition": "", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "sliceName": "diagnostic-service-sections"}, {"path": "DiagnosticReport.category.coding", "short": "", "definition": "", "min": 1, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "sct"}, {"path": "DiagnosticReport.code", "short": "Code", "definition": "Code des Befundberichts", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.code.coding", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "DiagnosticReport.code.coding", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "sct"}, {"path": "DiagnosticReport.code.coding", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "loinc"}, {"path": "DiagnosticReport.subject", "short": "Person", "definition": "Person, auf die sich die Befundbericht bezieht", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Patient"]}]}, {"path": "DiagnosticReport.encounter", "short": "Versorgungssstellenkontakt", "definition": "Fall-Referenz auf den Versorgungssstellenkontakt", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.effective[x]", "short": "Erstellungsdatum", "definition": "Zeitpunkt der Erstellung", "min": null, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "type", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "DiagnosticReport.effective[x]", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "dateTime"}], "sliceName": "effectiveDateTime"}, {"path": "DiagnosticReport.effective[x]", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Period"}], "sliceName": "effectivePeriod"}, {"path": "DiagnosticReport.issued", "short": "Erstellungszeitpunkt", "definition": "Zeit an der der Bericht erstellt wurde", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.result", "short": "Ergebnis", "definition": "Ergebnis einer Beobachtung", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.imagingStudy", "short": "Bildgebungsstudie", "definition": "Studie, die die vollständige Bildgebung umfasst", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-pr-bildgebung-bildgebungsstudie"]}]}, {"path": "DiagnosticReport.conclusion", "short": "Fazit", "definition": "Fazit zur aktuellen Befundung", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.conclusionCode", "short": "Strukturiertes Fazit", "definition": "Fazit, welches strukturiert über Codes dargestellt wird", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "DiagnosticReport.conclusionCode.coding", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "DiagnosticReport.conclusionCode.coding", "short": "", "definition": "", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "sliceName": "icd10-gm"}, {"path": "DiagnosticReport.conclusionCode.coding", "short": "", "definition": "", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "sliceName": "sct"}, {"path": "DiagnosticReport.conclusionCode.coding.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "binding": {"strength": "preferred", "valueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/ValueSet/mii-vs-bildgebung-diagnostic-report-coding", "description": ""}}, {"path": "DiagnosticReport.presentedForm", "short": "Anhang", "definition": "zusätzlicher wichtiger Anhang", "min": null, "max": null, "mustSupport": true, "isModifier": false}], "elementCount": 35, "parentName": "DiagnosticReport"}, "mii-pr-bildgebung-semistrukt-befundbericht": {"id": "mii-pr-bildgebung-semistrukt-befundbericht", "url": "https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-pr-bildgebung-semistrukt-befundbericht", "name": "MII_PR_Bildgebung_Semistrukt_Befundbericht", "title": "MII PR Bildgebung Semistrukturierter Befundbericht", "status": "active", "description": "Dieses Profil bietet die Möglichkeit, den Befundbericht in einer semi-strukturierten Weise abzubilden. Es dient damit als Ergänzung zum eigentlichen Befundbericht", "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Composition", "type": "Composition", "module": "bildgebung", "version": "2025.0.0", "differential": [{"path": "Composition.id", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.meta", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.meta.source", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.meta.profile", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.status", "short": "Status", "definition": "vorläufig | engültig | geändert | fehlerhafte Eingabe", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.type", "short": "Kompositionstyp", "definition": "Typ der Komposition", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.subject", "short": "Person", "definition": "Person, auf die sich die Komposition bezieht", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Patient"]}]}, {"path": "Composition.date", "short": "Erstellungsdatum", "definition": "Zeitpunkt der Erstellung", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.author", "short": "Autor", "definition": "Autor der Komposition", "min": null, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Practitioner"]}]}, {"path": "Composition.title", "short": "Titel", "definition": "Titel der Komposition", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.section", "short": "Befundabschnitt", "definition": "1. Abschnitt immer der Befundbericht, 2.-X. Abschnitt können Beobachtungen oder Freitext sein. Unterteilt in Titel, Code, Autor, Text und Eintrag", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "profile", "path": "Composition.section.entry.resolve()"}], "rules": "open", "description": ""}}, {"path": "Composition.section.title", "short": "Befundabschnittstitel", "definition": "Titel des Befundabschnitt", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.section.code", "short": "Abschnitttyp", "definition": "Typ des Abschnitts", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.section.author", "short": "Abschnittsautor", "definition": "Autor des Abschnitts", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.section.text", "short": "Abschnitttext", "definition": "Text im Abschnitt", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.section.entry", "short": "Abschnittseintrag", "definition": "Eintrag in einem Abschnitt", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.section.section", "short": "weiterer Abschnitt", "definition": "weiterer Abschnitt in der Komposition", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.section", "short": "", "definition": "", "min": 1, "max": "1", "mustSupport": false, "isModifier": false, "sliceName": "diagRep"}, {"path": "Composition.section.title", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.section.code", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.section.author", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.section.text", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Composition.section.entry", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-pr-bildgebung-radiologischer-befund"]}]}, {"path": "Composition.section.section", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}], "elementCount": 24, "parentName": "Composition"}};
+
+        let currentProfileId = null;
+        let currentElementIndex = null;
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-select first profile if available
+            const profiles = Object.keys(profileData);
+            if (profiles.length > 0) {
+                selectProfile(profiles[0]);
+            }
+        });
+
+        function selectProfile(profileId) {
+            if (!profileId) return;
+
+            currentProfileId = profileId;
+
+            // Hide all profiles
+            document.querySelectorAll('.profile-card').forEach(card => {
+                card.style.display = 'none';
+            });
+
+            // Show selected profile
+            const profileCard = document.getElementById('profile-' + profileId);
+            if (profileCard) {
+                profileCard.style.display = 'block';
+                // Auto-expand if collapsed
+                const body = profileCard.querySelector('.profile-body');
+                const header = profileCard.querySelector('.profile-header');
+                if (body && !body.classList.contains('expanded')) {
+                    toggleProfile(profileId);
+                }
+            }
+
+            // Update selector
+            document.getElementById('profileSelect').value = profileId;
+
+            // Clear element selection
+            clearElementSelection();
+        }
+
+        function toggleProfile(profileId) {
+            const card = document.getElementById('profile-' + profileId);
+            if (!card) return;
+
+            const header = card.querySelector('.profile-header');
+            const body = card.querySelector('.profile-body');
+
+            if (body.classList.contains('expanded')) {
+                body.classList.remove('expanded');
+                header.classList.remove('expanded');
+            } else {
+                body.classList.add('expanded');
+                header.classList.add('expanded');
+            }
+        }
+
+        function selectElement(profileId, elementIndex) {
+            currentElementIndex = elementIndex;
+
+            // Update active state
+            document.querySelectorAll('.element-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            const elementItem = document.querySelector(`[data-profile="${profileId}"][data-element="${elementIndex}"]`);
+            if (elementItem) {
+                elementItem.classList.add('active');
+            }
+
+            // Show element details
+            const detailsPanel = document.getElementById('details-' + profileId);
+            if (detailsPanel) {
+                const profile = profileData[profileId];
+                const element = profile.differential[elementIndex];
+                detailsPanel.innerHTML = renderElementDetails(element);
+            }
+        }
+
+        function clearElementSelection() {
+            document.querySelectorAll('.element-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            if (currentProfileId) {
+                const detailsPanel = document.getElementById('details-' + currentProfileId);
+                if (detailsPanel) {
+                    detailsPanel.innerHTML = '<div class="details-empty">Click an element on the left to see details</div>';
+                }
+            }
+        }
+
+        function renderElementDetails(element) {
+            let html = '<div class="detail-section">';
+            html += '<h3>' + escapeHtml(element.path) + '</h3>';
+
+            // Cardinality
+            if (element.min !== undefined || element.max !== undefined) {
+                html += '<div class="detail-row">';
+                html += '<div class="detail-label">Cardinality</div>';
+                html += '<div class="detail-value"><code>' + (element.min ?? '') + '..' + (element.max ?? '') + '</code>';
+                if (element.mustSupport) {
+                    html += ' <span class="badge badge-ms">Must Support</span>';
+                }
+                html += '</div></div>';
+            }
+
+            // Short description
+            if (element.short) {
+                html += '<div class="detail-row">';
+                html += '<div class="detail-label">Short</div>';
+                html += '<div class="detail-value">' + escapeHtml(element.short) + '</div>';
+                html += '</div>';
+            }
+
+            // Definition
+            if (element.definition) {
+                html += '<div class="detail-row">';
+                html += '<div class="detail-label">Definition</div>';
+                html += '<div class="detail-value">' + escapeHtml(element.definition) + '</div>';
+                html += '</div>';
+            }
+
+            html += '</div>';
+
+            // Types
+            if (element.type && element.type.length > 0) {
+                html += '<div class="detail-section">';
+                html += '<h3>Type Constraints</h3>';
+                html += '<ul class="type-list">';
+                element.type.forEach(type => {
+                    html += '<li class="type-item">';
+                    html += '<strong>Code:</strong> ' + escapeHtml(type.code);
+                    if (type.profile) {
+                        html += '<br><strong>Profile:</strong> ' + renderUrls(type.profile);
+                    }
+                    if (type.targetProfile) {
+                        html += '<br><strong>Target Profile:</strong> ' + renderUrls(type.targetProfile);
+                    }
+                    html += '</li>';
+                });
+                html += '</ul></div>';
+            }
+
+            // Binding
+            if (element.binding) {
+                html += '<div class="detail-section">';
+                html += '<h3>Terminology Binding</h3>';
+                html += '<div class="binding-info">';
+                html += '<div><strong>Strength:</strong> ' + escapeHtml(element.binding.strength) + '</div>';
+                html += '<div><strong>ValueSet:</strong> <code>' + escapeHtml(element.binding.valueSet) + '</code></div>';
+                if (element.binding.description) {
+                    html += '<div><strong>Description:</strong> ' + escapeHtml(element.binding.description) + '</div>';
+                }
+                html += '</div></div>';
+            }
+
+            // Constraints
+            if (element.constraints && element.constraints.length > 0) {
+                html += '<div class="detail-section">';
+                html += '<h3>Constraints</h3>';
+                html += '<ul class="constraint-list">';
+                element.constraints.forEach(c => {
+                    html += '<li class="constraint-item">';
+                    html += '<strong>' + escapeHtml(c.key) + '</strong> (' + escapeHtml(c.severity) + ')<br>';
+                    html += escapeHtml(c.human);
+                    if (c.expression) {
+                        html += '<br><code>' + escapeHtml(c.expression) + '</code>';
+                    }
+                    html += '</li>';
+                });
+                html += '</ul></div>';
+            }
+
+            // Slicing
+            if (element.slicing) {
+                html += '<div class="detail-section">';
+                html += '<h3>Slicing Information</h3>';
+                html += '<div class="detail-row">';
+                html += '<div class="detail-label">Rules</div>';
+                html += '<div class="detail-value"><code>' + escapeHtml(element.slicing.rules) + '</code></div>';
+                html += '</div>';
+                if (element.slicing.description) {
+                    html += '<div class="detail-row">';
+                    html += '<div class="detail-label">Description</div>';
+                    html += '<div class="detail-value">' + escapeHtml(element.slicing.description) + '</div>';
+                    html += '</div>';
+                }
+                html += '</div>';
+            }
+
+            return html;
+        }
+
+        function renderUrls(urls) {
+            if (Array.isArray(urls)) {
+                return urls.map(url => '<code>' + escapeHtml(url) + '</code>').join(', ');
+            }
+            return '<code>' + escapeHtml(urls) + '</code>';
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,3085 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Person - MII Profile Differential</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .header .breadcrumb {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        .header .breadcrumb a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .header .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .profile-selector {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .profile-selector select {
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .profile-header {
+            background: #ecf0f1;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #bdc3c7;
+        }
+
+        .profile-header:hover {
+            background: #dfe4e8;
+        }
+
+        .profile-header.expanded {
+            background: #3498db;
+            color: white;
+        }
+
+        .profile-header .title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .profile-header .indicator {
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .profile-header.expanded .indicator {
+            transform: rotate(90deg);
+        }
+
+        .profile-body {
+            display: none;
+            padding: 1.5rem;
+        }
+
+        .profile-body.expanded {
+            display: block;
+        }
+
+        .profile-info {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .profile-info p {
+            margin: 0.3rem 0;
+        }
+
+        .profile-info .label {
+            font-weight: 600;
+            color: #7f8c8d;
+            display: inline-block;
+            width: 120px;
+        }
+
+        .two-panel {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 1.5rem;
+            min-height: 400px;
+        }
+
+        .elements-panel {
+            border-right: 1px solid #ddd;
+            padding-right: 1rem;
+        }
+
+        .elements-list {
+            list-style: none;
+        }
+
+        .element-item {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            background: #f8f9fa;
+            border-left: 3px solid #95a5a6;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .element-item:hover {
+            background: #e9ecef;
+            transform: translateX(4px);
+        }
+
+        .element-item.active {
+            background: #3498db;
+            color: white;
+            border-left-color: #2980b9;
+        }
+
+        .element-item .path {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .element-item .badges {
+            margin-top: 0.3rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.75rem;
+            border-radius: 3px;
+            margin-right: 0.3rem;
+            font-weight: 600;
+        }
+
+        .badge-ms {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .badge-ext {
+            background: #9b59b6;
+            color: white;
+        }
+
+        .badge-card {
+            background: #f39c12;
+            color: white;
+        }
+
+        .badge-slice {
+            background: #16a085;
+            color: white;
+        }
+
+        .details-panel {
+            padding-left: 1rem;
+        }
+
+        .details-empty {
+            color: #95a5a6;
+            font-style: italic;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .detail-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-section h3 {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #3498db;
+        }
+
+        .detail-row {
+            padding: 0.5rem 0;
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 1rem;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #7f8c8d;
+        }
+
+        .detail-value {
+            color: #2c3e50;
+        }
+
+        .detail-value code {
+            background: #ecf0f1;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .type-list, .constraint-list {
+            list-style: none;
+        }
+
+        .type-item, .constraint-item {
+            background: #f8f9fa;
+            padding: 0.5rem;
+            margin: 0.3rem 0;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .binding-info {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 0.75rem;
+            border-radius: 4px;
+        }
+
+        .no-profiles {
+            text-align: center;
+            padding: 3rem;
+            color: #95a5a6;
+        }
+
+        @media (max-width: 1024px) {
+            .two-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .elements-panel {
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>MII Profile Differential: Person</h1>
+        <div class="breadcrumb">
+            <a href="index.html">← All Modules</a> / person
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="profile-selector">
+            <select id="profileSelect" onchange="selectProfile(this.value)">
+                <option value="">Select a profile...</option>
+                <option value="mii-pr-person-patient">MII PR Person Patient (Patient)</option>
+<option value="mii-pr-person-patient">MII PR Person Patient (Patient)</option>
+<option value="mii-pr-person-patient-pseudonymisiert">MII PR Person Patient (Pseudonymisiert) (Patient)</option>
+<option value="mii-pr-person-patient-pseudonymisiert">MII PR Person Patient (Pseudonymisiert) (Patient)</option>
+<option value="mii-pr-person-todesursache">MII PR Person Todesursache (Condition)</option>
+<option value="mii-pr-person-todesursache">MII PR Person Todesursache (Condition)</option>
+<option value="mii-pr-person-vitalstatus">MII PR Person Vitalstatus (Observation)</option>
+<option value="mii-pr-person-vitalstatus">MII PR Person Vitalstatus (Observation)</option>
+            </select>
+        </div>
+
+        <div id="profilesContainer">
+            
+        <div class="profile-card" id="profile-mii-pr-person-patient" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-person-patient')">
+                <div class="title">MII PR Person Patient</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Person_Patient</p>
+                    <p><span class="label">Type:</span> Patient</p>
+                    <p><span class="label">Base Definition:</span> Patient</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.1</p>
+                    <p><span class="label">Elements:</span> 72 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-person-patient', 0)">
+                    <div class="path">id</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-person-patient', 1)">
+                    <div class="path">meta</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-person-patient', 2)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-person-patient', 3)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-person-patient', 4)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-person-patient', 5)">
+                    <div class="path">identifier.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-person-patient', 6)">
+                    <div class="path">identifier.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-person-patient', 7)">
+                    <div class="path">identifier.value</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-person-patient', 8)">
+                    <div class="path">identifier.assigner</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-person-patient', 9)">
+                    <div class="path">identifier.assigner.identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-person-patient', 10)">
+                    <div class="path">identifier.assigner.identifier.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-person-patient', 11)">
+                    <div class="path">identifier.assigner.identifier.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-person-patient', 12)">
+                    <div class="path">identifier.assigner.identifier.value</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-person-patient', 13)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-person-patient', 14)">
+                    <div class="path">identifier.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="15"
+                    onclick="selectElement('mii-pr-person-patient', 15)">
+                    <div class="path">identifier.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="16"
+                    onclick="selectElement('mii-pr-person-patient', 16)">
+                    <div class="path">identifier.value</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="17"
+                    onclick="selectElement('mii-pr-person-patient', 17)">
+                    <div class="path">identifier.assigner</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="18"
+                    onclick="selectElement('mii-pr-person-patient', 18)">
+                    <div class="path">identifier.assigner.identifier.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="19"
+                    onclick="selectElement('mii-pr-person-patient', 19)">
+                    <div class="path">identifier.assigner.identifier.system</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="20"
+                    onclick="selectElement('mii-pr-person-patient', 20)">
+                    <div class="path">name</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="21"
+                    onclick="selectElement('mii-pr-person-patient', 21)">
+                    <div class="path">name</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="22"
+                    onclick="selectElement('mii-pr-person-patient', 22)">
+                    <div class="path">name.use</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="23"
+                    onclick="selectElement('mii-pr-person-patient', 23)">
+                    <div class="path">name.family</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="24"
+                    onclick="selectElement('mii-pr-person-patient', 24)">
+                    <div class="path">name.family.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="25"
+                    onclick="selectElement('mii-pr-person-patient', 25)">
+                    <div class="path">name.family.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="26"
+                    onclick="selectElement('mii-pr-person-patient', 26)">
+                    <div class="path">name.family.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="27"
+                    onclick="selectElement('mii-pr-person-patient', 27)">
+                    <div class="path">name.given</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="28"
+                    onclick="selectElement('mii-pr-person-patient', 28)">
+                    <div class="path">name.prefix</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="29"
+                    onclick="selectElement('mii-pr-person-patient', 29)">
+                    <div class="path">name.prefix.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="30"
+                    onclick="selectElement('mii-pr-person-patient', 30)">
+                    <div class="path">name</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="31"
+                    onclick="selectElement('mii-pr-person-patient', 31)">
+                    <div class="path">name.use</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="32"
+                    onclick="selectElement('mii-pr-person-patient', 32)">
+                    <div class="path">name.family</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="33"
+                    onclick="selectElement('mii-pr-person-patient', 33)">
+                    <div class="path">name.family.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="34"
+                    onclick="selectElement('mii-pr-person-patient', 34)">
+                    <div class="path">name.family.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="35"
+                    onclick="selectElement('mii-pr-person-patient', 35)">
+                    <div class="path">name.family.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="36"
+                    onclick="selectElement('mii-pr-person-patient', 36)">
+                    <div class="path">name.given</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="37"
+                    onclick="selectElement('mii-pr-person-patient', 37)">
+                    <div class="path">name.prefix</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="38"
+                    onclick="selectElement('mii-pr-person-patient', 38)">
+                    <div class="path">name.prefix.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="39"
+                    onclick="selectElement('mii-pr-person-patient', 39)">
+                    <div class="path">gender</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="40"
+                    onclick="selectElement('mii-pr-person-patient', 40)">
+                    <div class="path">gender.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="41"
+                    onclick="selectElement('mii-pr-person-patient', 41)">
+                    <div class="path">birthDate</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="42"
+                    onclick="selectElement('mii-pr-person-patient', 42)">
+                    <div class="path">birthDate.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="43"
+                    onclick="selectElement('mii-pr-person-patient', 43)">
+                    <div class="path">deceased[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="44"
+                    onclick="selectElement('mii-pr-person-patient', 44)">
+                    <div class="path">address</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="45"
+                    onclick="selectElement('mii-pr-person-patient', 45)">
+                    <div class="path">address</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="46"
+                    onclick="selectElement('mii-pr-person-patient', 46)">
+                    <div class="path">address.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="47"
+                    onclick="selectElement('mii-pr-person-patient', 47)">
+                    <div class="path">address.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="48"
+                    onclick="selectElement('mii-pr-person-patient', 48)">
+                    <div class="path">address.line</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="49"
+                    onclick="selectElement('mii-pr-person-patient', 49)">
+                    <div class="path">address.line.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="50"
+                    onclick="selectElement('mii-pr-person-patient', 50)">
+                    <div class="path">address.line.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="51"
+                    onclick="selectElement('mii-pr-person-patient', 51)">
+                    <div class="path">address.line.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="52"
+                    onclick="selectElement('mii-pr-person-patient', 52)">
+                    <div class="path">address.line.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="53"
+                    onclick="selectElement('mii-pr-person-patient', 53)">
+                    <div class="path">address.city</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="54"
+                    onclick="selectElement('mii-pr-person-patient', 54)">
+                    <div class="path">address.city.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="55"
+                    onclick="selectElement('mii-pr-person-patient', 55)">
+                    <div class="path">address.postalCode</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="56"
+                    onclick="selectElement('mii-pr-person-patient', 56)">
+                    <div class="path">address.country</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="57"
+                    onclick="selectElement('mii-pr-person-patient', 57)">
+                    <div class="path">address</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="58"
+                    onclick="selectElement('mii-pr-person-patient', 58)">
+                    <div class="path">address.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="59"
+                    onclick="selectElement('mii-pr-person-patient', 59)">
+                    <div class="path">address.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="60"
+                    onclick="selectElement('mii-pr-person-patient', 60)">
+                    <div class="path">address.line</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="61"
+                    onclick="selectElement('mii-pr-person-patient', 61)">
+                    <div class="path">address.line.extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="62"
+                    onclick="selectElement('mii-pr-person-patient', 62)">
+                    <div class="path">address.line.extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="63"
+                    onclick="selectElement('mii-pr-person-patient', 63)">
+                    <div class="path">address.line.extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="64"
+                    onclick="selectElement('mii-pr-person-patient', 64)">
+                    <div class="path">address.line.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="65"
+                    onclick="selectElement('mii-pr-person-patient', 65)">
+                    <div class="path">address.city</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="66"
+                    onclick="selectElement('mii-pr-person-patient', 66)">
+                    <div class="path">address.city.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="67"
+                    onclick="selectElement('mii-pr-person-patient', 67)">
+                    <div class="path">address.postalCode</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="68"
+                    onclick="selectElement('mii-pr-person-patient', 68)">
+                    <div class="path">address.country</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="69"
+                    onclick="selectElement('mii-pr-person-patient', 69)">
+                    <div class="path">link</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="70"
+                    onclick="selectElement('mii-pr-person-patient', 70)">
+                    <div class="path">link.other</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="71"
+                    onclick="selectElement('mii-pr-person-patient', 71)">
+                    <div class="path">link.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-person-patient">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-person-patient" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-person-patient')">
+                <div class="title">MII PR Person Patient</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Person_Patient</p>
+                    <p><span class="label">Type:</span> Patient</p>
+                    <p><span class="label">Base Definition:</span> Patient</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.1</p>
+                    <p><span class="label">Elements:</span> 72 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-person-patient', 0)">
+                    <div class="path">id</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-person-patient', 1)">
+                    <div class="path">meta</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-person-patient', 2)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-person-patient', 3)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-person-patient', 4)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-person-patient', 5)">
+                    <div class="path">identifier.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-person-patient', 6)">
+                    <div class="path">identifier.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-person-patient', 7)">
+                    <div class="path">identifier.value</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-person-patient', 8)">
+                    <div class="path">identifier.assigner</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-person-patient', 9)">
+                    <div class="path">identifier.assigner.identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-person-patient', 10)">
+                    <div class="path">identifier.assigner.identifier.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-person-patient', 11)">
+                    <div class="path">identifier.assigner.identifier.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-person-patient', 12)">
+                    <div class="path">identifier.assigner.identifier.value</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-person-patient', 13)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-person-patient', 14)">
+                    <div class="path">identifier.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="15"
+                    onclick="selectElement('mii-pr-person-patient', 15)">
+                    <div class="path">identifier.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="16"
+                    onclick="selectElement('mii-pr-person-patient', 16)">
+                    <div class="path">identifier.value</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="17"
+                    onclick="selectElement('mii-pr-person-patient', 17)">
+                    <div class="path">identifier.assigner</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="18"
+                    onclick="selectElement('mii-pr-person-patient', 18)">
+                    <div class="path">identifier.assigner.identifier.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="19"
+                    onclick="selectElement('mii-pr-person-patient', 19)">
+                    <div class="path">identifier.assigner.identifier.system</div>
+                    <div class="badges"></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="20"
+                    onclick="selectElement('mii-pr-person-patient', 20)">
+                    <div class="path">name</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="21"
+                    onclick="selectElement('mii-pr-person-patient', 21)">
+                    <div class="path">name</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="22"
+                    onclick="selectElement('mii-pr-person-patient', 22)">
+                    <div class="path">name.use</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="23"
+                    onclick="selectElement('mii-pr-person-patient', 23)">
+                    <div class="path">name.family</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="24"
+                    onclick="selectElement('mii-pr-person-patient', 24)">
+                    <div class="path">name.family.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="25"
+                    onclick="selectElement('mii-pr-person-patient', 25)">
+                    <div class="path">name.family.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="26"
+                    onclick="selectElement('mii-pr-person-patient', 26)">
+                    <div class="path">name.family.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="27"
+                    onclick="selectElement('mii-pr-person-patient', 27)">
+                    <div class="path">name.given</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="28"
+                    onclick="selectElement('mii-pr-person-patient', 28)">
+                    <div class="path">name.prefix</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="29"
+                    onclick="selectElement('mii-pr-person-patient', 29)">
+                    <div class="path">name.prefix.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="30"
+                    onclick="selectElement('mii-pr-person-patient', 30)">
+                    <div class="path">name</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="31"
+                    onclick="selectElement('mii-pr-person-patient', 31)">
+                    <div class="path">name.use</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="32"
+                    onclick="selectElement('mii-pr-person-patient', 32)">
+                    <div class="path">name.family</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="33"
+                    onclick="selectElement('mii-pr-person-patient', 33)">
+                    <div class="path">name.family.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="34"
+                    onclick="selectElement('mii-pr-person-patient', 34)">
+                    <div class="path">name.family.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="35"
+                    onclick="selectElement('mii-pr-person-patient', 35)">
+                    <div class="path">name.family.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="36"
+                    onclick="selectElement('mii-pr-person-patient', 36)">
+                    <div class="path">name.given</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="37"
+                    onclick="selectElement('mii-pr-person-patient', 37)">
+                    <div class="path">name.prefix</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="38"
+                    onclick="selectElement('mii-pr-person-patient', 38)">
+                    <div class="path">name.prefix.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="39"
+                    onclick="selectElement('mii-pr-person-patient', 39)">
+                    <div class="path">gender</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="40"
+                    onclick="selectElement('mii-pr-person-patient', 40)">
+                    <div class="path">gender.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="41"
+                    onclick="selectElement('mii-pr-person-patient', 41)">
+                    <div class="path">birthDate</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="42"
+                    onclick="selectElement('mii-pr-person-patient', 42)">
+                    <div class="path">birthDate.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="43"
+                    onclick="selectElement('mii-pr-person-patient', 43)">
+                    <div class="path">deceased[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="44"
+                    onclick="selectElement('mii-pr-person-patient', 44)">
+                    <div class="path">address</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="45"
+                    onclick="selectElement('mii-pr-person-patient', 45)">
+                    <div class="path">address</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="46"
+                    onclick="selectElement('mii-pr-person-patient', 46)">
+                    <div class="path">address.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="47"
+                    onclick="selectElement('mii-pr-person-patient', 47)">
+                    <div class="path">address.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="48"
+                    onclick="selectElement('mii-pr-person-patient', 48)">
+                    <div class="path">address.line</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="49"
+                    onclick="selectElement('mii-pr-person-patient', 49)">
+                    <div class="path">address.line.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="50"
+                    onclick="selectElement('mii-pr-person-patient', 50)">
+                    <div class="path">address.line.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="51"
+                    onclick="selectElement('mii-pr-person-patient', 51)">
+                    <div class="path">address.line.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="52"
+                    onclick="selectElement('mii-pr-person-patient', 52)">
+                    <div class="path">address.line.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="53"
+                    onclick="selectElement('mii-pr-person-patient', 53)">
+                    <div class="path">address.city</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="54"
+                    onclick="selectElement('mii-pr-person-patient', 54)">
+                    <div class="path">address.city.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="55"
+                    onclick="selectElement('mii-pr-person-patient', 55)">
+                    <div class="path">address.postalCode</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="56"
+                    onclick="selectElement('mii-pr-person-patient', 56)">
+                    <div class="path">address.country</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="57"
+                    onclick="selectElement('mii-pr-person-patient', 57)">
+                    <div class="path">address</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="58"
+                    onclick="selectElement('mii-pr-person-patient', 58)">
+                    <div class="path">address.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="59"
+                    onclick="selectElement('mii-pr-person-patient', 59)">
+                    <div class="path">address.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="60"
+                    onclick="selectElement('mii-pr-person-patient', 60)">
+                    <div class="path">address.line</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="61"
+                    onclick="selectElement('mii-pr-person-patient', 61)">
+                    <div class="path">address.line.extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="62"
+                    onclick="selectElement('mii-pr-person-patient', 62)">
+                    <div class="path">address.line.extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="63"
+                    onclick="selectElement('mii-pr-person-patient', 63)">
+                    <div class="path">address.line.extension</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="64"
+                    onclick="selectElement('mii-pr-person-patient', 64)">
+                    <div class="path">address.line.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="65"
+                    onclick="selectElement('mii-pr-person-patient', 65)">
+                    <div class="path">address.city</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="66"
+                    onclick="selectElement('mii-pr-person-patient', 66)">
+                    <div class="path">address.city.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="67"
+                    onclick="selectElement('mii-pr-person-patient', 67)">
+                    <div class="path">address.postalCode</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="68"
+                    onclick="selectElement('mii-pr-person-patient', 68)">
+                    <div class="path">address.country</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="69"
+                    onclick="selectElement('mii-pr-person-patient', 69)">
+                    <div class="path">link</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="70"
+                    onclick="selectElement('mii-pr-person-patient', 70)">
+                    <div class="path">link.other</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient"
+                    data-element="71"
+                    onclick="selectElement('mii-pr-person-patient', 71)">
+                    <div class="path">link.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-person-patient">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-person-patient-pseudonymisiert" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-person-patient-pseudonymisiert')">
+                <div class="title">MII PR Person Patient (Pseudonymisiert)</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Person_PatientPseudonymisiert</p>
+                    <p><span class="label">Type:</span> Patient</p>
+                    <p><span class="label">Base Definition:</span> Patient</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.1</p>
+                    <p><span class="label">Elements:</span> 27 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 0)">
+                    <div class="path">id</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 1)">
+                    <div class="path">meta</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 2)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 3)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 4)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 5)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 6)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 7)">
+                    <div class="path">identifier.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 8)">
+                    <div class="path">identifier.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 9)">
+                    <div class="path">identifier.value</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 10)">
+                    <div class="path">identifier.value.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 11)">
+                    <div class="path">identifier.value.extension.value[x]</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 12)">
+                    <div class="path">identifier.assigner</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 13)">
+                    <div class="path">identifier.assigner.identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 14)">
+                    <div class="path">identifier.assigner.identifier.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="15"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 15)">
+                    <div class="path">identifier.assigner.identifier.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="16"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 16)">
+                    <div class="path">identifier.assigner.identifier.value</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="17"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 17)">
+                    <div class="path">active</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="18"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 18)">
+                    <div class="path">gender</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="19"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 19)">
+                    <div class="path">gender.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="20"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 20)">
+                    <div class="path">birthDate</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="21"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 21)">
+                    <div class="path">address</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="22"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 22)">
+                    <div class="path">address</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="23"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 23)">
+                    <div class="path">address.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="24"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 24)">
+                    <div class="path">address.city.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="25"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 25)">
+                    <div class="path">address.postalCode</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="26"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 26)">
+                    <div class="path">address.country</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-person-patient-pseudonymisiert">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-person-patient-pseudonymisiert" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-person-patient-pseudonymisiert')">
+                <div class="title">MII PR Person Patient (Pseudonymisiert)</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Person_PatientPseudonymisiert</p>
+                    <p><span class="label">Type:</span> Patient</p>
+                    <p><span class="label">Base Definition:</span> Patient</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.1</p>
+                    <p><span class="label">Elements:</span> 27 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 0)">
+                    <div class="path">id</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 1)">
+                    <div class="path">meta</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 2)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 3)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 4)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 5)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 6)">
+                    <div class="path">identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 7)">
+                    <div class="path">identifier.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 8)">
+                    <div class="path">identifier.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 9)">
+                    <div class="path">identifier.value</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 10)">
+                    <div class="path">identifier.value.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 11)">
+                    <div class="path">identifier.value.extension.value[x]</div>
+                    <div class="badges"><span class="badge badge-ext">EXT</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 12)">
+                    <div class="path">identifier.assigner</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 13)">
+                    <div class="path">identifier.assigner.identifier</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 14)">
+                    <div class="path">identifier.assigner.identifier.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="15"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 15)">
+                    <div class="path">identifier.assigner.identifier.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="16"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 16)">
+                    <div class="path">identifier.assigner.identifier.value</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="17"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 17)">
+                    <div class="path">active</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="18"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 18)">
+                    <div class="path">gender</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="19"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 19)">
+                    <div class="path">gender.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="20"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 20)">
+                    <div class="path">birthDate</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="21"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 21)">
+                    <div class="path">address</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="22"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 22)">
+                    <div class="path">address</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="23"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 23)">
+                    <div class="path">address.type</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="24"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 24)">
+                    <div class="path">address.city.extension</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-ext">EXT</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="25"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 25)">
+                    <div class="path">address.postalCode</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-patient-pseudonymisiert"
+                    data-element="26"
+                    onclick="selectElement('mii-pr-person-patient-pseudonymisiert', 26)">
+                    <div class="path">address.country</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-person-patient-pseudonymisiert">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-person-todesursache" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-person-todesursache')">
+                <div class="title">MII PR Person Todesursache</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Person_Todesursache</p>
+                    <p><span class="label">Type:</span> Condition</p>
+                    <p><span class="label">Base Definition:</span> Condition</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.1</p>
+                    <p><span class="label">Elements:</span> 21 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-person-todesursache', 0)">
+                    <div class="path">id</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-person-todesursache', 1)">
+                    <div class="path">meta</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-person-todesursache', 2)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-person-todesursache', 3)">
+                    <div class="path">clinicalStatus</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-person-todesursache', 4)">
+                    <div class="path">verificationStatus</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-person-todesursache', 5)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-person-todesursache', 6)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-person-todesursache', 7)">
+                    <div class="path">category.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-person-todesursache', 8)">
+                    <div class="path">category.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-person-todesursache', 9)">
+                    <div class="path">category.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-person-todesursache', 10)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-person-todesursache', 11)">
+                    <div class="path">code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-person-todesursache', 12)">
+                    <div class="path">code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-person-todesursache', 13)">
+                    <div class="path">code.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-person-todesursache', 14)">
+                    <div class="path">code.coding.version</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="15"
+                    onclick="selectElement('mii-pr-person-todesursache', 15)">
+                    <div class="path">code.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="16"
+                    onclick="selectElement('mii-pr-person-todesursache', 16)">
+                    <div class="path">code.text</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="17"
+                    onclick="selectElement('mii-pr-person-todesursache', 17)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="18"
+                    onclick="selectElement('mii-pr-person-todesursache', 18)">
+                    <div class="path">encounter</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="19"
+                    onclick="selectElement('mii-pr-person-todesursache', 19)">
+                    <div class="path">recordedDate</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="20"
+                    onclick="selectElement('mii-pr-person-todesursache', 20)">
+                    <div class="path">note</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-person-todesursache">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-person-todesursache" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-person-todesursache')">
+                <div class="title">MII PR Person Todesursache</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Person_Todesursache</p>
+                    <p><span class="label">Type:</span> Condition</p>
+                    <p><span class="label">Base Definition:</span> Condition</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.1</p>
+                    <p><span class="label">Elements:</span> 21 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-person-todesursache', 0)">
+                    <div class="path">id</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-person-todesursache', 1)">
+                    <div class="path">meta</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-person-todesursache', 2)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-person-todesursache', 3)">
+                    <div class="path">clinicalStatus</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-person-todesursache', 4)">
+                    <div class="path">verificationStatus</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-person-todesursache', 5)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-person-todesursache', 6)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-person-todesursache', 7)">
+                    <div class="path">category.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-person-todesursache', 8)">
+                    <div class="path">category.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-person-todesursache', 9)">
+                    <div class="path">category.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-person-todesursache', 10)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-person-todesursache', 11)">
+                    <div class="path">code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-person-todesursache', 12)">
+                    <div class="path">code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-person-todesursache', 13)">
+                    <div class="path">code.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-person-todesursache', 14)">
+                    <div class="path">code.coding.version</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="15"
+                    onclick="selectElement('mii-pr-person-todesursache', 15)">
+                    <div class="path">code.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="16"
+                    onclick="selectElement('mii-pr-person-todesursache', 16)">
+                    <div class="path">code.text</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="17"
+                    onclick="selectElement('mii-pr-person-todesursache', 17)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="18"
+                    onclick="selectElement('mii-pr-person-todesursache', 18)">
+                    <div class="path">encounter</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="19"
+                    onclick="selectElement('mii-pr-person-todesursache', 19)">
+                    <div class="path">recordedDate</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-todesursache"
+                    data-element="20"
+                    onclick="selectElement('mii-pr-person-todesursache', 20)">
+                    <div class="path">note</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-person-todesursache">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-person-vitalstatus" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-person-vitalstatus')">
+                <div class="title">MII PR Person Vitalstatus</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Person_Vitalstatus</p>
+                    <p><span class="label">Type:</span> Observation</p>
+                    <p><span class="label">Base Definition:</span> Observation</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.1</p>
+                    <p><span class="label">Elements:</span> 24 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 0)">
+                    <div class="path">id</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 1)">
+                    <div class="path">meta</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 2)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 3)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 4)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 5)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 6)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 7)">
+                    <div class="path">code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 8)">
+                    <div class="path">code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 9)">
+                    <div class="path">code.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 10)">
+                    <div class="path">code.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 11)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 12)">
+                    <div class="path">encounter</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 13)">
+                    <div class="path">effective[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 14)">
+                    <div class="path">value[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="15"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 15)">
+                    <div class="path">value[x].coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="16"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 16)">
+                    <div class="path">value[x].coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="17"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 17)">
+                    <div class="path">value[x].coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="18"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 18)">
+                    <div class="path">value[x].coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="19"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 19)">
+                    <div class="path">note</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="20"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 20)">
+                    <div class="path">bodySite</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="21"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 21)">
+                    <div class="path">specimen</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="22"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 22)">
+                    <div class="path">referenceRange</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="23"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 23)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-person-vitalstatus">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="profile-card" id="profile-mii-pr-person-vitalstatus" style="display:none;">
+            <div class="profile-header" onclick="toggleProfile('mii-pr-person-vitalstatus')">
+                <div class="title">MII PR Person Vitalstatus</div>
+                <div class="indicator">▶</div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <p><span class="label">Name:</span> MII_PR_Person_Vitalstatus</p>
+                    <p><span class="label">Type:</span> Observation</p>
+                    <p><span class="label">Base Definition:</span> Observation</p>
+                    <p><span class="label">Status:</span> active</p>
+                    <p><span class="label">Version:</span> 2025.0.1</p>
+                    <p><span class="label">Elements:</span> 24 differential elements</p>
+                </div>
+
+                <div class="two-panel">
+                    <div class="elements-panel">
+                        <h3>Differential Elements</h3>
+                        <ul class="elements-list">
+                            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="0"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 0)">
+                    <div class="path">id</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="1"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 1)">
+                    <div class="path">meta</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="2"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 2)">
+                    <div class="path">meta.profile</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="3"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 3)">
+                    <div class="path">status</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="4"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 4)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="5"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 5)">
+                    <div class="path">category</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="6"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 6)">
+                    <div class="path">code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="7"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 7)">
+                    <div class="path">code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="8"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 8)">
+                    <div class="path">code.coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="9"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 9)">
+                    <div class="path">code.coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="10"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 10)">
+                    <div class="path">code.coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="11"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 11)">
+                    <div class="path">subject</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="12"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 12)">
+                    <div class="path">encounter</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="13"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 13)">
+                    <div class="path">effective[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="14"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 14)">
+                    <div class="path">value[x]</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="15"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 15)">
+                    <div class="path">value[x].coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="16"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 16)">
+                    <div class="path">value[x].coding</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span><span class="badge badge-slice">SLICE</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="17"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 17)">
+                    <div class="path">value[x].coding.system</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="18"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 18)">
+                    <div class="path">value[x].coding.code</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="19"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 19)">
+                    <div class="path">note</div>
+                    <div class="badges"><span class="badge badge-ms">MS</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="20"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 20)">
+                    <div class="path">bodySite</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="21"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 21)">
+                    <div class="path">specimen</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="22"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 22)">
+                    <div class="path">referenceRange</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                <li class="element-item"
+                    data-profile="mii-pr-person-vitalstatus"
+                    data-element="23"
+                    onclick="selectElement('mii-pr-person-vitalstatus', 23)">
+                    <div class="path">component</div>
+                    <div class="badges"><span class="badge badge-card">⬆</span></div>
+                </li>
+            
+                        </ul>
+                    </div>
+                    <div class="details-panel" id="details-mii-pr-person-vitalstatus">
+                        <div class="details-empty">Click an element on the left to see details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        </div>
+    </div>
+
+    <script>
+        // Embedded profile data
+        const profileData = {"mii-pr-person-patient": {"id": "mii-pr-person-patient", "url": "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/Patient", "name": "MII_PR_Person_Patient", "title": "MII PR Person Patient", "status": "active", "description": "Dieses Profil beschreibt eine Patient*in in der Medizininformatik-Initiative.", "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient", "type": "Patient", "module": "person", "version": "2025.0.1", "differential": [{"path": "Patient.id", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.meta", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.meta.profile", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.identifier", "short": "Patienten-Identifikator", "definition": "Ein Identifikator für den/die Patient*in", "min": null, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "Patient.identifier", "short": "Krankenversichertennummer", "definition": "Krankenversichertennummer, unabhängig, ob GKV, PKV oder Sonderkostenträger", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Identifier", "profile": ["http://fhir.de/StructureDefinition/identifier-kvid-10"]}], "sliceName": "versichertenId"}, {"path": "Patient.identifier.type", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.identifier.system", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.identifier.value", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.identifier.assigner", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.identifier.assigner.identifier", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Identifier", "profile": ["http://fhir.de/StructureDefinition/identifier-iknr"]}]}, {"path": "Patient.identifier.assigner.identifier.type", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.identifier.assigner.identifier.system", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.identifier.assigner.identifier.value", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.identifier", "short": "Patientenidentifikation", "definition": "Patientenidentifikator innerhalb einer Organisation", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "type": [{"code": "Identifier", "profile": ["http://fhir.de/StructureDefinition/identifier-pid"]}], "sliceName": "pid"}, {"path": "Patient.identifier.type", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.identifier.system", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.identifier.value", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.identifier.assigner", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.identifier.assigner.identifier.type", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.identifier.assigner.identifier.system", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "constraints": [{"key": "mii-pat-2", "severity": "error", "human": "Entweder IKNR oder MII Core Location Identifier muss verwendet werden", "expression": "$this = 'http://fhir.de/sid/arge-ik/iknr' or $this = 'https://www.medizininformatik-initiative.de/fhir/core/CodeSystem/core-location-identifier'"}]}, {"path": "Patient.name", "short": "Name", "definition": "Name der Patientin oder des Patienten", "min": null, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "Patient.name", "short": "Personenname", "definition": "Personenname mit in Deutschland üblichen Namensbestandteilen", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "HumanName", "profile": ["http://fhir.de/StructureDefinition/humanname-de-basis"]}], "sliceName": "name"}, {"path": "Patient.name.use", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.name.family", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.name.family.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "isExtension": true, "sliceName": "namenszusatz"}, {"path": "Patient.name.family.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "isExtension": true, "sliceName": "nachname"}, {"path": "Patient.name.family.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "isExtension": true, "sliceName": "vorsatzwort"}, {"path": "Patient.name.given", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.name.prefix", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.name.prefix.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "isExtension": true, "sliceName": "prefix-qualifier"}, {"path": "Patient.name", "short": "Geburtsname", "definition": "Name, der vor einer Namensänderung aufgrund von Heirat verwendet wurde", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "HumanName", "profile": ["http://fhir.de/StructureDefinition/humanname-de-basis"]}], "sliceName": "geburtsname"}, {"path": "Patient.name.use", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.name.family", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.name.family.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "isExtension": true, "sliceName": "namenszusatz"}, {"path": "Patient.name.family.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "isExtension": true, "sliceName": "nachname"}, {"path": "Patient.name.family.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "isExtension": true, "sliceName": "vorsatzwort"}, {"path": "Patient.name.given", "short": "", "definition": "", "min": null, "max": "0", "mustSupport": false, "isModifier": false}, {"path": "Patient.name.prefix", "short": "", "definition": "", "min": null, "max": "0", "mustSupport": false, "isModifier": false}, {"path": "Patient.name.prefix.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "isExtension": true, "sliceName": "prefix-qualifier"}, {"path": "Patient.gender", "short": "Administratives Geschlecht", "definition": "männlich | weiblich | andere | unbekannt | unbestimmt | divers", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.gender.extension", "short": "Extension Administratives Geschlecht", "definition": "Extension zur genaueren Differenzierung des administrativen Geschlechts", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Extension", "profile": ["http://fhir.de/StructureDefinition/gender-amtlich-de"]}], "isExtension": true, "sliceName": "other-amtlich"}, {"path": "Patient.birthDate", "short": "Geburtsdatum", "definition": "Das Geburtsdatum der Patientin oder des Patienten", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.birthDate.extension", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Extension", "profile": ["http://hl7.org/fhir/StructureDefinition/data-absent-reason"]}], "isExtension": true, "sliceName": "data-absent-reason"}, {"path": "Patient.deceased[x]", "short": "Verstorben", "definition": "Gibt an, ob die Person verstorben ist oder nicht", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.address", "short": "Adresse", "definition": "Eine Adresse der Patientin oder des Patienten", "min": null, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "Patient.address", "short": "Straßenanschrift", "definition": "Eine Straßenanschrift der Patientin oder des Patienten", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "type": [{"code": "Address", "profile": ["http://fhir.de/StructureDefinition/address-de-basis"]}], "constraints": [{"key": "pat-cnt-2or3-char", "severity": "warning", "human": "The content of the country element (if present) SHALL be selected EITHER from ValueSet ISO Country Alpha-2 http://hl7.org/fhir/ValueSet/iso3166-1-2 OR MAY be selected from ISO Country Alpha-3 Value Set http://hl7.org/fhir/ValueSet/iso3166-1-3, IF the country is not specified in value Set ISO Country Alpha-2 http://hl7.org/fhir/ValueSet/iso3166-1-2.", "expression": "country.empty() or (country.memberOf('http://hl7.org/fhir/ValueSet/iso3166-1-2') or country.memberOf('http://hl7.org/fhir/ValueSet/iso3166-1-3'))"}], "sliceName": "Strassenanschrift"}, {"path": "Patient.address.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "isExtension": true, "sliceName": "Stadtteil"}, {"path": "Patient.address.type", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.address.line", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.address.line.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "isExtension": true, "sliceName": "Strasse"}, {"path": "Patient.address.line.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "isExtension": true, "sliceName": "Hausnummer"}, {"path": "Patient.address.line.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "isExtension": true, "sliceName": "Adresszusatz"}, {"path": "Patient.address.line.extension", "short": "", "definition": "", "min": null, "max": "0", "mustSupport": true, "isModifier": false, "isExtension": true, "sliceName": "Postfach"}, {"path": "Patient.address.city", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.address.city.extension", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Extension", "profile": ["http://fhir.de/StructureDefinition/destatis/ags"]}], "isExtension": true, "sliceName": "gemeindeschluessel"}, {"path": "Patient.address.postalCode", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.address.country", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.address", "short": "Postfach", "definition": "Eine Postfachanschrift der Patientin oder des Patienten", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "type": [{"code": "Address", "profile": ["http://fhir.de/StructureDefinition/address-de-basis"]}], "constraints": [{"key": "pat-cnt-2or3-char", "severity": "warning", "human": "The content of the country element (if present) SHALL be selected EITHER from ValueSet ISO Country Alpha-2 http://hl7.org/fhir/ValueSet/iso3166-1-2 OR MAY be selected from ISO Country Alpha-3 Value Set http://hl7.org/fhir/ValueSet/iso3166-1-3, IF the country is not specified in value Set ISO Country Alpha-2 http://hl7.org/fhir/ValueSet/iso3166-1-2.", "expression": "country.empty() or (country.memberOf('http://hl7.org/fhir/ValueSet/iso3166-1-2') or country.memberOf('http://hl7.org/fhir/ValueSet/iso3166-1-3'))"}], "sliceName": "Postfach"}, {"path": "Patient.address.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "isExtension": true, "sliceName": "Stadtteil"}, {"path": "Patient.address.type", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.address.line", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.address.line.extension", "short": "", "definition": "", "min": null, "max": "0", "mustSupport": false, "isModifier": false, "isExtension": true, "sliceName": "Strasse"}, {"path": "Patient.address.line.extension", "short": "", "definition": "", "min": null, "max": "0", "mustSupport": false, "isModifier": false, "isExtension": true, "sliceName": "Hausnummer"}, {"path": "Patient.address.line.extension", "short": "", "definition": "", "min": null, "max": "0", "mustSupport": false, "isModifier": false, "isExtension": true, "sliceName": "Adresszusatz"}, {"path": "Patient.address.line.extension", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false, "isExtension": true, "sliceName": "Postfach"}, {"path": "Patient.address.city", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.address.city.extension", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Extension", "profile": ["http://fhir.de/StructureDefinition/destatis/ags"]}], "isExtension": true, "sliceName": "gemeindeschluessel"}, {"path": "Patient.address.postalCode", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.address.country", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.link", "short": "Verweis", "definition": "Verweis auf eine andere Patientenressource, die die gleiche tatsächliche Person betrifft", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.link.other", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.link.type", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}], "elementCount": 72, "parentName": "Patient"}, "mii-pr-person-patient-pseudonymisiert": {"id": "mii-pr-person-patient-pseudonymisiert", "url": "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/PatientPseudonymisiert", "name": "MII_PR_Person_PatientPseudonymisiert", "title": "MII PR Person Patient (Pseudonymisiert)", "status": "active", "description": "Dieses Profil beschreibt eine*n pseudonymisierte*n Patient*in in der Medizininformatik-Initiative.", "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient", "type": "Patient", "module": "person", "version": "2025.0.1", "differential": [{"path": "Patient.id", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.meta", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.meta.profile", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.identifier", "short": "Patienten-Identifikator", "definition": "Ein Identifikator für den/die Patient*in", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "Patient.identifier", "short": "Pseudonymisierter Identifikator", "definition": "Ein Pseudonym ersetzt einen Originalwert. \nDie Verarbeitung ist umkehrbar. Zusätzliche Informationen sind erforderlich, um den Originalwert zu rekonstruieren, bspw. eine Trusted Third Party.", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "sliceName": "PseudonymisierterIdentifier"}, {"path": "Patient.identifier", "short": "Anonymisierter Identifikator", "definition": "Ein Anonymisierter Identifikator ersetzt einen Originalwert. \nDie Verarbeitung ist unumkehrbar. Der Originalwert kann nicht oder nur mit unverhältnismäßigem Aufwand rekonstruiert werden.", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "sliceName": "AnonymisierterIdentifier"}, {"path": "Patient.identifier", "short": "Maskierter Identifier der Krankenversicherten-ID", "definition": "Identifier der Krankenversichertennummer, bei dem der Wert maskiert wurde.", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Identifier", "profile": ["http://fhir.de/StructureDefinition/identifier-kvid-10"]}], "constraints": [{"key": "ide-masked-1", "severity": "warning", "human": "Identifier.value SOLLTE keinen Wert und SOLLTE die Extension Data Absent Reason mit Code 'masked' enthalten.", "expression": "value.hasValue().not() and value.extension.where(url='http://hl7.org/fhir/StructureDefinition/data-absent-reason' and value='masked').exists()"}], "sliceName": "MaskierterVersichertenIdentifer"}, {"path": "Patient.identifier.type", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.identifier.system", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.identifier.value", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.identifier.value.extension", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Extension", "profile": ["http://hl7.org/fhir/StructureDefinition/data-absent-reason"]}], "isExtension": true, "sliceName": "data-absent-reason"}, {"path": "Patient.identifier.value.extension.value[x]", "short": "", "definition": "", "min": null, "max": null, "mustSupport": false, "isModifier": false, "isExtension": true}, {"path": "Patient.identifier.assigner", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.identifier.assigner.identifier", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Identifier", "profile": ["http://fhir.de/StructureDefinition/identifier-iknr"]}]}, {"path": "Patient.identifier.assigner.identifier.type", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.identifier.assigner.identifier.system", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.identifier.assigner.identifier.value", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.active", "short": "Aktiv", "definition": "Gibt an, ob diese Patient-Ressource aktiv verwendet wird.", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.gender", "short": "Administratives Geschlecht", "definition": "männlich | weiblich | andere | unbekannt | unbestimmt | divers", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.gender.extension", "short": "Extension Administratives Geschlecht", "definition": "Extension zur genaueren Differenzierung des administrativen Geschlechts", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Extension", "profile": ["http://fhir.de/StructureDefinition/gender-amtlich-de"]}], "isExtension": true, "sliceName": "other-amtlich"}, {"path": "Patient.birthDate", "short": "Geburtsdatum", "definition": "Das Geburtsdatum der Patientin oder des Patienten", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.address", "short": "Adresse", "definition": "Eine Adresse der Patientin oder des Patienten", "min": null, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "Patient.address", "short": "Straßenanschrift", "definition": "Eine Straßenanschrift der Patientin oder des Patienten", "min": 0, "max": "*", "mustSupport": true, "isModifier": false, "type": [{"code": "Address", "profile": ["http://fhir.de/StructureDefinition/address-de-basis"]}], "constraints": [{"key": "pat-cnt-2or3-char", "severity": "warning", "human": "The content of the country element (if present) SHALL be selected EITHER from ValueSet ISO Country Alpha-2 http://hl7.org/fhir/ValueSet/iso3166-1-2 OR MAY be selected from ISO Country Alpha-3 Value Set http://hl7.org/fhir/ValueSet/iso3166-1-3, IF the country is not specified in value Set ISO Country Alpha-2 http://hl7.org/fhir/ValueSet/iso3166-1-2.", "expression": "country.empty() or (country.memberOf('http://hl7.org/fhir/ValueSet/iso3166-1-2') or country.memberOf('http://hl7.org/fhir/ValueSet/iso3166-1-3'))"}], "sliceName": "Strassenanschrift"}, {"path": "Patient.address.type", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.address.city.extension", "short": "", "definition": "", "min": 0, "max": "1", "mustSupport": true, "isModifier": false, "type": [{"code": "Extension", "profile": ["http://fhir.de/StructureDefinition/destatis/ags"]}], "isExtension": true, "sliceName": "gemeindeschluessel"}, {"path": "Patient.address.postalCode", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Patient.address.country", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}], "elementCount": 27, "parentName": "Patient"}, "mii-pr-person-todesursache": {"id": "mii-pr-person-todesursache", "url": "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/Todesursache", "name": "MII_PR_Person_Todesursache", "title": "MII PR Person Todesursache", "status": "active", "description": "Dieses Profil beschreibt den Todesursache der Patient*in als Element des Kerndatensatzes Medizininformatik-Initiative", "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Condition", "type": "Condition", "module": "person", "version": "2025.0.1", "differential": [{"path": "Condition.id", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Condition.meta", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Condition.meta.profile", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Condition.clinicalStatus", "short": "Klinischer Status", "definition": "aktiv | Rezidiv | Rückfall | inaktiv | Remission | abgeklungen", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Condition.verificationStatus", "short": "Verifizierungsstatus", "definition": "unbestätigt | vorläufig | differential | bestätigt | widerlegt | fehlerhafte Eingabe", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Condition.category", "short": "Kategorie", "definition": "Eine Kategorie, die der Diagnose zugeordnet ist.", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "Condition.category", "short": "", "definition": "", "min": 1, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "todesDiagnose"}, {"path": "Condition.category.coding", "short": "", "definition": "", "min": 2, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "Condition.category.coding", "short": "", "definition": "", "min": 1, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "snomed"}, {"path": "Condition.category.coding", "short": "", "definition": "", "min": 1, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "loinc"}, {"path": "Condition.code", "short": "Code", "definition": "Ein ICD-10-WHO Code, der die Todesursache identifiziert.", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Condition.code.coding", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "Condition.code.coding", "short": "ICD-10-WHO", "definition": "Ein ICD-10-WHO Code, der die Todesursache identifiziert.", "min": 1, "max": "1", "mustSupport": true, "isModifier": false, "binding": {"strength": "required", "valueSet": "http://hl7.org/fhir/sid/icd-10/vs", "description": ""}, "sliceName": "icd10-who"}, {"path": "Condition.code.coding.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Condition.code.coding.version", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Condition.code.coding.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Condition.code.text", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Condition.subject", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Condition.encounter", "short": "Fall oder Kontakt", "definition": "Fall oder Kontakt, bei dem die Todesursache festgestellt wurde.", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Condition.recordedDate", "short": "Aufzeichnungsdatum", "definition": "Datum, an dem die Todesursache erstmals dokumentiert wurde.", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Condition.note", "short": "Hinweis", "definition": "Zusätzliche Informationen zur Todesursache als Freitext.", "min": null, "max": null, "mustSupport": true, "isModifier": false}], "elementCount": 21, "parentName": "Condition"}, "mii-pr-person-vitalstatus": {"id": "mii-pr-person-vitalstatus", "url": "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/Vitalstatus", "name": "MII_PR_Person_Vitalstatus", "title": "MII PR Person Vitalstatus", "status": "active", "description": "Dieses Profil beschreibt den Vitalstatus der Patient*in in der Medizininformatik-Initiative.", "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation", "type": "Observation", "module": "person", "version": "2025.0.1", "differential": [{"path": "Observation.id", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.meta", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.meta.profile", "short": "", "definition": "", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.status", "short": "Status", "definition": "abgeschlossen", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.category", "short": "Kategorie", "definition": "Klassifikation des Typs der Beobachtung für den Vitalstatus.", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "Observation.category", "short": "", "definition": "", "min": 1, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "survey"}, {"path": "Observation.code", "short": "Code", "definition": "Ein LOINC Code, der die Vitalstatus Beobachtung identifiziert.", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.code.coding", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "Observation.code.coding", "short": "LOINC Code", "definition": "LOINC Code für Vitalstatus", "min": 1, "max": "1", "mustSupport": true, "isModifier": false, "sliceName": "loinc"}, {"path": "Observation.code.coding.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.code.coding.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.subject", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "Reference", "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Patient", "http://hl7.org/fhir/StructureDefinition/Group"]}]}, {"path": "Observation.encounter", "short": "Fall oder Kontakt", "definition": "Fall oder Kontakt, bei dem der Vitalstatus festgestellt wurde.", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.effective[x]", "short": "Zeitpunkt", "definition": "Der Zeitpunkt, zu dem der beobachtete Vitalstatus als wahr festgestellt wird.", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "dateTime"}]}, {"path": "Observation.value[x]", "short": "Codierter Wert", "definition": "Der codierte Wert für den Vitalstatus.", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "type": [{"code": "CodeableConcept"}]}, {"path": "Observation.value[x].coding", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false, "slicing": {"discriminator": [{"type": "pattern", "path": "$this"}], "rules": "open", "description": ""}}, {"path": "Observation.value[x].coding", "short": "Vitalstatus", "definition": "Der Vitalstatus der Person.", "min": 1, "max": "1", "mustSupport": true, "isModifier": false, "binding": {"strength": "required", "valueSet": "https://www.medizininformatik-initiative.de/fhir/core/modul-person/ValueSet/Vitalstatus", "description": ""}, "sliceName": "Vitalstatus"}, {"path": "Observation.value[x].coding.system", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.value[x].coding.code", "short": "", "definition": "", "min": 1, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.note", "short": "Hinweis", "definition": "Zusätzliche Informationen zum Vitalstatus als Freitext.", "min": null, "max": null, "mustSupport": true, "isModifier": false}, {"path": "Observation.bodySite", "short": "", "definition": "", "min": null, "max": "0", "mustSupport": false, "isModifier": false}, {"path": "Observation.specimen", "short": "", "definition": "", "min": null, "max": "0", "mustSupport": false, "isModifier": false}, {"path": "Observation.referenceRange", "short": "", "definition": "", "min": null, "max": "0", "mustSupport": false, "isModifier": false}, {"path": "Observation.component", "short": "", "definition": "", "min": null, "max": "0", "mustSupport": false, "isModifier": false}], "elementCount": 24, "parentName": "Observation"}};
+
+        let currentProfileId = null;
+        let currentElementIndex = null;
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-select first profile if available
+            const profiles = Object.keys(profileData);
+            if (profiles.length > 0) {
+                selectProfile(profiles[0]);
+            }
+        });
+
+        function selectProfile(profileId) {
+            if (!profileId) return;
+
+            currentProfileId = profileId;
+
+            // Hide all profiles
+            document.querySelectorAll('.profile-card').forEach(card => {
+                card.style.display = 'none';
+            });
+
+            // Show selected profile
+            const profileCard = document.getElementById('profile-' + profileId);
+            if (profileCard) {
+                profileCard.style.display = 'block';
+                // Auto-expand if collapsed
+                const body = profileCard.querySelector('.profile-body');
+                const header = profileCard.querySelector('.profile-header');
+                if (body && !body.classList.contains('expanded')) {
+                    toggleProfile(profileId);
+                }
+            }
+
+            // Update selector
+            document.getElementById('profileSelect').value = profileId;
+
+            // Clear element selection
+            clearElementSelection();
+        }
+
+        function toggleProfile(profileId) {
+            const card = document.getElementById('profile-' + profileId);
+            if (!card) return;
+
+            const header = card.querySelector('.profile-header');
+            const body = card.querySelector('.profile-body');
+
+            if (body.classList.contains('expanded')) {
+                body.classList.remove('expanded');
+                header.classList.remove('expanded');
+            } else {
+                body.classList.add('expanded');
+                header.classList.add('expanded');
+            }
+        }
+
+        function selectElement(profileId, elementIndex) {
+            currentElementIndex = elementIndex;
+
+            // Update active state
+            document.querySelectorAll('.element-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            const elementItem = document.querySelector(`[data-profile="${profileId}"][data-element="${elementIndex}"]`);
+            if (elementItem) {
+                elementItem.classList.add('active');
+            }
+
+            // Show element details
+            const detailsPanel = document.getElementById('details-' + profileId);
+            if (detailsPanel) {
+                const profile = profileData[profileId];
+                const element = profile.differential[elementIndex];
+                detailsPanel.innerHTML = renderElementDetails(element);
+            }
+        }
+
+        function clearElementSelection() {
+            document.querySelectorAll('.element-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            if (currentProfileId) {
+                const detailsPanel = document.getElementById('details-' + currentProfileId);
+                if (detailsPanel) {
+                    detailsPanel.innerHTML = '<div class="details-empty">Click an element on the left to see details</div>';
+                }
+            }
+        }
+
+        function renderElementDetails(element) {
+            let html = '<div class="detail-section">';
+            html += '<h3>' + escapeHtml(element.path) + '</h3>';
+
+            // Cardinality
+            if (element.min !== undefined || element.max !== undefined) {
+                html += '<div class="detail-row">';
+                html += '<div class="detail-label">Cardinality</div>';
+                html += '<div class="detail-value"><code>' + (element.min ?? '') + '..' + (element.max ?? '') + '</code>';
+                if (element.mustSupport) {
+                    html += ' <span class="badge badge-ms">Must Support</span>';
+                }
+                html += '</div></div>';
+            }
+
+            // Short description
+            if (element.short) {
+                html += '<div class="detail-row">';
+                html += '<div class="detail-label">Short</div>';
+                html += '<div class="detail-value">' + escapeHtml(element.short) + '</div>';
+                html += '</div>';
+            }
+
+            // Definition
+            if (element.definition) {
+                html += '<div class="detail-row">';
+                html += '<div class="detail-label">Definition</div>';
+                html += '<div class="detail-value">' + escapeHtml(element.definition) + '</div>';
+                html += '</div>';
+            }
+
+            html += '</div>';
+
+            // Types
+            if (element.type && element.type.length > 0) {
+                html += '<div class="detail-section">';
+                html += '<h3>Type Constraints</h3>';
+                html += '<ul class="type-list">';
+                element.type.forEach(type => {
+                    html += '<li class="type-item">';
+                    html += '<strong>Code:</strong> ' + escapeHtml(type.code);
+                    if (type.profile) {
+                        html += '<br><strong>Profile:</strong> ' + renderUrls(type.profile);
+                    }
+                    if (type.targetProfile) {
+                        html += '<br><strong>Target Profile:</strong> ' + renderUrls(type.targetProfile);
+                    }
+                    html += '</li>';
+                });
+                html += '</ul></div>';
+            }
+
+            // Binding
+            if (element.binding) {
+                html += '<div class="detail-section">';
+                html += '<h3>Terminology Binding</h3>';
+                html += '<div class="binding-info">';
+                html += '<div><strong>Strength:</strong> ' + escapeHtml(element.binding.strength) + '</div>';
+                html += '<div><strong>ValueSet:</strong> <code>' + escapeHtml(element.binding.valueSet) + '</code></div>';
+                if (element.binding.description) {
+                    html += '<div><strong>Description:</strong> ' + escapeHtml(element.binding.description) + '</div>';
+                }
+                html += '</div></div>';
+            }
+
+            // Constraints
+            if (element.constraints && element.constraints.length > 0) {
+                html += '<div class="detail-section">';
+                html += '<h3>Constraints</h3>';
+                html += '<ul class="constraint-list">';
+                element.constraints.forEach(c => {
+                    html += '<li class="constraint-item">';
+                    html += '<strong>' + escapeHtml(c.key) + '</strong> (' + escapeHtml(c.severity) + ')<br>';
+                    html += escapeHtml(c.human);
+                    if (c.expression) {
+                        html += '<br><code>' + escapeHtml(c.expression) + '</code>';
+                    }
+                    html += '</li>';
+                });
+                html += '</ul></div>';
+            }
+
+            // Slicing
+            if (element.slicing) {
+                html += '<div class="detail-section">';
+                html += '<h3>Slicing Information</h3>';
+                html += '<div class="detail-row">';
+                html += '<div class="detail-label">Rules</div>';
+                html += '<div class="detail-value"><code>' + escapeHtml(element.slicing.rules) + '</code></div>';
+                html += '</div>';
+                if (element.slicing.description) {
+                    html += '<div class="detail-row">';
+                    html += '<div class="detail-label">Description</div>';
+                    html += '<div class="detail-value">' + escapeHtml(element.slicing.description) + '</div>';
+                    html += '</div>';
+                }
+                html += '</div>';
+            }
+
+            return html;
+        }
+
+        function renderUrls(urls) {
+            if (Array.isArray(urls)) {
+                return urls.map(url => '<code>' + escapeHtml(url) + '</code>').join(', ');
+            }
+            return '<code>' + escapeHtml(urls) + '</code>';
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>
