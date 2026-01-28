@@ -41,6 +41,17 @@ dependencies:
   de.medizininformatikinitiative.kerndatensatz.molgen: 2025.0.0
   de.medizininformatikinitiative.kerndatensatz.patho: 2025.0.2
   de.medizininformatikinitiative.kerndatensatz.bildgebung: 2025.0.0
+  de.medizininformatikinitiative.kerndatensatz.mikrobiologie: 2025.0.1
+  de.medizininformatikinitiative.kerndatensatz.studie: 2025.0.0
+
+  de.medizininformatikinitiative.kerndatensatz.seltene: 2026.0.0
+
+  # MII Kerndatensatz Extension Modules (noch nicht als Release verfügbar)
+  # de.medizininformatikinitiative.kerndatensatz.pro: dev
+  # de.medizininformatikinitiative.kerndatensatz.dokument: 2026.0.0
+  # de.medizininformatikinitiative.kerndatensatz.kardiologie: 2026.0.0-alpha.2
+  # de.medizininformatikinitiative.kerndatensatz.lungenfunktion: 2026.0.0
+  # de.medizininformatikinitiative.kerndatensatz.molekulares-tumorboard: 2026.0.0-rc.1
 #
 #
 # The pages property corresponds to IG.definition.page. SUSHI can
