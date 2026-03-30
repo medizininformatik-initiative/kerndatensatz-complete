@@ -4,6 +4,10 @@ Dieses Paket bündelt alle Module des Kerndatensatzes der Medizininformatik-Init
 
 Während das [Meta-Modul](https://github.com/medizininformatik-initiative/kerndatensatz-meta) (`de.medizininformatikinitiative.kerndatensatz.meta`) modulübergreifende Ressourcen bereitstellt, die von den einzelnen KDS-Modulen als Grundlage genutzt werden (Extensions, CodeSystems, Naming-Conventions), dient dieses Complete-Paket als gebündelter Output: Eine einzelne Abhängigkeit, die alle Module des Kerndatensatzes in ein Projekt einbindet.
 
+## Abhängigkeitsgraph
+
+<img src="dep-graph-2026.png" alt="MII KDS 2026 Abhängigkeitsgraph" width="100%"/>
+
 ## Module
 
 ### Basismodule
