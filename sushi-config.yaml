@@ -3,55 +3,52 @@
 # │  used properties are included. For a list of all supported properties and their functions,     │
 # │  see: https://fshschool.org/docs/sushi/configuration/.                                         │
 # ╰────────────────────────────────────────────────────────────────────────────────────────────────╯
-id: fhir.example
-canonical: http://example.org
-name: ExampleIG
-# title: Example Title
-# description: Example Implementation Guide for getting started with SUSHI
-status: draft # draft | active | retired | unknown
-version: 0.1.0
-fhirVersion: 4.0.1 # https://www.hl7.org/fhir/valueset-FHIR-version.html
+id: de.medizininformatikinitiative.kerndatensatz.complete
+canonical: https://www.medizininformatik-initiative.de/fhir/core/complete
+name: MIIKerndatensatzComplete
+title: MII Kerndatensatz Complete
+description: Vollständiges Paket aller Module des MII Kerndatensatzes
+status: active
+version: 2026.0.0
+fhirVersion: 4.0.1
 copyrightYear: 2025+
-releaseLabel: ci-build
-# license: CC0-1.0 # https://www.hl7.org/fhir/valueset-spdx-license.html
-# jurisdiction: urn:iso:std:iso:3166#US "United States of America" # https://www.hl7.org/fhir/valueset-jurisdiction.html
+releaseLabel: release
+license: CC-BY-4.0
+jurisdiction: urn:iso:std:iso:3166#DE "Germany"
 publisher:
-  name: Example Publisher
-  url: http://example.org/example-publisher
-  # email: test@example.org
+  name: Medizininformatik Initiative
+  url: https://www.medizininformatik-initiative.de
 
 # The dependencies property corresponds to IG.dependsOn. The key is the
 # package id and the value is the version (or dev/current). For advanced
 # use cases, the value can be an object with keys for id, uri, and version.
 #
 dependencies:
-  # MII Kerndatensatz Core Modules
-  de.medizininformatikinitiative.kerndatensatz.person: 2025.0.0
-  de.medizininformatikinitiative.kerndatensatz.diagnose: 2025.0.0
-  de.medizininformatikinitiative.kerndatensatz.prozedur: 2025.0.0
-  de.medizininformatikinitiative.kerndatensatz.laborbefund: 2025.0.1
-  de.medizininformatikinitiative.kerndatensatz.medikation: 2025.0.0
-  de.medizininformatikinitiative.kerndatensatz.fall: 2025.0.0
-  de.medizininformatikinitiative.kerndatensatz.consent: 2025.0.0
-  de.medizininformatikinitiative.kerndatensatz.biobank: 2025.0.0
+  # Deutsche Basisprofile
+  de.basisprofil.r4: 1.5.4
 
-  # MII Kerndatensatz Specialized Modules
-  de.medizininformatikinitiative.kerndatensatz.onkologie: 2025.0.0
-  de.medizininformatikinitiative.kerndatensatz.icu: 2025.0.0
-  de.medizininformatikinitiative.kerndatensatz.molgen: 2025.0.0
-  de.medizininformatikinitiative.kerndatensatz.patho: 2025.0.2
-  de.medizininformatikinitiative.kerndatensatz.bildgebung: 2025.0.0
+  # MII Kerndatensatz Basismodule
+  de.medizininformatikinitiative.kerndatensatz.base: 2026.0.0
+  de.medizininformatikinitiative.kerndatensatz.meta: 2026.0.0
+  de.medizininformatikinitiative.kerndatensatz.medikation: 2026.0.1
+  de.medizininformatikinitiative.kerndatensatz.laborbefund: 2026.0.1
+  de.medizininformatikinitiative.kerndatensatz.biobank: 2026.0.1
+
+  # MII Kerndatensatz Erweiterungsmodule
+  de.medizininformatikinitiative.kerndatensatz.icu: 2026.0.2
   de.medizininformatikinitiative.kerndatensatz.mikrobiologie: 2025.0.1
-  de.medizininformatikinitiative.kerndatensatz.studie: 2025.0.0
+  de.medizininformatikinitiative.kerndatensatz.molgen: 2026.0.4
+  de.medizininformatikinitiative.kerndatensatz.patho: 2026.0.1
+  de.medizininformatikinitiative.kerndatensatz.studie: 2026.0.2
+  de.medizininformatikinitiative.kerndatensatz.bildgebung: 2026.0.0
+  de.medizininformatikinitiative.kerndatensatz.dokument: 2026.0.1
+  de.medizininformatikinitiative.kerndatensatz.onkologie: 2026.0.3
+  de.medizininformatikinitiative.kerndatensatz.seltene: 2026.0.1
+  de.medizininformatikinitiative.kerndatensatz.mtb: 2026.0.1
+  de.medizininformatikinitiative.kerndatensatz.pros: 2026.0.1
 
-  de.medizininformatikinitiative.kerndatensatz.seltene: 2026.0.0
-
-  # MII Kerndatensatz Extension Modules (noch nicht als Release verfügbar)
-  # de.medizininformatikinitiative.kerndatensatz.pro: dev
-  # de.medizininformatikinitiative.kerndatensatz.dokument: 2026.0.0
-  # de.medizininformatikinitiative.kerndatensatz.kardiologie: 2026.0.0-alpha.2
-  # de.medizininformatikinitiative.kerndatensatz.lungenfunktion: 2026.0.0
-  # de.medizininformatikinitiative.kerndatensatz.molekulares-tumorboard: 2026.0.0-rc.1
+  # Einwilligungsmanagement
+  de.einwilligungsmanagement: 1.0.2
 #
 #
 # The pages property corresponds to IG.definition.page. SUSHI can
