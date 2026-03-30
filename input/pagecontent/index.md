@@ -59,15 +59,32 @@ Während das [Meta-Modul](https://github.com/medizininformatik-initiative/kernda
 | DICOM (`fhir.dicom`) | 2025.3.20250714 | Bildgebung |
 | IHE FormatCode (`ihe.formatcode.fhir`) | 1.4.0 | Dokument |
 
-## Nutzung
+## Installation
 
-Dieses Paket kann als einzelne Abhängigkeit verwendet werden, um alle MII KDS-Module in ein Projekt einzubinden:
+### Über die FHIR Package Registry (empfohlen)
+
+Sobald das Paket auf packages.fhir.org verfügbar ist, genügt eine einzelne Abhängigkeit in der `sushi-config.yaml`:
 
 ```yaml
-# sushi-config.yaml
 dependencies:
   de.medizininformatikinitiative.kerndatensatz.complete: 2026.0.0
 ```
+
+Alle 19 Modul-Dependencies werden automatisch von der FHIR Package Registry aufgelöst und heruntergeladen.
+
+### Manuelle Installation
+
+Solange das Paket noch nicht auf packages.fhir.org verfügbar ist, kann es vom [GitHub Release](https://github.com/medizininformatik-initiative/kerndatensatz-complete/releases/tag/v2026.0.0) heruntergeladen und lokal installiert werden:
+
+```bash
+# Package herunterladen
+curl -LO https://github.com/medizininformatik-initiative/kerndatensatz-complete/releases/download/v2026.0.0/de.medizininformatikinitiative.kerndatensatz.complete-2026.0.0.tgz
+
+# In den lokalen FHIR-Cache installieren
+fhir install de.medizininformatikinitiative.kerndatensatz.complete-2026.0.0.tgz
+```
+
+Danach kann das Paket wie gewohnt als Dependency referenziert werden. Alle weiteren Module werden automatisch von packages.fhir.org aufgelöst.
 
 ## Weitere Informationen
 
