@@ -1,7 +1,7 @@
 {
   "name": "de.medizininformatikinitiative.kerndatensatz.complete",
   "version": "2026.0.0",
-  "description": "MII Kerndatensatz Complete v2026.0.0 - Vollständiges Meta-Paket aller Module des MII Kerndatensatzes der Medizininformatik-Initiative.",
+  "description": "MII Kerndatensatz Complete v2026.0.0 - Bill of Materials (BOM) aller Module des MII Kerndatensatzes mit kompatiblen Versionen.",
   "license": "CC-BY-4.0",
   "dependencies": {
     "hl7.fhir.r4.core": "4.0.1",

@@ -7,7 +7,7 @@ id: de.medizininformatikinitiative.kerndatensatz.complete
 canonical: https://www.medizininformatik-initiative.de/fhir/core/complete
 name: MIIKerndatensatzComplete
 title: MII Kerndatensatz Complete
-description: Vollständiges Paket aller Module des MII Kerndatensatzes
+description: Bill of Materials (BOM) aller Module des MII Kerndatensatzes mit kompatiblen Versionen
 status: active
 version: 2026.0.0
 fhirVersion: 4.0.1
