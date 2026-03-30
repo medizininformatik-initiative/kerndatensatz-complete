@@ -105,7 +105,8 @@ Danach kann das Paket wie gewohnt als Dependency referenziert werden. Alle weite
 ## Weitere Informationen
 
 - [Alle KDS-Repositories auf GitHub](https://github.com/orgs/medizininformatik-initiative/repositories?q=kerndatensatzmodul)
-- [MII Kerndatensatz Meta Wiki (Gesamtübersicht)](https://github.com/medizininformatik-initiative/kerndatensatz-meta/wiki)
+- [Übersicht über Versionen der KDS-Module](https://github.com/medizininformatik-initiative/kerndatensatz-meta/wiki/%C3%9Cbersicht-%C3%BCber-Versionen-der-Kerndatensatz%E2%80%90Module)
+- [MII Kerndatensatz Meta Wiki](https://github.com/medizininformatik-initiative/kerndatensatz-meta/wiki)
 - [MII Kerndatensatz auf Art-Decor](https://art-decor.org/art-decor/decor-project--mide-)
 - [MII GitHub Organisation](https://github.com/medizininformatik-initiative)
 - [MII FHIR Packages auf Simplifier](https://simplifier.net/organization/koordinationsstellemii/~packages)
