@@ -10,6 +10,8 @@ Während das [Meta-Modul](https://github.com/medizininformatik-initiative/kernda
 
 ## Module
 
+> Die Einteilung in Basis- und Erweiterungsmodule folgt der bisherigen Konvention des Kerndatensatzes. Diese Kategorisierung spiegelt jedoch nicht den aktuellen Reifegrad, die Verbreitung oder den Innovationscharakter der einzelnen Module wider. Wir arbeiten derzeit an einer differenzierteren Klassifikation, die den dynamischen Entwicklungen im MII-Ökosystem besser gerecht wird.
+
 ### Basismodule
 
 | Modul | Package | Version | GitHub | Release |
