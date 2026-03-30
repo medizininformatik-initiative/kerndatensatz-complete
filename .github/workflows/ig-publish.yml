@@ -35,10 +35,13 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: Setup Ruby (for Jekyll)
+      - name: Setup Ruby and Jekyll
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.1'
+
+      - name: Install Jekyll
+        run: gem install jekyll
 
       - name: Cache FHIR packages
         uses: actions/cache@v4
