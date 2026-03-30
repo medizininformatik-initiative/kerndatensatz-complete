@@ -45,7 +45,7 @@ dependencies:
   de.medizininformatikinitiative.kerndatensatz.onkologie: 2026.0.3
   de.medizininformatikinitiative.kerndatensatz.seltene: 2026.0.1
   de.medizininformatikinitiative.kerndatensatz.mtb: 2026.0.1
-  de.medizininformatikinitiative.kerndatensatz.pros: 2026.0.1
+  de.medizininformatikinitiative.kerndatensatz.pros: 2026.2.0
 
   # Einwilligungsmanagement
   de.einwilligungsmanagement: 1.0.2
