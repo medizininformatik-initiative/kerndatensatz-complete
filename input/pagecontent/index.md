@@ -86,7 +86,7 @@ fhir install de.medizininformatikinitiative.kerndatensatz.complete-2026.0.0.tgz
 
 Danach kann das Paket wie gewohnt als Dependency referenziert werden. Alle weiteren Module werden automatisch von packages.fhir.org aufgelöst.
 
-> **Hinweis:** Der `fhir`-Befehl stammt aus dem [Firely Terminal (Simplifier CLI)](https://simplifier.net/downloads/firely-terminal). Bitte **Version 3.4.0** verwenden — nicht die aktuellste Version, da neuere Versionen zu Inkompatibilitäten führen können. Installation:
+> **Hinweis:** Der `fhir`-Befehl stammt aus dem [Firely Terminal (Simplifier CLI)](https://simplifier.net/downloads/firely-terminal). Im Zweifel Version 3.4.0 verwenden — neuere Versionen sind nicht getestet.
 >
 > ```bash
 > dotnet tool install -g Firely.Terminal --version 3.4.0
