@@ -1,0 +1,115 @@
+###############################################################################
+# Stage 1: Download all FHIR packages and extract conformance resources
+###############################################################################
+FROM eclipse-temurin:21-jre AS fetcher
+
+RUN apt-get update && apt-get install -y curl jq && rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /conformance && \
+    PACKAGES=" \
+      de.basisprofil.r4/1.5.4 \
+      de.einwilligungsmanagement/1.0.2 \
+      de.medizininformatikinitiative.kerndatensatz.base/2026.0.0 \
+      de.medizininformatikinitiative.kerndatensatz.meta/2026.0.0 \
+      de.medizininformatikinitiative.kerndatensatz.medikation/2026.0.1 \
+      de.medizininformatikinitiative.kerndatensatz.laborbefund/2026.0.1 \
+      de.medizininformatikinitiative.kerndatensatz.biobank/2026.0.1 \
+      de.medizininformatikinitiative.kerndatensatz.icu/2026.0.2 \
+      de.medizininformatikinitiative.kerndatensatz.mikrobiologie/2025.0.1 \
+      de.medizininformatikinitiative.kerndatensatz.molgen/2026.0.4 \
+      de.medizininformatikinitiative.kerndatensatz.patho/2026.0.1 \
+      de.medizininformatikinitiative.kerndatensatz.studie/2026.0.2 \
+      de.medizininformatikinitiative.kerndatensatz.bildgebung/2026.0.0 \
+      de.medizininformatikinitiative.kerndatensatz.dokument/2026.0.1 \
+      de.medizininformatikinitiative.kerndatensatz.onkologie/2026.0.3 \
+      de.medizininformatikinitiative.kerndatensatz.seltene/2026.0.1 \
+      de.medizininformatikinitiative.kerndatensatz.mtb/2026.0.1 \
+      de.medizininformatikinitiative.kerndatensatz.pros/2026.2.0 \
+    " && \
+    for PKG in $PACKAGES; do \
+      NAME="${PKG%/*}"; VERSION="${PKG#*/}"; \
+      echo "Fetching $NAME $VERSION ..."; \
+      curl -sL "https://packages.fhir.org/${NAME}/${VERSION}" -o /tmp/pkg.tgz && \
+      mkdir -p /tmp/pkg && tar -xzf /tmp/pkg.tgz -C /tmp/pkg && \
+      for f in /tmp/pkg/package/*.json; do \
+        RT=$(jq -r '.resourceType // empty' "$f" 2>/dev/null); \
+        case "$RT" in \
+          StructureDefinition|ValueSet|CodeSystem|NamingSystem|ConceptMap|SearchParameter|OperationDefinition) \
+            ID=$(jq -r '.id' "$f"); \
+            cp "$f" "/conformance/${RT}-${ID}.json"; \
+            ;; \
+        esac; \
+      done && \
+      rm -rf /tmp/pkg /tmp/pkg.tgz; \
+    done && \
+    echo "Total conformance resources:" && ls /conformance/*.json | wc -l
+
+###############################################################################
+# Final: Blaze with conformance resources and auto-loader
+###############################################################################
+FROM samply/blaze:0.31
+
+LABEL org.opencontainers.image.title="MII KDS Validation Server (Blaze)"
+LABEL org.opencontainers.image.description="Blaze FHIR Server with all MII Kerndatensatz conformance resources (BOM 2026.0.0)"
+LABEL org.opencontainers.image.source="https://github.com/medizininformatik-initiative/kerndatensatz-complete"
+
+# Copy individual conformance resources (with correct ownership)
+COPY --from=fetcher --chown=1001:1001 /conformance/ /app/kds-resources/
+
+# Loader script: PUTs each resource individually
+COPY <<'LOADER' /app/load-kds.sh
+#!/bin/bash
+MARKER="/app/data/.kds-loaded"
+if [ -f "$MARKER" ]; then
+  echo "KDS resources already loaded."
+  exit 0
+fi
+
+echo "Waiting for Blaze..."
+for i in $(seq 1 120); do
+  if curl -sf http://localhost:8080/fhir/metadata > /dev/null 2>&1; then
+    echo "Blaze ready after ${i}s"
+    break
+  fi
+  sleep 1
+done
+
+echo "Loading MII KDS conformance resources..."
+TOTAL=0
+ERRORS=0
+for f in /app/kds-resources/*.json; do
+  # Parse ResourceType and ID from filename: {ResourceType}-{ID}.json
+  BASENAME=$(basename "$f" .json)
+  RT="${BASENAME%%-*}"
+  ID="${BASENAME#*-}"
+  HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
+    -X PUT -H "Content-Type: application/fhir+json" \
+    -d @"$f" \
+    "http://localhost:8080/fhir/${RT}/${ID}")
+  if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 300 ]; then
+    TOTAL=$((TOTAL + 1))
+  else
+    ERRORS=$((ERRORS + 1))
+  fi
+done
+
+echo "Loaded $TOTAL resources ($ERRORS errors)"
+touch "$MARKER"
+LOADER
+
+# Entrypoint wrapper
+COPY <<'WRAPPER' /app/entrypoint-wrapper.sh
+#!/bin/bash
+/__cacert_entrypoint.sh java -jar blaze-0.31.0-standalone.jar &
+BLAZE_PID=$!
+/app/load-kds.sh &
+wait $BLAZE_PID
+WRAPPER
+
+USER root
+RUN chmod +x /app/load-kds.sh /app/entrypoint-wrapper.sh
+USER 1001
+
+ENV JAVA_TOOL_OPTIONS="-Xmx2g"
+EXPOSE 8080
+ENTRYPOINT ["/app/entrypoint-wrapper.sh"]

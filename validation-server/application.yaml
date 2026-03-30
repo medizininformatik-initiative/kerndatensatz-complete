@@ -1,0 +1,71 @@
+spring:
+  datasource:
+    url: jdbc:h2:file:/app/data/hapi;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+  jpa:
+    properties:
+      hibernate.dialect: ca.uhn.fhir.jpa.model.dialect.HapiFhirH2Dialect
+      hibernate.search.enabled: false
+
+hapi:
+  fhir:
+    fhir_version: R4
+    narrative_enabled: false
+    install_transitive_ig_dependencies: true
+    implementationguides:
+      base:
+        name: de.medizininformatikinitiative.kerndatensatz.base
+        version: 2026.0.0
+      meta:
+        name: de.medizininformatikinitiative.kerndatensatz.meta
+        version: 2026.0.0
+      medikation:
+        name: de.medizininformatikinitiative.kerndatensatz.medikation
+        version: 2026.0.1
+      labor:
+        name: de.medizininformatikinitiative.kerndatensatz.laborbefund
+        version: 2026.0.1
+      biobank:
+        name: de.medizininformatikinitiative.kerndatensatz.biobank
+        version: 2026.0.1
+      icu:
+        name: de.medizininformatikinitiative.kerndatensatz.icu
+        version: 2026.0.2
+      mikrobiologie:
+        name: de.medizininformatikinitiative.kerndatensatz.mikrobiologie
+        version: 2025.0.1
+      molgen:
+        name: de.medizininformatikinitiative.kerndatensatz.molgen
+        version: 2026.0.4
+      patho:
+        name: de.medizininformatikinitiative.kerndatensatz.patho
+        version: 2026.0.1
+      studie:
+        name: de.medizininformatikinitiative.kerndatensatz.studie
+        version: 2026.0.2
+      bildgebung:
+        name: de.medizininformatikinitiative.kerndatensatz.bildgebung
+        version: 2026.0.0
+      dokument:
+        name: de.medizininformatikinitiative.kerndatensatz.dokument
+        version: 2026.0.1
+      onkologie:
+        name: de.medizininformatikinitiative.kerndatensatz.onkologie
+        version: 2026.0.3
+      seltene:
+        name: de.medizininformatikinitiative.kerndatensatz.seltene
+        version: 2026.0.1
+      mtb:
+        name: de.medizininformatikinitiative.kerndatensatz.mtb
+        version: 2026.0.1
+      pros:
+        name: de.medizininformatikinitiative.kerndatensatz.pros
+        version: 2026.2.0
+      basisprofil:
+        name: de.basisprofil.r4
+        version: 1.5.4
+      # einwilligung disabled: example-ConsentManagement-Provenance.json contains
+      # base64 PNG signature that crashes HAPI packageInstaller (HAPI-1821)
+      # einwilligung:
+      #   name: de.einwilligungsmanagement
+      #   version: 1.0.2

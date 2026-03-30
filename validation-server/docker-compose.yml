@@ -1,0 +1,42 @@
+services:
+  hapi-fhir:
+    build: .
+    container_name: mii-kds-validation-server
+    ports:
+      - "8080:8080"
+    environment:
+      # H2 in-memory DB for fast startup
+      SPRING_DATASOURCE_URL: "jdbc:h2:mem:hapi"
+      SPRING_DATASOURCE_DRIVERCLASSNAME: org.h2.Driver
+      HAPI_FHIR_FHIR_VERSION: R4
+      # Disable unnecessary features for validation use
+      HAPI_FHIR_ALLOW_MULTIPLE_DELETE: "false"
+      HAPI_FHIR_NARRATIVE_ENABLED: "false"
+    volumes:
+      - hapi-data:/data/hapi
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/fhir/metadata"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+
+  blaze:
+    image: samply/blaze:0.31
+    container_name: mii-kds-blaze
+    ports:
+      - "8082:8080"
+    environment:
+      JAVA_TOOL_OPTIONS: "-Xmx2g"
+    volumes:
+      - blaze-data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+volumes:
+  hapi-data:
+  blaze-data:
