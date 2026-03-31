@@ -52,7 +52,7 @@ Während das [Meta-Modul](https://github.com/medizininformatik-initiative/kernda
 | Paket | Version | Verwendet von |
 |-------|---------|---------------|
 | Deutsche Basisprofile R4 (`de.basisprofil.r4`) | 1.5.4 | Base, Medikation, Biobank, ICU, Molgen, Onkologie, Seltene, MTB |
-| Einwilligungsmanagement (`de.einwilligungsmanagement`) | 1.0.2 | Consent |
+| Einwilligungsmanagement (`de.einwilligungsmanagement`) | 2.0.2 | Consent (transitiv) |
 | ISiK (`de.gematik.isik`) | 5.0.0 - 5.1.0 | ICU, Pathologie, PROs |
 | IHE-D Terminologie (`de.ihe-d.terminology`) | 3.0.1 | Medikation, Dokument |
 | Deutsche Medikation (`de.fhir.medication`) | 1.0.x | Medikation |

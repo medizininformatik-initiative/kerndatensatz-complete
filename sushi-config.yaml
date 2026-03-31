@@ -49,7 +49,6 @@ dependencies:
 
   # Einwilligungsmanagement
   de.medizininformatikinitiative.kerndatensatz.consent: 2026.0.0
-  de.einwilligungsmanagement: 1.0.2
 #
 #
 # The pages property corresponds to IG.definition.page. SUSHI can
