@@ -7,12 +7,12 @@ id: de.medizininformatikinitiative.kerndatensatz.complete
 canonical: https://www.medizininformatik-initiative.de/fhir/core/complete
 name: MIIKerndatensatzComplete
 title: MII Kerndatensatz Complete
-description: Bill of Materials (BOM) aller Module des MII Kerndatensatzes mit kompatiblen Versionen
+description: Bill of Materials (BOM) aller Module des MII Kerndatensatzes – letzte stabile 2025er Generation
 status: active
-version: 2026.0.1-rc.1
+version: 2025.0.0
 fhirVersion: 4.0.1
 copyrightYear: 2025+
-releaseLabel: rc
+releaseLabel: release
 license: CC-BY-4.0
 jurisdiction: urn:iso:std:iso:3166#DE "Germany"
 publisher:
@@ -27,29 +27,25 @@ dependencies:
   # Deutsche Basisprofile
   de.basisprofil.r4: 1.5.4
 
-  # MII Kerndatensatz Basismodule
-  de.medizininformatikinitiative.kerndatensatz.base: 2026.0.0
-  de.medizininformatikinitiative.kerndatensatz.meta: 2026.0.0
-  de.medizininformatikinitiative.kerndatensatz.medikation: 2026.0.1
-  de.medizininformatikinitiative.kerndatensatz.laborbefund: 2026.0.1
+  # MII Kerndatensatz Basismodule (vor 2026 einzeln publiziert, kein base-Package)
+  de.medizininformatikinitiative.kerndatensatz.person: 2025.0.1
+  de.medizininformatikinitiative.kerndatensatz.fall: 2025.0.1
+  de.medizininformatikinitiative.kerndatensatz.diagnose: 2025.0.1
+  de.medizininformatikinitiative.kerndatensatz.prozedur: 2025.0.1
+  de.medizininformatikinitiative.kerndatensatz.meta: 2025.0.3
+  de.medizininformatikinitiative.kerndatensatz.medikation: 2025.0.1
+  de.medizininformatikinitiative.kerndatensatz.laborbefund: 2025.0.2
 
   # MII Kerndatensatz Erweiterungsmodule
-  de.medizininformatikinitiative.kerndatensatz.biobank: 2026.0.1
-  de.medizininformatikinitiative.kerndatensatz.icu: 2026.0.2
+  de.medizininformatikinitiative.kerndatensatz.biobank: 2025.0.4
+  de.medizininformatikinitiative.kerndatensatz.consent: 2025.0.4
+  de.medizininformatikinitiative.kerndatensatz.icu: 2025.0.4
   de.medizininformatikinitiative.kerndatensatz.mikrobiologie: 2025.0.1
-  de.medizininformatikinitiative.kerndatensatz.molgen: 2026.0.4
-  de.medizininformatikinitiative.kerndatensatz.patho: 2026.0.1
-  de.medizininformatikinitiative.kerndatensatz.studie: 2026.0.2
-  de.medizininformatikinitiative.kerndatensatz.bildgebung: 2026.0.0
-  de.medizininformatikinitiative.kerndatensatz.dokument: 2026.0.1
-  de.medizininformatikinitiative.kerndatensatz.onkologie: 2026.0.3
-  de.medizininformatikinitiative.kerndatensatz.seltene: 2026.0.1
-  de.medizininformatikinitiative.kerndatensatz.mtb: 2026.0.1
-  de.medizininformatikinitiative.kerndatensatz.pros: 2026.2.0
-
-  # Einwilligungsmanagement
-  de.medizininformatikinitiative.kerndatensatz.consent: 2026.0.0
-  de.einwilligungsmanagement: 1.0.2
+  de.medizininformatikinitiative.kerndatensatz.molgen: 2025.0.0
+  de.medizininformatikinitiative.kerndatensatz.patho: 2025.0.2
+  de.medizininformatikinitiative.kerndatensatz.studie: 2025.0.0
+  de.medizininformatikinitiative.kerndatensatz.bildgebung: 2025.0.2
+  de.medizininformatikinitiative.kerndatensatz.onkologie: 2025.1.0
 #
 #
 # The pages property corresponds to IG.definition.page. SUSHI can
