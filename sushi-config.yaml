@@ -9,10 +9,10 @@ name: MIIKerndatensatzComplete
 title: MII Kerndatensatz Complete
 description: Bill of Materials (BOM) aller Module des MII Kerndatensatzes mit kompatiblen Versionen
 status: active
-version: 2026.0.0
+version: 2026.0.1-rc.1
 fhirVersion: 4.0.1
 copyrightYear: 2025+
-releaseLabel: release
+releaseLabel: rc
 license: CC-BY-4.0
 jurisdiction: urn:iso:std:iso:3166#DE "Germany"
 publisher:
@@ -48,6 +48,7 @@ dependencies:
   de.medizininformatikinitiative.kerndatensatz.pros: 2026.2.0
 
   # Einwilligungsmanagement
+  de.medizininformatikinitiative.kerndatensatz.consent: 2026.0.0
   de.einwilligungsmanagement: 1.0.2
 #
 #
