@@ -45,14 +45,14 @@ Während das [Meta-Modul](https://github.com/medizininformatik-initiative/kernda
 | Seltene Erkrankungen | `de.medizininformatikinitiative.kerndatensatz.seltene` | 2026.0.1 | [kerndatensatzmodul-seltene-erkrankungen](https://github.com/medizininformatik-initiative/kerndatensatzmodul-seltene-erkrankungen) | [v2026.0.1](https://github.com/medizininformatik-initiative/kerndatensatzmodul-seltene-erkrankungen/releases/tag/v2026.0.1) |
 | Molekulares Tumorboard | `de.medizininformatikinitiative.kerndatensatz.mtb` | 2026.0.1 | [kerndatensatzmodul-molekulares-tumorboard](https://github.com/medizininformatik-initiative/kerndatensatzmodul-molekulares-tumorboard) | [v2026.0.1](https://github.com/medizininformatik-initiative/kerndatensatzmodul-molekulares-tumorboard/releases/tag/v2026.0.1) (2026-03-30) |
 | PROs | `de.medizininformatikinitiative.kerndatensatz.pros` | 2026.2.0 | [kerndatensatzmodul-proms](https://github.com/medizininformatik-initiative/kerndatensatzmodul-proms) | [v2026.2.0](https://github.com/medizininformatik-initiative/kerndatensatzmodul-proms/releases/tag/v2026.2.0) |
-| Consent | `de.medizininformatikinitiative.kerndatensatz.consent` | 2026.0.0 | [kerndatensatzmodul-consent](https://github.com/medizininformatik-initiative/kerndatensatzmodul-consent) | [v2026.0.0](https://github.com/medizininformatik-initiative/kerndatensatzmodul-consent/releases/tag/2026.0.0) |
+| Consent | `de.medizininformatikinitiative.kerndatensatz.consent` | 2026.0.1-rc-2 | [kerndatensatzmodul-consent](https://github.com/medizininformatik-initiative/kerndatensatzmodul-consent) | - |
 
 ### Nationale Abhängigkeiten
 
 | Paket | Version | Verwendet von |
 |-------|---------|---------------|
 | Deutsche Basisprofile R4 (`de.basisprofil.r4`) | 1.5.4 | Base, Medikation, Biobank, ICU, Molgen, Onkologie, Seltene, MTB |
-| Einwilligungsmanagement (`de.einwilligungsmanagement`) | 2.0.2 | Consent (transitiv) |
+| Einwilligungsmanagement (`de.einwilligungsmanagement`) | 2.0.3 | Consent (transitiv) |
 | ISiK (`de.gematik.isik`) | 5.0.0 - 5.1.0 | ICU, Pathologie, PROs |
 | IHE-D Terminologie (`de.ihe-d.terminology`) | 3.0.1 | Medikation, Dokument |
 | Deutsche Medikation (`de.fhir.medication`) | 1.0.x | Medikation |
