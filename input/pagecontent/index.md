@@ -34,9 +34,9 @@ Die Module des Kerndatensatzes werden von verschiedenen Teams eigenständig weit
 | Consent | `de.medizininformatikinitiative.kerndatensatz.consent` | 2025.0.4 |
 | ICU | `de.medizininformatikinitiative.kerndatensatz.icu` | 2025.0.4 |
 | Mikrobiologie | `de.medizininformatikinitiative.kerndatensatz.mikrobiologie` | 2025.0.1 |
-| Molekulargenetik | `de.medizininformatikinitiative.kerndatensatz.molgen` | 2025.0.0 |
+| Molekulargenetik | `de.medizininformatikinitiative.kerndatensatz.molgen` | 2025.9.0-latest |
 | Pathologie | `de.medizininformatikinitiative.kerndatensatz.patho` | 2025.0.2 |
-| Studie | `de.medizininformatikinitiative.kerndatensatz.studie` | 2025.0.0 |
+| Studie | `de.medizininformatikinitiative.kerndatensatz.studie` | 2025.9.0-latest |
 | Bildgebung | `de.medizininformatikinitiative.kerndatensatz.bildgebung` | 2025.0.2 |
 | Onkologie | `de.medizininformatikinitiative.kerndatensatz.onkologie` | 2025.1.0 |
 
@@ -80,7 +80,7 @@ Die folgenden Module wurden erst ab der 2026er Generation als stable Release pub
 <ul>
   <li><code>de.medizininformatikinitiative.kerndatensatz.consent</code> (2025.0.4)</li>
   <li><code>de.medizininformatikinitiative.kerndatensatz.icu</code> (2025.0.4)</li>
-  <li><code>de.medizininformatikinitiative.kerndatensatz.studie</code> (2025.0.0)</li>
+  <li><code>de.medizininformatikinitiative.kerndatensatz.studie</code> (2025.9.0-latest)</li>
   <li><code>de.medizininformatikinitiative.kerndatensatz.mikrobiologie</code> (2025.0.1) — teilweise</li>
 </ul>
 <p>Dies ist ein bekanntes Problem der 2025er Publikationsinfrastruktur und wurde in der 2026er Generation behoben.</p>
@@ -94,21 +94,21 @@ Sobald das Paket auf packages.fhir.org verfügbar ist, genügt eine einzelne Abh
 
 ```yaml
 dependencies:
-  de.medizininformatikinitiative.kerndatensatz.complete: 2025.0.0
+  de.medizininformatikinitiative.kerndatensatz.complete: 2025.9.0-latest
 ```
 
 Alle 16 Modul-Dependencies werden automatisch von der FHIR Package Registry aufgelöst und heruntergeladen.
 
 ### Manuelle Installation
 
-Solange das Paket noch nicht auf packages.fhir.org verfügbar ist, kann es vom [GitHub Release](https://github.com/medizininformatik-initiative/kerndatensatz-complete/releases/tag/v2025.0.0) heruntergeladen und lokal installiert werden:
+Solange das Paket noch nicht auf packages.fhir.org verfügbar ist, kann es vom [GitHub Release](https://github.com/medizininformatik-initiative/kerndatensatz-complete/releases/tag/v2025.9.0-latest) heruntergeladen und lokal installiert werden:
 
 ```bash
 # Package herunterladen
-curl -LO https://github.com/medizininformatik-initiative/kerndatensatz-complete/releases/download/v2025.0.0/de.medizininformatikinitiative.kerndatensatz.complete-2025.0.0.tgz
+curl -LO https://github.com/medizininformatik-initiative/kerndatensatz-complete/releases/download/v2025.9.0-latest/de.medizininformatikinitiative.kerndatensatz.complete-2025.9.0-latest.tgz
 
 # In den lokalen FHIR-Cache installieren
-fhir install de.medizininformatikinitiative.kerndatensatz.complete-2025.0.0.tgz
+fhir install de.medizininformatikinitiative.kerndatensatz.complete-2025.9.0-latest.tgz
 ```
 
 Danach kann das Paket wie gewohnt als Dependency referenziert werden. Alle weiteren Module werden automatisch von packages.fhir.org aufgelöst.

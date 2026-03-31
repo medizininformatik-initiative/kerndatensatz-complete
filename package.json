@@ -1,7 +1,7 @@
 {
   "name": "de.medizininformatikinitiative.kerndatensatz.complete",
-  "version": "2025.0.0",
-  "description": "MII Kerndatensatz Complete v2025.0.0 - Bill of Materials (BOM) der letzten stabilen 2025er Generation aller KDS-Module.",
+  "version": "2025.9.0-latest",
+  "description": "MII Kerndatensatz Complete v2025.9.0-latest - Bill of Materials (BOM) der finalen 2025er Generation aller KDS-Module.",
   "license": "CC-BY-4.0",
   "dependencies": {
     "hl7.fhir.r4.core": "4.0.1",

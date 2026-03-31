@@ -9,10 +9,10 @@ name: MIIKerndatensatzComplete
 title: MII Kerndatensatz Complete
 description: Bill of Materials (BOM) aller Module des MII Kerndatensatzes – letzte stabile 2025er Generation
 status: active
-version: 2025.0.0
+version: 2025.9.0-latest
 fhirVersion: 4.0.1
 copyrightYear: 2025+
-releaseLabel: release
+releaseLabel: latest
 license: CC-BY-4.0
 jurisdiction: urn:iso:std:iso:3166#DE "Germany"
 publisher:
