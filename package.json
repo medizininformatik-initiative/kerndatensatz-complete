@@ -1,7 +1,7 @@
 {
   "name": "de.medizininformatikinitiative.kerndatensatz.complete",
-  "version": "2026.0.0",
-  "description": "MII Kerndatensatz Complete v2026.0.0 - Bill of Materials (BOM) aller Module des MII Kerndatensatzes mit kompatiblen Versionen.",
+  "version": "2026.0.1-rc.1",
+  "description": "MII Kerndatensatz Complete v2026.0.1-rc.1 - Bill of Materials (BOM) aller Module des MII Kerndatensatzes mit kompatiblen Versionen.",
   "license": "CC-BY-4.0",
   "dependencies": {
     "hl7.fhir.r4.core": "4.0.1",
@@ -22,6 +22,6 @@
     "de.medizininformatikinitiative.kerndatensatz.seltene": "2026.0.1",
     "de.medizininformatikinitiative.kerndatensatz.mtb": "2026.0.1",
     "de.medizininformatikinitiative.kerndatensatz.pros": "2026.2.0",
-    "de.einwilligungsmanagement": "1.0.2"
+    "de.medizininformatikinitiative.kerndatensatz.consent": "2026.0.1-rc-2"
   }
 }
