@@ -45,10 +45,20 @@ function readCapabilityStatements(packageDir) {
   if (!packageDir) return [];
   const pkgDir = join(packageDir, 'package');
   const files = readdirSync(pkgDir).filter(f => f.startsWith('CapabilityStatement') && f.endsWith('.json'));
-  return files.map(f => {
-    const content = JSON.parse(readFileSync(join(pkgDir, f), 'utf8'));
-    return content;
-  });
+  return files.map(f => JSON.parse(readFileSync(join(pkgDir, f), 'utf8')));
+}
+
+// Read StructureDefinitions from a package (fallback for modules with empty CapabilityStatements)
+function readStructureDefinitions(packageDir) {
+  if (!packageDir) return [];
+  const pkgDir = join(packageDir, 'package');
+  const files = readdirSync(pkgDir).filter(f => f.startsWith('StructureDefinition') && f.endsWith('.json'));
+  return files.map(f => JSON.parse(readFileSync(join(pkgDir, f), 'utf8')));
+}
+
+// Check if a CapabilityStatement has actual resource entries
+function hasResourceEntries(capStmts) {
+  return capStmts.some(cs => cs.rest?.[0]?.resource?.length > 0);
 }
 
 // Read all SearchParameters from META package
@@ -81,42 +91,76 @@ for (const [packageId, packageVersion] of Object.entries(deps)) {
     continue;
   }
 
+  const moduleName = packageId.split('.').pop();
   const capStmts = readCapabilityStatements(dir);
-  for (const cs of capStmts) {
-    if (!cs.rest?.[0]?.resource) continue;
 
-    const moduleName = packageId.split('.').pop();
-    console.log(`  ${moduleName}: ${cs.rest[0].resource.length} resource type(s)`);
+  if (hasResourceEntries(capStmts)) {
+    // Normal path: use CapabilityStatement resource entries
+    for (const cs of capStmts) {
+      if (!cs.rest?.[0]?.resource) continue;
+      console.log(`  ${moduleName}: ${cs.rest[0].resource.length} resource type(s) (from CapabilityStatement)`);
 
-    for (const resource of cs.rest[0].resource) {
-      const type = resource.type;
-      if (!resourceMap.has(type)) {
-        resourceMap.set(type, {
-          profiles: new Set(),
-          searchParams: new Map(),
-          sourceModules: new Set()
-        });
-      }
+      for (const resource of cs.rest[0].resource) {
+        const type = resource.type;
+        if (!resourceMap.has(type)) {
+          resourceMap.set(type, {
+            profiles: new Set(),
+            searchParams: new Map(),
+            sourceModules: new Set()
+          });
+        }
 
-      const entry = resourceMap.get(type);
-      entry.sourceModules.add(moduleName);
+        const entry = resourceMap.get(type);
+        entry.sourceModules.add(moduleName);
 
-      // Collect supported profiles (keep version suffix as-is from modules)
-      if (resource.supportedProfile) {
-        for (const p of resource.supportedProfile) {
-          entry.profiles.add(p);
+        // Collect supported profiles (keep version suffix as-is from modules)
+        if (resource.supportedProfile) {
+          for (const p of resource.supportedProfile) {
+            entry.profiles.add(p);
+          }
+        }
+
+        // Collect search parameters from module CapabilityStatement
+        if (resource.searchParam) {
+          for (const sp of resource.searchParam) {
+            if (!entry.searchParams.has(sp.name)) {
+              entry.searchParams.set(sp.name, {
+                definition: sp.definition,
+                type: sp.type
+              });
+            }
+          }
         }
       }
+    }
+  } else {
+    // Fallback: CapabilityStatement has empty rest — derive profiles from StructureDefinitions
+    const sds = readStructureDefinitions(dir);
+    const profilesByType = new Map();
+    for (const sd of sds) {
+      // Skip infrastructure types (SearchParameter, Extension, etc.) — only clinical/admin resource profiles
+      const infraTypes = new Set(['SearchParameter', 'StructureDefinition', 'ValueSet', 'CodeSystem', 'NamingSystem', 'ConceptMap', 'OperationDefinition']);
+      if (sd.kind === 'resource' && sd.type && sd.url && !infraTypes.has(sd.type)) {
+        if (!profilesByType.has(sd.type)) profilesByType.set(sd.type, []);
+        const profileRef = sd.version ? `${sd.url}|${sd.version}` : sd.url;
+        profilesByType.get(sd.type).push(profileRef);
+      }
+    }
 
-      // Collect search parameters from module CapabilityStatement
-      if (resource.searchParam) {
-        for (const sp of resource.searchParam) {
-          if (!entry.searchParams.has(sp.name)) {
-            entry.searchParams.set(sp.name, {
-              definition: sp.definition,
-              type: sp.type
-            });
-          }
+    if (profilesByType.size > 0) {
+      console.log(`  ${moduleName}: ${sds.length} StructureDefinition(s) -> ${profilesByType.size} resource type(s) (fallback from StructureDefinitions)`);
+      for (const [type, profiles] of profilesByType) {
+        if (!resourceMap.has(type)) {
+          resourceMap.set(type, {
+            profiles: new Set(),
+            searchParams: new Map(),
+            sourceModules: new Set()
+          });
+        }
+        const entry = resourceMap.get(type);
+        entry.sourceModules.add(moduleName);
+        for (const p of profiles) {
+          entry.profiles.add(p);
         }
       }
     }
