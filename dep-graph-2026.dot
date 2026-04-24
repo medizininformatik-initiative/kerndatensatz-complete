@@ -1,3 +1,14 @@
+// MII KDS 2026 — Abhängigkeitsgraph
+//
+// Quelle:     dep-graph-2026.dot
+// Generiert:  dot -Tpng dep-graph-2026.dot -o input/images/dep-graph-2026.png
+//             dot -Tsvg dep-graph-2026.dot -o input/images/dep-graph-2026.svg
+//
+// Farben:
+//   #d4edda  grün    = finale Version (normative / STU-abgeschlossen)
+//   #fff3cd  gelb    = STU / Trial Use / Alpha
+//   #e2e3e5  grau    = in Entwicklung / nicht publiziert
+
 digraph MII_KDS_2026 {
     rankdir=TB;
     bgcolor="white";
@@ -8,19 +19,19 @@ digraph MII_KDS_2026 {
     ranksep=0.7;
 
     labelloc="t";
-    label=<<B>MII KDS 2026 — Abhängigkeitsgraph</B><BR/><FONT POINT-SIZE="10">Pfeil = „hängt ab von" · Nur MII-interne Deps · Stand 2026-03-30</FONT>>;
+    label=<<B>MII KDS 2026 — Abhängigkeitsgraph</B><BR/><FONT POINT-SIZE="10">Pfeil = „hängt ab von" · Nur MII-interne Deps · Stand 2026-04-23</FONT>>;
     fontsize=15;
 
-    // ════════════ Foundation ════════════
+    // ════════════ Layer 0: Foundation ════════════
     meta [label="Meta\n2026.0.0", fillcolor="#d4edda"];
 
-    // ════════════ Depend on meta only ════════════
-    base [label=<Base 2026.0.0<BR/><FONT POINT-SIZE="8">(Person, Fall, Diagnose, Prozedur)</FONT>>, fillcolor="#d4edda"];
-    labor [label="Labor\n2026.0.1", fillcolor="#d4edda"];
-    medikation [label="Medikation\n2026.0.1", fillcolor="#d4edda"];
-    biobank [label="Biobank\n2026.0.1", fillcolor="#d4edda"];
-    studie [label="Studie\n2026.0.2", fillcolor="#d4edda"];
-    pros [label="PROs\n2026.0.1", fillcolor="#d4edda"];
+    // ════════════ Layer 1: Basismodule (abhängig von meta) ════════════
+    base       [label=<Base 2026.0.0<BR/><FONT POINT-SIZE="8">(Person, Fall, Diagnose, Prozedur)</FONT>>, fillcolor="#d4edda"];
+    labor      [label="Labor\n2026.0.1",      fillcolor="#d4edda"];
+    medikation [label="Medikation\n2026.0.1",  fillcolor="#d4edda"];
+    biobank    [label="Biobank\n2026.0.1",     fillcolor="#d4edda"];
+    studie     [label="Studie\n2026.0.2",      fillcolor="#d4edda"];
+    pros       [label="PROs\n2026.2.0",        fillcolor="#d4edda"];
 
     meta -> base;
     meta -> labor;
@@ -29,26 +40,29 @@ digraph MII_KDS_2026 {
     meta -> studie;
     meta -> pros;
 
-    // ════════════ Level 2 ════════════
-    icu [label="ICU\n2026.0.2", fillcolor="#d4edda"];
+    // ════════════ Layer 2: Erweiterungsmodule ════════════
+    icu        [label="ICU\n2026.0.2",         fillcolor="#d4edda"];
     base -> icu;
 
-    molgen [label="MolGen\n2026.0.4", fillcolor="#d4edda"];
+    molgen     [label="MolGen\n2026.0.4",      fillcolor="#d4edda"];
     meta -> molgen;
     base -> molgen;
     biobank -> molgen;
 
-    bildgebung [label="Bildgebung\n2026.0.0", fillcolor="#d4edda"];
+    bildgebung [label="Bildgebung\n2026.0.0",  fillcolor="#d4edda"];
     meta -> bildgebung;
     base -> bildgebung;
     medikation -> bildgebung;
 
-    dokument [label="Dokument\n2026.0.1", fillcolor="#d4edda"];
+    dokument   [label="Dokument\n2026.0.1",    fillcolor="#d4edda"];
     meta -> dokument;
     base -> dokument;
 
-    // ════════════ Level 3 ════════════
-    onko [label="Onkologie\n2026.0.3", fillcolor="#d4edda"];
+    mikrobio   [label="Mikrobiologie\n2027.0.0-alpha.2\n(STU)", fillcolor="#fff3cd"];
+    labor -> mikrobio;
+
+    // ════════════ Layer 3: Komplexe Module ════════════
+    onko       [label="Onkologie\n2026.0.3",   fillcolor="#d4edda"];
     meta -> onko;
     base -> onko;
     biobank -> onko;
@@ -56,13 +70,13 @@ digraph MII_KDS_2026 {
     molgen -> onko;
     studie -> onko;
 
-    patho [label="Pathologie\n2026.0.1", fillcolor="#d4edda"];
+    patho      [label="Pathologie\n2026.0.1",  fillcolor="#d4edda"];
     meta -> patho;
     base -> patho;
     biobank -> patho;
 
-    // ════════════ Level 4 ════════════
-    seltene [label="Seltene Erkr.\n2026.0.1", fillcolor="#d4edda"];
+    // ════════════ Layer 4 ════════════
+    seltene    [label="Seltene Erkr.\n2026.0.1", fillcolor="#d4edda"];
     meta -> seltene;
     base -> seltene;
     molgen -> seltene;
@@ -70,8 +84,8 @@ digraph MII_KDS_2026 {
     icu -> seltene;
     studie -> seltene;
 
-    // ════════════ Level 5 ════════════
-    mtb [label="MTB\n2026.0.1", fillcolor="#d4edda"];
+    // ════════════ Layer 5 ════════════
+    mtb        [label="MTB\n2026.0.1",         fillcolor="#d4edda"];
     meta -> mtb;
     base -> mtb;
     biobank -> mtb;
@@ -81,26 +95,24 @@ digraph MII_KDS_2026 {
     patho -> mtb;
     studie -> mtb;
 
-    // ════════════ Non-final ════════════
+    // ════════════ In Entwicklung ════════════
     subgraph cluster_nonfinal {
         label=<<B>In Entwicklung</B>>;
         style="dashed"; color="gray60"; bgcolor="#f8f9fa";
         fontname="Helvetica"; fontsize=10;
 
-        mikrobio [label="Mikrobiologie\n2025.0.1", fillcolor="#e2e3e5", color="gray60", fontcolor="gray30"];
-        kardiologie [label="Kardiologie\n(alpha)", fillcolor="#e2e3e5", color="gray60", fontcolor="gray30"];
+        kardiologie    [label="Kardiologie\n(alpha)",             fillcolor="#e2e3e5", color="gray60", fontcolor="gray30"];
         lungenfunktion [label="Lungenfunktion\n(nicht publiziert)", fillcolor="#e2e3e5", color="gray60", fontcolor="gray30"];
     }
 
-    labor -> mikrobio [color="gray70", style=dashed, penwidth=0.8];
-    meta -> kardiologie [color="gray70", style=dashed, penwidth=0.8];
+    meta -> kardiologie    [color="gray70", style=dashed, penwidth=0.8];
     meta -> lungenfunktion [color="gray70", style=dashed, penwidth=0.8];
 
     // ════════════ Ranking ════════════
-    {rank=min; meta}
+    {rank=min;  meta}
     {rank=same; base; labor; medikation; biobank; studie; pros}
-    {rank=same; icu; molgen; bildgebung; dokument}
+    {rank=same; icu; molgen; bildgebung; dokument; mikrobio}
     {rank=same; onko; patho}
     {rank=same; seltene}
-    {rank=max; mtb}
+    {rank=max;  mtb}
 }
