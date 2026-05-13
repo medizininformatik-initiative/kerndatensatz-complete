@@ -10,7 +10,7 @@
 <title>MII_KDS_2026</title>
 <polygon fill="white" stroke="none" points="-4,4 -4,-455.4 2000.71,-455.4 2000.71,4 -4,4"/>
 <text xml:space="preserve" text-anchor="start" x="867.48" y="-434.15" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="15.00">MII KDS 2026 — Abhängigkeitsgraph</text>
-<text xml:space="preserve" text-anchor="start" x="858.11" y="-423.9" font-family="Helvetica,sans-Serif" font-size="10.00">Pfeil = „hängt ab von&quot; · Nur MII&#45;interne Deps · Stand 2026&#45;04&#45;23</text>
+<text xml:space="preserve" text-anchor="start" x="858.11" y="-423.9" font-family="Helvetica,sans-Serif" font-size="10.00">Pfeil = „hängt ab von&quot; · Nur MII&#45;interne Deps · Stand 2026&#45;05&#45;13</text>
 <g id="clust1" class="cluster">
 <title>cluster_nonfinal</title>
 <polygon fill="#f8f9fa" stroke="#999999" stroke-dasharray="5,2" points="1734.71,-277.84 1734.71,-354.37 1988.71,-354.37 1988.71,-277.84 1734.71,-277.84"/>
@@ -278,7 +278,7 @@
 <title>mikrobio</title>
 <path fill="#fff3cd" stroke="black" d="M1620.21,-235.84C1620.21,-235.84 1527.21,-235.84 1527.21,-235.84 1521.21,-235.84 1515.21,-229.84 1515.21,-223.84 1515.21,-223.84 1515.21,-194.56 1515.21,-194.56 1515.21,-188.56 1521.21,-182.56 1527.21,-182.56 1527.21,-182.56 1620.21,-182.56 1620.21,-182.56 1626.21,-182.56 1632.21,-188.56 1632.21,-194.56 1632.21,-194.56 1632.21,-223.84 1632.21,-223.84 1632.21,-229.84 1626.21,-235.84 1620.21,-235.84"/>
 <text xml:space="preserve" text-anchor="middle" x="1573.71" y="-216.75" font-family="Helvetica,sans-Serif" font-size="11.00">Mikrobiologie</text>
-<text xml:space="preserve" text-anchor="middle" x="1573.71" y="-204.75" font-family="Helvetica,sans-Serif" font-size="11.00">2027.0.0&#45;alpha.2</text>
+<text xml:space="preserve" text-anchor="middle" x="1573.71" y="-204.75" font-family="Helvetica,sans-Serif" font-size="11.00">2027.0.0&#45;alpha.3</text>
 <text xml:space="preserve" text-anchor="middle" x="1573.71" y="-192.75" font-family="Helvetica,sans-Serif" font-size="11.00">(STU)</text>
 </g>
 <!-- labor&#45;&gt;mikrobio -->

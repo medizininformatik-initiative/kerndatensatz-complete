@@ -13,7 +13,7 @@ PACKAGES=(
   "de.medizininformatikinitiative.kerndatensatz.laborbefund/2026.0.1"
   "de.medizininformatikinitiative.kerndatensatz.biobank/2026.0.1"
   "de.medizininformatikinitiative.kerndatensatz.icu/2026.0.2"
-  "de.medizininformatikinitiative.kerndatensatz.mikrobiologie/2027.0.0-alpha.2"
+  "de.medizininformatikinitiative.kerndatensatz.mikrobiologie/2027.0.0-alpha.3"
   "de.medizininformatikinitiative.kerndatensatz.molgen/2026.0.4"
   "de.medizininformatikinitiative.kerndatensatz.patho/2026.0.1"
   "de.medizininformatikinitiative.kerndatensatz.studie/2026.0.2"

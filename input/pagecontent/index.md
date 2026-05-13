@@ -37,7 +37,7 @@ Während das [Meta-Modul](https://github.com/medizininformatik-initiative/kernda
 |-------|---------|---------|--------|---------|
 | Biobank | `de.medizininformatikinitiative.kerndatensatz.biobank` | 2026.0.1 | [kerndatensatzmodul-biobank](https://github.com/medizininformatik-initiative/kerndatensatzmodul-biobank) | [v2026.0.1](https://github.com/medizininformatik-initiative/kerndatensatzmodul-biobank/releases/tag/v2026.0.1) (2026-02-11) |
 | ICU | `de.medizininformatikinitiative.kerndatensatz.icu` | 2026.0.2 | [kerndatensatzmodul-intensivmedizin](https://github.com/medizininformatik-initiative/kerndatensatzmodul-intensivmedizin) | [v2026.0.2](https://github.com/medizininformatik-initiative/kerndatensatzmodul-intensivmedizin/releases/tag/v2026.0.2) (2026-03-18) |
-| Mikrobiologie | `de.medizininformatikinitiative.kerndatensatz.mikrobiologie` | 2027.0.0-alpha.2 | [kerndatensatzmodul-mikrobiologie](https://github.com/medizininformatik-initiative/kerndatensatzmodul-mikrobiologie) | [v2027.0.0-alpha.2](https://github.com/medizininformatik-initiative/kerndatensatzmodul-mikrobiologie/releases/tag/v2027.0.0-alpha.2) |
+| Mikrobiologie | `de.medizininformatikinitiative.kerndatensatz.mikrobiologie` | 2027.0.0-alpha.3 | [kerndatensatzmodul-mikrobiologie](https://github.com/medizininformatik-initiative/kerndatensatzmodul-mikrobiologie) | [v2027.0.0-alpha.3](https://github.com/medizininformatik-initiative/kerndatensatzmodul-mikrobiologie/releases/tag/v2027.0.0-alpha.3) |
 | Molekulargenetik | `de.medizininformatikinitiative.kerndatensatz.molgen` | 2026.0.4 | [kerndatensatzmodul-GenetischeTests](https://github.com/medizininformatik-initiative/kerndatensatzmodul-GenetischeTests) | [v2026.0.4](https://github.com/medizininformatik-initiative/kerndatensatzmodul-GenetischeTests/releases/tag/v2026.0.4) (2026-01-02) |
 | Pathologie | `de.medizininformatikinitiative.kerndatensatz.patho` | 2026.0.1 | [kerndatensatzmodul-PathologieBefund](https://github.com/medizininformatik-initiative/kerndatensatzmodul-PathologieBefund) | - |
 | Studie | `de.medizininformatikinitiative.kerndatensatz.studie` | 2026.0.2 | [kerndatensatzmodul-studie](https://github.com/medizininformatik-initiative/kerndatensatzmodul-studie) | [v2026.0.1](https://github.com/medizininformatik-initiative/kerndatensatzmodul-studie/releases/tag/v2026.0.1) (2026-01-09) |
@@ -80,21 +80,21 @@ Sobald das Paket auf packages.fhir.org verfügbar ist, genügt eine einzelne Abh
 
 ```yaml
 dependencies:
-  de.medizininformatikinitiative.kerndatensatz.complete: 2026.1.0
+  de.medizininformatikinitiative.kerndatensatz.complete: 2026.2.0
 ```
 
 Alle 19 Modul-Dependencies werden automatisch von der FHIR Package Registry aufgelöst und heruntergeladen.
 
 ### Manuelle Installation
 
-Solange das Paket noch nicht auf packages.fhir.org verfügbar ist, kann es vom [GitHub Release](https://github.com/medizininformatik-initiative/kerndatensatz-complete/releases/tag/v2026.1.0) heruntergeladen und lokal installiert werden:
+Solange das Paket noch nicht auf packages.fhir.org verfügbar ist, kann es vom [GitHub Release](https://github.com/medizininformatik-initiative/kerndatensatz-complete/releases/tag/v2026.2.0) heruntergeladen und lokal installiert werden:
 
 ```bash
 # Package herunterladen
-curl -LO https://github.com/medizininformatik-initiative/kerndatensatz-complete/releases/download/v2026.1.0/de.medizininformatikinitiative.kerndatensatz.complete-2026.1.0.tgz
+curl -LO https://github.com/medizininformatik-initiative/kerndatensatz-complete/releases/download/v2026.2.0/de.medizininformatikinitiative.kerndatensatz.complete-2026.2.0.tgz
 
 # In den lokalen FHIR-Cache installieren
-fhir install de.medizininformatikinitiative.kerndatensatz.complete-2026.1.0.tgz
+fhir install de.medizininformatikinitiative.kerndatensatz.complete-2026.2.0.tgz
 ```
 
 Danach kann das Paket wie gewohnt als Dependency referenziert werden. Alle weiteren Module werden automatisch von packages.fhir.org aufgelöst.

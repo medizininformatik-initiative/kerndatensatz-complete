@@ -9,7 +9,7 @@ name: MIIKerndatensatzComplete
 title: MII Kerndatensatz Complete
 description: Bill of Materials (BOM) aller Module des MII Kerndatensatzes mit kompatiblen Versionen
 status: active
-version: 2026.1.0
+version: 2026.2.0
 fhirVersion: 4.0.1
 copyrightYear: 2025+
 releaseLabel: release
@@ -36,7 +36,7 @@ dependencies:
   # MII Kerndatensatz Erweiterungsmodule
   de.medizininformatikinitiative.kerndatensatz.biobank: 2026.0.1
   de.medizininformatikinitiative.kerndatensatz.icu: 2026.0.2
-  de.medizininformatikinitiative.kerndatensatz.mikrobiologie: 2027.0.0-alpha.2
+  de.medizininformatikinitiative.kerndatensatz.mikrobiologie: 2027.0.0-alpha.3
   de.medizininformatikinitiative.kerndatensatz.molgen: 2026.0.4
   de.medizininformatikinitiative.kerndatensatz.patho: 2026.0.1
   de.medizininformatikinitiative.kerndatensatz.studie: 2026.0.2

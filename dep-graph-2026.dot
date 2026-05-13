@@ -19,7 +19,7 @@ digraph MII_KDS_2026 {
     ranksep=0.7;
 
     labelloc="t";
-    label=<<B>MII KDS 2026 — Abhängigkeitsgraph</B><BR/><FONT POINT-SIZE="10">Pfeil = „hängt ab von" · Nur MII-interne Deps · Stand 2026-04-23</FONT>>;
+    label=<<B>MII KDS 2026 — Abhängigkeitsgraph</B><BR/><FONT POINT-SIZE="10">Pfeil = „hängt ab von" · Nur MII-interne Deps · Stand 2026-05-13</FONT>>;
     fontsize=15;
 
     // ════════════ Layer 0: Foundation ════════════
@@ -58,7 +58,7 @@ digraph MII_KDS_2026 {
     meta -> dokument;
     base -> dokument;
 
-    mikrobio   [label="Mikrobiologie\n2027.0.0-alpha.2\n(STU)", fillcolor="#fff3cd"];
+    mikrobio   [label="Mikrobiologie\n2027.0.0-alpha.3\n(STU)", fillcolor="#fff3cd"];
     labor -> mikrobio;
 
     // ════════════ Layer 3: Komplexe Module ════════════
