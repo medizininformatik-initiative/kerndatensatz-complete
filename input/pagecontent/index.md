@@ -19,6 +19,10 @@ Während das [Meta-Modul](https://github.com/medizininformatik-initiative/kernda
 > Die Ballot-Linie ist untereinander **noch nicht kohärent**: Die 2027.0.0-Releases deklarieren teilweise weiterhin die 2026er Basismodule als Abhängigkeit — Bildgebung erwartet Base 2026.0.1 und Meta 2026.0.0, Dokument erwartet Base 2026.0.0 und Meta 2026.0.0, Biobank und Studie erwarten Meta 2026.0.0, ICU 2027.0.0 erwartet Base 2026.0.1. Lediglich Base 2027.0.0-ballot.rc1 → Meta 2027.0.0-ballot.rc3 ist in sich stimmig.
 >
 > Beim Auflösen können Base und Meta dadurch transitiv in zwei Versionen gezogen werden, was bei der Validierung doppelte Canonicals erzeugt. Im Abhängigkeitsgraphen unten sind diese Stellen rot gestrichelt markiert. Diese BOM ist deshalb ein **Ballot-Arbeitsstand zum Review, kein freigegebener Versionsstand**.
+>
+> Neu in dieser BOM sind **Kardiologie** und **Lungenfunktion** (beide 2027.0.0-ballot.rc1). Lungenfunktion deklariert dabei die Abhängigkeit `de.basiprofil.r4` — ein Tippfehler, das Paket existiert nicht und die Abhängigkeit ist nicht auflösbar. **Soziodemographie** ist angekündigt, aber in keiner Registry publiziert und daher nicht gepinnt.
+>
+> Repariert gegenüber dem vorigen Stand: **Biobank 2027.0.0-ballot.rc2** verweist jetzt korrekt auf Meta 2027.0.0-ballot.rc3 statt auf 2026.0.0.
 
 
 ## Abhängigkeitsgraph
@@ -44,7 +48,7 @@ Während das [Meta-Modul](https://github.com/medizininformatik-initiative/kernda
 
 | Modul | Package | Version | GitHub | Release |
 |-------|---------|---------|--------|---------|
-| Biobank | `de.medizininformatikinitiative.kerndatensatz.biobank` | 2027.0.0-ballot.rc1 | [kerndatensatzmodul-biobank](https://github.com/medizininformatik-initiative/kerndatensatzmodul-biobank) | [v2027.0.0-ballot.rc1](https://github.com/medizininformatik-initiative/kerndatensatzmodul-biobank/releases/tag/v2027.0.0-ballot.rc1) (2026-08-28) |
+| Biobank | `de.medizininformatikinitiative.kerndatensatz.biobank` | 2027.0.0-ballot.rc2 | [kerndatensatzmodul-biobank](https://github.com/medizininformatik-initiative/kerndatensatzmodul-biobank) | nur als Package publiziert, letztes GitHub-Release ist rc1 (2026-08-28) |
 | ICU | `de.medizininformatikinitiative.kerndatensatz.icu` | 2027.0.0 | [kerndatensatzmodul-intensivmedizin](https://github.com/medizininformatik-initiative/kerndatensatzmodul-intensivmedizin) | nur als Package publiziert, kein GitHub-Release |
 | Mikrobiologie | `de.medizininformatikinitiative.kerndatensatz.mikrobiologie` | 2027.0.0-alpha.5 | [kerndatensatzmodul-mikrobiologie](https://github.com/medizininformatik-initiative/kerndatensatzmodul-mikrobiologie) | [2027.0.0-alpha.5](https://github.com/medizininformatik-initiative/kerndatensatzmodul-mikrobiologie/releases/tag/2027.0.0-alpha.5) (2026-06-18) |
 | Molekulargenetik | `de.medizininformatikinitiative.kerndatensatz.molgen` | 2026.0.4 | [kerndatensatzmodul-GenetischeTests](https://github.com/medizininformatik-initiative/kerndatensatzmodul-GenetischeTests) | [v2026.0.4](https://github.com/medizininformatik-initiative/kerndatensatzmodul-GenetischeTests/releases/tag/v2026.0.4) (2026-01-02) |
@@ -57,6 +61,18 @@ Während das [Meta-Modul](https://github.com/medizininformatik-initiative/kernda
 | Molekulares Tumorboard | `de.medizininformatikinitiative.kerndatensatz.mtb` | 2026.0.1 | [kerndatensatzmodul-molekulares-tumorboard](https://github.com/medizininformatik-initiative/kerndatensatzmodul-molekulares-tumorboard) | [v2026.0.1](https://github.com/medizininformatik-initiative/kerndatensatzmodul-molekulares-tumorboard/releases/tag/v2026.0.1) (2026-03-30) |
 | PROs | `de.medizininformatikinitiative.kerndatensatz.pros` | 2026.7.0 | [kerndatensatzmodul-proms](https://github.com/medizininformatik-initiative/kerndatensatzmodul-proms) | [v2026.7.0](https://github.com/medizininformatik-initiative/kerndatensatzmodul-proms/releases/tag/v2026.7.0) |
 | Consent | `de.medizininformatikinitiative.kerndatensatz.consent` | 2026.0.1-rc-4 | [kerndatensatzmodul-consent](https://github.com/medizininformatik-initiative/kerndatensatzmodul-consent) | nur als Package publiziert, kein GitHub-Release |
+| Kardiologie | `de.medizininformatikinitiative.kerndatensatz.kardiologie` | 2027.0.0-ballot.rc1 | [kerndatensatz-kardiologie](https://github.com/medizininformatik-initiative/kerndatensatz-kardiologie) | [v2027.0.0-ballot.rc1](https://github.com/medizininformatik-initiative/kerndatensatz-kardiologie/releases/tag/v2027.0.0-ballot.rc1) (2026-08-31) |
+| Lungenfunktion | `de.medizininformatikinitiative.kerndatensatz.lungenfunktion` | 2027.0.0-ballot.rc1 | [kerndatensatz-lungenfunktion](https://github.com/medizininformatik-initiative/kerndatensatz-lungenfunktion) | nur als Package publiziert, kein GitHub-Release |
+
+### Angekündigt, noch nicht publiziert
+
+| Modul | Package | Version | GitHub | Status |
+|-------|---------|---------|--------|--------|
+| Soziodemographie | `de.medizininformatikinitiative.kerndatensatz.soziodemographie` | 2027.0.0-ballot.rc1 (im Repo) | [kerndatensatz-soziodemographie](https://github.com/medizininformatik-initiative/kerndatensatz-soziodemographie) | **in keiner Registry publiziert** |
+
+Das Repo deklariert `packageId: de.medizininformatikinitiative.kerndatensatz.soziodemographie` in Version 2027.0.0-ballot.rc1 (`releaseLabel: ci-build`, `status: draft`), das Package ist aber weder auf packages.simplifier.net noch auf packages.fhir.org verfügbar — in keiner Version. Es gibt auch keine GitHub-Releases oder Tags.
+
+Das Modul ist deshalb **nicht** in `package.json` und `sushi-config.yaml` gepinnt: eine nicht auflösbare Abhängigkeit würde jeden Konsumenten dieser BOM brechen. Sobald das Package publiziert ist, wird es nachgezogen.
 
 ### Externe Abhängigkeiten
 
@@ -68,7 +84,7 @@ Pakete ohne Pin werden weiterhin transitiv aufgelöst; ihre Version ergibt sich 
 
 | Paket | Version | Angefordert von | Anmerkung |
 |-------|---------|-----------------|-----------|
-| Deutsche Basisprofile R4 (`de.basisprofil.r4`) | 1.6.0 | Base, Biobank, ICU, Bildgebung, Dokument | ältere Module fordern noch 1.5.x |
+| Deutsche Basisprofile R4 (`de.basisprofil.r4`) | 1.6.0 | Base, Biobank, ICU, Bildgebung, Dokument, Kardiologie | ältere Module fordern noch 1.5.x; Lungenfunktion fordert das nicht existierende `de.basiprofil.r4` |
 | HL7 Terminology (`hl7.terminology.r4`) | 7.3.0 | ICU 2027.0.0 | Module uneinig: 5.0.0 / 6.1.0 / 6.5.0 / 7.1.0 / 7.2.0 / 7.3.0 |
 | HL7 Extensions R4 (`hl7.fhir.uv.extensions.r4`) | 5.3.0 | Base 2026.0.1, CRMI 2.0.0 | Module uneinig: 5.1.0 / 5.2.0 / 5.3.0 |
 | HL7 Clinical Genomics (`hl7.fhir.uv.genomics-reporting`) | 3.0.0 | Molekulargenetik, MTB | einheitlich |
@@ -76,7 +92,7 @@ Pakete ohne Pin werden weiterhin transitiv aufgelöst; ihre Version ergibt sich 
 | HL7 Europe Laboratory (`hl7.fhir.eu.laboratory`) | 2.0.0 | Biobank 2027.0.0-ballot.rc1 | einheitlich |
 | HL7 Europe Extensions R4 (`hl7.fhir.eu.extensions.r4`) | 1.3.0 | EU Base, EU Laboratory | einheitlich |
 | MIABIS (`eu.miabis.r4`) | 0.2.0 | Biobank | **aktuell wäre 1.3.0** — Biobank hängt eine Major-Version zurück |
-| ISiK (`de.gematik.isik`) | 6.0.0 | ICU 2027.0.0, Dokument 2027.0.0-ballot.rc1 | Pathologie fordert 5.1.0, PROs 5.1.1 |
+| ISiK (`de.gematik.isik`) | 6.0.0 | ICU 2027.0.0, Dokument 2027.0.0-ballot.rc1, Kardiologie | Pathologie fordert 5.1.0, PROs 5.1.1 |
 
 #### Nur transitiv aufgelöst
 
@@ -112,7 +128,7 @@ dependencies:
   de.medizininformatikinitiative.kerndatensatz.complete: 2027.0.0-ballot.1
 ```
 
-Alle 18 Modul-Dependencies und die 8 gepinnten externen Pakete werden automatisch von der FHIR Package Registry aufgelöst und heruntergeladen.
+Alle 19 Modul-Dependencies und die 8 gepinnten externen Pakete werden automatisch von der FHIR Package Registry aufgelöst und heruntergeladen.
 
 ### Manuelle Installation
 

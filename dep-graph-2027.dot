@@ -37,14 +37,14 @@ digraph MII_KDS_2027_Ballot {
     base       [label=<Base 2027.0.0-ballot.rc1<BR/><FONT POINT-SIZE="8">(Person, Fall, Diagnose, Prozedur) · Ballot</FONT>>, fillcolor="#fff3cd"];
     labor      [label="Labor\n2026.0.3",       fillcolor="#d4edda"];
     medikation [label="Medikation\n2026.0.1",  fillcolor="#d4edda"];
-    biobank    [label=<Biobank 2027.0.0-ballot.rc1<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
+    biobank    [label=<Biobank 2027.0.0-ballot.rc2<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
     studie     [label=<Studie 2027.0.0-ballot.rc1<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
     pros       [label="PROs\n2026.7.0",        fillcolor="#d4edda"];
 
     meta -> base;
     meta -> labor       [color="#c0392b", style=dashed];
     meta -> medikation  [color="#c0392b", style=dashed];
-    meta -> biobank     [color="#c0392b", style=dashed];
+    meta -> biobank;
     meta -> studie      [color="#c0392b", style=dashed];
     meta -> pros        [color="#c0392b", style=dashed];
 
@@ -106,24 +106,31 @@ digraph MII_KDS_2027_Ballot {
     // ════════════ Einwilligung (keine MII-internen Deps) ════════════
     consent    [label=<Consent 2026.0.1-rc-4<BR/><FONT POINT-SIZE="8">(RC) · → de.einwilligungsmanagement 2.0.3</FONT>>, fillcolor="#fff3cd"];
 
-    // ════════════ In Entwicklung ════════════
+    // ════════════ Neue Ballot-Module ════════════
+    kardiologie [label=<Kardiologie 2027.0.0-ballot.rc1<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
+    meta -> kardiologie [color="#c0392b", style=dashed];
+    base -> kardiologie [color="#c0392b", style=dashed];
+    icu  -> kardiologie [color="#c0392b", style=dashed];
+
+    lungenfunktion [label=<Lungenfunktion 2027.0.0-ballot.rc1<BR/><FONT POINT-SIZE="8">(Ballot) · <FONT COLOR="#c0392b">Dep-Tippfehler de.basiprofil.r4</FONT></FONT>>, fillcolor="#fff3cd"];
+    meta       -> lungenfunktion [color="#c0392b", style=dashed];
+    base       -> lungenfunktion [color="#c0392b", style=dashed];
+    medikation -> lungenfunktion;
+
+    // ════════════ Angekündigt, noch nicht publiziert ════════════
     subgraph cluster_nonfinal {
-        label=<<B>In Entwicklung</B>>;
+        label=<<B>Angekündigt, Package nicht publiziert</B>>;
         style="dashed"; color="gray60"; bgcolor="#f8f9fa";
         fontname="Helvetica"; fontsize=10;
 
-        kardiologie    [label="Kardiologie\n(alpha)",             fillcolor="#e2e3e5", color="gray60", fontcolor="gray30"];
-        lungenfunktion [label="Lungenfunktion\n(nicht publiziert)", fillcolor="#e2e3e5", color="gray60", fontcolor="gray30"];
+        soziodem [label=<Soziodemographie<BR/><FONT POINT-SIZE="8">2027.0.0-ballot.rc1 im Repo,<BR/>in keiner Registry</FONT>>, fillcolor="#e2e3e5", color="gray60", fontcolor="gray30"];
     }
-
-    meta -> kardiologie    [color="gray70", style=dashed, penwidth=0.8];
-    meta -> lungenfunktion [color="gray70", style=dashed, penwidth=0.8];
 
     // ════════════ Ranking ════════════
     {rank=min;  meta}
     {rank=same; base; labor; medikation; biobank; studie; pros; consent}
-    {rank=same; icu; molgen; bildgebung; dokument; mikrobio}
-    {rank=same; onko; patho}
+    {rank=same; icu; molgen; bildgebung; dokument; mikrobio; lungenfunktion}
+    {rank=same; onko; patho; kardiologie}
     {rank=same; seltene}
     {rank=max;  mtb}
 }

@@ -28,7 +28,7 @@ digraph MII_KDS_2027_Extern {
 
         m_base   [label="Base\n2027.0.0-ballot.rc1", fillcolor="#fff3cd"];
         m_meta   [label="Meta\n2027.0.0-ballot.rc3", fillcolor="#fff3cd"];
-        m_bio    [label="Biobank\n2027.0.0-ballot.rc1", fillcolor="#fff3cd"];
+        m_bio    [label="Biobank\n2027.0.0-ballot.rc2", fillcolor="#fff3cd"];
         m_dok    [label="Dokument\n2027.0.0-ballot.rc1", fillcolor="#fff3cd"];
         m_bild   [label="Bildgebung\n2027.0.0-ballot.rc2", fillcolor="#fff3cd"];
         m_icu    [label="ICU\n2027.0.0", fillcolor="#d4edda"];
@@ -39,6 +39,8 @@ digraph MII_KDS_2027_Extern {
         m_patho  [label="Pathologie\n2026.0.2", fillcolor="#d4edda"];
         m_pros   [label="PROs\n2026.7.0", fillcolor="#d4edda"];
         m_cons   [label="Consent\n2026.0.1-rc-4", fillcolor="#fff3cd"];
+        m_kard   [label="Kardiologie\n2027.0.0-ballot.rc1", fillcolor="#fff3cd"];
+        m_lufu   [label="Lungenfunktion\n2027.0.0-ballot.rc1", fillcolor="#fff3cd"];
     }
 
     // ════════════ Gepinnt: HL7 International ════════════
@@ -90,6 +92,9 @@ digraph MII_KDS_2027_Extern {
         einw  [label="de.einwilligungsmanagement\n2.0.3"];
         gtermi[label="de.gematik.terminology\n1.0.6 – 1.0.9"];
     }
+
+    // ════════════ Nicht aufloesbar ════════════
+    basitypo [label=<de.basiprofil.r4 1.5.x<BR/><FONT POINT-SIZE="7">existiert nicht — Tippfehler</FONT>>, shape=box, style="rounded,filled,dashed", fillcolor="#fdeaea", color="#c0392b", fontcolor="#c0392b", penwidth=1.4];
 
     // ════════════ Kanten: Terminology ════════════
     m_icu -> tho [label="7.3.0"];
@@ -149,4 +154,10 @@ digraph MII_KDS_2027_Extern {
     m_medi  -> demed [style=dashed, color="gray70"];
     m_cons  -> einw  [style=dashed, color="gray70"];
     isik    -> gtermi[style=dashed, color="gray70"];
+
+    // ════════════ Kanten: neue Ballot-Module ════════════
+    m_kard -> basis [label="1.6.0"];
+    m_kard -> isik  [label="6.0.0"];
+    m_kard -> tho   [label="7.1.0", color="#c0392b", fontcolor="#c0392b"];
+    m_lufu -> basitypo [label="1.5.x", color="#c0392b", fontcolor="#c0392b"];
 }

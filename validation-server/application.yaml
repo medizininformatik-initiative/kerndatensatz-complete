@@ -27,7 +27,7 @@ hapi:
         version: 2026.0.3
       biobank:
         name: de.medizininformatikinitiative.kerndatensatz.biobank
-        version: 2027.0.0-ballot.rc1
+        version: 2027.0.0-ballot.rc2
       icu:
         name: de.medizininformatikinitiative.kerndatensatz.icu
         version: 2027.0.0
@@ -61,6 +61,13 @@ hapi:
       pros:
         name: de.medizininformatikinitiative.kerndatensatz.pros
         version: 2026.7.0
+      kardiologie:
+        name: de.medizininformatikinitiative.kerndatensatz.kardiologie
+        version: 2027.0.0-ballot.rc1
+      lungenfunktion:
+        name: de.medizininformatikinitiative.kerndatensatz.lungenfunktion
+        version: 2027.0.0-ballot.rc1
+      # soziodemographie: Package noch nicht publiziert (mii-kds-complete-e1x)
       basisprofil:
         name: de.basisprofil.r4
         version: 1.6.0

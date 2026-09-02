@@ -25,10 +25,16 @@ publisher:
 #
 # ACHTUNG (Ballot-Stand 2026-09-02): Die 2027.0.0-Releases deklarieren untereinander
 # noch die 2026er Basismodule. bildgebung -> base 2026.0.1 / meta 2026.0.0,
-# dokument -> base 2026.0.0 / meta 2026.0.0, biobank + studie -> meta 2026.0.0,
-# icu 2027.0.0 -> base 2026.0.1. Nur base 2027.0.0-ballot.rc1 -> meta 2027.0.0-ballot.rc3
-# ist in sich stimmig. base und meta koennen daher transitiv doppelt aufgeloest werden.
-# Siehe Issue mii-kds-complete-d3d.
+# dokument -> base 2026.0.0 / meta 2026.0.0, studie -> meta 2026.0.0,
+# icu 2027.0.0 -> base 2026.0.1, kardiologie -> base 2026.0.0 / meta 2026.0.0 / icu 2026.0.1,
+# lungenfunktion -> base 2026.0.x / meta 2026.0.x. Stimmig sind nur
+# base 2027.0.0-ballot.rc1 -> meta 2027.0.0-ballot.rc3 und biobank 2027.0.0-ballot.rc2 ->
+# meta 2027.0.0-ballot.rc3 (in rc2 repariert). base und meta koennen daher transitiv
+# doppelt aufgeloest werden. Siehe Issue mii-kds-complete-d3d.
+#
+# lungenfunktion 2027.0.0-ballot.rc1 deklariert ausserdem 'de.basiprofil.r4' (Tippfehler,
+# fehlendes s) -- dieses Paket existiert nicht, die Dependency ist nicht aufloesbar.
+# Siehe mii-kds-complete-alr.
 dependencies:
   # Deutsche Basisprofile
   de.basisprofil.r4: 1.6.0
@@ -40,7 +46,7 @@ dependencies:
   de.medizininformatikinitiative.kerndatensatz.laborbefund: 2026.0.3
 
   # MII Kerndatensatz Erweiterungsmodule
-  de.medizininformatikinitiative.kerndatensatz.biobank: 2027.0.0-ballot.rc1
+  de.medizininformatikinitiative.kerndatensatz.biobank: 2027.0.0-ballot.rc2
   de.medizininformatikinitiative.kerndatensatz.icu: 2027.0.0
   de.medizininformatikinitiative.kerndatensatz.mikrobiologie: 2027.0.0-alpha.5
   de.medizininformatikinitiative.kerndatensatz.molgen: 2026.0.4
@@ -52,6 +58,14 @@ dependencies:
   de.medizininformatikinitiative.kerndatensatz.seltene: 2026.0.1
   de.medizininformatikinitiative.kerndatensatz.mtb: 2026.0.1
   de.medizininformatikinitiative.kerndatensatz.pros: 2026.7.0
+  de.medizininformatikinitiative.kerndatensatz.kardiologie: 2027.0.0-ballot.rc1
+  de.medizininformatikinitiative.kerndatensatz.lungenfunktion: 2027.0.0-ballot.rc1
+
+  # Soziodemographie ist NICHT gepinnt: das Repo deklariert packageId
+  # de.medizininformatikinitiative.kerndatensatz.soziodemographie in 2027.0.0-ballot.rc1,
+  # das Package ist aber in keiner Registry publiziert (404 auf Simplifier und
+  # packages.fhir.org). Eine nicht aufloesbare Dependency wuerde jeden Konsumenten
+  # der BOM brechen -- siehe mii-kds-complete-e1x.
 
   # Einwilligungsmanagement
   de.medizininformatikinitiative.kerndatensatz.consent: 2026.0.1-rc-4

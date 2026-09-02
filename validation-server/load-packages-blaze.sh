@@ -11,7 +11,7 @@ PACKAGES=(
   "de.medizininformatikinitiative.kerndatensatz.meta/2027.0.0-ballot.rc3"
   "de.medizininformatikinitiative.kerndatensatz.medikation/2026.0.1"
   "de.medizininformatikinitiative.kerndatensatz.laborbefund/2026.0.3"
-  "de.medizininformatikinitiative.kerndatensatz.biobank/2027.0.0-ballot.rc1"
+  "de.medizininformatikinitiative.kerndatensatz.biobank/2027.0.0-ballot.rc2"
   "de.medizininformatikinitiative.kerndatensatz.icu/2027.0.0"
   "de.medizininformatikinitiative.kerndatensatz.mikrobiologie/2027.0.0-alpha.5"
   "de.medizininformatikinitiative.kerndatensatz.molgen/2026.0.4"
@@ -23,6 +23,9 @@ PACKAGES=(
   "de.medizininformatikinitiative.kerndatensatz.seltene/2026.0.1"
   "de.medizininformatikinitiative.kerndatensatz.mtb/2026.0.1"
   "de.medizininformatikinitiative.kerndatensatz.pros/2026.7.0"
+  "de.medizininformatikinitiative.kerndatensatz.kardiologie/2027.0.0-ballot.rc1"
+  "de.medizininformatikinitiative.kerndatensatz.lungenfunktion/2027.0.0-ballot.rc1"
+  # soziodemographie: Package noch nicht publiziert (mii-kds-complete-e1x)
   "de.medizininformatikinitiative.kerndatensatz.consent/2026.0.1-rc-4"
   "de.basisprofil.r4/1.6.0"
   "de.einwilligungsmanagement/2.0.3"
