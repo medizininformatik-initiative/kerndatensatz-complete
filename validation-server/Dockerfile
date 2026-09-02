@@ -64,9 +64,17 @@ LABEL org.opencontainers.image.title="MII KDS Validation Server (HAPI)"
 LABEL org.opencontainers.image.description="HAPI FHIR Server with all MII Kerndatensatz packages pre-cached (BOM 2027.0.0-ballot.1)"
 LABEL org.opencontainers.image.source="https://github.com/medizininformatik-initiative/kerndatensatz-complete"
 
-# Copy pre-fetched packages into HAPI's FHIR cache (as correct user)
-COPY --from=package-fetcher --chown=1001:1001 /root/.fhir/packages /root/.fhir/packages
-COPY --chown=1001:1001 application.yaml /app/config/application.yaml
+# Copy pre-fetched packages into HAPI's FHIR cache.
+#
+# hapiproject/hapi laeuft als User 65532 (nonroot) mit Home /home/nonroot.
+# Der FilesystemPackageCacheManager sucht unter $HOME/.fhir/packages -- landet
+# der Cache unter /root oder gehoert er User 1001, ist er wirkungslos und HAPI
+# laedt beim Start alle Pakete erneut aus der Registry (bis 429 Too Many
+# Requests den Start abbricht).
+COPY --from=package-fetcher --chown=65532:65532 /root/.fhir/packages /home/nonroot/.fhir/packages
+COPY --chown=65532:65532 application.yaml /app/config/application.yaml
+
+ENV HOME=/home/nonroot
 
 ENV SPRING_CONFIG_ADDITIONAL_LOCATION="file:///app/config/application.yaml"
 
