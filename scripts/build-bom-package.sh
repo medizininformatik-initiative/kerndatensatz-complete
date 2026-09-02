@@ -104,6 +104,7 @@ mkdir -p "$PACKAGE_DIR/examples"
 
 TOTAL_RESOURCES=0
 TOTAL_EXAMPLES=0
+COLLISIONS=0
 
 while IFS= read -r dep; do
   NAME="${dep%@*}"
@@ -128,7 +129,17 @@ while IFS= read -r dep; do
     [[ "$BASENAME" == "package.json" ]] && continue
     [[ "$BASENAME" == ".index.json" ]] && continue
 
-    # Copy resource, prefixing with module short name to avoid collisions
+    # Skip macOS AppleDouble resource forks (._package.json etc.), die in
+    # einigen publizierten Modul-Tarballs stecken und zwischen Modulen
+    # kollidieren -- siehe mii-kds-complete Issue zu Dokument/Seltene
+    [[ "$BASENAME" == ._* ]] && continue
+
+    # Kollisionen sichtbar machen, statt still zu ueberschreiben
+    if [[ -e "$PACKAGE_DIR/${BASENAME}" ]]; then
+      echo "    ! Kollision: ${BASENAME} wird von ${SHORT} ueberschrieben"
+      COLLISIONS=$((COLLISIONS + 1))
+    fi
+
     cp "$f" "$PACKAGE_DIR/${BASENAME}"
     PKG_RESOURCES=$((PKG_RESOURCES + 1))
   done
@@ -149,7 +160,7 @@ while IFS= read -r dep; do
 done <<< "$DEPS"
 
 echo ""
-echo "  Total: ${TOTAL_RESOURCES} resources, ${TOTAL_EXAMPLES} examples"
+echo "  Total: ${TOTAL_RESOURCES} resources, ${TOTAL_EXAMPLES} examples, ${COLLISIONS} Kollisionen"
 echo ""
 
 # --- Phase 3: Write package.json ---

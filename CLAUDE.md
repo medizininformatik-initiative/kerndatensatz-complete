@@ -61,9 +61,21 @@ Beim Hinzufügen oder Aktualisieren eines Moduls müssen diese Dateien angepasst
 2. `sushi-config.yaml` — Dependency-Version + ggf. Paketversion/releaseLabel
 3. `validation-server/application.yaml` — HAPI-Konfiguration
 4. `validation-server/load-packages-blaze.sh` — Blaze-Loader
-5. `input/pagecontent/index.md` — Modultabelle
-6. `dep-graph-2027.dot` — Abhängigkeitsgraph (danach neu rendern)
-7. `dep-graph-2027-extern.dot` — bei geänderten externen Abhängigkeiten (danach neu rendern)
+5. `validation-server/Dockerfile` — **eigene Paketliste** für den Pre-Cache des HAPI-Images
+6. `input/pagecontent/index.md` — Modultabelle
+7. `dep-graph-2027.dot` — Abhängigkeitsgraph (danach neu rendern)
+8. `dep-graph-2027-extern.dot` — bei geänderten externen Abhängigkeiten (danach neu rendern)
+
+Danach prüfen, ob alle Quellen übereinstimmen:
+
+```bash
+./scripts/check-module-versions.py            # Konsistenz + Registry-Abgleich
+./scripts/check-module-versions.py --offline  # nur Konsistenz, ohne Netz
+```
+
+Das Skript kennt die bewussten Ausnahmen (Consent fehlt in HAPI wegen HAPI-1821,
+`hl7.fhir.r4.core` steht nicht unter `implementationguides`) und meldet neuere
+verfügbare Versionen als Hinweis, nicht als Fehler.
 
 ### Pinning-Regel für externe Pakete
 

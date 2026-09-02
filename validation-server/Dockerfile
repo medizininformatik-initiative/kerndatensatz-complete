@@ -8,24 +8,35 @@ RUN apt-get update && apt-get install -y curl jq && rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /root/.fhir/packages && cd /root/.fhir/packages && \
     PACKAGES=" \
       hl7.fhir.r4.core/4.0.1 \
-      de.basisprofil.r4/1.5.4 \
-      de.einwilligungsmanagement/1.0.2 \
-      de.medizininformatikinitiative.kerndatensatz.base/2026.0.0 \
-      de.medizininformatikinitiative.kerndatensatz.meta/2026.0.0 \
+      de.basisprofil.r4/1.6.0 \
+      de.medizininformatikinitiative.kerndatensatz.base/2027.0.0-ballot.rc1 \
+      de.medizininformatikinitiative.kerndatensatz.meta/2027.0.0-ballot.rc3 \
       de.medizininformatikinitiative.kerndatensatz.medikation/2026.0.1 \
-      de.medizininformatikinitiative.kerndatensatz.laborbefund/2026.0.1 \
-      de.medizininformatikinitiative.kerndatensatz.biobank/2026.0.1 \
-      de.medizininformatikinitiative.kerndatensatz.icu/2026.0.2 \
-      de.medizininformatikinitiative.kerndatensatz.mikrobiologie/2025.0.1 \
+      de.medizininformatikinitiative.kerndatensatz.laborbefund/2026.0.3 \
+      de.medizininformatikinitiative.kerndatensatz.biobank/2027.0.0-ballot.rc2 \
+      de.medizininformatikinitiative.kerndatensatz.icu/2027.0.0 \
+      de.medizininformatikinitiative.kerndatensatz.mikrobiologie/2027.0.0-alpha.5 \
       de.medizininformatikinitiative.kerndatensatz.molgen/2026.0.4 \
-      de.medizininformatikinitiative.kerndatensatz.patho/2026.0.1 \
-      de.medizininformatikinitiative.kerndatensatz.studie/2026.0.2 \
-      de.medizininformatikinitiative.kerndatensatz.bildgebung/2026.0.0 \
-      de.medizininformatikinitiative.kerndatensatz.dokument/2026.0.1 \
+      de.medizininformatikinitiative.kerndatensatz.patho/2026.0.2 \
+      de.medizininformatikinitiative.kerndatensatz.studie/2027.0.0-ballot.rc1 \
+      de.medizininformatikinitiative.kerndatensatz.bildgebung/2027.0.0-ballot.rc2 \
+      de.medizininformatikinitiative.kerndatensatz.dokument/2027.0.0-ballot.rc1 \
       de.medizininformatikinitiative.kerndatensatz.onkologie/2026.0.3 \
       de.medizininformatikinitiative.kerndatensatz.seltene/2026.0.1 \
       de.medizininformatikinitiative.kerndatensatz.mtb/2026.0.1 \
-      de.medizininformatikinitiative.kerndatensatz.pros/2026.2.0 \
+      de.medizininformatikinitiative.kerndatensatz.pros/2026.7.0 \
+      de.medizininformatikinitiative.kerndatensatz.kardiologie/2027.0.0-ballot.rc1 \
+      de.medizininformatikinitiative.kerndatensatz.lungenfunktion/2027.0.0-ballot.rc1 \
+      de.medizininformatikinitiative.kerndatensatz.consent/2026.0.1-rc-4 \
+      hl7.terminology.r4/7.3.0 \
+      hl7.fhir.uv.extensions.r4/5.3.0 \
+      hl7.fhir.uv.genomics-reporting/3.0.0 \
+      hl7.fhir.eu.base/2.0.0 \
+      hl7.fhir.eu.laboratory/2.0.0 \
+      hl7.fhir.eu.extensions.r4/1.3.0 \
+      eu.miabis.r4/0.2.0 \
+      de.gematik.isik/6.0.0 \
+      de.einwilligungsmanagement/2.0.3 \
     " && \
     for PKG in $PACKAGES; do \
       NAME="${PKG%/*}"; VERSION="${PKG#*/}"; \
@@ -50,7 +61,7 @@ RUN mkdir -p /root/.fhir/packages && cd /root/.fhir/packages && \
 FROM hapiproject/hapi:v7.6.0
 
 LABEL org.opencontainers.image.title="MII KDS Validation Server (HAPI)"
-LABEL org.opencontainers.image.description="HAPI FHIR Server with all MII Kerndatensatz packages pre-cached (BOM 2026.0.0)"
+LABEL org.opencontainers.image.description="HAPI FHIR Server with all MII Kerndatensatz packages pre-cached (BOM 2027.0.0-ballot.1)"
 LABEL org.opencontainers.image.source="https://github.com/medizininformatik-initiative/kerndatensatz-complete"
 
 # Copy pre-fetched packages into HAPI's FHIR cache (as correct user)
