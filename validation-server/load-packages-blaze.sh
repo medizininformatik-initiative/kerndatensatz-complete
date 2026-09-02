@@ -26,6 +26,15 @@ PACKAGES=(
   "de.medizininformatikinitiative.kerndatensatz.consent/2026.0.1-rc-4"
   "de.basisprofil.r4/1.6.0"
   "de.einwilligungsmanagement/2.0.3"
+  # Externe Abhaengigkeiten, explizit gepinnt (siehe package.json / sushi-config.yaml)
+  "hl7.terminology.r4/7.3.0"
+  "hl7.fhir.uv.extensions.r4/5.3.0"
+  "hl7.fhir.uv.genomics-reporting/3.0.0"
+  "hl7.fhir.eu.base/2.0.0"
+  "hl7.fhir.eu.laboratory/2.0.0"
+  "hl7.fhir.eu.extensions.r4/1.3.0"
+  "eu.miabis.r4/0.2.0"
+  "de.gematik.isik/6.0.0"
 )
 
 # Reihenfolge entspricht der BOM (package.json / sushi-config.yaml).

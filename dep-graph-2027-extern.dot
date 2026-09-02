@@ -1,0 +1,152 @@
+// MII KDS 2027 Ballot — Externe Abhängigkeiten
+//
+// Quelle:     dep-graph-2027-extern.dot
+// Generiert:  dot -Tpng dep-graph-2027-extern.dot -o input/images/dep-graph-2027-extern.png
+//             dot -Tsvg dep-graph-2027-extern.dot -o input/images/dep-graph-2027-extern.svg
+//
+// Kästen:  durchgezogen = in der BOM gepinnt · gestrichelt = nur transitiv aufgelöst
+// Kanten:  Beschriftung = Version, die das Modul deklariert
+//          rot = weicht von der BOM-Pinnung ab
+
+digraph MII_KDS_2027_Extern {
+    rankdir=LR;
+    bgcolor="white";
+    fontname="Helvetica";
+    node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=10, margin="0.18,0.09"];
+    edge [color="gray55", arrowsize=0.6, penwidth=0.9, fontname="Helvetica", fontsize=7, fontcolor="gray35"];
+    nodesep=0.22;
+    ranksep=2.6;
+
+    labelloc="t";
+    label=<<B>MII KDS 2027 Ballot — Externe Abhängigkeiten</B><BR/><FONT POINT-SIZE="9">Pfeil = „hängt ab von" · Stand 2026-09-02 · Durchgezogen = in der BOM gepinnt, gestrichelt = nur transitiv<BR/><FONT COLOR="#c0392b">Rote Kante = Modul fordert eine andere Version an als die BOM pinnt</FONT></FONT>>;
+    fontsize=14;
+
+    // ════════════ MII-Module ════════════
+    subgraph cluster_mii {
+        label=<<B>MII KDS Module</B>>;
+        style="rounded"; color="gray70"; bgcolor="#fbfbfc"; fontsize=10;
+
+        m_base   [label="Base\n2027.0.0-ballot.rc1", fillcolor="#fff3cd"];
+        m_meta   [label="Meta\n2027.0.0-ballot.rc3", fillcolor="#fff3cd"];
+        m_bio    [label="Biobank\n2027.0.0-ballot.rc1", fillcolor="#fff3cd"];
+        m_dok    [label="Dokument\n2027.0.0-ballot.rc1", fillcolor="#fff3cd"];
+        m_bild   [label="Bildgebung\n2027.0.0-ballot.rc2", fillcolor="#fff3cd"];
+        m_icu    [label="ICU\n2027.0.0", fillcolor="#d4edda"];
+        m_labor  [label="Labor\n2026.0.3", fillcolor="#d4edda"];
+        m_medi   [label="Medikation\n2026.0.1", fillcolor="#d4edda"];
+        m_molgen [label="MolGen\n2026.0.4", fillcolor="#d4edda"];
+        m_mtb    [label="MTB\n2026.0.1", fillcolor="#d4edda"];
+        m_patho  [label="Pathologie\n2026.0.2", fillcolor="#d4edda"];
+        m_pros   [label="PROs\n2026.7.0", fillcolor="#d4edda"];
+        m_cons   [label="Consent\n2026.0.1-rc-4", fillcolor="#fff3cd"];
+    }
+
+    // ════════════ Gepinnt: HL7 International ════════════
+    subgraph cluster_hl7 {
+        label=<<B>HL7 International</B>>;
+        style="rounded"; color="#5b8db8"; bgcolor="#f4f8fb"; fontsize=10;
+
+        tho  [label="hl7.terminology.r4\n7.3.0",            fillcolor="#dce9f4", color="#5b8db8", penwidth=1.6];
+        ext  [label="hl7.fhir.uv.extensions.r4\n5.3.0",     fillcolor="#dce9f4", color="#5b8db8", penwidth=1.6];
+        geno [label="hl7.fhir.uv.genomics-reporting\n3.0.0", fillcolor="#dce9f4", color="#5b8db8", penwidth=1.6];
+    }
+
+    // ════════════ Gepinnt: HL7 Europe ════════════
+    subgraph cluster_eu {
+        label=<<B>HL7 Europe</B>>;
+        style="rounded"; color="#7a9e5b"; bgcolor="#f6faf3"; fontsize=10;
+
+        eubase [label="hl7.fhir.eu.base\n2.0.0",         fillcolor="#e4f0da", color="#7a9e5b", penwidth=1.6];
+        eulab  [label="hl7.fhir.eu.laboratory\n2.0.0",   fillcolor="#e4f0da", color="#7a9e5b", penwidth=1.6];
+        euext  [label="hl7.fhir.eu.extensions.r4\n1.3.0", fillcolor="#e4f0da", color="#7a9e5b", penwidth=1.6];
+        miabis [label=<eu.miabis.r4 0.2.0<BR/><FONT POINT-SIZE="7" COLOR="#c0392b">aktuell wäre 1.3.0</FONT>>, fillcolor="#e4f0da", color="#7a9e5b", penwidth=1.6];
+    }
+
+    // ════════════ Gepinnt: Deutschland ════════════
+    subgraph cluster_de {
+        label=<<B>Deutschland</B>>;
+        style="rounded"; color="#b8895b"; bgcolor="#fbf7f3"; fontsize=10;
+
+        basis [label="de.basisprofil.r4\n1.6.0",  fillcolor="#f4e7da", color="#b8895b", penwidth=1.6];
+        isik  [label="de.gematik.isik\n6.0.0",    fillcolor="#f4e7da", color="#b8895b", penwidth=1.6];
+    }
+
+    // ════════════ Nur transitiv ════════════
+    subgraph cluster_trans {
+        label=<<B>Nur transitiv aufgelöst</B>>;
+        style="rounded,dashed"; color="gray65"; bgcolor="#f8f9fa"; fontsize=10;
+
+        node [style="rounded,filled,dashed", fillcolor="#eef0f2", color="gray60", fontcolor="gray25"];
+        ips   [label="hl7.fhir.uv.ips\n2.0.0"];
+        sdc   [label="hl7.fhir.uv.sdc\n3.0.0 / 4.0.0"];
+        mcode [label="hl7.fhir.us.mcode\n2.1.x"];
+        crmi  [label="hl7.fhir.uv.crmi\n2.0.0"];
+        xver  [label="hl7.fhir.uv.xver-r5.r4\n0.1.0"];
+        dicom [label="fhir.dicom\n2025.3.20250714"];
+        kdl   [label="dvmd.kdl.r4\n2025.0.1 / 2026.0.0"];
+        ihed  [label="de.ihe-d.terminology\n3.0.1"];
+        fmt   [label="ihe.formatcode.fhir\n1.4.0"];
+        demed [label="de.fhir.medication\n1.0.x"];
+        einw  [label="de.einwilligungsmanagement\n2.0.3"];
+        gtermi[label="de.gematik.terminology\n1.0.6 – 1.0.9"];
+    }
+
+    // ════════════ Kanten: Terminology ════════════
+    m_icu -> tho [label="7.3.0"];
+    m_base -> tho [label="7.1.0", color="#c0392b", fontcolor="#c0392b"];
+    m_meta -> tho [label="7.1.0", color="#c0392b", fontcolor="#c0392b"];
+    m_dok  -> tho [label="7.1.0", color="#c0392b", fontcolor="#c0392b"];
+    m_molgen -> tho [label="6.1.x", color="#c0392b", fontcolor="#c0392b"];
+
+    // ════════════ Kanten: Extensions ════════════
+    m_base  -> ext [label="5.2.0", color="#c0392b", fontcolor="#c0392b"];
+    m_meta  -> ext [label="5.2.0", color="#c0392b", fontcolor="#c0392b"];
+    m_labor -> ext [label="5.2.0", color="#c0392b", fontcolor="#c0392b"];
+    m_dok   -> ext [label="5.2.0", color="#c0392b", fontcolor="#c0392b"];
+    m_bild  -> ext [label="5.2.0", color="#c0392b", fontcolor="#c0392b"];
+
+    // ════════════ Kanten: Clinical Genomics ════════════
+    m_molgen -> geno [label="3.0.x"];
+    m_mtb    -> geno [label="3.0.0"];
+
+    // ════════════ Kanten: EU ════════════
+    m_bio -> eulab  [label="2.0.0"];
+    m_bio -> miabis [label="0.2.0"];
+    eulab -> eubase [label="2.0.0"];
+    eulab -> euext  [label="1.3.0"];
+    eubase -> euext [label="1.3.0"];
+
+    // ════════════ Kanten: Deutschland ════════════
+    m_base -> basis [label="1.6.0"];
+    m_bio  -> basis [label="1.6.0"];
+    m_icu  -> basis [label="1.6.0"];
+    m_bild -> basis [label="1.6.0"];
+    m_dok  -> basis [label="1.6.0"];
+    m_medi -> basis [label="1.5.x", color="#c0392b", fontcolor="#c0392b"];
+    m_molgen -> basis [label="1.5.x", color="#c0392b", fontcolor="#c0392b"];
+    m_mtb  -> basis [label="1.5.4", color="#c0392b", fontcolor="#c0392b"];
+
+    m_icu   -> isik [label="6.0.0"];
+    m_dok   -> isik [label="6.0.0"];
+    m_patho -> isik [label="5.1.0", color="#c0392b", fontcolor="#c0392b"];
+    m_pros  -> isik [label="5.1.1", color="#c0392b", fontcolor="#c0392b"];
+
+    // ════════════ Kanten: transitiv ════════════
+    m_labor -> ips   [style=dashed, color="gray70"];
+    m_medi  -> ips   [style=dashed, color="gray70"];
+    m_pros  -> sdc   [style=dashed, color="gray70"];
+    isik    -> sdc   [style=dashed, color="gray70"];
+    m_patho -> mcode [style=dashed, color="gray70"];
+    m_base  -> crmi  [style=dashed, color="gray70"];
+    m_meta  -> crmi  [style=dashed, color="gray70"];
+    m_base  -> xver  [style=dashed, color="gray70"];
+    m_bild  -> dicom [style=dashed, color="gray70"];
+    m_dok   -> kdl   [style=dashed, color="gray70"];
+    m_icu   -> kdl   [style=dashed, color="gray70"];
+    m_dok   -> ihed  [style=dashed, color="gray70"];
+    m_medi  -> ihed  [style=dashed, color="gray70"];
+    m_dok   -> fmt   [style=dashed, color="gray70"];
+    m_medi  -> demed [style=dashed, color="gray70"];
+    m_cons  -> einw  [style=dashed, color="gray70"];
+    isik    -> gtermi[style=dashed, color="gray70"];
+}

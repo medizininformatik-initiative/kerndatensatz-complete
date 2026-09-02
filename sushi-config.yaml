@@ -7,7 +7,7 @@ id: de.medizininformatikinitiative.kerndatensatz.complete
 canonical: https://www.medizininformatik-initiative.de/fhir/core/complete
 name: MIIKerndatensatzComplete
 title: MII Kerndatensatz Complete
-description: Bill of Materials (BOM) aller Module des MII Kerndatensatzes (Ballot-Stand 2027.0.0) mit kompatiblen Versionen
+description: Bill of Materials (BOM) aller Module des MII Kerndatensatzes samt gepinnter externer Abhaengigkeiten (Ballot-Stand 2027.0.0)
 status: active
 version: 2027.0.0-ballot.1
 fhirVersion: 4.0.1
@@ -55,6 +55,40 @@ dependencies:
 
   # Einwilligungsmanagement
   de.medizininformatikinitiative.kerndatensatz.consent: 2026.0.1-rc-4
+
+  # Externe Abhaengigkeiten
+  #
+  # Gepinnt wird jeweils die hoechste Version, die ein MII-Modul transitiv tatsaechlich
+  # anfordert -- nicht die neueste verfuegbare. Eine Version, gegen die kein Modul gebaut
+  # wurde, gehoert nicht in eine BOM.
+  #
+  # Uneinigkeit zwischen den Modulen (jeweils hoechste gewinnt):
+  #   hl7.terminology.r4        5.0.0 / 6.1.0 / 6.5.0 / 7.1.0 / 7.2.0 / 7.3.0 (icu 2027.0.0)
+  #   hl7.fhir.uv.extensions.r4 5.1.0 / 5.2.0 / 5.3.0 (base 2026.0.1, crmi 2.0.0)
+  #   de.gematik.isik           5.1.0 (patho) / 5.1.1 (pros) / 6.0.0 (icu, dokument)
+  #
+  # eu.miabis.r4 ist bewusst auf 0.2.0 gepinnt: Biobank fordert auch in
+  # 2027.0.0-ballot.rc1 noch 0.2.0 an, obwohl MIABIS bei 1.3.0 steht -- siehe mii-kds-complete-gi5.
+
+  # Terminologie
+  hl7.terminology.r4: 7.3.0
+
+  # Extensions
+  hl7.fhir.uv.extensions.r4: 5.3.0
+
+  # Clinical Genomics
+  hl7.fhir.uv.genomics-reporting: 3.0.0
+
+  # EU-Profile
+  hl7.fhir.eu.base: 2.0.0
+  hl7.fhir.eu.laboratory: 2.0.0
+  hl7.fhir.eu.extensions.r4: 1.3.0
+
+  # Biobank (MIABIS)
+  eu.miabis.r4: 0.2.0
+
+  # ISiK
+  de.gematik.isik: 6.0.0
 #
 #
 # The pages property corresponds to IG.definition.page. SUSHI can

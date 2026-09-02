@@ -1,7 +1,7 @@
 {
   "name": "de.medizininformatikinitiative.kerndatensatz.complete",
   "version": "2027.0.0-ballot.1",
-  "description": "MII Kerndatensatz Complete v2027.0.0-ballot.1 - Bill of Materials (BOM) aller Module des MII Kerndatensatzes. Ballot-Stand: Module mit einem 2027.0.0-Release sind auf dieses gepinnt, alle uebrigen auf ihre hoechste stabile 2026er Version.",
+  "description": "MII Kerndatensatz Complete v2027.0.0-ballot.1 - Bill of Materials (BOM) aller Module des MII Kerndatensatzes samt der verbindlich gepinnten externen Abhaengigkeiten (Terminology, Extensions, ISiK, EU-Profile, MIABIS, Clinical Genomics). Ballot-Stand: Module mit einem 2027.0.0-Release sind auf dieses gepinnt, alle uebrigen auf ihre hoechste stabile 2026er Version.",
   "license": "CC-BY-4.0",
   "dependencies": {
     "hl7.fhir.r4.core": "4.0.1",
@@ -22,6 +22,14 @@
     "de.medizininformatikinitiative.kerndatensatz.seltene": "2026.0.1",
     "de.medizininformatikinitiative.kerndatensatz.mtb": "2026.0.1",
     "de.medizininformatikinitiative.kerndatensatz.pros": "2026.7.0",
-    "de.medizininformatikinitiative.kerndatensatz.consent": "2026.0.1-rc-4"
+    "de.medizininformatikinitiative.kerndatensatz.consent": "2026.0.1-rc-4",
+    "hl7.terminology.r4": "7.3.0",
+    "hl7.fhir.uv.extensions.r4": "5.3.0",
+    "hl7.fhir.uv.genomics-reporting": "3.0.0",
+    "hl7.fhir.eu.base": "2.0.0",
+    "hl7.fhir.eu.laboratory": "2.0.0",
+    "hl7.fhir.eu.extensions.r4": "1.3.0",
+    "eu.miabis.r4": "0.2.0",
+    "de.gematik.isik": "6.0.0"
   }
 }

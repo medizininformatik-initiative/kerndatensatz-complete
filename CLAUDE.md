@@ -23,6 +23,13 @@ dot -Tpng dep-graph-2027.dot -o input/images/dep-graph-2027.png
 dot -Tsvg dep-graph-2027.dot -o input/images/dep-graph-2027.svg
 ```
 
+Zusätzlich gibt es `dep-graph-2027-extern.dot` für die externen Abhängigkeiten:
+
+```bash
+dot -Tpng dep-graph-2027-extern.dot -o input/images/dep-graph-2027-extern.png
+dot -Tsvg dep-graph-2027-extern.dot -o input/images/dep-graph-2027-extern.svg
+```
+
 `dep-graph-2026.dot` bleibt als Historie des 2026er Stands liegen.
 
 ### Farbschema
@@ -56,6 +63,18 @@ Beim Hinzufügen oder Aktualisieren eines Moduls müssen diese Dateien angepasst
 4. `validation-server/load-packages-blaze.sh` — Blaze-Loader
 5. `input/pagecontent/index.md` — Modultabelle
 6. `dep-graph-2027.dot` — Abhängigkeitsgraph (danach neu rendern)
+7. `dep-graph-2027-extern.dot` — bei geänderten externen Abhängigkeiten (danach neu rendern)
+
+### Pinning-Regel für externe Pakete
+
+Die BOM pinnt externe Pakete (Terminology, Extensions, ISiK, EU-Profile, MIABIS, Clinical
+Genomics) auf **die höchste Version, die ein MII-Modul transitiv tatsächlich anfordert** —
+nicht auf die neueste verfügbare. Eine Version, gegen die kein Modul gebaut wurde, gehört
+nicht in eine BOM. Deshalb steht z.B. `eu.miabis.r4` auf 0.2.0, obwohl MIABIS bei 1.3.0 ist.
+
+Die transitive Hülle lässt sich so ermitteln: `https://packages.simplifier.net/<pkg>` liefert
+JSON mit allen Versionen, `https://packages.simplifier.net/<pkg>/<version>` dagegen das
+gzip-Tarball — die deklarierten Dependencies stehen darin in `package/package.json`.
 
 
 <!-- BEGIN BEADS INTEGRATION v:1 profile:minimal hash:ca08a54f -->
