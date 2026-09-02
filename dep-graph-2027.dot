@@ -1,0 +1,129 @@
+// MII KDS 2027 Ballot — Abhängigkeitsgraph
+//
+// Quelle:     dep-graph-2027.dot
+// Generiert:  dot -Tpng dep-graph-2027.dot -o input/images/dep-graph-2027.png
+//             dot -Tsvg dep-graph-2027.dot -o input/images/dep-graph-2027.svg
+//
+// Knotenfarben:
+//   #d4edda  grün    = finale Version (normative / STU-abgeschlossen)
+//   #fff3cd  gelb    = Ballot / RC / Alpha
+//   #e2e3e5  grau    = in Entwicklung / nicht publiziert
+//
+// Kantenfarben:
+//   grau            = deklarierte Dependency passt zur BOM
+//   rot, gestrichelt = Modul deklariert noch die 2026er Version, während die BOM
+//                      das Ziel auf die 2027er Ballot-Linie pinnt (Issue mii-kds-complete-d3d)
+
+digraph MII_KDS_2027_Ballot {
+    rankdir=TB;
+    bgcolor="white";
+    fontname="Helvetica";
+    node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=11, margin="0.25,0.12"];
+    edge [color="gray50", arrowsize=0.7, penwidth=1.0, dir=back];
+    nodesep=0.5;
+    ranksep=0.7;
+
+    labelloc="t";
+    label=<<B>MII KDS 2027 Ballot — Abhängigkeitsgraph</B><BR/><FONT POINT-SIZE="10">Pfeil = „hängt ab von" · Nur MII-interne Deps · Stand 2026-09-02<BR/><FONT COLOR="#c0392b">Rot gestrichelt = Modul deklariert noch die 2026er Version des Ziels</FONT></FONT>>;
+    fontsize=15;
+
+    // Kantenstil für den 2026/2027-Bruch
+    // (als Makro-Ersatz: jede betroffene Kante trägt die Attribute explizit)
+
+    // ════════════ Layer 0: Foundation ════════════
+    meta [label=<Meta 2027.0.0-ballot.rc3<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
+
+    // ════════════ Layer 1: Basismodule ════════════
+    base       [label=<Base 2027.0.0-ballot.rc1<BR/><FONT POINT-SIZE="8">(Person, Fall, Diagnose, Prozedur) · Ballot</FONT>>, fillcolor="#fff3cd"];
+    labor      [label="Labor\n2026.0.3",       fillcolor="#d4edda"];
+    medikation [label="Medikation\n2026.0.1",  fillcolor="#d4edda"];
+    biobank    [label=<Biobank 2027.0.0-ballot.rc1<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
+    studie     [label=<Studie 2027.0.0-ballot.rc1<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
+    pros       [label="PROs\n2026.7.0",        fillcolor="#d4edda"];
+
+    meta -> base;
+    meta -> labor       [color="#c0392b", style=dashed];
+    meta -> medikation  [color="#c0392b", style=dashed];
+    meta -> biobank     [color="#c0392b", style=dashed];
+    meta -> studie      [color="#c0392b", style=dashed];
+    meta -> pros        [color="#c0392b", style=dashed];
+
+    // ════════════ Layer 2: Erweiterungsmodule ════════════
+    icu        [label=<ICU 2027.0.0<BR/><FONT POINT-SIZE="8">(final)</FONT>>, fillcolor="#d4edda"];
+    base -> icu [color="#c0392b", style=dashed];
+
+    molgen     [label="MolGen\n2026.0.4",      fillcolor="#d4edda"];
+    meta    -> molgen [color="#c0392b", style=dashed];
+    base    -> molgen [color="#c0392b", style=dashed];
+    biobank -> molgen [color="#c0392b", style=dashed];
+
+    bildgebung [label=<Bildgebung 2027.0.0-ballot.rc2<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
+    meta       -> bildgebung [color="#c0392b", style=dashed];
+    base       -> bildgebung [color="#c0392b", style=dashed];
+    medikation -> bildgebung;
+
+    dokument   [label=<Dokument 2027.0.0-ballot.rc1<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
+    meta -> dokument [color="#c0392b", style=dashed];
+    base -> dokument [color="#c0392b", style=dashed];
+
+    mikrobio   [label=<Mikrobiologie 2027.0.0-alpha.5<BR/><FONT POINT-SIZE="8">(Alpha)</FONT>>, fillcolor="#fff3cd"];
+    labor -> mikrobio;
+
+    // ════════════ Layer 3: Komplexe Module ════════════
+    onko       [label="Onkologie\n2026.0.3",   fillcolor="#d4edda"];
+    meta       -> onko [color="#c0392b", style=dashed];
+    base       -> onko [color="#c0392b", style=dashed];
+    biobank    -> onko [color="#c0392b", style=dashed];
+    medikation -> onko;
+    molgen     -> onko;
+    studie     -> onko [color="#c0392b", style=dashed];
+
+    patho      [label="Pathologie\n2026.0.2",  fillcolor="#d4edda"];
+    meta    -> patho [color="#c0392b", style=dashed];
+    base    -> patho [color="#c0392b", style=dashed];
+    biobank -> patho [color="#c0392b", style=dashed];
+
+    // ════════════ Layer 4 ════════════
+    seltene    [label="Seltene Erkr.\n2026.0.1", fillcolor="#d4edda"];
+    meta       -> seltene [color="#c0392b", style=dashed];
+    base       -> seltene [color="#c0392b", style=dashed];
+    molgen     -> seltene;
+    medikation -> seltene;
+    icu        -> seltene [color="#c0392b", style=dashed];
+    studie     -> seltene [color="#c0392b", style=dashed];
+
+    // ════════════ Layer 5 ════════════
+    mtb        [label="MTB\n2026.0.1",         fillcolor="#d4edda"];
+    meta       -> mtb [color="#c0392b", style=dashed];
+    base       -> mtb [color="#c0392b", style=dashed];
+    biobank    -> mtb [color="#c0392b", style=dashed];
+    medikation -> mtb;
+    molgen     -> mtb;
+    onko       -> mtb;
+    patho      -> mtb;
+    studie     -> mtb [color="#c0392b", style=dashed];
+
+    // ════════════ Einwilligung (keine MII-internen Deps) ════════════
+    consent    [label=<Consent 2026.0.1-rc-4<BR/><FONT POINT-SIZE="8">(RC) · → de.einwilligungsmanagement 2.0.3</FONT>>, fillcolor="#fff3cd"];
+
+    // ════════════ In Entwicklung ════════════
+    subgraph cluster_nonfinal {
+        label=<<B>In Entwicklung</B>>;
+        style="dashed"; color="gray60"; bgcolor="#f8f9fa";
+        fontname="Helvetica"; fontsize=10;
+
+        kardiologie    [label="Kardiologie\n(alpha)",             fillcolor="#e2e3e5", color="gray60", fontcolor="gray30"];
+        lungenfunktion [label="Lungenfunktion\n(nicht publiziert)", fillcolor="#e2e3e5", color="gray60", fontcolor="gray30"];
+    }
+
+    meta -> kardiologie    [color="gray70", style=dashed, penwidth=0.8];
+    meta -> lungenfunktion [color="gray70", style=dashed, penwidth=0.8];
+
+    // ════════════ Ranking ════════════
+    {rank=min;  meta}
+    {rank=same; base; labor; medikation; biobank; studie; pros; consent}
+    {rank=same; icu; molgen; bildgebung; dokument; mikrobio}
+    {rank=same; onko; patho}
+    {rank=same; seltene}
+    {rank=max;  mtb}
+}

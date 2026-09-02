@@ -12,11 +12,20 @@ Die Module des Kerndatensatzes werden von verschiedenen Teams eigenständig weit
 
 Während das [Meta-Modul](https://github.com/medizininformatik-initiative/kerndatensatz-meta) (`de.medizininformatikinitiative.kerndatensatz.meta`) modulübergreifende Ressourcen bereitstellt, die von den einzelnen KDS-Modulen als Grundlage genutzt werden (Extensions, CodeSystems, Naming-Conventions), dient dieses Complete-Paket als gebündelter Output: Eine einzelne Abhängigkeit, die alle Module des Kerndatensatzes in ein Projekt einbindet.
 
+> **Ballot-Stand 2027.0.0 (Stand 2026-09-02)**
+>
+> Diese BOM bildet den laufenden Ballot ab: Module mit einem 2027.0.0-Release sind auf dieses gepinnt (Base, Meta, Biobank, Studie, Bildgebung, Dokument, ICU, Mikrobiologie), alle übrigen auf ihre höchste stabile 2026er Version.
+>
+> Die Ballot-Linie ist untereinander **noch nicht kohärent**: Die 2027.0.0-Releases deklarieren teilweise weiterhin die 2026er Basismodule als Abhängigkeit — Bildgebung erwartet Base 2026.0.1 und Meta 2026.0.0, Dokument erwartet Base 2026.0.0 und Meta 2026.0.0, Biobank und Studie erwarten Meta 2026.0.0, ICU 2027.0.0 erwartet Base 2026.0.1. Lediglich Base 2027.0.0-ballot.rc1 → Meta 2027.0.0-ballot.rc3 ist in sich stimmig.
+>
+> Beim Auflösen können Base und Meta dadurch transitiv in zwei Versionen gezogen werden, was bei der Validierung doppelte Canonicals erzeugt. Im Abhängigkeitsgraphen unten sind diese Stellen rot gestrichelt markiert. Diese BOM ist deshalb ein **Ballot-Arbeitsstand zum Review, kein freigegebener Versionsstand**.
+
+
 ## Abhängigkeitsgraph
 
-<img src="dep-graph-2026.png" alt="MII KDS 2026 Abhängigkeitsgraph" width="100%"/>
+<img src="dep-graph-2027.png" alt="MII KDS 2027 Ballot Abhängigkeitsgraph" width="100%"/>
 
-<small>Automatisch generiert aus <code>dep-graph-2026.dot</code> via Graphviz. Legende: grün = finale Version, gelb = STU/Trial Use, grau = in Entwicklung.</small>
+<small>Automatisch generiert aus <code>dep-graph-2027.dot</code> via Graphviz. Knoten: grün = finale Version, gelb = Ballot/RC/Alpha, grau = in Entwicklung. Kanten: rot gestrichelt = das Modul deklariert noch die 2026er Version des Ziels, während diese BOM auf die 2027er Ballot-Linie pinnt.</small>
 
 ## Module
 
@@ -26,39 +35,39 @@ Während das [Meta-Modul](https://github.com/medizininformatik-initiative/kernda
 
 | Modul | Package | Version | GitHub | Release |
 |-------|---------|---------|--------|---------|
-| Base (Person, Fall, Diagnose, Prozedur, Consent) | `de.medizininformatikinitiative.kerndatensatz.base` | 2026.0.0 | [kerndatensatz-basis](https://github.com/medizininformatik-initiative/kerndatensatz-basis) | [v2026.0.0](https://github.com/medizininformatik-initiative/kerndatensatz-basis/releases/tag/v2026.0.0) (2025-12-13) |
-| Meta | `de.medizininformatikinitiative.kerndatensatz.meta` | 2026.0.0 | [kerndatensatz-meta](https://github.com/medizininformatik-initiative/kerndatensatz-meta) | [v2026.0.0](https://github.com/medizininformatik-initiative/kerndatensatz-meta/releases/tag/v2026.0.0) (2025-11-24) |
+| Base (Person, Fall, Diagnose, Prozedur, Consent) | `de.medizininformatikinitiative.kerndatensatz.base` | 2027.0.0-ballot.rc1 | [kerndatensatz-basis](https://github.com/medizininformatik-initiative/kerndatensatz-basis) | [v2027.0.0-ballot.rc1](https://github.com/medizininformatik-initiative/kerndatensatz-basis/releases/tag/v2027.0.0-ballot.rc1) (2026-09-01) |
+| Meta | `de.medizininformatikinitiative.kerndatensatz.meta` | 2027.0.0-ballot.rc3 | [kerndatensatz-meta](https://github.com/medizininformatik-initiative/kerndatensatz-meta) | [v2027.0.0-ballot.rc3](https://github.com/medizininformatik-initiative/kerndatensatz-meta/releases/tag/v2027.0.0-ballot.rc3) (2026-09-01) |
 | Medikation | `de.medizininformatikinitiative.kerndatensatz.medikation` | 2026.0.1 | [kerndatensatzmodul-medikation](https://github.com/medizininformatik-initiative/kerndatensatzmodul-medikation) | [v2026.0.1](https://github.com/medizininformatik-initiative/kerndatensatzmodul-medikation/releases/tag/v2026.0.1) (2026-02-13) |
-| Laborbefund | `de.medizininformatikinitiative.kerndatensatz.laborbefund` | 2026.0.1 | [kerndatensatzmodul-labor](https://github.com/medizininformatik-initiative/kerndatensatzmodul-labor) | [2026.0.1](https://github.com/medizininformatik-initiative/kerndatensatzmodul-labor/releases/tag/2026.0.1) |
+| Laborbefund | `de.medizininformatikinitiative.kerndatensatz.laborbefund` | 2026.0.3 | [kerndatensatzmodul-labor](https://github.com/medizininformatik-initiative/kerndatensatzmodul-labor) | [2026.0.3](https://github.com/medizininformatik-initiative/kerndatensatzmodul-labor/releases/tag/2026.0.3) (2026-06-11) |
 
 ### Erweiterungsmodule
 
 | Modul | Package | Version | GitHub | Release |
 |-------|---------|---------|--------|---------|
-| Biobank | `de.medizininformatikinitiative.kerndatensatz.biobank` | 2026.0.1 | [kerndatensatzmodul-biobank](https://github.com/medizininformatik-initiative/kerndatensatzmodul-biobank) | [v2026.0.1](https://github.com/medizininformatik-initiative/kerndatensatzmodul-biobank/releases/tag/v2026.0.1) (2026-02-11) |
-| ICU | `de.medizininformatikinitiative.kerndatensatz.icu` | 2026.0.2 | [kerndatensatzmodul-intensivmedizin](https://github.com/medizininformatik-initiative/kerndatensatzmodul-intensivmedizin) | [v2026.0.2](https://github.com/medizininformatik-initiative/kerndatensatzmodul-intensivmedizin/releases/tag/v2026.0.2) (2026-03-18) |
-| Mikrobiologie | `de.medizininformatikinitiative.kerndatensatz.mikrobiologie` | 2027.0.0-alpha.3 | [kerndatensatzmodul-mikrobiologie](https://github.com/medizininformatik-initiative/kerndatensatzmodul-mikrobiologie) | [v2027.0.0-alpha.3](https://github.com/medizininformatik-initiative/kerndatensatzmodul-mikrobiologie/releases/tag/v2027.0.0-alpha.3) |
+| Biobank | `de.medizininformatikinitiative.kerndatensatz.biobank` | 2027.0.0-ballot.rc1 | [kerndatensatzmodul-biobank](https://github.com/medizininformatik-initiative/kerndatensatzmodul-biobank) | [v2027.0.0-ballot.rc1](https://github.com/medizininformatik-initiative/kerndatensatzmodul-biobank/releases/tag/v2027.0.0-ballot.rc1) (2026-08-28) |
+| ICU | `de.medizininformatikinitiative.kerndatensatz.icu` | 2027.0.0 | [kerndatensatzmodul-intensivmedizin](https://github.com/medizininformatik-initiative/kerndatensatzmodul-intensivmedizin) | nur als Package publiziert, kein GitHub-Release |
+| Mikrobiologie | `de.medizininformatikinitiative.kerndatensatz.mikrobiologie` | 2027.0.0-alpha.5 | [kerndatensatzmodul-mikrobiologie](https://github.com/medizininformatik-initiative/kerndatensatzmodul-mikrobiologie) | [2027.0.0-alpha.5](https://github.com/medizininformatik-initiative/kerndatensatzmodul-mikrobiologie/releases/tag/2027.0.0-alpha.5) (2026-06-18) |
 | Molekulargenetik | `de.medizininformatikinitiative.kerndatensatz.molgen` | 2026.0.4 | [kerndatensatzmodul-GenetischeTests](https://github.com/medizininformatik-initiative/kerndatensatzmodul-GenetischeTests) | [v2026.0.4](https://github.com/medizininformatik-initiative/kerndatensatzmodul-GenetischeTests/releases/tag/v2026.0.4) (2026-01-02) |
-| Pathologie | `de.medizininformatikinitiative.kerndatensatz.patho` | 2026.0.1 | [kerndatensatzmodul-PathologieBefund](https://github.com/medizininformatik-initiative/kerndatensatzmodul-PathologieBefund) | - |
-| Studie | `de.medizininformatikinitiative.kerndatensatz.studie` | 2026.0.2 | [kerndatensatzmodul-studie](https://github.com/medizininformatik-initiative/kerndatensatzmodul-studie) | [v2026.0.1](https://github.com/medizininformatik-initiative/kerndatensatzmodul-studie/releases/tag/v2026.0.1) (2026-01-09) |
-| Bildgebung | `de.medizininformatikinitiative.kerndatensatz.bildgebung` | 2026.0.0 | [kerndatensatz-bildgebung](https://github.com/medizininformatik-initiative/kerndatensatz-bildgebung) | [v2026.0.0](https://github.com/medizininformatik-initiative/kerndatensatz-bildgebung/releases/tag/v2026.0.0) (2025-12-19) |
-| Dokument | `de.medizininformatikinitiative.kerndatensatz.dokument` | 2026.0.1 | [kerndatensatz-dokument](https://github.com/medizininformatik-initiative/kerndatensatz-dokument) | [v2026.0.1](https://github.com/medizininformatik-initiative/kerndatensatz-dokument/releases/tag/v2026.0.1) |
+| Pathologie | `de.medizininformatikinitiative.kerndatensatz.patho` | 2026.0.2 | [kerndatensatzmodul-PathologieBefund](https://github.com/medizininformatik-initiative/kerndatensatzmodul-PathologieBefund) | nur als Package publiziert, kein GitHub-Release |
+| Studie | `de.medizininformatikinitiative.kerndatensatz.studie` | 2027.0.0-ballot.rc1 | [kerndatensatzmodul-studie](https://github.com/medizininformatik-initiative/kerndatensatzmodul-studie) | [v2027.0.0-ballot.rc1](https://github.com/medizininformatik-initiative/kerndatensatzmodul-studie/releases/tag/v2027.0.0-ballot.rc1) (2026-08-31) |
+| Bildgebung | `de.medizininformatikinitiative.kerndatensatz.bildgebung` | 2027.0.0-ballot.rc2 | [kerndatensatz-bildgebung](https://github.com/medizininformatik-initiative/kerndatensatz-bildgebung) | [2027.0.0-ballot.rc2](https://github.com/medizininformatik-initiative/kerndatensatz-bildgebung/releases/tag/2027.0.0-ballot.rc2) (2026-08-31) |
+| Dokument | `de.medizininformatikinitiative.kerndatensatz.dokument` | 2027.0.0-ballot.rc1 | [kerndatensatz-dokument](https://github.com/medizininformatik-initiative/kerndatensatz-dokument) | [v2027.0.0-ballot.rc1](https://github.com/medizininformatik-initiative/kerndatensatz-dokument/releases/tag/v2027.0.0-ballot.rc1) (2026-08-28) |
 | Onkologie | `de.medizininformatikinitiative.kerndatensatz.onkologie` | 2026.0.3 | [kerndatensatzmodul-onkologie](https://github.com/medizininformatik-initiative/kerndatensatzmodul-onkologie) | [v2026.0.3](https://github.com/medizininformatik-initiative/kerndatensatzmodul-onkologie/releases/tag/v2026.0.3) (2026-03-29) |
 | Seltene Erkrankungen | `de.medizininformatikinitiative.kerndatensatz.seltene` | 2026.0.1 | [kerndatensatzmodul-seltene-erkrankungen](https://github.com/medizininformatik-initiative/kerndatensatzmodul-seltene-erkrankungen) | [v2026.0.1](https://github.com/medizininformatik-initiative/kerndatensatzmodul-seltene-erkrankungen/releases/tag/v2026.0.1) |
 | Molekulares Tumorboard | `de.medizininformatikinitiative.kerndatensatz.mtb` | 2026.0.1 | [kerndatensatzmodul-molekulares-tumorboard](https://github.com/medizininformatik-initiative/kerndatensatzmodul-molekulares-tumorboard) | [v2026.0.1](https://github.com/medizininformatik-initiative/kerndatensatzmodul-molekulares-tumorboard/releases/tag/v2026.0.1) (2026-03-30) |
-| PROs | `de.medizininformatikinitiative.kerndatensatz.pros` | 2026.2.0 | [kerndatensatzmodul-proms](https://github.com/medizininformatik-initiative/kerndatensatzmodul-proms) | [v2026.2.0](https://github.com/medizininformatik-initiative/kerndatensatzmodul-proms/releases/tag/v2026.2.0) |
-| Consent | `de.medizininformatikinitiative.kerndatensatz.consent` | 2026.0.1-rc-2 | [kerndatensatzmodul-consent](https://github.com/medizininformatik-initiative/kerndatensatzmodul-consent) | - |
+| PROs | `de.medizininformatikinitiative.kerndatensatz.pros` | 2026.7.0 | [kerndatensatzmodul-proms](https://github.com/medizininformatik-initiative/kerndatensatzmodul-proms) | [v2026.7.0](https://github.com/medizininformatik-initiative/kerndatensatzmodul-proms/releases/tag/v2026.7.0) |
+| Consent | `de.medizininformatikinitiative.kerndatensatz.consent` | 2026.0.1-rc-4 | [kerndatensatzmodul-consent](https://github.com/medizininformatik-initiative/kerndatensatzmodul-consent) | nur als Package publiziert, kein GitHub-Release |
 
 ### Nationale Abhängigkeiten
 
 | Paket | Version | Verwendet von |
 |-------|---------|---------------|
-| Deutsche Basisprofile R4 (`de.basisprofil.r4`) | 1.5.4 | Base, Medikation, Biobank, ICU, Molgen, Onkologie, Seltene, MTB |
+| Deutsche Basisprofile R4 (`de.basisprofil.r4`) | 1.6.0 | Base, Medikation, Biobank, ICU, Molgen, Onkologie, Seltene, MTB, Bildgebung, Dokument |
 | Einwilligungsmanagement (`de.einwilligungsmanagement`) | 2.0.3 | Consent (transitiv) |
-| ISiK (`de.gematik.isik`) | 5.0.0 - 5.1.0 | ICU, Pathologie, PROs |
+| ISiK (`de.gematik.isik`) | 5.1.0 - 6.0.0 | ICU, Dokument (6.0.0), Pathologie (5.1.0), PROs (5.1.1) |
 | IHE-D Terminologie (`de.ihe-d.terminology`) | 3.0.1 | Medikation, Dokument |
 | Deutsche Medikation (`de.fhir.medication`) | 1.0.x | Medikation |
-| DVMD KDL (`dvmd.kdl.r4`) | 2025.0.1 | Dokument |
+| DVMD KDL (`dvmd.kdl.r4`) | 2025.0.1 - 2026.0.0 | Dokument (2025.0.1), ICU (2026.0.0) |
 
 ### Internationale Abhängigkeiten
 
@@ -68,6 +77,10 @@ Während das [Meta-Modul](https://github.com/medizininformatik-initiative/kernda
 | HL7 Genomics Reporting (`hl7.fhir.uv.genomics-reporting`) | 3.0.x | Molekulargenetik, MTB |
 | HL7 Structured Data Capture (`hl7.fhir.uv.sdc`) | 3.0.0 | PROs |
 | HL7 mCODE (`hl7.fhir.us.mcode`) | 2.1.x | Pathologie |
+| HL7 Extensions R4 (`hl7.fhir.uv.extensions.r4`) | 5.2.0 | Base, Meta, Bildgebung, Dokument, Laborbefund |
+| HL7 CRMI (`hl7.fhir.uv.crmi`) | 2.0.0 | Base, Meta |
+| HL7 Terminology (`hl7.terminology.r4`) | 6.1.x - 7.3.0 | Base, Meta, Dokument, ICU, Molgen |
+| HL7 Europe Laboratory (`hl7.fhir.eu.laboratory`) | 2.0.0 | Biobank |
 | MIABIS (`eu.miabis.r4`) | 0.2.0 | Biobank |
 | DICOM (`fhir.dicom`) | 2025.3.20250714 | Bildgebung |
 | IHE FormatCode (`ihe.formatcode.fhir`) | 1.4.0 | Dokument |
@@ -80,21 +93,21 @@ Sobald das Paket auf packages.fhir.org verfügbar ist, genügt eine einzelne Abh
 
 ```yaml
 dependencies:
-  de.medizininformatikinitiative.kerndatensatz.complete: 2026.2.0
+  de.medizininformatikinitiative.kerndatensatz.complete: 2027.0.0-ballot.1
 ```
 
 Alle 19 Modul-Dependencies werden automatisch von der FHIR Package Registry aufgelöst und heruntergeladen.
 
 ### Manuelle Installation
 
-Solange das Paket noch nicht auf packages.fhir.org verfügbar ist, kann es vom [GitHub Release](https://github.com/medizininformatik-initiative/kerndatensatz-complete/releases/tag/v2026.2.0) heruntergeladen und lokal installiert werden:
+Solange das Paket noch nicht auf packages.fhir.org verfügbar ist, kann es vom [GitHub Release](https://github.com/medizininformatik-initiative/kerndatensatz-complete/releases/tag/v2027.0.0-ballot.1) heruntergeladen und lokal installiert werden:
 
 ```bash
 # Package herunterladen
-curl -LO https://github.com/medizininformatik-initiative/kerndatensatz-complete/releases/download/v2026.2.0/de.medizininformatikinitiative.kerndatensatz.complete-2026.2.0.tgz
+curl -LO https://github.com/medizininformatik-initiative/kerndatensatz-complete/releases/download/v2027.0.0-ballot.1/de.medizininformatikinitiative.kerndatensatz.complete-2027.0.0-ballot.1.tgz
 
 # In den lokalen FHIR-Cache installieren
-fhir install de.medizininformatikinitiative.kerndatensatz.complete-2026.2.0.tgz
+fhir install de.medizininformatikinitiative.kerndatensatz.complete-2027.0.0-ballot.1.tgz
 ```
 
 Danach kann das Paket wie gewohnt als Dependency referenziert werden. Alle weiteren Module werden automatisch von packages.fhir.org aufgelöst.

@@ -15,21 +15,26 @@ Bill of Materials (BOM) aller MII KDS-Module mit kompatiblen Versionen. Enthält
 Der Abhängigkeitsgraph wird als Graphviz DOT-Datei gepflegt und daraus als PNG/SVG gerendert:
 
 ```bash
-# Quelle bearbeiten
-dep-graph-2026.dot
+# Quelle bearbeiten (aktuell: Ballot-Linie 2027)
+dep-graph-2027.dot
 
 # Rendern
-dot -Tpng dep-graph-2026.dot -o input/images/dep-graph-2026.png
-dot -Tsvg dep-graph-2026.dot -o input/images/dep-graph-2026.svg
+dot -Tpng dep-graph-2027.dot -o input/images/dep-graph-2027.png
+dot -Tsvg dep-graph-2027.dot -o input/images/dep-graph-2027.svg
 ```
+
+`dep-graph-2026.dot` bleibt als Historie des 2026er Stands liegen.
 
 ### Farbschema
 
 | Farbe | Hex | Bedeutung |
 |-------|-----|-----------|
 | Grün | `#d4edda` | Finale Version (normative / STU-abgeschlossen) |
-| Gelb | `#fff3cd` | STU / Trial Use / Alpha |
+| Gelb | `#fff3cd` | Ballot / RC / Alpha |
 | Grau | `#e2e3e5` | In Entwicklung / nicht publiziert |
+
+Kanten: grau = deklarierte Dependency passt zur BOM; rot gestrichelt (`#c0392b`) = das Modul
+deklariert noch die 2026er Version des Ziels, während die BOM auf die 2027er Ballot-Linie pinnt.
 
 ## Package bauen
 
@@ -50,7 +55,7 @@ Beim Hinzufügen oder Aktualisieren eines Moduls müssen diese Dateien angepasst
 3. `validation-server/application.yaml` — HAPI-Konfiguration
 4. `validation-server/load-packages-blaze.sh` — Blaze-Loader
 5. `input/pagecontent/index.md` — Modultabelle
-6. `dep-graph-2026.dot` — Abhängigkeitsgraph (danach neu rendern)
+6. `dep-graph-2027.dot` — Abhängigkeitsgraph (danach neu rendern)
 
 
 <!-- BEGIN BEADS INTEGRATION v:1 profile:minimal hash:ca08a54f -->
