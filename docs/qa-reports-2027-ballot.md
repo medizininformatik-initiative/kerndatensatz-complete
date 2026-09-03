@@ -1,10 +1,52 @@
 # QA-Reports der KDS-Module — Auswertung
 
-Stand: 2026-09-03 · IG Publisher v2.3.3 · reproduzierbar mit `./scripts/fetch-qa-reports.py --details`
+Stand: 2026-09-03 · IG Publisher v2.3.3 · reproduzierbar mit dem Skill `mii-qa-reports`:
 
-## Verfügbarkeit: 5 von 20
+```bash
+~/.claude/skills/mii-qa-reports/scripts/fetch_qa.py --pin-file package.json --details
+```
 
-Nur fünf Module publizieren einen auswertbaren QA-Report. Sie tun das an **drei verschiedenen Stellen** — es gibt keinen einheitlichen Ort:
+> **Korrektur gegenüber der ersten Fassung.** Die erste Auswertung suchte nur an der
+> gh-pages-Wurzel, auf build.fhir.org und am Canonical und fand deshalb nur 5 Reports.
+> Während Ballotierung und Template-Migration liegt der aktuelle Build aber meist unter
+> `gh-pages/branches/<branch>/`. Mit dieser Quelle sind es **18 von 39** Repos — und
+> mehrere Zahlen unten ändern sich drastisch.
+
+## Verfügbarkeit: 18 von 39
+
+Achtzehn Repos publizieren einen auswertbaren QA-Report, verteilt über build.fhir.org, die gh-pages-Wurzel und vor allem `gh-pages/branches/<branch>/`. Es gibt keinen einheitlichen Ort und keine einheitliche Branch-Konvention.
+
+### Die auffälligsten Reports
+
+| Repo | Branch | Version | Errors | Warnings |
+|---|---|---|---|---|
+| kerndatensatzmodul-onkologie | dev | 2026.0.3 | **6872** | 3961 |
+| kerndatensatzmodul-studie | tech-test-2026-07-23 | 2026.0.1 | **783** | 662 |
+| kerndatensatzmodul-seltene-erkrankungen | dev | v2 | **681** | 387 |
+| kerndatensatz-meta | 2027.0.0-ballot.rc3 | 2027.0.0-ballot.rc3 | **386** | 957 |
+| kerndatensatzmodul-proms | dev | 2026.7.0 | **302** | 1004 |
+| kerndatensatzmodul-labor | flatten-category-v2 | 2027.0.0-ballot.rc3 | **37** | 41 |
+| kds-fdpg-layer | Wurzel | 2026.0.0 | 26 | 7389 |
+| kerndatensatz-basis | develop | 2027.0.0-ballot.rc1 | 22 | 635 |
+| kerndatensatz-dokument | dev | 2027.0.0-ballot.rc1 | 8 | 120 |
+| kerndatensatz-soziodemographie | 1.0.0 | 2027.0.0-ballot.rc1 | 8 | 216 |
+
+**Meta ist der wichtigste Fund.** An der zuerst gefundenen Stelle stand ein Report über
+2026.0.0 mit 3 Errors. Der Branch-Build zur tatsächlich gepinnten Ballot-Version
+2027.0.0-ballot.rc3 hat **386 Errors** — zwei Größenordnungen mehr. Meta ist das
+Fundament, auf dem alle anderen Module aufsetzen.
+
+**Labor 2027.0.0-ballot.rc3 hat 37 Errors** und war vorher gar nicht sichtbar, weil das
+Modul keinen Report an der gh-pages-Wurzel ablegt.
+
+**Mikrobiologie baut bereits 2027.0.0-alpha.6**, publiziert ist aber nur alpha.5 — der
+Pin der BOM ist also korrekt, alpha.6 steht bevor.
+
+**Auf einem Labor-Branch (`restrict-interpretation-vs`) läuft eine Paket-Umbenennung**
+von `kerndatensatz.laborbefund` nach `kerndatensatz.labor`. Falls das so kommt, bricht es
+jede BOM, die auf den alten Namen pinnt.
+
+### Erste Auswertung (nur Wurzel-/CI-Quellen) — hier zum Vergleich:
 
 | Modul | QA-Report über | BOM pinnt | Errors | Warnings | Hints | Quelle |
 |---|---|---|---|---|---|---|

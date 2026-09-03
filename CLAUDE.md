@@ -75,18 +75,21 @@ Danach prüfen, ob alle Quellen übereinstimmen:
 
 ## QA-Reports der Module
 
+Dafür gibt es den Skill **`mii-qa-reports`** (global unter `~/.claude/skills/`), weil
+er für alle MII-KDS-Repos gilt, nicht nur für dieses Projekt:
+
 ```bash
-./scripts/fetch-qa-reports.py --details
+~/.claude/skills/mii-qa-reports/scripts/fetch_qa.py --pin-file package.json --details
 ```
 
-Holt die publizierten IG-Publisher-QA-Reports und vergleicht die Version, über die
-der Report spricht, mit der von der BOM gepinnten. Die Module publizieren an drei
-verschiedenen Stellen (build.fhir.org, GitHub Pages, Canonical); aktuell tun es nur
-5 von 20. Auswertung in `docs/qa-reports-2027-ballot.md`.
+Er entdeckt die Repos aus der GitHub-Org und sucht die QA-Reports auch unter
+`gh-pages/branches/<branch>/` — dort liegen während Ballotierung und
+Template-Migration die aktuellen Builds. Auswertung in `docs/qa-reports-2027-ballot.md`.
 
-**Achtung:** `www.medizininformatik-initiative.de` antwortet auf *jeden* Pfad mit
-HTTP 200 und einer HTML-Seite. Ein Statuscode-Check allein erzeugt dort Fehlalarme —
-immer den Inhalt prüfen.
+**Zwei Fallen:** `www.medizininformatik-initiative.de` antwortet auf *jeden* Pfad mit
+HTTP 200 und einer HTML-Seite (Statuscode-Check erzeugt dort Fehlalarme), und ein
+Report beschreibt nicht zwingend die Version, die die BOM pinnt — immer `ig-ver`
+gegenhalten.
 
 Das Skript kennt die bewussten Ausnahmen (Consent fehlt in HAPI wegen HAPI-1821,
 `hl7.fhir.r4.core` steht nicht unter `implementationguides`) und meldet neuere
