@@ -1,6 +1,12 @@
 # Namens-Inventur der KDS-Module
 
-Stand: 2026-09-03 · Quellen: `sushi-config.yaml` und `package.json` des Default-Branch, GitHub-Tags/Releases, Package-Registry.
+Stand: 2026-09-03 · Quellen: `sushi-config.yaml` und `package.json`, GitHub-Tags/Releases, Package-Registry.
+
+> **Korrektur.** Die erste Fassung las nur den **Default-Branch**. Das ist bei mehreren
+> Modulen der falsche Stand: die 2027er Ballot-Arbeit läuft auf `migration/*`- und
+> `release/*`-Branches, die vom Default-Branch aus unsichtbar sind. Die Tabelle unten
+> zeigt weiterhin den Default-Branch; der Abschnitt
+> [Führender Branch](#führender-branch-weicht-vom-default-ab) nennt die Abweichungen.
 
 ## Übersicht
 
@@ -30,6 +36,37 @@ Stand: 2026-09-03 · Quellen: `sushi-config.yaml` und `package.json` des Default
 
 ⚠ = `packageId` fehlt in `sushi-config.yaml`, kommt aus `package.json`
 ❌ = fehlerhaft
+
+## Führender Branch weicht vom Default ab
+
+Bei diesen Modulen trägt **nicht** der Default-Branch den Ballot-Stand:
+
+| Modul | Default-Branch | führender Branch | was dort anders ist |
+|---|---|---|---|
+| medikation | `master` 2026.0.1 | `migration/2026.0.1-template…` | **2027.0.0-ballot.rc1** — die gesamte Ballot-Vorbereitung |
+| symptome | `master` 2026.0.0-rc.1 | `migration/2027.0.0-ballot…` | **2027.0.0-ballot.rc1** |
+| seltene | `dev` 2026.0.1, ID `mii-ig-seltene-erkrankungen-v2026-de` | `migration/2026.0.1-template…` | **2027.0.0-ballot.rc1** und ID bereinigt zu **`mii-ig-seltene`** |
+| mikrobiologie | `main`, ID `kerndatensatzmodul-mikrobiologie` | Branch `v2027.0.0-ballot.rc1` | ID bereinigt zu **`mii-ig-mikrobiologie`** |
+
+**Zwei der Namensprobleme sind also auf Branches längst behoben** — sie sind nur nie im
+Default-Branch angekommen. Wer die Konventionsdiskussion führt, sollte das wissen: bei
+seltene und mikrobiologie geht es nicht ums Ob, sondern ums Mergen.
+
+Umgekehrt ist bei **onkologie** der Default-Branch (`dev`, 2026.0.3, ID `…-v2026`) der
+gute Stand, während `main` mit 2026.0.0 und der ID `mii-ig-onko-de-**v2025**` zurückliegt.
+Bei **meta** ist `main` korrekt auf ballot.rc3, während `dev` und `master` auf 2026.0.0
+stehengeblieben sind.
+
+## Was in keinem Branch und keinem Tag steht
+
+| Modul | publiziert | wo die Version herkommt |
+|---|---|---|
+| bildgebung | 2027.0.0-ballot.**rc2** | Tag `2027.0.0-ballot.rc2` enthält intern `version: 2027.0.0-ballot.rc1` — die Nummer wurde in der Pipeline gesetzt, nie in der `sushi-config` |
+| icu | **2027.0.0** (final) | weder Branch noch Tag; `main` steht auf `2027.0.0-ballot.rc1` |
+| patho | **2026.0.2** | weder Branch noch Tag; `main` steht auf dem fehlerhaften `2027.0.0-ballot.rc` |
+
+Bei diesen drei lässt sich aus dem Repository nicht rekonstruieren, aus welchem Stand das
+publizierte Paket gebaut wurde.
 
 ## Die Brüche
 
