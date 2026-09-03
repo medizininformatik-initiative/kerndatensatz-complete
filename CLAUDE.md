@@ -127,6 +127,23 @@ bd close <id>         # Complete work
 - Run `bd prime` for detailed command reference and session close protocol
 - Use `bd remember` for persistent knowledge — do NOT use MEMORY.md files
 
+## Release-Gate
+
+Vor jedem BOM-Release:
+
+```bash
+./scripts/release-gate.sh          # Konsistenz, Registry, QA-Reports, Build, Kollisionen
+./scripts/release-gate.sh --full   # zusätzlich Validation-Server offline prüfen
+./scripts/release-gate.sh --quick  # nur Konsistenz, ohne Netz
+```
+
+Exit 0 = release-fähig · 1 = harter Fehler · 2 = nur Hinweise, Sichtung nötig.
+
+Harte Fehler sind: abweichende Versionen zwischen den sechs Quellen, ein nicht auflösbarer
+Pin, ein fehlgeschlagener Build, Dateinamen-Kollisionen beim Zusammenbauen. Alles andere —
+neuere verfügbare Versionen, QA-Reports über eine andere Version, doppelte Canonicals aus
+Modulfehlern — sind Hinweise und blockieren nicht.
+
 ## Session Completion
 
 **When ending a work session**, you MUST complete ALL steps below. Work is NOT complete until `git push` succeeds.
