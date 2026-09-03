@@ -27,9 +27,10 @@ publisher:
 # noch die 2026er Basismodule. bildgebung -> base 2026.0.1 / meta 2026.0.0,
 # dokument -> base 2026.0.0 / meta 2026.0.0, studie -> meta 2026.0.0,
 # icu 2027.0.0 -> base 2026.0.1, kardiologie -> base 2026.0.0 / meta 2026.0.0 / icu 2026.0.1,
-# lungenfunktion -> base 2026.0.x / meta 2026.0.x. Stimmig sind nur
-# base 2027.0.0-ballot.rc1 -> meta 2027.0.0-ballot.rc3 und biobank 2027.0.0-ballot.rc2 ->
-# meta 2027.0.0-ballot.rc3 (in rc2 repariert). base und meta koennen daher transitiv
+# lungenfunktion -> base 2026.0.x / meta 2026.0.x, mikrobiologie -> laborbefund 2026.0.3.
+# Stimmig sind nur
+# base 2027.0.0-ballot.rc1, biobank 2027.0.0-ballot.rc2 und laborbefund 2027.0.0-ballot.rc3
+# -> jeweils meta 2027.0.0-ballot.rc3 (in den jeweiligen rc repariert). base und meta koennen daher transitiv
 # doppelt aufgeloest werden. Siehe Issue mii-kds-complete-d3d.
 #
 # lungenfunktion 2027.0.0-ballot.rc1 deklariert ausserdem 'de.basiprofil.r4' (Tippfehler,
@@ -43,7 +44,7 @@ dependencies:
   de.medizininformatikinitiative.kerndatensatz.base: 2027.0.0-ballot.rc1
   de.medizininformatikinitiative.kerndatensatz.meta: 2027.0.0-ballot.rc3
   de.medizininformatikinitiative.kerndatensatz.medikation: 2026.0.1
-  de.medizininformatikinitiative.kerndatensatz.laborbefund: 2026.0.3
+  de.medizininformatikinitiative.kerndatensatz.laborbefund: 2027.0.0-ballot.rc3
 
   # MII Kerndatensatz Erweiterungsmodule
   de.medizininformatikinitiative.kerndatensatz.biobank: 2027.0.0-ballot.rc2

@@ -22,7 +22,7 @@ Während das [Meta-Modul](https://github.com/medizininformatik-initiative/kernda
 >
 > Neu in dieser BOM sind **Kardiologie** und **Lungenfunktion** (beide 2027.0.0-ballot.rc1). Lungenfunktion deklariert dabei die Abhängigkeit `de.basiprofil.r4` — ein Tippfehler, das Paket existiert nicht und die Abhängigkeit ist nicht auflösbar. **Soziodemographie** ist angekündigt, aber in keiner Registry publiziert und daher nicht gepinnt.
 >
-> Repariert gegenüber dem vorigen Stand: **Biobank 2027.0.0-ballot.rc2** verweist jetzt korrekt auf Meta 2027.0.0-ballot.rc3 statt auf 2026.0.0.
+> Repariert gegenüber dem vorigen Stand: **Biobank 2027.0.0-ballot.rc2** und **Laborbefund 2027.0.0-ballot.rc3** verweisen jetzt korrekt auf Meta 2027.0.0-ballot.rc3 statt auf 2026.0.0. Neu zurückgefallen ist dafür **Mikrobiologie 2027.0.0-alpha.5**, das weiterhin Laborbefund 2026.0.3 fordert.
 
 
 ## Abhängigkeitsgraph
@@ -42,7 +42,7 @@ Während das [Meta-Modul](https://github.com/medizininformatik-initiative/kernda
 | Base (Person, Fall, Diagnose, Prozedur, Consent) | `de.medizininformatikinitiative.kerndatensatz.base` | 2027.0.0-ballot.rc1 | [kerndatensatz-basis](https://github.com/medizininformatik-initiative/kerndatensatz-basis) | [v2027.0.0-ballot.rc1](https://github.com/medizininformatik-initiative/kerndatensatz-basis/releases/tag/v2027.0.0-ballot.rc1) (2026-09-01) |
 | Meta | `de.medizininformatikinitiative.kerndatensatz.meta` | 2027.0.0-ballot.rc3 | [kerndatensatz-meta](https://github.com/medizininformatik-initiative/kerndatensatz-meta) | [v2027.0.0-ballot.rc3](https://github.com/medizininformatik-initiative/kerndatensatz-meta/releases/tag/v2027.0.0-ballot.rc3) (2026-09-01) |
 | Medikation | `de.medizininformatikinitiative.kerndatensatz.medikation` | 2026.0.1 | [kerndatensatzmodul-medikation](https://github.com/medizininformatik-initiative/kerndatensatzmodul-medikation) | [v2026.0.1](https://github.com/medizininformatik-initiative/kerndatensatzmodul-medikation/releases/tag/v2026.0.1) (2026-02-13) |
-| Laborbefund | `de.medizininformatikinitiative.kerndatensatz.laborbefund` | 2026.0.3 | [kerndatensatzmodul-labor](https://github.com/medizininformatik-initiative/kerndatensatzmodul-labor) | [2026.0.3](https://github.com/medizininformatik-initiative/kerndatensatzmodul-labor/releases/tag/2026.0.3) (2026-06-11) |
+| Laborbefund | `de.medizininformatikinitiative.kerndatensatz.laborbefund` | 2027.0.0-ballot.rc3 | [kerndatensatzmodul-labor](https://github.com/medizininformatik-initiative/kerndatensatzmodul-labor) | [v2027.0.0-ballot.rc3](https://github.com/medizininformatik-initiative/kerndatensatzmodul-labor/releases/tag/v2027.0.0-ballot.rc3) (2026-09-02) |
 
 ### Erweiterungsmodule
 
@@ -105,7 +105,7 @@ Pakete ohne Pin werden weiterhin transitiv aufgelöst; ihre Version ergibt sich 
 | DVMD KDL (`dvmd.kdl.r4`) | 2025.0.1 (Dokument), 2026.0.0 (ICU) | Dokument, ICU |
 | DICOM (`fhir.dicom`) | 2025.3.20250714 | Bildgebung |
 | IHE FormatCode (`ihe.formatcode.fhir`) | 1.4.0 | Dokument |
-| HL7 International Patient Summary (`hl7.fhir.uv.ips`) | 2.0.0 | Medikation, Laborbefund |
+| HL7 International Patient Summary (`hl7.fhir.uv.ips`) | 2.0.0 (Medikation), 2.0.1 (Laborbefund) | Medikation, Laborbefund |
 | HL7 Structured Data Capture (`hl7.fhir.uv.sdc`) | 3.0.0 (PROs), 4.0.0 (ISiK 6.0.0) | PROs, ISiK |
 | HL7 mCODE (`hl7.fhir.us.mcode`) | 2.1.x | Pathologie |
 | HL7 CRMI (`hl7.fhir.uv.crmi`) | 2.0.0 | Base, Meta |

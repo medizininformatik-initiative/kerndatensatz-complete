@@ -1,18 +1,26 @@
 ###############################################################################
-# Stage 1: Download and cache all FHIR packages
+# Stage 1: Alle FHIR-Pakete als Tarball holen
+#
+# Die Tarballs werden entpackt, bereinigt und neu gepackt. HAPI bekommt sie
+# ueber packageUrl: file:///app/packages/... serviert -- siehe application.yaml.
+#
+# Wichtig: HAPIs JpaPackageCache liest den Dateisystem-Cache unter
+# ~/.fhir/packages NICHT. Ohne packageUrl laedt der Server bei jedem Start
+# jedes Paket erneut von packages.fhir.org und scheitert dort frueher oder
+# spaeter an 429 Too Many Requests.
 ###############################################################################
 FROM eclipse-temurin:21-jre AS package-fetcher
 
 RUN apt-get update && apt-get install -y curl jq && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /root/.fhir/packages && cd /root/.fhir/packages && \
+RUN mkdir -p /packages /work && cd /work && \
     PACKAGES=" \
       hl7.fhir.r4.core/4.0.1 \
       de.basisprofil.r4/1.6.0 \
       de.medizininformatikinitiative.kerndatensatz.base/2027.0.0-ballot.rc1 \
       de.medizininformatikinitiative.kerndatensatz.meta/2027.0.0-ballot.rc3 \
       de.medizininformatikinitiative.kerndatensatz.medikation/2026.0.1 \
-      de.medizininformatikinitiative.kerndatensatz.laborbefund/2026.0.3 \
+      de.medizininformatikinitiative.kerndatensatz.laborbefund/2027.0.0-ballot.rc3 \
       de.medizininformatikinitiative.kerndatensatz.biobank/2027.0.0-ballot.rc2 \
       de.medizininformatikinitiative.kerndatensatz.icu/2027.0.0 \
       de.medizininformatikinitiative.kerndatensatz.mikrobiologie/2027.0.0-alpha.5 \
@@ -38,47 +46,47 @@ RUN mkdir -p /root/.fhir/packages && cd /root/.fhir/packages && \
       de.gematik.isik/6.0.0 \
       de.einwilligungsmanagement/2.0.3 \
     " && \
+    FAILED="" && \
     for PKG in $PACKAGES; do \
       NAME="${PKG%/*}"; VERSION="${PKG#*/}"; \
-      DIR="${NAME}#${VERSION}"; \
       echo "Fetching $NAME $VERSION ..."; \
-      mkdir -p "$DIR" && \
-      curl -sL "https://packages.fhir.org/${NAME}/${VERSION}" -o pkg.tgz && \
-      tar -xzf pkg.tgz -C "$DIR" && \
-      rm pkg.tgz; \
+      OK=0; \
+      for ATTEMPT in 1 2 3 4 5; do \
+        for BASE in https://packages.fhir.org https://packages.simplifier.net; do \
+          if curl -sfL --max-time 180 "$BASE/$NAME/$VERSION" -o pkg.tgz && tar -tzf pkg.tgz >/dev/null 2>&1; then OK=1; break; fi; \
+        done; \
+        [ "$OK" = "1" ] && break; \
+        echo "  Versuch $ATTEMPT fehlgeschlagen, warte ..."; sleep $((ATTEMPT * 5)); \
+      done; \
+      if [ "$OK" != "1" ]; then echo "  FEHLER: $NAME $VERSION nicht ladbar"; FAILED="$FAILED $NAME/$VERSION"; continue; fi; \
+      rm -rf ex && mkdir ex && tar -xzf pkg.tgz -C ex && \
+      find ex -name "*.json" -exec grep -l "iVBORw0KGgo" {} \; -delete && \
+      find ex -name "example-*.json" -delete && \
+      find ex -path "*/examples/*.json" -delete && \
+      find ex -name "._*" -delete && \
+      (cd ex && tar -czf "/packages/$NAME-$VERSION.tgz" package) && \
+      rm -f pkg.tgz; \
     done && \
-    echo "Packages cached:" && ls -d */ | wc -l && \
-    echo "Removing files with base64 binary data from cache (HAPI-1821 workaround)..." && \
-    find /root/.fhir/packages -name "*.json" -exec grep -l "iVBORw0KGgo" {} \; -delete && \
-    echo "Removing example instances (not needed for validation)..." && \
-    find /root/.fhir/packages -name "example-*.json" -delete && \
-    find /root/.fhir/packages -path "*/examples/*.json" -delete && \
-    echo "Done cleaning."
+    if [ -n "$FAILED" ]; then echo "Nicht ladbar:$FAILED"; exit 1; fi && \
+    echo "Tarballs bereit: $(ls /packages | wc -l)"
 
 ###############################################################################
-# Final: HAPI with pre-cached packages (loads from cache on first start)
+# Final: HAPI mit lokal hinterlegten Paket-Tarballs
 ###############################################################################
 FROM hapiproject/hapi:v7.6.0
 
 LABEL org.opencontainers.image.title="MII KDS Validation Server (HAPI)"
-LABEL org.opencontainers.image.description="HAPI FHIR Server with all MII Kerndatensatz packages pre-cached (BOM 2027.0.0-ballot.1)"
+LABEL org.opencontainers.image.description="HAPI FHIR Server mit allen MII Kerndatensatz Paketen (BOM 2027.0.0-ballot.1)"
 LABEL org.opencontainers.image.source="https://github.com/medizininformatik-initiative/kerndatensatz-complete"
 
-# Copy pre-fetched packages into HAPI's FHIR cache.
-#
-# hapiproject/hapi laeuft als User 65532 (nonroot) mit Home /home/nonroot.
-# Der FilesystemPackageCacheManager sucht unter $HOME/.fhir/packages -- landet
-# der Cache unter /root oder gehoert er User 1001, ist er wirkungslos und HAPI
-# laedt beim Start alle Pakete erneut aus der Registry (bis 429 Too Many
-# Requests den Start abbricht).
-COPY --from=package-fetcher --chown=65532:65532 /root/.fhir/packages /home/nonroot/.fhir/packages
+# hapiproject/hapi laeuft als User 65532 (nonroot).
+COPY --from=package-fetcher --chown=65532:65532 /packages /app/packages
 COPY --chown=65532:65532 application.yaml /app/config/application.yaml
 
 ENV HOME=/home/nonroot
-
 ENV SPRING_CONFIG_ADDITIONAL_LOCATION="file:///app/config/application.yaml"
 
 EXPOSE 8080
 
-HEALTHCHECK --interval=30s --timeout=10s --start-period=120s --retries=5 \
+HEALTHCHECK --interval=30s --timeout=10s --start-period=180s --retries=8 \
   CMD curl -f http://localhost:8080/fhir/metadata || exit 1

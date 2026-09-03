@@ -1,12 +1,20 @@
 # Validierungsbericht — BOM 2027.0.0-ballot.1
 
-Stand: 2026-09-02 · HAPI FHIR 7.6.0 · alle 27 gepinnten Pakete aus dem Pre-Cache, kein Registry-Zugriff zur Laufzeit.
+Stand: 2026-09-03 · HAPI FHIR 7.6.0 · alle 27 gepinnten Pakete als lokale Tarballs, verifiziert offline (`--network none`).
 
 ## Aufbau
 
-BOM-Paket gebaut mit `./scripts/build-bom-package.sh`: 19 Module, **1371 Conformance-Ressourcen**, 1042 Examples, 11 MB, **0 Dateinamen-Kollisionen**.
+BOM-Paket gebaut mit `./scripts/build-bom-package.sh`: 19 Module, **1373 Conformance-Ressourcen**, 1047 Examples, 11 MB, **0 Dateinamen-Kollisionen**.
 
-HAPI startet in 30 Sekunden und indiziert **7144 Ressourcen** aus 27 Paketen — ohne einen einzigen Konflikt beim Laden.
+HAPI startet in 26 Sekunden und indiziert **7049 Ressourcen** aus 27 Paketen — ohne einen einzigen Konflikt beim Laden.
+
+### Wie die Pakete zu HAPI kommen
+
+**HAPIs `JpaPackageCache` liest den Dateisystem-Cache unter `~/.fhir/packages` nicht.** Ohne weitere Konfiguration lädt der Server bei jedem Start jedes Paket erneut von `packages.fhir.org` — und scheitert dort früher oder später an `429 Too Many Requests` mit `HAPI-1301: Unable to locate package`. Ein Lauf, der durchgeht, ist dann Zufall, kein Beleg.
+
+Der Server bekommt die Pakete deshalb über `packageUrl: file:///app/packages/<name>-<version>.tgz`. Der Dockerfile lädt die Tarballs im Build, bereinigt sie (base64-PNGs wegen HAPI-1821, Examples, macOS-Resource-Forks) und packt sie neu; ein fehlgeschlagener Download bricht den Build jetzt ab, statt still ein unvollständiges Image zu erzeugen.
+
+Gegenprobe: `docker run --network none` startet den Server vollständig durch — 7049 Ressourcen, 0 Registry-Versuche, 0 Ladefehler.
 
 ## Die zentrale Frage: brechen die doppelten Canonicals?
 
@@ -18,8 +26,8 @@ Das Risiko bleibt für Konsumenten, die die Module **einzeln** statt über die B
 
 | | Anzahl |
 |---|---|
-| Terminologie-Fehler | 14 |
-| Strukturelle Fehler | 230 |
+| Terminologie-Fehler | 15 |
+| Strukturelle Fehler | 238 |
 
 ### Terminologie (14) — erwartbar
 
@@ -57,11 +65,15 @@ Betroffen z.B. `mii-pr-icu-score-rass`, `mii-pr-icu-untersuchung-pupillenbefund`
 
 Consent scheiterte an einer nicht auflösbaren Profilreferenz — das Profil *ist* im Paket, aber HAPI lädt Consent gar nicht (HAPI-1821-Workaround, Issue `mii-kds-complete-5e3`). Konfigurationslücke, kein Paketfehler.
 
+### Laborbefund 2027.0.0-ballot.rc3 — ohne Befund
+
+Alle sechs mitgelieferten Beispiele validieren **fehlerfrei** gegen ihre Profile: 0 Terminologie-, 0 strukturelle Fehler.
+
 ## Nebenbefunde aus dem Build
 
 - **ICU 2027.0.0**: zwei verschiedene ValueSets teilen sich dieselbe canonical URL (`mii-vs-icu-code-observation-extrakorporale-verfahren-loinc`). Verifiziert im unveränderten Registry-Paket.
 - **Dokument und Seltene**: macOS-Resource-Forks (`._package.json`) in den publizierten Tarballs. Der Build filtert sie jetzt.
-- **validation-server/Dockerfile**: der Pre-Cache lag unter `/root/.fhir/packages` mit Besitzer 1001, HAPI läuft aber als 65532 mit Home `/home/nonroot`. Der Cache war wirkungslos, HAPI lud bei jedem Start alle Pakete neu und scheiterte an `429 Too Many Requests`. Behoben.
+- **validation-server/Dockerfile**: der Pre-Cache unter `~/.fhir/packages` war grundsätzlich wirkungslos (siehe oben) und der Download-Loop prüfte nicht, ob `curl` erfolgreich war — ein unvollständiges Image lief grün durch. Beides behoben: lokale Tarballs über `packageUrl`, Retry über beide Registries, harter Abbruch bei Fehlschlag.
 
 ## Reproduzieren
 

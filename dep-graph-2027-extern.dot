@@ -32,7 +32,7 @@ digraph MII_KDS_2027_Extern {
         m_dok    [label="Dokument\n2027.0.0-ballot.rc1", fillcolor="#fff3cd"];
         m_bild   [label="Bildgebung\n2027.0.0-ballot.rc2", fillcolor="#fff3cd"];
         m_icu    [label="ICU\n2027.0.0", fillcolor="#d4edda"];
-        m_labor  [label="Labor\n2026.0.3", fillcolor="#d4edda"];
+        m_labor  [label="Labor\n2027.0.0-ballot.rc3", fillcolor="#fff3cd"];
         m_medi   [label="Medikation\n2026.0.1", fillcolor="#d4edda"];
         m_molgen [label="MolGen\n2026.0.4", fillcolor="#d4edda"];
         m_mtb    [label="MTB\n2026.0.1", fillcolor="#d4edda"];
@@ -79,7 +79,7 @@ digraph MII_KDS_2027_Extern {
         style="rounded,dashed"; color="gray65"; bgcolor="#f8f9fa"; fontsize=10;
 
         node [style="rounded,filled,dashed", fillcolor="#eef0f2", color="gray60", fontcolor="gray25"];
-        ips   [label="hl7.fhir.uv.ips\n2.0.0"];
+        ips   [label="hl7.fhir.uv.ips\n2.0.0 / 2.0.1"];
         sdc   [label="hl7.fhir.uv.sdc\n3.0.0 / 4.0.0"];
         mcode [label="hl7.fhir.us.mcode\n2.1.x"];
         crmi  [label="hl7.fhir.uv.crmi\n2.0.0"];

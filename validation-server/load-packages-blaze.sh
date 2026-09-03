@@ -10,7 +10,7 @@ PACKAGES=(
   "de.medizininformatikinitiative.kerndatensatz.base/2027.0.0-ballot.rc1"
   "de.medizininformatikinitiative.kerndatensatz.meta/2027.0.0-ballot.rc3"
   "de.medizininformatikinitiative.kerndatensatz.medikation/2026.0.1"
-  "de.medizininformatikinitiative.kerndatensatz.laborbefund/2026.0.3"
+  "de.medizininformatikinitiative.kerndatensatz.laborbefund/2027.0.0-ballot.rc3"
   "de.medizininformatikinitiative.kerndatensatz.biobank/2027.0.0-ballot.rc2"
   "de.medizininformatikinitiative.kerndatensatz.icu/2027.0.0"
   "de.medizininformatikinitiative.kerndatensatz.mikrobiologie/2027.0.0-alpha.5"
