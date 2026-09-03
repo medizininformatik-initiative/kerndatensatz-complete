@@ -73,6 +73,21 @@ Danach prüfen, ob alle Quellen übereinstimmen:
 ./scripts/check-module-versions.py --offline  # nur Konsistenz, ohne Netz
 ```
 
+## QA-Reports der Module
+
+```bash
+./scripts/fetch-qa-reports.py --details
+```
+
+Holt die publizierten IG-Publisher-QA-Reports und vergleicht die Version, über die
+der Report spricht, mit der von der BOM gepinnten. Die Module publizieren an drei
+verschiedenen Stellen (build.fhir.org, GitHub Pages, Canonical); aktuell tun es nur
+5 von 20. Auswertung in `docs/qa-reports-2027-ballot.md`.
+
+**Achtung:** `www.medizininformatik-initiative.de` antwortet auf *jeden* Pfad mit
+HTTP 200 und einer HTML-Seite. Ein Statuscode-Check allein erzeugt dort Fehlalarme —
+immer den Inhalt prüfen.
+
 Das Skript kennt die bewussten Ausnahmen (Consent fehlt in HAPI wegen HAPI-1821,
 `hl7.fhir.r4.core` steht nicht unter `implementationguides`) und meldet neuere
 verfügbare Versionen als Hinweis, nicht als Fehler.
