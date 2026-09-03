@@ -31,6 +31,31 @@ Achtzehn Repos publizieren einen auswertbaren QA-Report, verteilt über build.fh
 | kerndatensatz-dokument | dev | 2027.0.0-ballot.rc1 | 8 | 120 |
 | kerndatensatz-soziodemographie | 1.0.0 | 2027.0.0-ballot.rc1 | 8 | 216 |
 
+### Von welchem Branch stammt der Report?
+
+Ein frisches Build-Datum heißt nicht, dass der Branch aktuell ist. Sechs der achtzehn
+Reports stammen von einem Branch, der nicht den aktuellen Stand trägt:
+
+| Repo | Branch | Stand |
+|---|---|---|
+| lungenfunktion | tech-test-2026-07-23 | 42 Commits hinter `main` |
+| studie | tech-test-2026-07-23 | 40 Commits hinter `master` |
+| molgen | tech-test-2026-07-23 | 32 Commits hinter `main` |
+| meta | 2027.0.0-ballot.rc3 | 3 Commits hinter `main` |
+| soziodemographie | 1.0.0 | 2 Commits hinter `main` |
+| laborbefund | flatten-category-v2 | **Branch existiert nicht mehr** |
+
+Die `tech-test-2026-07-23`-Builds sind vom Juli und wirken durch das Datum aktuell,
+beschreiben aber einen Stand von vor der Migration. Für Studie heißt das: die 783 Errors
+beziehen sich auf 2026.0.1, nicht auf die gepinnte `2027.0.0-ballot.rc1` — zu dieser
+Version gibt es **keinen** Report.
+
+Bei Labor ist der Befund trotzdem belastbar: `master`, der Tag `v2027.0.0-ballot.rc3`
+und der gelöschte Branch liefern identische Zahlen (37 Errors, 41 Warnings).
+
+Verlässlich sind die Reports von **onkologie, proms, seltene** (jeweils Default-Branch)
+sowie **basis und dokument** (identisch mit dem Default).
+
 **Meta ist der wichtigste Fund.** An der zuerst gefundenen Stelle stand ein Report über
 2026.0.0 mit 3 Errors. Der Branch-Build zur tatsächlich gepinnten Ballot-Version
 2027.0.0-ballot.rc3 hat **386 Errors** — zwei Größenordnungen mehr. Meta ist das
