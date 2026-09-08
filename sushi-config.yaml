@@ -9,7 +9,7 @@ name: MIIKerndatensatzComplete
 title: MII Kerndatensatz Complete
 description: Bill of Materials (BOM) aller Module des MII Kerndatensatzes samt gepinnter externer Abhaengigkeiten (Ballot-Stand 2027.0.0)
 status: active
-version: 2027.0.0-ballot.1
+version: 2027.0.0-ballot.2
 fhirVersion: 4.0.1
 copyrightYear: 2025+
 releaseLabel: ballot
@@ -27,8 +27,11 @@ publisher:
 # noch die 2026er Basismodule. bildgebung -> base 2026.0.1 / meta 2026.0.0,
 # dokument -> base 2026.0.0 / meta 2026.0.0, studie -> meta 2026.0.0,
 # icu 2027.0.0 -> base 2026.0.1, kardiologie -> base 2026.0.0 / meta 2026.0.0 / icu 2026.0.1,
-# lungenfunktion -> base 2026.0.x / meta 2026.0.x, mikrobiologie -> laborbefund 2026.0.3.
-# Stimmig sind nur
+# lungenfunktion -> base 2026.0.x / meta 2026.0.x, mikrobiologie -> laborbefund 2026.0.3,
+# patho 2027.0.0-ballot.rc1 -> base 2026.0.1 / biobank 2026.0.1 / meta 2026.0.0,
+# pros 2027.0.0-ballot.rc3 -> meta 2026.0.x (Deps gegenueber 2026.7.0 unveraendert).
+# Vollstaendig kohaerent ist bisher nur molgen 2027.0.0-ballot.rc2.
+# Stimmig sind ausserdem
 # base 2027.0.0-ballot.rc1, biobank 2027.0.0-ballot.rc2 und laborbefund 2027.0.0-ballot.rc3
 # -> jeweils meta 2027.0.0-ballot.rc3 (in den jeweiligen rc repariert). base und meta koennen daher transitiv
 # doppelt aufgeloest werden. Siehe Issue mii-kds-complete-d3d.
@@ -50,15 +53,15 @@ dependencies:
   de.medizininformatikinitiative.kerndatensatz.biobank: 2027.0.0-ballot.rc2
   de.medizininformatikinitiative.kerndatensatz.icu: 2027.0.0
   de.medizininformatikinitiative.kerndatensatz.mikrobiologie: 2027.0.0-alpha.5
-  de.medizininformatikinitiative.kerndatensatz.molgen: 2026.0.4
-  de.medizininformatikinitiative.kerndatensatz.patho: 2026.0.2
+  de.medizininformatikinitiative.kerndatensatz.molgen: 2027.0.0-ballot.rc2
+  de.medizininformatikinitiative.kerndatensatz.patho: 2027.0.0-ballot.rc1
   de.medizininformatikinitiative.kerndatensatz.studie: 2027.0.0-ballot.rc1
   de.medizininformatikinitiative.kerndatensatz.bildgebung: 2027.0.0-ballot.rc2
   de.medizininformatikinitiative.kerndatensatz.dokument: 2027.0.0-ballot.rc1
   de.medizininformatikinitiative.kerndatensatz.onkologie: 2026.0.3
   de.medizininformatikinitiative.kerndatensatz.seltene: 2026.0.1
   de.medizininformatikinitiative.kerndatensatz.mtb: 2026.0.1
-  de.medizininformatikinitiative.kerndatensatz.pros: 2026.7.0
+  de.medizininformatikinitiative.kerndatensatz.pros: 2027.0.0-ballot.rc3
   de.medizininformatikinitiative.kerndatensatz.kardiologie: 2027.0.0-ballot.rc1
   de.medizininformatikinitiative.kerndatensatz.lungenfunktion: 2027.0.0-ballot.rc1
 
@@ -69,7 +72,7 @@ dependencies:
   # der BOM brechen -- siehe mii-kds-complete-e1x.
 
   # Einwilligungsmanagement
-  de.medizininformatikinitiative.kerndatensatz.consent: 2026.0.1-rc-4
+  de.medizininformatikinitiative.kerndatensatz.consent: 2027.0.0-ballot.rc1
 
   # Externe Abhaengigkeiten
   #

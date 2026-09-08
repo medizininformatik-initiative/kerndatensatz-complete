@@ -24,7 +24,7 @@ digraph MII_KDS_2027_Ballot {
     ranksep=0.7;
 
     labelloc="t";
-    label=<<B>MII KDS 2027 Ballot — Abhängigkeitsgraph</B><BR/><FONT POINT-SIZE="10">Pfeil = „hängt ab von" · Nur MII-interne Deps · Stand 2026-09-02<BR/><FONT COLOR="#c0392b">Rot gestrichelt = Modul deklariert noch die 2026er Version des Ziels</FONT></FONT>>;
+    label=<<B>MII KDS 2027 Ballot — Abhängigkeitsgraph</B><BR/><FONT POINT-SIZE="10">Pfeil = „hängt ab von" · Nur MII-interne Deps · Stand 2026-09-08<BR/><FONT COLOR="#c0392b">Rot gestrichelt = Modul deklariert noch die 2026er Version des Ziels</FONT></FONT>>;
     fontsize=15;
 
     // Kantenstil für den 2026/2027-Bruch
@@ -39,7 +39,7 @@ digraph MII_KDS_2027_Ballot {
     medikation [label="Medikation\n2026.0.1",  fillcolor="#d4edda"];
     biobank    [label=<Biobank 2027.0.0-ballot.rc2<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
     studie     [label=<Studie 2027.0.0-ballot.rc1<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
-    pros       [label="PROs\n2026.7.0",        fillcolor="#d4edda"];
+    pros       [label=<PROs 2027.0.0-ballot.rc3<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
 
     meta -> base;
     meta -> labor;
@@ -52,10 +52,10 @@ digraph MII_KDS_2027_Ballot {
     icu        [label=<ICU 2027.0.0<BR/><FONT POINT-SIZE="8">(final)</FONT>>, fillcolor="#d4edda"];
     base -> icu [color="#c0392b", style=dashed];
 
-    molgen     [label="MolGen\n2026.0.4",      fillcolor="#d4edda"];
-    meta    -> molgen [color="#c0392b", style=dashed];
-    base    -> molgen [color="#c0392b", style=dashed];
-    biobank -> molgen [color="#c0392b", style=dashed];
+    molgen     [label=<MolGen 2027.0.0-ballot.rc2<BR/><FONT POINT-SIZE="8">(Ballot) · vollständig kohärent</FONT>>, fillcolor="#fff3cd"];
+    meta    -> molgen;
+    base    -> molgen;
+    biobank -> molgen;
 
     bildgebung [label=<Bildgebung 2027.0.0-ballot.rc2<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
     meta       -> bildgebung [color="#c0392b", style=dashed];
@@ -78,7 +78,7 @@ digraph MII_KDS_2027_Ballot {
     molgen     -> onko;
     studie     -> onko [color="#c0392b", style=dashed];
 
-    patho      [label="Pathologie\n2026.0.2",  fillcolor="#d4edda"];
+    patho      [label=<Pathologie 2027.0.0-ballot.rc1<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
     meta    -> patho [color="#c0392b", style=dashed];
     base    -> patho [color="#c0392b", style=dashed];
     biobank -> patho [color="#c0392b", style=dashed];
@@ -104,7 +104,7 @@ digraph MII_KDS_2027_Ballot {
     studie     -> mtb [color="#c0392b", style=dashed];
 
     // ════════════ Einwilligung (keine MII-internen Deps) ════════════
-    consent    [label=<Consent 2026.0.1-rc-4<BR/><FONT POINT-SIZE="8">(RC) · → de.einwilligungsmanagement 2.0.3</FONT>>, fillcolor="#fff3cd"];
+    consent    [label=<Consent 2027.0.0-ballot.rc1<BR/><FONT POINT-SIZE="8">(Ballot) · → de.einwilligungsmanagement 2.0.4-rc1</FONT>>, fillcolor="#fff3cd"];
 
     // ════════════ Neue Ballot-Module ════════════
     kardiologie [label=<Kardiologie 2027.0.0-ballot.rc1<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];

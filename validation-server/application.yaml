@@ -43,12 +43,12 @@ hapi:
         packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.mikrobiologie-2027.0.0-alpha.5.tgz
       molgen:
         name: de.medizininformatikinitiative.kerndatensatz.molgen
-        version: 2026.0.4
-        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.molgen-2026.0.4.tgz
+        version: 2027.0.0-ballot.rc2
+        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.molgen-2027.0.0-ballot.rc2.tgz
       patho:
         name: de.medizininformatikinitiative.kerndatensatz.patho
-        version: 2026.0.2
-        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.patho-2026.0.2.tgz
+        version: 2027.0.0-ballot.rc1
+        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.patho-2027.0.0-ballot.rc1.tgz
       studie:
         name: de.medizininformatikinitiative.kerndatensatz.studie
         version: 2027.0.0-ballot.rc1
@@ -75,8 +75,8 @@ hapi:
         packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.mtb-2026.0.1.tgz
       pros:
         name: de.medizininformatikinitiative.kerndatensatz.pros
-        version: 2026.7.0
-        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.pros-2026.7.0.tgz
+        version: 2027.0.0-ballot.rc3
+        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.pros-2027.0.0-ballot.rc3.tgz
       kardiologie:
         name: de.medizininformatikinitiative.kerndatensatz.kardiologie
         version: 2027.0.0-ballot.rc1

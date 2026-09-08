@@ -18,7 +18,7 @@ digraph MII_KDS_2027_Extern {
     ranksep=2.6;
 
     labelloc="t";
-    label=<<B>MII KDS 2027 Ballot — Externe Abhängigkeiten</B><BR/><FONT POINT-SIZE="9">Pfeil = „hängt ab von" · Stand 2026-09-02 · Durchgezogen = in der BOM gepinnt, gestrichelt = nur transitiv<BR/><FONT COLOR="#c0392b">Rote Kante = Modul fordert eine andere Version an als die BOM pinnt</FONT></FONT>>;
+    label=<<B>MII KDS 2027 Ballot — Externe Abhängigkeiten</B><BR/><FONT POINT-SIZE="9">Pfeil = „hängt ab von" · Stand 2026-09-08 · Durchgezogen = in der BOM gepinnt, gestrichelt = nur transitiv<BR/><FONT COLOR="#c0392b">Rote Kante = Modul fordert eine andere Version an als die BOM pinnt</FONT></FONT>>;
     fontsize=14;
 
     // ════════════ MII-Module ════════════
@@ -34,11 +34,11 @@ digraph MII_KDS_2027_Extern {
         m_icu    [label="ICU\n2027.0.0", fillcolor="#d4edda"];
         m_labor  [label="Labor\n2027.0.0-ballot.rc3", fillcolor="#fff3cd"];
         m_medi   [label="Medikation\n2026.0.1", fillcolor="#d4edda"];
-        m_molgen [label="MolGen\n2026.0.4", fillcolor="#d4edda"];
+        m_molgen [label="MolGen\n2027.0.0-ballot.rc2", fillcolor="#fff3cd"];
         m_mtb    [label="MTB\n2026.0.1", fillcolor="#d4edda"];
-        m_patho  [label="Pathologie\n2026.0.2", fillcolor="#d4edda"];
-        m_pros   [label="PROs\n2026.7.0", fillcolor="#d4edda"];
-        m_cons   [label="Consent\n2026.0.1-rc-4", fillcolor="#fff3cd"];
+        m_patho  [label="Pathologie\n2027.0.0-ballot.rc1", fillcolor="#fff3cd"];
+        m_pros   [label="PROs\n2027.0.0-ballot.rc3", fillcolor="#fff3cd"];
+        m_cons   [label="Consent\n2027.0.0-ballot.rc1", fillcolor="#fff3cd"];
         m_kard   [label="Kardiologie\n2027.0.0-ballot.rc1", fillcolor="#fff3cd"];
         m_lufu   [label="Lungenfunktion\n2027.0.0-ballot.rc1", fillcolor="#fff3cd"];
     }
@@ -89,7 +89,7 @@ digraph MII_KDS_2027_Extern {
         ihed  [label="de.ihe-d.terminology\n3.0.1"];
         fmt   [label="ihe.formatcode.fhir\n1.4.0"];
         demed [label="de.fhir.medication\n1.0.x"];
-        einw  [label="de.einwilligungsmanagement\n2.0.3"];
+        einw  [label="de.einwilligungsmanagement\n2.0.4-rc1"];
         gtermi[label="de.gematik.terminology\n1.0.6 – 1.0.9"];
     }
 
@@ -128,12 +128,12 @@ digraph MII_KDS_2027_Extern {
     m_bild -> basis [label="1.6.0"];
     m_dok  -> basis [label="1.6.0"];
     m_medi -> basis [label="1.5.x", color="#c0392b", fontcolor="#c0392b"];
-    m_molgen -> basis [label="1.5.x", color="#c0392b", fontcolor="#c0392b"];
+    m_molgen -> basis [label="1.6.0"];
     m_mtb  -> basis [label="1.5.4", color="#c0392b", fontcolor="#c0392b"];
 
     m_icu   -> isik [label="6.0.0"];
     m_dok   -> isik [label="6.0.0"];
-    m_patho -> isik [label="5.1.0", color="#c0392b", fontcolor="#c0392b"];
+    m_patho -> isik [label="5.1.2", color="#c0392b", fontcolor="#c0392b"];
     m_pros  -> isik [label="5.1.1", color="#c0392b", fontcolor="#c0392b"];
 
     // ════════════ Kanten: transitiv ════════════

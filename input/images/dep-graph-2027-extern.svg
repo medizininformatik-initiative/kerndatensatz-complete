@@ -10,7 +10,7 @@
 <title>MII_KDS_2027_Extern</title>
 <polygon fill="white" stroke="none" points="-4,4 -4,-1380 1185.93,-1380 1185.93,4 -4,4"/>
 <text xml:space="preserve" text-anchor="start" x="439.47" y="-1359.7" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="14.00">MII KDS 2027 Ballot — Externe Abhängigkeiten</text>
-<text xml:space="preserve" text-anchor="start" x="377.22" y="-1350.45" font-family="Helvetica,sans-Serif" font-size="9.00">Pfeil = „hängt ab von&quot; · Stand 2026&#45;09&#45;02 · Durchgezogen = in der BOM gepinnt, gestrichelt = nur transitiv</text>
+<text xml:space="preserve" text-anchor="start" x="377.22" y="-1350.45" font-family="Helvetica,sans-Serif" font-size="9.00">Pfeil = „hängt ab von&quot; · Stand 2026&#45;09&#45;08 · Durchgezogen = in der BOM gepinnt, gestrichelt = nur transitiv</text>
 <text xml:space="preserve" text-anchor="start" x="450.34" y="-1341.45" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#c0392b">Rote Kante = Modul fordert eine andere Version an als die BOM pinnt</text>
 <g id="clust1" class="cluster">
 <title>cluster_mii</title>
@@ -399,14 +399,14 @@
 <!-- m_molgen -->
 <g id="node9" class="node">
 <title>m_molgen</title>
-<path fill="#d4edda" stroke="black" d="M88.8,-754C88.8,-754 49.38,-754 49.38,-754 43.38,-754 37.38,-748 37.38,-742 37.38,-742 37.38,-730 37.38,-730 37.38,-724 43.38,-718 49.38,-718 49.38,-718 88.8,-718 88.8,-718 94.8,-718 100.8,-724 100.8,-730 100.8,-730 100.8,-742 100.8,-742 100.8,-748 94.8,-754 88.8,-754"/>
+<path fill="#fff3cd" stroke="black" d="M110.17,-754C110.17,-754 28,-754 28,-754 22,-754 16,-748 16,-742 16,-742 16,-730 16,-730 16,-724 22,-718 28,-718 28,-718 110.17,-718 110.17,-718 116.17,-718 122.17,-724 122.17,-730 122.17,-730 122.17,-742 122.17,-742 122.17,-748 116.17,-754 110.17,-754"/>
 <text xml:space="preserve" text-anchor="middle" x="69.09" y="-737.75" font-family="Helvetica,sans-Serif" font-size="10.00">MolGen</text>
-<text xml:space="preserve" text-anchor="middle" x="69.09" y="-726.5" font-family="Helvetica,sans-Serif" font-size="10.00">2026.0.4</text>
+<text xml:space="preserve" text-anchor="middle" x="69.09" y="-726.5" font-family="Helvetica,sans-Serif" font-size="10.00">2027.0.0&#45;ballot.rc2</text>
 </g>
 <!-- m_molgen&#45;&gt;tho -->
 <g id="edge5" class="edge">
 <title>m_molgen&#45;&gt;tho</title>
-<path fill="none" stroke="#c0392b" stroke-width="0.9" d="M101.12,-745.35C111.12,-749.38 121.78,-754.85 130.17,-762 184.31,-808.15 155.73,-859.47 216.17,-897 253.96,-920.47 304.64,-924.46 343.36,-923.14"/>
+<path fill="none" stroke="#c0392b" stroke-width="0.9" d="M119.44,-754.36C123.25,-756.65 126.88,-759.2 130.17,-762 184.31,-808.15 155.73,-859.47 216.17,-897 253.96,-920.47 304.64,-924.46 343.36,-923.14"/>
 <polygon fill="#c0392b" stroke="#c0392b" stroke-width="0.9" points="343.18,-925.25 349.08,-922.89 343,-921.05 343.18,-925.25"/>
 <text xml:space="preserve" text-anchor="middle" x="224.05" y="-905.74" font-family="Helvetica,sans-Serif" font-size="7.00" fill="#c0392b">6.1.x</text>
 </g>
@@ -420,16 +420,16 @@
 <!-- m_molgen&#45;&gt;geno -->
 <g id="edge11" class="edge">
 <title>m_molgen&#45;&gt;geno</title>
-<path fill="none" stroke="#8c8c8c" stroke-width="0.9" d="M101.23,-743.9C111.6,-747.86 122.45,-753.65 130.17,-762 210.23,-848.58 120.22,-944.45 216.17,-1013 261.87,-1045.65 328.56,-1015.35 368.06,-991.43"/>
+<path fill="none" stroke="#8c8c8c" stroke-width="0.9" d="M121.35,-754.34C124.56,-756.62 127.55,-759.16 130.17,-762 210.23,-848.58 120.22,-944.45 216.17,-1013 261.87,-1045.65 328.56,-1015.35 368.06,-991.43"/>
 <polygon fill="#8c8c8c" stroke="#8c8c8c" stroke-width="0.9" points="369,-993.31 373,-988.37 366.79,-989.74 369,-993.31"/>
 <text xml:space="preserve" text-anchor="middle" x="224.05" y="-1021.95" font-family="Helvetica,sans-Serif" font-size="7.00" fill="#595959">3.0.x</text>
 </g>
 <!-- m_molgen&#45;&gt;basis -->
 <g id="edge24" class="edge">
 <title>m_molgen&#45;&gt;basis</title>
-<path fill="none" stroke="#c0392b" stroke-width="0.9" d="M101,-746.7C135.13,-756.55 190.69,-766.65 231.92,-745 322.11,-697.64 373.59,-577.92 392.5,-525.38"/>
-<polygon fill="#c0392b" stroke="#c0392b" stroke-width="0.9" points="394.38,-526.37 394.39,-520.01 390.42,-524.97 394.38,-526.37"/>
-<text xml:space="preserve" text-anchor="middle" x="224.05" y="-751.83" font-family="Helvetica,sans-Serif" font-size="7.00" fill="#c0392b">1.5.x</text>
+<path fill="none" stroke="#8c8c8c" stroke-width="0.9" d="M122.57,-752.13C155.76,-759.24 198.54,-762.53 231.92,-745 322.11,-697.64 373.59,-577.92 392.5,-525.38"/>
+<polygon fill="#8c8c8c" stroke="#8c8c8c" stroke-width="0.9" points="394.38,-526.37 394.39,-520.01 390.42,-524.97 394.38,-526.37"/>
+<text xml:space="preserve" text-anchor="middle" x="224.05" y="-751.83" font-family="Helvetica,sans-Serif" font-size="7.00" fill="#595959">1.6.0</text>
 </g>
 <!-- m_mtb -->
 <g id="node10" class="node">
@@ -455,16 +455,16 @@
 <!-- m_patho -->
 <g id="node11" class="node">
 <title>m_patho</title>
-<path fill="#d4edda" stroke="black" d="M92.92,-286C92.92,-286 45.25,-286 45.25,-286 39.25,-286 33.25,-280 33.25,-274 33.25,-274 33.25,-262 33.25,-262 33.25,-256 39.25,-250 45.25,-250 45.25,-250 92.92,-250 92.92,-250 98.92,-250 104.92,-256 104.92,-262 104.92,-262 104.92,-274 104.92,-274 104.92,-280 98.92,-286 92.92,-286"/>
+<path fill="#fff3cd" stroke="black" d="M110.17,-286C110.17,-286 28,-286 28,-286 22,-286 16,-280 16,-274 16,-274 16,-262 16,-262 16,-256 22,-250 28,-250 28,-250 110.17,-250 110.17,-250 116.17,-250 122.17,-256 122.17,-262 122.17,-262 122.17,-274 122.17,-274 122.17,-280 116.17,-286 110.17,-286"/>
 <text xml:space="preserve" text-anchor="middle" x="69.09" y="-269.75" font-family="Helvetica,sans-Serif" font-size="10.00">Pathologie</text>
-<text xml:space="preserve" text-anchor="middle" x="69.09" y="-258.5" font-family="Helvetica,sans-Serif" font-size="10.00">2026.0.2</text>
+<text xml:space="preserve" text-anchor="middle" x="69.09" y="-258.5" font-family="Helvetica,sans-Serif" font-size="10.00">2027.0.0&#45;ballot.rc1</text>
 </g>
 <!-- m_patho&#45;&gt;isik -->
 <g id="edge28" class="edge">
 <title>m_patho&#45;&gt;isik</title>
-<path fill="none" stroke="#c0392b" stroke-width="0.9" d="M105.37,-273.5C139.2,-279.73 191.04,-291.86 231.92,-312.75 290.12,-342.49 347.23,-394.25 377.87,-424.38"/>
+<path fill="none" stroke="#c0392b" stroke-width="0.9" d="M122.35,-276.85C155.06,-283.72 197.4,-295.11 231.92,-312.75 290.12,-342.49 347.23,-394.25 377.87,-424.38"/>
 <polygon fill="#c0392b" stroke="#c0392b" stroke-width="0.9" points="376.21,-425.7 381.94,-428.43 379.16,-422.71 376.21,-425.7"/>
-<text xml:space="preserve" text-anchor="middle" x="224.05" y="-314.35" font-family="Helvetica,sans-Serif" font-size="7.00" fill="#c0392b">5.1.0</text>
+<text xml:space="preserve" text-anchor="middle" x="224.05" y="-314.35" font-family="Helvetica,sans-Serif" font-size="7.00" fill="#c0392b">5.1.2</text>
 </g>
 <!-- mcode -->
 <g id="node27" class="node">
@@ -476,20 +476,20 @@
 <!-- m_patho&#45;&gt;mcode -->
 <g id="edge34" class="edge">
 <title>m_patho&#45;&gt;mcode</title>
-<path fill="none" stroke="#b3b3b3" stroke-width="0.9" stroke-dasharray="5,2" d="M105.35,-256.66C114.02,-252.85 122.89,-248.01 130.17,-242 182.46,-198.84 156.22,-147.67 216.17,-116 298.62,-72.45 578.64,-108.59 699.68,-126.92"/>
+<path fill="none" stroke="#b3b3b3" stroke-width="0.9" stroke-dasharray="5,2" d="M119.35,-249.53C123.17,-247.26 126.84,-244.75 130.17,-242 182.46,-198.84 156.22,-147.67 216.17,-116 298.62,-72.45 578.64,-108.59 699.68,-126.92"/>
 <polygon fill="#b3b3b3" stroke="#b3b3b3" stroke-width="0.9" points="699.12,-128.96 705.37,-127.79 699.76,-124.81 699.12,-128.96"/>
 </g>
 <!-- m_pros -->
 <g id="node12" class="node">
 <title>m_pros</title>
-<path fill="#d4edda" stroke="black" d="M88.8,-390C88.8,-390 49.38,-390 49.38,-390 43.38,-390 37.38,-384 37.38,-378 37.38,-378 37.38,-366 37.38,-366 37.38,-360 43.38,-354 49.38,-354 49.38,-354 88.8,-354 88.8,-354 94.8,-354 100.8,-360 100.8,-366 100.8,-366 100.8,-378 100.8,-378 100.8,-384 94.8,-390 88.8,-390"/>
+<path fill="#fff3cd" stroke="black" d="M110.17,-390C110.17,-390 28,-390 28,-390 22,-390 16,-384 16,-378 16,-378 16,-366 16,-366 16,-360 22,-354 28,-354 28,-354 110.17,-354 110.17,-354 116.17,-354 122.17,-360 122.17,-366 122.17,-366 122.17,-378 122.17,-378 122.17,-384 116.17,-390 110.17,-390"/>
 <text xml:space="preserve" text-anchor="middle" x="69.09" y="-373.75" font-family="Helvetica,sans-Serif" font-size="10.00">PROs</text>
-<text xml:space="preserve" text-anchor="middle" x="69.09" y="-362.5" font-family="Helvetica,sans-Serif" font-size="10.00">2026.7.0</text>
+<text xml:space="preserve" text-anchor="middle" x="69.09" y="-362.5" font-family="Helvetica,sans-Serif" font-size="10.00">2027.0.0&#45;ballot.rc3</text>
 </g>
 <!-- m_pros&#45;&gt;isik -->
 <g id="edge29" class="edge">
 <title>m_pros&#45;&gt;isik</title>
-<path fill="none" stroke="#c0392b" stroke-width="0.9" d="M101.14,-358.93C140.92,-342.95 207.62,-318.93 231.92,-326.75 291.7,-345.98 348.25,-395.05 378.35,-424.54"/>
+<path fill="none" stroke="#c0392b" stroke-width="0.9" d="M114.58,-353.64C154.55,-338.23 210.19,-319.76 231.92,-326.75 291.7,-345.98 348.25,-395.05 378.35,-424.54"/>
 <polygon fill="#c0392b" stroke="#c0392b" stroke-width="0.9" points="376.6,-425.76 382.34,-428.49 379.56,-422.78 376.6,-425.76"/>
 <text xml:space="preserve" text-anchor="middle" x="224.05" y="-328.35" font-family="Helvetica,sans-Serif" font-size="7.00" fill="#c0392b">5.1.1</text>
 </g>
@@ -503,27 +503,27 @@
 <!-- m_pros&#45;&gt;sdc -->
 <g id="edge32" class="edge">
 <title>m_pros&#45;&gt;sdc</title>
-<path fill="none" stroke="#b3b3b3" stroke-width="0.9" stroke-dasharray="5,2" d="M101.11,-358.96C110.49,-354.92 120.79,-350.37 130.17,-346 168.91,-327.95 175.35,-315.64 216.17,-303 390.08,-249.17 610.78,-270.66 707.29,-284.19"/>
+<path fill="none" stroke="#b3b3b3" stroke-width="0.9" stroke-dasharray="5,2" d="M113.53,-353.54C119.15,-351.05 124.81,-348.5 130.17,-346 168.91,-327.95 175.35,-315.64 216.17,-303 390.08,-249.17 610.78,-270.66 707.29,-284.19"/>
 <polygon fill="#b3b3b3" stroke="#b3b3b3" stroke-width="0.9" points="706.71,-286.23 712.95,-284.99 707.3,-282.07 706.71,-286.23"/>
 </g>
 <!-- m_cons -->
 <g id="node13" class="node">
 <title>m_cons</title>
-<path fill="#fff3cd" stroke="black" d="M98.55,-234C98.55,-234 39.63,-234 39.63,-234 33.63,-234 27.63,-228 27.63,-222 27.63,-222 27.63,-210 27.63,-210 27.63,-204 33.63,-198 39.63,-198 39.63,-198 98.55,-198 98.55,-198 104.55,-198 110.55,-204 110.55,-210 110.55,-210 110.55,-222 110.55,-222 110.55,-228 104.55,-234 98.55,-234"/>
+<path fill="#fff3cd" stroke="black" d="M110.17,-234C110.17,-234 28,-234 28,-234 22,-234 16,-228 16,-222 16,-222 16,-210 16,-210 16,-204 22,-198 28,-198 28,-198 110.17,-198 110.17,-198 116.17,-198 122.17,-204 122.17,-210 122.17,-210 122.17,-222 122.17,-222 122.17,-228 116.17,-234 110.17,-234"/>
 <text xml:space="preserve" text-anchor="middle" x="69.09" y="-217.75" font-family="Helvetica,sans-Serif" font-size="10.00">Consent</text>
-<text xml:space="preserve" text-anchor="middle" x="69.09" y="-206.5" font-family="Helvetica,sans-Serif" font-size="10.00">2026.0.1&#45;rc&#45;4</text>
+<text xml:space="preserve" text-anchor="middle" x="69.09" y="-206.5" font-family="Helvetica,sans-Serif" font-size="10.00">2027.0.0&#45;ballot.rc1</text>
 </g>
 <!-- einw -->
 <g id="node35" class="node">
 <title>einw</title>
 <path fill="#eef0f2" stroke="#999999" stroke-dasharray="5,2" d="M820.76,-102C820.76,-102 693.59,-102 693.59,-102 687.59,-102 681.59,-96 681.59,-90 681.59,-90 681.59,-78 681.59,-78 681.59,-72 687.59,-66 693.59,-66 693.59,-66 820.76,-66 820.76,-66 826.76,-66 832.76,-72 832.76,-78 832.76,-78 832.76,-90 832.76,-90 832.76,-96 826.76,-102 820.76,-102"/>
 <text xml:space="preserve" text-anchor="middle" x="757.18" y="-85.75" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#404040">de.einwilligungsmanagement</text>
-<text xml:space="preserve" text-anchor="middle" x="757.18" y="-74.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#404040">2.0.3</text>
+<text xml:space="preserve" text-anchor="middle" x="757.18" y="-74.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#404040">2.0.4&#45;rc1</text>
 </g>
 <!-- m_cons&#45;&gt;einw -->
 <g id="edge45" class="edge">
 <title>m_cons&#45;&gt;einw</title>
-<path fill="none" stroke="#b3b3b3" stroke-width="0.9" stroke-dasharray="5,2" d="M110.89,-200.72C117.55,-197.56 124.21,-193.97 130.17,-190 174.37,-160.53 168.61,-130.67 216.17,-107 363.93,-33.46 563.56,-50.12 674.03,-67.74"/>
+<path fill="none" stroke="#b3b3b3" stroke-width="0.9" stroke-dasharray="5,2" d="M117.21,-197.58C121.71,-195.25 126.1,-192.71 130.17,-190 174.37,-160.53 168.61,-130.67 216.17,-107 363.93,-33.46 563.56,-50.12 674.03,-67.74"/>
 <polygon fill="#b3b3b3" stroke="#b3b3b3" stroke-width="0.9" points="673.58,-69.8 679.84,-68.69 674.25,-65.65 673.58,-69.8"/>
 </g>
 <!-- m_kard -->
