@@ -31,18 +31,58 @@ Zwei Module sind in der Registry **weiter als ihr eigener Default-Branch**: bild
 
 ## 2. GitHub Pages
 
-| Stand | Module |
-|---|---|
-| **aktuell** | consent, dokument, laborbefund, lungenfunktion, medikation, mikrobiologie, molgen, patho, studie, symptom |
-| **hinterher** | base (**41 Tage**), pros (6), onkologie (5), bildgebung (3), kardiologie (3), biobank (1), icu (1) |
-| **keine Pages** | meta, mtb, seltene, soziodemographie |
+> **Korrektur der ersten Fassung.** Die erste Erhebung nutzte die GitHub-Pages-API
+> (`/pages` und `/pages/builds/latest`). Die liefert bei workflow-basierten Pages
+> `status: null` und keinen Build — daraus wurde fälschlich „keine Pages". Richtig ist:
+> **alle 21 Module haben einen `gh-pages`-Branch.** Die Aussagen zu meta, mtb, seltene,
+> soziodemographie und base waren falsch und sind unten ersetzt.
 
-`base` ist der Ausreißer: letzter Pages-Build 22. Juli, Branch-Head 1. September. Wer den
-Guide dort ansieht, bekommt einen sechs Wochen alten Stand — bei dem Modul, auf dem alle
-anderen aufsetzen.
+Der Guide liegt fast nirgends an der Wurzel, sondern unter `/branches/<branch>/`.
 
-Dass **meta gar keine Pages** hat, erklärt rückblickend, warum der QA-Report dort so schwer
-zu finden war.
+**Nur 5 von 21 liefern eine Wurzelseite** (HTTP 200): base, molgen, patho, pros,
+soziodemographie. Die übrigen 16 antworten dort mit 404 — wer die Repo-Adresse aufruft,
+landet im Nichts und muss den Branch-Pfad kennen.
+
+### Neuester Build je Modul
+
+| Modul | Branch | Version | Datum | Errors | Stand |
+|---|---|---|---|---|---|
+| laborbefund | master | 2027.0.0-ballot.rc3 | 08.09. | 37 | aktuell |
+| medikation | master | 2027.0.0-ballot.rc2 | 08.09. | 56 | aktuell |
+| pros | dev | 2027.0.0-ballot.rc3 | 08.09. | 419 | aktuell |
+| seltene | dev | 2027.0.0-ballot.rc1 | 08.09. | 355 | aktuell |
+| onkologie | dev | 2027.0.0-ballot.rc1 | 07.09. | 4714 | 1 Tag |
+| base | develop | 2027.0.0-ballot.rc1 | 04.09. | 22 | aktuell |
+| molgen | dev | 2027.0.0-ballot.rc1 | 03.09. | 53 | aktuell |
+| mikrobiologie | v2027.0.0-ballot.rc1 | 2027.0.0-alpha.6 | 03.09. | 0 | aktuell |
+| soziodemographie | 1.0.0 | 2027.0.0-ballot.rc1 | 03.09. | 1 | aktuell |
+| meta | 2027.0.0-ballot.rc3 | 2027.0.0-ballot.rc3 | 01.09. | 386 | aktuell |
+| dokument | tech-test-2026-07-23 | 2026.0.1 | 23.07. | 355 | **36 Tage** |
+| studie | tech-test-2026-07-23 | 2026.0.1 | 23.07. | 783 | **39 Tage** |
+| lungenfunktion | tech-test-2026-07-23 | 2026.0.0 | 23.07. | — | **40 Tage** |
+| symptom | tech-test-2026-07-23 | 2026.0.0-rc.1 | 23.07. | 14 | (Repo ruht) |
+| **ohne jeden Build** | bildgebung, biobank, consent, icu, kardiologie, mtb, patho | | | | |
+
+**base ist aktuell** — der Build vom 4. September trägt 2027.0.0-ballot.rc1 mit 22 Errors.
+Die zuvor gemeldeten „41 Tage Rückstand" waren ein Artefakt der Pages-API.
+
+Sieben Module haben **überhaupt keinen** publizierten Build auf gh-pages. Für dokument
+liegt der aktuelle Build stattdessen auf build.fhir.org — gh-pages und der CI-Server werden
+uneinheitlich genutzt, keiner deckt alle Module ab.
+
+### Die Migrations-Branches sind leer
+
+Elf Module haben ein Verzeichnis `branches/migration/` unter gh-pages — **keines davon
+enthält ein `qa.json`**: bildgebung, biobank, consent, dokument, icu, medikation, meta,
+mikrobiologie, pros, seltene, studie, symptom. Dasselbe gilt für die Verzeichnisse
+`fix/`, `feat/`, `chore/`, `build/`, `release/`, `dependabot/` und `ci/`.
+
+Es sind also Platzhalter aus abgebrochenen oder nie durchgelaufenen Builds. Wer dort nach
+dem Migrationsstand sucht, findet nichts — die eigentliche Arbeit steckt auf `dev`,
+`master` oder einem versionierten Branch.
+
+Der einzige Branch, der überall auftaucht und trägt, ist `tech-test-2026-07-23`: elf Module
+haben ihn, und bei vieren ist er bis heute der **neueste** Build.
 
 ## 3. Wer ist mit den Dependencies auf 2027?
 
@@ -167,5 +207,7 @@ weil die verteilten Kopien keine Version mitführen.
 3. **CRMI ist eine Insel.** Vier Module, sehr unterschiedliche Tiefe, `knowledgeRepresentationLevel`
    nirgends. Wenn CRMI Konvention werden soll, braucht es eine Festlegung, welche Auszeichnungen
    verbindlich sind.
-4. **Template und Werkzeuge driften.** Sechs Template-Zustände, drei davon ohne feste Version;
+4. **Die Guides sind schlecht erreichbar.** Nur fünf Module liefern eine Wurzelseite, sieben
+   haben gar keinen Build auf gh-pages, und die Migrations-Verzeichnisse sind durchweg leer.
+5. **Template und Werkzeuge driften.** Sechs Template-Zustände, drei davon ohne feste Version;
    Skills in einem Drittel der Repos, ohne Versionierung und ohne gemeinsamen Kern.
