@@ -42,11 +42,23 @@ PREFIX = "de.medizininformatikinitiative.kerndatensatz."
 
 
 def version_key(v):
+    """Versionsschluessel.
+
+    Achtung beim MII-Schema: '2027.0.0-ballot' ist die FINALE Ballot-Fassung und
+    kommt NACH '2027.0.0-ballot.rcN'. Ein reiner String-Vergleich der Prerelease-
+    Kennung dreht das um ('ballot' < 'ballot.rc3') -- deshalb wird ein Prerelease
+    ohne Punkt-Suffix hoeher gewichtet als eines mit.
+    """
     core = v.split("-")[0]
-    parts = [int(p) if p.isdigit() else 0 for p in core.split(".")]
-    while len(parts) < 3:
-        parts.append(0)
-    return (parts, 1 if "-" not in v else 0, v)
+    p = [int(x) if x.isdigit() else 0 for x in core.split(".")]
+    while len(p) < 3:
+        p.append(0)
+    pre = v.split("-", 1)[1] if "-" in v else ""
+    if not pre:
+        return (p, 2, "")
+    base = pre.split(".")[0]
+    stufe = 1 if "." not in pre else 0
+    return (p, stufe, (base, pre))
 
 
 def http(url, timeout=180):

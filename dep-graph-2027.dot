@@ -24,26 +24,26 @@ digraph MII_KDS_2027_Ballot {
     ranksep=0.7;
 
     labelloc="t";
-    label=<<B>MII KDS 2027 Ballot — Abhängigkeitsgraph</B><BR/><FONT POINT-SIZE="10">Pfeil = „hängt ab von" · Nur MII-interne Deps · Stand 2026-09-08<BR/><FONT COLOR="#c0392b">Rot gestrichelt = Modul deklariert noch die 2026er Version des Ziels</FONT></FONT>>;
+    label=<<B>MII KDS 2027 Ballot — Abhängigkeitsgraph</B><BR/><FONT POINT-SIZE="10">Pfeil = „hängt ab von" · Nur MII-interne Deps · Stand 2026-09-10<BR/><FONT COLOR="#c0392b">Rot gestrichelt = Modul deklariert noch die 2026er Version des Ziels</FONT></FONT>>;
     fontsize=15;
 
     // Kantenstil für den 2026/2027-Bruch
     // (als Makro-Ersatz: jede betroffene Kante trägt die Attribute explizit)
 
     // ════════════ Layer 0: Foundation ════════════
-    meta [label=<Meta 2027.0.0-ballot.rc3<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
+    meta [label=<Meta 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
 
     // ════════════ Layer 1: Basismodule ════════════
     base       [label=<Base 2027.0.0-ballot.rc1<BR/><FONT POINT-SIZE="8">(Person, Fall, Diagnose, Prozedur) · Ballot</FONT>>, fillcolor="#fff3cd"];
-    labor      [label=<Labor 2027.0.0-ballot.rc3<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
-    medikation [label="Medikation\n2026.0.1",  fillcolor="#d4edda"];
+    labor      [label=<Labor 2027.0.0-ballot.rc4<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
+    medikation [label=<Medikation 2027.0.0-ballot.rc5<BR/><FONT POINT-SIZE="8">(Ballot) · vollständig kohärent</FONT>>, fillcolor="#fff3cd"];
     biobank    [label=<Biobank 2027.0.0-ballot.rc2<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
     studie     [label=<Studie 2027.0.0-ballot.rc1<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
-    pros       [label=<PROs 2027.0.0-ballot.rc3<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
+    pros       [label=<PROs 2027.0.0-ballot.rc4<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
 
     meta -> base;
     meta -> labor;
-    meta -> medikation  [color="#c0392b", style=dashed];
+    meta -> medikation;
     meta -> biobank;
     meta -> studie      [color="#c0392b", style=dashed];
     meta -> pros        [color="#c0392b", style=dashed];
@@ -78,10 +78,10 @@ digraph MII_KDS_2027_Ballot {
     molgen     -> onko;
     studie     -> onko [color="#c0392b", style=dashed];
 
-    patho      [label=<Pathologie 2027.0.0-ballot.rc1<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
-    meta    -> patho [color="#c0392b", style=dashed];
-    base    -> patho [color="#c0392b", style=dashed];
-    biobank -> patho [color="#c0392b", style=dashed];
+    patho      [label=<Pathologie 2027.0.0-ballot.rc2<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
+    meta    -> patho;
+    base    -> patho;
+    biobank -> patho;
 
     // ════════════ Layer 4 ════════════
     seltene    [label="Seltene Erkr.\n2026.0.1", fillcolor="#d4edda"];
@@ -112,7 +112,7 @@ digraph MII_KDS_2027_Ballot {
     base -> kardiologie [color="#c0392b", style=dashed];
     icu  -> kardiologie [color="#c0392b", style=dashed];
 
-    lungenfunktion [label=<Lungenfunktion 2027.0.0-ballot.rc1<BR/><FONT POINT-SIZE="8">(Ballot) · <FONT COLOR="#c0392b">Dep-Tippfehler de.basiprofil.r4</FONT></FONT>>, fillcolor="#fff3cd"];
+    lungenfunktion [label=<Lungenfunktion 2027.0.0-ballot.rc2<BR/><FONT POINT-SIZE="8">(Ballot) · <FONT COLOR="#c0392b">Dep-Tippfehler de.basiprofil.r4</FONT></FONT>>, fillcolor="#fff3cd"];
     meta       -> lungenfunktion [color="#c0392b", style=dashed];
     base       -> lungenfunktion [color="#c0392b", style=dashed];
     medikation -> lungenfunktion;

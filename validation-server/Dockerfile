@@ -18,23 +18,23 @@ RUN mkdir -p /packages /work && cd /work && \
       hl7.fhir.r4.core/4.0.1 \
       de.basisprofil.r4/1.6.0 \
       de.medizininformatikinitiative.kerndatensatz.base/2027.0.0-ballot.rc1 \
-      de.medizininformatikinitiative.kerndatensatz.meta/2027.0.0-ballot.rc3 \
-      de.medizininformatikinitiative.kerndatensatz.medikation/2026.0.1 \
-      de.medizininformatikinitiative.kerndatensatz.laborbefund/2027.0.0-ballot.rc3 \
+      de.medizininformatikinitiative.kerndatensatz.meta/2027.0.0-ballot \
+      de.medizininformatikinitiative.kerndatensatz.medikation/2027.0.0-ballot.rc5 \
+      de.medizininformatikinitiative.kerndatensatz.laborbefund/2027.0.0-ballot.rc4 \
       de.medizininformatikinitiative.kerndatensatz.biobank/2027.0.0-ballot.rc2 \
       de.medizininformatikinitiative.kerndatensatz.icu/2027.0.0 \
       de.medizininformatikinitiative.kerndatensatz.mikrobiologie/2027.0.0-alpha.5 \
       de.medizininformatikinitiative.kerndatensatz.molgen/2027.0.0-ballot.rc2 \
-      de.medizininformatikinitiative.kerndatensatz.patho/2027.0.0-ballot.rc1 \
+      de.medizininformatikinitiative.kerndatensatz.patho/2027.0.0-ballot.rc2 \
       de.medizininformatikinitiative.kerndatensatz.studie/2027.0.0-ballot.rc1 \
       de.medizininformatikinitiative.kerndatensatz.bildgebung/2027.0.0-ballot.rc2 \
       de.medizininformatikinitiative.kerndatensatz.dokument/2027.0.0-ballot.rc1 \
       de.medizininformatikinitiative.kerndatensatz.onkologie/2026.0.3 \
       de.medizininformatikinitiative.kerndatensatz.seltene/2026.0.1 \
       de.medizininformatikinitiative.kerndatensatz.mtb/2026.0.1 \
-      de.medizininformatikinitiative.kerndatensatz.pros/2027.0.0-ballot.rc3 \
+      de.medizininformatikinitiative.kerndatensatz.pros/2027.0.0-ballot.rc4 \
       de.medizininformatikinitiative.kerndatensatz.kardiologie/2027.0.0-ballot.rc1 \
-      de.medizininformatikinitiative.kerndatensatz.lungenfunktion/2027.0.0-ballot.rc1 \
+      de.medizininformatikinitiative.kerndatensatz.lungenfunktion/2027.0.0-ballot.rc2 \
       de.medizininformatikinitiative.kerndatensatz.consent/2027.0.0-ballot.rc1 \
       hl7.terminology.r4/7.3.0 \
       hl7.fhir.uv.extensions.r4/5.3.0 \
@@ -76,7 +76,7 @@ RUN mkdir -p /packages /work && cd /work && \
 FROM hapiproject/hapi:v7.6.0
 
 LABEL org.opencontainers.image.title="MII KDS Validation Server (HAPI)"
-LABEL org.opencontainers.image.description="HAPI FHIR Server mit allen MII Kerndatensatz Paketen (BOM 2027.0.0-ballot.2)"
+LABEL org.opencontainers.image.description="HAPI FHIR Server mit allen MII Kerndatensatz Paketen (BOM 2027.0.0-ballot.3)"
 LABEL org.opencontainers.image.source="https://github.com/medizininformatik-initiative/kerndatensatz-complete"
 
 # hapiproject/hapi laeuft als User 65532 (nonroot).
