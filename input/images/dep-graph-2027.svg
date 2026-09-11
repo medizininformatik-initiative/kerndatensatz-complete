@@ -10,7 +10,7 @@
 <title>MII_KDS_2027_Ballot</title>
 <polygon fill="white" stroke="none" points="-4,4 -4,-481.65 2887.51,-481.65 2887.51,4 -4,4"/>
 <text xml:space="preserve" text-anchor="start" x="1287.63" y="-460.4" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="15.00">MII KDS 2027 Ballot — Abhängigkeitsgraph</text>
-<text xml:space="preserve" text-anchor="start" x="1301.51" y="-450.15" font-family="Helvetica,sans-Serif" font-size="10.00">Pfeil = „hängt ab von&quot; · Nur MII&#45;interne Deps · Stand 2026&#45;09&#45;10</text>
+<text xml:space="preserve" text-anchor="start" x="1301.51" y="-450.15" font-family="Helvetica,sans-Serif" font-size="10.00">Pfeil = „hängt ab von&quot; · Nur MII&#45;interne Deps · Stand 2026&#45;09&#45;11</text>
 <text xml:space="preserve" text-anchor="start" x="1294.01" y="-440.15" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#c0392b">Rot gestrichelt = Modul deklariert noch die 2026er Version des Ziels</text>
 <g id="clust1" class="cluster">
 <title>cluster_nonfinal</title>
@@ -28,7 +28,7 @@
 <g id="node2" class="node">
 <title>base</title>
 <path fill="#fff3cd" stroke="black" d="M1380.89,-305.12C1380.89,-305.12 1218.14,-305.12 1218.14,-305.12 1212.14,-305.12 1206.14,-299.12 1206.14,-293.12 1206.14,-293.12 1206.14,-280.84 1206.14,-280.84 1206.14,-274.84 1212.14,-268.84 1218.14,-268.84 1218.14,-268.84 1380.89,-268.84 1380.89,-268.84 1386.89,-268.84 1392.89,-274.84 1392.89,-280.84 1392.89,-280.84 1392.89,-293.12 1392.89,-293.12 1392.89,-299.12 1386.89,-305.12 1380.89,-305.12"/>
-<text xml:space="preserve" text-anchor="start" x="1241.01" y="-287.03" font-family="Helvetica,sans-Serif" font-size="11.00">Base 2027.0.0&#45;ballot.rc1</text>
+<text xml:space="preserve" text-anchor="start" x="1250.01" y="-287.03" font-family="Helvetica,sans-Serif" font-size="11.00">Base 2027.0.0&#45;ballot</text>
 <text xml:space="preserve" text-anchor="start" x="1224.14" y="-278.88" font-family="Helvetica,sans-Serif" font-size="8.00">(Person, Fall, Diagnose, Prozedur) · Ballot</text>
 </g>
 <!-- meta&#45;&gt;base -->
@@ -66,14 +66,14 @@
 <!-- biobank -->
 <g id="node5" class="node">
 <title>biobank</title>
-<path fill="#fff3cd" stroke="black" d="M1928.14,-305.12C1928.14,-305.12 1784.89,-305.12 1784.89,-305.12 1778.89,-305.12 1772.89,-299.12 1772.89,-293.12 1772.89,-293.12 1772.89,-280.84 1772.89,-280.84 1772.89,-274.84 1778.89,-268.84 1784.89,-268.84 1784.89,-268.84 1928.14,-268.84 1928.14,-268.84 1934.14,-268.84 1940.14,-274.84 1940.14,-280.84 1940.14,-280.84 1940.14,-293.12 1940.14,-293.12 1940.14,-299.12 1934.14,-305.12 1928.14,-305.12"/>
-<text xml:space="preserve" text-anchor="start" x="1790.89" y="-287.03" font-family="Helvetica,sans-Serif" font-size="11.00">Biobank 2027.0.0&#45;ballot.rc2</text>
+<path fill="#fff3cd" stroke="black" d="M1919.14,-305.12C1919.14,-305.12 1793.89,-305.12 1793.89,-305.12 1787.89,-305.12 1781.89,-299.12 1781.89,-293.12 1781.89,-293.12 1781.89,-280.84 1781.89,-280.84 1781.89,-274.84 1787.89,-268.84 1793.89,-268.84 1793.89,-268.84 1919.14,-268.84 1919.14,-268.84 1925.14,-268.84 1931.14,-274.84 1931.14,-280.84 1931.14,-280.84 1931.14,-293.12 1931.14,-293.12 1931.14,-299.12 1925.14,-305.12 1919.14,-305.12"/>
+<text xml:space="preserve" text-anchor="start" x="1799.89" y="-287.03" font-family="Helvetica,sans-Serif" font-size="11.00">Biobank 2027.0.0&#45;ballot</text>
 <text xml:space="preserve" text-anchor="start" x="1843.76" y="-278.88" font-family="Helvetica,sans-Serif" font-size="8.00">(Ballot)</text>
 </g>
 <!-- meta&#45;&gt;biobank -->
 <g id="edge4" class="edge">
 <title>meta&#45;&gt;biobank</title>
-<path fill="none" stroke="#7f7f7f" d="M1347.8,-355.74C1356.88,-352.45 1366.39,-349.39 1375.51,-347.12 1512.06,-313.09 1675.49,-298.28 1772.4,-292.11"/>
+<path fill="none" stroke="#7f7f7f" d="M1347.8,-355.74C1356.88,-352.45 1366.39,-349.39 1375.51,-347.12 1516.55,-311.97 1686.27,-297.33 1781.74,-291.52"/>
 <polygon fill="#7f7f7f" stroke="#7f7f7f" points="1347.07,-353.39 1341.36,-358.13 1348.78,-357.98 1347.07,-353.39"/>
 </g>
 <!-- studie -->
@@ -164,8 +164,8 @@
 <!-- meta&#45;&gt;patho -->
 <g id="edge23" class="edge">
 <title>meta&#45;&gt;patho</title>
-<path fill="none" stroke="#7f7f7f" d="M1346.47,-355.77C1355.93,-352.35 1365.92,-349.23 1375.51,-347.12 1510.59,-317.36 1883.92,-385.46 1996.51,-305.12 2055.47,-263.06 2071.74,-169.41 2076.05,-130.45"/>
-<polygon fill="#7f7f7f" stroke="#7f7f7f" points="1345.78,-353.41 1340.08,-358.16 1347.5,-358 1345.78,-353.41"/>
+<path fill="none" stroke="#7f7f7f" d="M1346.47,-355.77C1355.93,-352.36 1365.92,-349.24 1375.51,-347.12 1508.63,-317.73 1875.06,-382.17 1987.51,-305.12 2048.31,-263.47 2069.04,-169.59 2075.21,-130.51"/>
+<polygon fill="#7f7f7f" stroke="#7f7f7f" points="1345.78,-353.42 1340.08,-358.17 1347.5,-358 1345.78,-353.42"/>
 </g>
 <!-- seltene -->
 <g id="node15" class="node">
@@ -190,8 +190,8 @@
 <!-- meta&#45;&gt;mtb -->
 <g id="edge32" class="edge">
 <title>meta&#45;&gt;mtb</title>
-<path fill="none" stroke="#c0392b" stroke-dasharray="5,2" d="M1346.46,-355.73C1355.92,-352.32 1365.91,-349.21 1375.51,-347.12 1520.19,-315.59 1908.33,-371.85 2040.51,-305.12 2143.02,-253.37 2263.74,-175.34 2185.51,-91.28 2121.34,-22.32 1430.64,-20.7 1256.96,-21.39"/>
-<polygon fill="#c0392b" stroke="#c0392b" points="1345.77,-353.37 1340.07,-358.13 1347.49,-357.96 1345.77,-353.37"/>
+<path fill="none" stroke="#c0392b" stroke-dasharray="5,2" d="M1346.46,-355.74C1355.92,-352.32 1365.92,-349.22 1375.51,-347.12 1518.44,-315.91 1901.08,-369.36 2032.51,-305.12 2137.51,-253.8 2265.13,-176.83 2185.51,-91.28 2121.34,-22.32 1430.64,-20.7 1256.96,-21.39"/>
+<polygon fill="#c0392b" stroke="#c0392b" points="1345.77,-353.38 1340.08,-358.13 1347.49,-357.97 1345.77,-353.38"/>
 </g>
 <!-- kardiologie -->
 <g id="node18" class="node">
@@ -203,8 +203,8 @@
 <!-- meta&#45;&gt;kardiologie -->
 <g id="edge40" class="edge">
 <title>meta&#45;&gt;kardiologie</title>
-<path fill="none" stroke="#c0392b" stroke-dasharray="5,2" d="M1346.48,-355.8C1355.94,-352.38 1365.92,-349.25 1375.51,-347.12 1438.91,-333.01 1914.27,-352.66 1958.51,-305.12 2055.01,-201.43 1801.74,-146.7 1657.93,-124.71"/>
-<polygon fill="#c0392b" stroke="#c0392b" points="1345.78,-353.44 1340.09,-358.19 1347.5,-358.03 1345.78,-353.44"/>
+<path fill="none" stroke="#c0392b" stroke-dasharray="5,2" d="M1346.48,-355.81C1355.94,-352.39 1365.92,-349.26 1375.51,-347.12 1437.93,-333.19 1905.98,-351.96 1949.51,-305.12 2043.72,-203.77 1798.85,-148.23 1657.89,-125.44"/>
+<polygon fill="#c0392b" stroke="#c0392b" points="1345.78,-353.45 1340.09,-358.2 1347.51,-358.04 1345.78,-353.45"/>
 </g>
 <!-- lungenfunktion -->
 <g id="node19" class="node">
@@ -333,8 +333,8 @@
 <!-- biobank&#45;&gt;molgen -->
 <g id="edge10" class="edge">
 <title>biobank&#45;&gt;molgen</title>
-<path fill="none" stroke="#7f7f7f" d="M1764.34,-276.93C1596.35,-260.42 1242.87,-225.7 1081.74,-209.87"/>
-<polygon fill="#7f7f7f" stroke="#7f7f7f" points="1763.97,-279.35 1771.18,-277.6 1764.45,-274.47 1763.97,-279.35"/>
+<path fill="none" stroke="#7f7f7f" d="M1773.36,-277.81C1609.31,-261.7 1245.68,-225.98 1081.65,-209.87"/>
+<polygon fill="#7f7f7f" stroke="#7f7f7f" points="1772.79,-280.22 1779.99,-278.46 1773.27,-275.34 1772.79,-280.22"/>
 </g>
 <!-- biobank&#45;&gt;onko -->
 <g id="edge19" class="edge">

@@ -7,11 +7,11 @@ BLAZE_URL="${1:-http://localhost:8082/fhir}"
 echo "Loading MII KDS packages into Blaze at $BLAZE_URL"
 
 PACKAGES=(
-  "de.medizininformatikinitiative.kerndatensatz.base/2027.0.0-ballot.rc1"
+  "de.medizininformatikinitiative.kerndatensatz.base/2027.0.0-ballot"
   "de.medizininformatikinitiative.kerndatensatz.meta/2027.0.0-ballot"
   "de.medizininformatikinitiative.kerndatensatz.medikation/2027.0.0-ballot.rc5"
   "de.medizininformatikinitiative.kerndatensatz.laborbefund/2027.0.0-ballot.rc4"
-  "de.medizininformatikinitiative.kerndatensatz.biobank/2027.0.0-ballot.rc2"
+  "de.medizininformatikinitiative.kerndatensatz.biobank/2027.0.0-ballot"
   "de.medizininformatikinitiative.kerndatensatz.icu/2027.0.0"
   "de.medizininformatikinitiative.kerndatensatz.mikrobiologie/2027.0.0-alpha.5"
   "de.medizininformatikinitiative.kerndatensatz.molgen/2027.0.0-ballot.rc2"
@@ -36,7 +36,7 @@ PACKAGES=(
   "hl7.fhir.eu.base/2.0.0"
   "hl7.fhir.eu.laboratory/2.0.0"
   "hl7.fhir.eu.extensions.r4/1.3.0"
-  "eu.miabis.r4/0.2.0"
+  "eu.miabis.r4/1.3.0"
   "de.gematik.isik/6.0.0"
 )
 

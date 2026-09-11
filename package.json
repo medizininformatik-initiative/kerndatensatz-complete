@@ -1,16 +1,16 @@
 {
   "name": "de.medizininformatikinitiative.kerndatensatz.complete",
-  "version": "2027.0.0-ballot.3",
-  "description": "MII Kerndatensatz Complete v2027.0.0-ballot.3 - Bill of Materials (BOM) aller Module des MII Kerndatensatzes samt der verbindlich gepinnten externen Abhaengigkeiten (Terminology, Extensions, ISiK, EU-Profile, MIABIS, Clinical Genomics). Ballot-Stand: Module mit einem 2027.0.0-Release sind auf dieses gepinnt, alle uebrigen auf ihre hoechste stabile 2026er Version.",
+  "version": "2027.0.0-ballot.4",
+  "description": "MII Kerndatensatz Complete v2027.0.0-ballot.4 - Bill of Materials (BOM) aller Module des MII Kerndatensatzes samt der verbindlich gepinnten externen Abhaengigkeiten (Terminology, Extensions, ISiK, EU-Profile, MIABIS, Clinical Genomics). Ballot-Stand: Module mit einem 2027.0.0-Release sind auf dieses gepinnt, alle uebrigen auf ihre hoechste stabile 2026er Version.",
   "license": "CC-BY-4.0",
   "dependencies": {
     "hl7.fhir.r4.core": "4.0.1",
     "de.basisprofil.r4": "1.6.0",
-    "de.medizininformatikinitiative.kerndatensatz.base": "2027.0.0-ballot.rc1",
+    "de.medizininformatikinitiative.kerndatensatz.base": "2027.0.0-ballot",
     "de.medizininformatikinitiative.kerndatensatz.meta": "2027.0.0-ballot",
     "de.medizininformatikinitiative.kerndatensatz.medikation": "2027.0.0-ballot.rc5",
     "de.medizininformatikinitiative.kerndatensatz.laborbefund": "2027.0.0-ballot.rc4",
-    "de.medizininformatikinitiative.kerndatensatz.biobank": "2027.0.0-ballot.rc2",
+    "de.medizininformatikinitiative.kerndatensatz.biobank": "2027.0.0-ballot",
     "de.medizininformatikinitiative.kerndatensatz.icu": "2027.0.0",
     "de.medizininformatikinitiative.kerndatensatz.mikrobiologie": "2027.0.0-alpha.5",
     "de.medizininformatikinitiative.kerndatensatz.molgen": "2027.0.0-ballot.rc2",
@@ -31,7 +31,7 @@
     "hl7.fhir.eu.base": "2.0.0",
     "hl7.fhir.eu.laboratory": "2.0.0",
     "hl7.fhir.eu.extensions.r4": "1.3.0",
-    "eu.miabis.r4": "0.2.0",
+    "eu.miabis.r4": "1.3.0",
     "de.gematik.isik": "6.0.0"
   }
 }

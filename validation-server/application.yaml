@@ -15,8 +15,8 @@ hapi:
     implementationguides:
       base:
         name: de.medizininformatikinitiative.kerndatensatz.base
-        version: 2027.0.0-ballot.rc1
-        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.base-2027.0.0-ballot.rc1.tgz
+        version: 2027.0.0-ballot
+        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.base-2027.0.0-ballot.tgz
       meta:
         name: de.medizininformatikinitiative.kerndatensatz.meta
         version: 2027.0.0-ballot
@@ -31,8 +31,8 @@ hapi:
         packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.laborbefund-2027.0.0-ballot.rc4.tgz
       biobank:
         name: de.medizininformatikinitiative.kerndatensatz.biobank
-        version: 2027.0.0-ballot.rc2
-        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.biobank-2027.0.0-ballot.rc2.tgz
+        version: 2027.0.0-ballot
+        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.biobank-2027.0.0-ballot.tgz
       icu:
         name: de.medizininformatikinitiative.kerndatensatz.icu
         version: 2027.0.0
@@ -120,8 +120,8 @@ hapi:
         packageUrl: file:///app/packages/hl7.fhir.eu.extensions.r4-1.3.0.tgz
       miabis:
         name: eu.miabis.r4
-        version: 0.2.0
-        packageUrl: file:///app/packages/eu.miabis.r4-0.2.0.tgz
+        version: 1.3.0
+        packageUrl: file:///app/packages/eu.miabis.r4-1.3.0.tgz
       isik:
         name: de.gematik.isik
         version: 6.0.0
