@@ -39,7 +39,7 @@ digraph MII_KDS_2027_Ballot {
     medikation [label=<Medikation 2027.0.0-ballot.rc5<BR/><FONT POINT-SIZE="8">(Ballot) · vollständig kohärent</FONT>>, fillcolor="#fff3cd"];
     biobank    [label=<Biobank 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
     studie     [label=<Studie 2027.0.0-ballot.rc1<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
-    pros       [label=<PROs 2027.0.0-ballot.rc4<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
+    pros       [label=<PROs 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
 
     meta -> base;
     meta -> labor;
@@ -112,6 +112,9 @@ digraph MII_KDS_2027_Ballot {
     base -> kardiologie [color="#c0392b", style=dashed];
     icu  -> kardiologie [color="#c0392b", style=dashed];
 
+    symptom    [label=<Symptome 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(Ballot) · vollständig kohärent</FONT>>, fillcolor="#fff3cd"];
+    meta -> symptom;
+
     lungenfunktion [label=<Lungenfunktion 2027.0.0-ballot.rc2<BR/><FONT POINT-SIZE="8">(Ballot) · <FONT COLOR="#c0392b">Dep-Tippfehler de.basiprofil.r4</FONT></FONT>>, fillcolor="#fff3cd"];
     meta       -> lungenfunktion [color="#c0392b", style=dashed];
     base       -> lungenfunktion [color="#c0392b", style=dashed];
@@ -128,7 +131,7 @@ digraph MII_KDS_2027_Ballot {
 
     // ════════════ Ranking ════════════
     {rank=min;  meta}
-    {rank=same; base; labor; medikation; biobank; studie; pros; consent}
+    {rank=same; base; labor; medikation; biobank; studie; pros; consent; symptom}
     {rank=same; icu; molgen; bildgebung; dokument; mikrobio; lungenfunktion}
     {rank=same; onko; patho; kardiologie}
     {rank=same; seltene}
