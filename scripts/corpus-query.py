@@ -23,12 +23,21 @@ PREFIX = "de.medizininformatikinitiative.kerndatensatz."
 
 
 def version_key(v):
-    """Versionsschluessel.
+    """Versionsschluessel fuer das MII-Schema.
 
-    Achtung beim MII-Schema: '2027.0.0-ballot' ist die FINALE Ballot-Fassung und
-    kommt NACH '2027.0.0-ballot.rcN'. Ein reiner String-Vergleich der Prerelease-
-    Kennung dreht das um ('ballot' < 'ballot.rc3') -- deshalb wird ein Prerelease
-    ohne Punkt-Suffix hoeher gewichtet als eines mit.
+    Innerhalb derselben Basisversion gilt:
+        2027.0.0-alpha.5
+      < 2027.0.0-ballot.rc1  <  2027.0.0-ballot.rc3
+      < 2027.0.0-ballot        (die Ballot-Fassung)
+      < 2027.0.0-ballot.1      (Patches danach)
+      < 2027.0.0               (final)
+
+    Ein String-Vergleich der Prerelease-Kennung bekommt das nicht hin
+    ('ballot' < 'ballot.1' < 'ballot.rc3' waere alphabetisch). Deshalb wird die
+    Kennung zerlegt in Basis ('alpha', 'ballot') und Suffix. Verglichen wird
+    zuerst die Basis, dann die Suffix-Stufe: rc* unten, kein Suffix in der
+    Mitte, Zahl darueber. Fehlt die Kennung ganz, ist es die finale Version --
+    sie gewinnt ueber alles.
     """
     core = v.split("-")[0]
     p = [int(x) if x.isdigit() else 0 for x in core.split(".")]
@@ -36,10 +45,17 @@ def version_key(v):
         p.append(0)
     pre = v.split("-", 1)[1] if "-" in v else ""
     if not pre:
-        return (p, 2, "")
-    base = pre.split(".")[0]
-    stufe = 1 if "." not in pre else 0
-    return (p, stufe, (base, pre))
+        return (p, "\uffff", 0, 0)
+    basis, _, suffix = pre.partition(".")
+    if not suffix:
+        stufe, num = 1, 0
+    elif suffix.startswith("rc") and suffix[2:].isdigit():
+        stufe, num = 0, int(suffix[2:])
+    elif suffix.isdigit():
+        stufe, num = 2, int(suffix)
+    else:
+        stufe, num = 0, 0
+    return (p, basis, stufe, num)
 
 
 def entries(module=None, version=None):

@@ -39,7 +39,7 @@ digraph MII_KDS_2027_Ballot {
     medikation [label=<Medikation 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(Ballot) · vollständig kohärent</FONT>>, fillcolor="#fff3cd"];
     biobank    [label=<Biobank 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
     studie     [label=<Studie 2027.0.0-ballot.rc1<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
-    pros       [label=<PROs 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
+    pros       [label=<PROs 2027.0.0-ballot.1<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
 
     meta -> base;
     meta -> labor;
@@ -52,7 +52,7 @@ digraph MII_KDS_2027_Ballot {
     icu        [label=<ICU 2027.0.0<BR/><FONT POINT-SIZE="8">(final)</FONT>>, fillcolor="#d4edda"];
     base -> icu [color="#c0392b", style=dashed];
 
-    molgen     [label=<MolGen 2027.0.0-ballot.rc3<BR/><FONT POINT-SIZE="8">(Ballot) · vollständig kohärent</FONT>>, fillcolor="#fff3cd"];
+    molgen     [label=<MolGen 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(Ballot) · vollständig kohärent</FONT>>, fillcolor="#fff3cd"];
     meta    -> molgen;
     base    -> molgen;
     biobank -> molgen;
