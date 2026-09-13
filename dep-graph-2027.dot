@@ -24,7 +24,7 @@ digraph MII_KDS_2027_Ballot {
     ranksep=0.7;
 
     labelloc="t";
-    label=<<B>MII KDS 2027 Ballot — Abhängigkeitsgraph</B><BR/><FONT POINT-SIZE="10">Pfeil = „hängt ab von" · Nur MII-interne Deps · Stand 2026-09-11<BR/><FONT COLOR="#c0392b">Rot gestrichelt = Modul deklariert noch die 2026er Version des Ziels</FONT></FONT>>;
+    label=<<B>MII KDS 2027 Ballot — Abhängigkeitsgraph</B><BR/><FONT POINT-SIZE="10">Pfeil = „hängt ab von" · Nur MII-interne Deps · Stand 2026-09-13<BR/><FONT COLOR="#c0392b">Rot gestrichelt = Modul deklariert noch die 2026er Version des Ziels</FONT></FONT>>;
     fontsize=15;
 
     // Kantenstil für den 2026/2027-Bruch
@@ -36,7 +36,7 @@ digraph MII_KDS_2027_Ballot {
     // ════════════ Layer 1: Basismodule ════════════
     base       [label=<Base 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(Person, Fall, Diagnose, Prozedur) · Ballot</FONT>>, fillcolor="#fff3cd"];
     labor      [label=<Labor 2027.0.0-ballot.rc4<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
-    medikation [label=<Medikation 2027.0.0-ballot.rc5<BR/><FONT POINT-SIZE="8">(Ballot) · vollständig kohärent</FONT>>, fillcolor="#fff3cd"];
+    medikation [label=<Medikation 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(Ballot) · vollständig kohärent</FONT>>, fillcolor="#fff3cd"];
     biobank    [label=<Biobank 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
     studie     [label=<Studie 2027.0.0-ballot.rc1<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
     pros       [label=<PROs 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
@@ -52,7 +52,7 @@ digraph MII_KDS_2027_Ballot {
     icu        [label=<ICU 2027.0.0<BR/><FONT POINT-SIZE="8">(final)</FONT>>, fillcolor="#d4edda"];
     base -> icu [color="#c0392b", style=dashed];
 
-    molgen     [label=<MolGen 2027.0.0-ballot.rc2<BR/><FONT POINT-SIZE="8">(Ballot) · vollständig kohärent</FONT>>, fillcolor="#fff3cd"];
+    molgen     [label=<MolGen 2027.0.0-ballot.rc3<BR/><FONT POINT-SIZE="8">(Ballot) · vollständig kohärent</FONT>>, fillcolor="#fff3cd"];
     meta    -> molgen;
     base    -> molgen;
     biobank -> molgen;
@@ -62,9 +62,9 @@ digraph MII_KDS_2027_Ballot {
     base       -> bildgebung [color="#c0392b", style=dashed];
     medikation -> bildgebung;
 
-    dokument   [label=<Dokument 2027.0.0-ballot.rc1<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
-    meta -> dokument [color="#c0392b", style=dashed];
-    base -> dokument [color="#c0392b", style=dashed];
+    dokument   [label=<Dokument 2027.0.0-ballot.rc2<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
+    meta -> dokument;
+    base -> dokument;
 
     mikrobio   [label=<Mikrobiologie 2027.0.0-alpha.5<BR/><FONT POINT-SIZE="8">(Alpha)</FONT>>, fillcolor="#fff3cd"];
     labor -> mikrobio [color="#c0392b", style=dashed];

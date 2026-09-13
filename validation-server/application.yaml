@@ -23,8 +23,8 @@ hapi:
         packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.meta-2027.0.0-ballot.tgz
       medikation:
         name: de.medizininformatikinitiative.kerndatensatz.medikation
-        version: 2027.0.0-ballot.rc5
-        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.medikation-2027.0.0-ballot.rc5.tgz
+        version: 2027.0.0-ballot
+        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.medikation-2027.0.0-ballot.tgz
       labor:
         name: de.medizininformatikinitiative.kerndatensatz.laborbefund
         version: 2027.0.0-ballot.rc4
@@ -43,8 +43,8 @@ hapi:
         packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.mikrobiologie-2027.0.0-alpha.5.tgz
       molgen:
         name: de.medizininformatikinitiative.kerndatensatz.molgen
-        version: 2027.0.0-ballot.rc2
-        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.molgen-2027.0.0-ballot.rc2.tgz
+        version: 2027.0.0-ballot.rc3
+        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.molgen-2027.0.0-ballot.rc3.tgz
       patho:
         name: de.medizininformatikinitiative.kerndatensatz.patho
         version: 2027.0.0-ballot.rc2
@@ -59,8 +59,8 @@ hapi:
         packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.bildgebung-2027.0.0-ballot.rc2.tgz
       dokument:
         name: de.medizininformatikinitiative.kerndatensatz.dokument
-        version: 2027.0.0-ballot.rc1
-        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.dokument-2027.0.0-ballot.rc1.tgz
+        version: 2027.0.0-ballot.rc2
+        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.dokument-2027.0.0-ballot.rc2.tgz
       onkologie:
         name: de.medizininformatikinitiative.kerndatensatz.onkologie
         version: 2026.0.3
