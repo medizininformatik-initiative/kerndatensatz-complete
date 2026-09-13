@@ -1,7 +1,7 @@
 {
   "name": "de.medizininformatikinitiative.kerndatensatz.complete",
-  "version": "2027.0.0-ballot.8",
-  "description": "MII Kerndatensatz Complete v2027.0.0-ballot.8 - Bill of Materials (BOM) aller Module des MII Kerndatensatzes samt der verbindlich gepinnten externen Abhaengigkeiten (Terminology, Extensions, ISiK, EU-Profile, MIABIS, Clinical Genomics). Ballot-Stand: Module mit einem 2027.0.0-Release sind auf dieses gepinnt, alle uebrigen auf ihre hoechste stabile 2026er Version.",
+  "version": "2027.0.0-ballot.9",
+  "description": "MII Kerndatensatz Complete v2027.0.0-ballot.9 - Bill of Materials (BOM) aller Module des MII Kerndatensatzes samt der verbindlich gepinnten externen Abhaengigkeiten (Terminology, Extensions, ISiK, EU-Profile, MIABIS, Clinical Genomics). Ballot-Stand: Module mit einem 2027.0.0-Release sind auf dieses gepinnt, alle uebrigen auf ihre hoechste stabile 2026er Version.",
   "license": "CC-BY-4.0",
   "dependencies": {
     "hl7.fhir.r4.core": "4.0.1",
@@ -13,11 +13,11 @@
     "de.medizininformatikinitiative.kerndatensatz.biobank": "2027.0.0-ballot",
     "de.medizininformatikinitiative.kerndatensatz.icu": "2027.0.0",
     "de.medizininformatikinitiative.kerndatensatz.mikrobiologie": "2027.0.0-alpha.5",
-    "de.medizininformatikinitiative.kerndatensatz.molgen": "2027.0.0-ballot",
+    "de.medizininformatikinitiative.kerndatensatz.molgen": "2027.0.0-ballot.1",
     "de.medizininformatikinitiative.kerndatensatz.patho": "2027.0.0-ballot.rc2",
     "de.medizininformatikinitiative.kerndatensatz.studie": "2027.0.0-ballot.rc1",
     "de.medizininformatikinitiative.kerndatensatz.bildgebung": "2027.0.0-ballot.rc2",
-    "de.medizininformatikinitiative.kerndatensatz.dokument": "2027.0.0-ballot.rc2",
+    "de.medizininformatikinitiative.kerndatensatz.dokument": "2027.0.0-ballot",
     "de.medizininformatikinitiative.kerndatensatz.onkologie": "2026.0.3",
     "de.medizininformatikinitiative.kerndatensatz.seltene": "2026.0.1",
     "de.medizininformatikinitiative.kerndatensatz.mtb": "2026.0.1",
