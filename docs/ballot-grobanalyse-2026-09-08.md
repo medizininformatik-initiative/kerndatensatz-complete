@@ -70,19 +70,31 @@ Sieben Module haben **überhaupt keinen** publizierten Build auf gh-pages. Für 
 liegt der aktuelle Build stattdessen auf build.fhir.org — gh-pages und der CI-Server werden
 uneinheitlich genutzt, keiner deckt alle Module ab.
 
-### Die Migrations-Branches sind leer
+### Korrektur: die Migrations-Verzeichnisse sind NICHT leer
 
-Elf Module haben ein Verzeichnis `branches/migration/` unter gh-pages — **keines davon
-enthält ein `qa.json`**: bildgebung, biobank, consent, dokument, icu, medikation, meta,
-mikrobiologie, pros, seltene, studie, symptom. Dasselbe gilt für die Verzeichnisse
-`fix/`, `feat/`, `chore/`, `build/`, `release/`, `dependabot/` und `ci/`.
+> Die erste Fassung meldete, elf Module hätten ein Verzeichnis `branches/migration/`
+> ohne `qa.json` — Platzhalter aus abgebrochenen Builds. **Das war falsch.**
 
-Es sind also Platzhalter aus abgebrochenen oder nie durchgelaufenen Builds. Wer dort nach
-dem Migrationsstand sucht, findet nichts — die eigentliche Arbeit steckt auf `dev`,
-`master` oder einem versionierten Branch.
+Branch-Namen mit Schrägstrich werden auf gh-pages zu **verschachtelten Verzeichnissen**:
+der Branch `migration/2026.0.0-template-v0.11.3` liegt unter
+`branches/migration/2026.0.0-template-v0.11.3/`. Die Erhebung suchte nur eine Ebene tief
+und fand deshalb ein leeres `migration/`.
 
-Der einzige Branch, der überall auftaucht und trägt, ist `tech-test-2026-07-23`: elf Module
-haben ihn, und bei vieren ist er bis heute der **neueste** Build.
+Ebenso falsch war daher die Aussage, sieben Module hätten „überhaupt keinen Build".
+Tatsächlich bauen alle; die Reports lagen nur eine Ebene tiefer:
+
+| Modul | Branch | ERR |
+|---|---|---|
+| bildgebung | migration/2026.0.0-template-v0.11.3 | 22 |
+| kardiologie | ci/gh-pages-preview | 41 |
+| biobank | chore/sync-ig-template-… | 81 |
+| patho | dev/v2027 | 26 |
+| icu | migration/2026.0.3-template-v0.11.3 | 1251 |
+| consent | fix/qa-01-example-consent… | 82 |
+
+Ohne Report ist allein **mtb**.
+
+Beide Skills (`mii-qa-reports`, `mii-ballot-readiness`) suchen jetzt zwei Ebenen tief.
 
 ## 3. Wer ist mit den Dependencies auf 2027?
 
