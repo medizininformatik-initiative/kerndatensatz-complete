@@ -1,23 +1,22 @@
 # Reifegrad der KDS-Module
 
-BOM `2027.0.0-ballot.13` · 20 Module · automatisch erzeugt von `scripts/build-status.py`
+BOM `2027.0.0-ballot.14` · 20 Module · automatisch erzeugt von `scripts/build-status.py`
 
 Der Reifegrad misst **Version und Abhängigkeiten zusammen**. Eine 2027er Versionsnummer allein sagt wenig — entscheidend ist, worauf das Paket intern zeigt.
 
 | Stufe | Module |
 |---|---|
-| **finale Linie** | base, biobank, consent, dokument, kardiologie, laborbefund, medikation, meta, mikrobiologie, molgen, onkologie, patho, pros, studie, symptom |
+| **finale Linie** | base, biobank, consent, dokument, kardiologie, laborbefund, medikation, meta, mikrobiologie, molgen, onkologie, patho, pros, seltene, studie, symptom |
 | **Nummer ohne Umzug** | bildgebung, icu, lungenfunktion |
-| **noch 2026** | mtb, seltene |
+| **noch 2026** | mtb |
 
-**22 offene 2026er Referenzen** über alle Module.
+**16 offene 2026er Referenzen** über alle Module.
 
 ## Je Modul
 
 | Modul | Version | Deps | offen auf 2026 | auf RCs |
 |---|---|---|---|---|
 | mtb | `2026.0.1` | 9 | base, biobank, consent, medikation, meta, molgen, onkologie, patho, studie | — |
-| seltene | `2026.0.1` | 6 | meta, molgen, icu, studie, base, medikation | — |
 | bildgebung | `2027.0.0-ballot.rc2` | 3 | meta, base, medikation | — |
 | lungenfunktion | `2027.0.0-ballot.rc2` | 3 | meta, base, medikation | — |
 | icu | `2027.0.0-ballot.rc2` | 1 | base | — |
@@ -34,6 +33,7 @@ Der Reifegrad misst **Version und Abhängigkeiten zusammen**. Eine 2027er Versio
 | onkologie | `2027.0.0-ballot` | 6 | — | — |
 | patho | `2027.0.0-ballot` | 3 | — | — |
 | pros | `2027.0.0-ballot.1` | 1 | — | — |
+| seltene | `2027.0.0-ballot` | 5 | — | — |
 | studie | `2027.0.0-ballot` | 1 | — | — |
 | symptom | `2027.0.0-ballot` | 1 | — | — |
 

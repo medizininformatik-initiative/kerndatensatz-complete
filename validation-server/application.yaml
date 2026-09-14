@@ -67,8 +67,8 @@ hapi:
         packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.onkologie-2027.0.0-ballot.tgz
       seltene:
         name: de.medizininformatikinitiative.kerndatensatz.seltene
-        version: 2026.0.1
-        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.seltene-2026.0.1.tgz
+        version: 2027.0.0-ballot
+        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.seltene-2027.0.0-ballot.tgz
       mtb:
         name: de.medizininformatikinitiative.kerndatensatz.mtb
         version: 2026.0.1

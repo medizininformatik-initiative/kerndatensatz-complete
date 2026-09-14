@@ -84,13 +84,12 @@ digraph MII_KDS_2027_Ballot {
     biobank -> patho;
 
     // ════════════ Layer 4 ════════════
-    seltene    [label="Seltene Erkr.\n2026.0.1", fillcolor="#d4edda"];
-    meta       -> seltene [color="#c0392b", style=dashed];
-    base       -> seltene [color="#c0392b", style=dashed];
+    seltene    [label=<Seltene Erkr. 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+    meta       -> seltene;
+    base       -> seltene;
     molgen     -> seltene;
     medikation -> seltene;
-    icu        -> seltene [color="#c0392b", style=dashed];
-    studie     -> seltene [color="#c0392b", style=dashed];
+    studie     -> seltene;
 
     // ════════════ Layer 5 ════════════
     mtb        [label="MTB\n2026.0.1",         fillcolor="#d4edda"];

@@ -18,13 +18,13 @@ digraph MII_KDS_Status {
   onkologie [label=<<B>onkologie</B><BR/><FONT POINT-SIZE="8">ballot</FONT>>, fillcolor="#d4edda", color="#2a6249"];
   patho [label=<<B>patho</B><BR/><FONT POINT-SIZE="8">ballot</FONT>>, fillcolor="#d4edda", color="#2a6249"];
   pros [label=<<B>pros</B><BR/><FONT POINT-SIZE="8">ballot.1</FONT>>, fillcolor="#d4edda", color="#2a6249"];
+  seltene [label=<<B>seltene</B><BR/><FONT POINT-SIZE="8">ballot</FONT>>, fillcolor="#d4edda", color="#2a6249"];
   studie [label=<<B>studie</B><BR/><FONT POINT-SIZE="8">ballot</FONT>>, fillcolor="#d4edda", color="#2a6249"];
   symptom [label=<<B>symptom</B><BR/><FONT POINT-SIZE="8">ballot</FONT>>, fillcolor="#d4edda", color="#2a6249"];
   bildgebung [label=<<B>bildgebung</B><BR/><FONT POINT-SIZE="8">ballot.rc2</FONT><BR/><FONT POINT-SIZE="7">3× 2026</FONT>>, fillcolor="#fbe3e0", color="#a32e2e"];
   icu [label=<<B>icu</B><BR/><FONT POINT-SIZE="8">ballot.rc2</FONT><BR/><FONT POINT-SIZE="7">1× 2026</FONT>>, fillcolor="#fbe3e0", color="#a32e2e"];
   lungenfunktion [label=<<B>lungenfunktion</B><BR/><FONT POINT-SIZE="8">ballot.rc2</FONT><BR/><FONT POINT-SIZE="7">3× 2026</FONT>>, fillcolor="#fbe3e0", color="#a32e2e"];
   mtb [label=<<B>mtb</B><BR/><FONT POINT-SIZE="8">2026.0.1</FONT><BR/><FONT POINT-SIZE="7">9× 2026</FONT>>, fillcolor="#e2e3e5", color="#5c6472"];
-  seltene [label=<<B>seltene</B><BR/><FONT POINT-SIZE="8">2026.0.1</FONT><BR/><FONT POINT-SIZE="7">6× 2026</FONT>>, fillcolor="#e2e3e5", color="#5c6472"];
   meta -> base;
   base -> bildgebung [color="#c0392b", style=dashed];
   medikation -> bildgebung [color="#c0392b", style=dashed];
@@ -64,12 +64,11 @@ digraph MII_KDS_Status {
   biobank -> patho;
   meta -> patho;
   meta -> pros;
-  base -> seltene [color="#c0392b", style=dashed];
-  icu -> seltene [color="#c0392b", style=dashed];
-  medikation -> seltene [color="#c0392b", style=dashed];
-  meta -> seltene [color="#c0392b", style=dashed];
-  molgen -> seltene [color="#c0392b", style=dashed];
-  studie -> seltene [color="#c0392b", style=dashed];
+  base -> seltene;
+  medikation -> seltene;
+  meta -> seltene;
+  molgen -> seltene;
+  studie -> seltene;
   meta -> studie;
   meta -> symptom;
 
