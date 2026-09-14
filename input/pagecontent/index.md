@@ -72,7 +72,7 @@ Während das [Meta-Modul](https://github.com/medizininformatik-initiative/kernda
 | Seltene Erkrankungen | `de.medizininformatikinitiative.kerndatensatz.seltene` | 2026.0.1 | [kerndatensatzmodul-seltene-erkrankungen](https://github.com/medizininformatik-initiative/kerndatensatzmodul-seltene-erkrankungen) | [v2026.0.1](https://github.com/medizininformatik-initiative/kerndatensatzmodul-seltene-erkrankungen/releases/tag/v2026.0.1) |
 | Molekulares Tumorboard | `de.medizininformatikinitiative.kerndatensatz.mtb` | 2026.0.1 | [kerndatensatzmodul-molekulares-tumorboard](https://github.com/medizininformatik-initiative/kerndatensatzmodul-molekulares-tumorboard) | [v2026.0.1](https://github.com/medizininformatik-initiative/kerndatensatzmodul-molekulares-tumorboard/releases/tag/v2026.0.1) (2026-03-30) |
 | PROs | `de.medizininformatikinitiative.kerndatensatz.pros` | 2027.0.0-ballot.1 | [kerndatensatzmodul-proms](https://github.com/medizininformatik-initiative/kerndatensatzmodul-proms) | nur als Package publiziert |
-| Consent | `de.medizininformatikinitiative.kerndatensatz.consent` | 2027.0.0-ballot.rc1 | [kerndatensatzmodul-consent](https://github.com/medizininformatik-initiative/kerndatensatzmodul-consent) | nur als Package publiziert, kein GitHub-Release |
+| Consent | `de.medizininformatikinitiative.kerndatensatz.consent` | 2027.0.0-ballot | [kerndatensatzmodul-consent](https://github.com/medizininformatik-initiative/kerndatensatzmodul-consent) | nur als Package publiziert, kein GitHub-Release |
 | Kardiologie | `de.medizininformatikinitiative.kerndatensatz.kardiologie` | 2027.0.0-ballot | [kerndatensatz-kardiologie](https://github.com/medizininformatik-initiative/kerndatensatz-kardiologie) | [v2027.0.0-ballot.rc1](https://github.com/medizininformatik-initiative/kerndatensatz-kardiologie/releases/tag/v2027.0.0-ballot.rc1) (2026-08-31) |
 | Lungenfunktion | `de.medizininformatikinitiative.kerndatensatz.lungenfunktion` | 2027.0.0-ballot.rc2 | [kerndatensatz-lungenfunktion](https://github.com/medizininformatik-initiative/kerndatensatz-lungenfunktion) | nur als Package publiziert, kein GitHub-Release |
 | Symptome | `de.medizininformatikinitiative.kerndatensatz.symptom` | 2027.0.0-ballot | [kerndatensatzmodul-symptome](https://github.com/medizininformatik-initiative/kerndatensatzmodul-symptome) | [v2027.0.0-ballot](https://github.com/medizininformatik-initiative/kerndatensatzmodul-symptome/releases/tag/v2027.0.0-ballot) (2026-09-11) |
@@ -111,7 +111,7 @@ Pakete ohne Pin werden weiterhin transitiv aufgelöst; ihre Version ergibt sich 
 
 | Paket | Version | Angefordert von |
 |-------|---------|-----------------|
-| Einwilligungsmanagement (`de.einwilligungsmanagement`) | 2.0.4-rc1 | Consent |
+| Einwilligungsmanagement (`de.einwilligungsmanagement`) | 2.0.4 | Consent |
 | Deutsche Medikation (`de.fhir.medication`) | 1.0.x | Medikation |
 | IHE-D Terminologie (`de.ihe-d.terminology`) | 3.0.1 | Medikation, Dokument |
 | gematik Terminologie (`de.gematik.terminology`) | 1.0.6 – 1.0.9 | ISiK (transitiv) |

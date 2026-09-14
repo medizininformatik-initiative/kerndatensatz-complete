@@ -7,7 +7,7 @@ digraph MII_KDS_Status {
   label=<<B>MII KDS — Abhängigkeiten und Reifegrad</B><BR/><FONT POINT-SIZE="9">Pfeil = „hängt ab von" · Nur MII-interne Deps · aus den publizierten Paketen abgeleitet</FONT>>;
   base [label=<<B>base</B><BR/><FONT POINT-SIZE="8">ballot</FONT>>, fillcolor="#d4edda", color="#2a6249"];
   biobank [label=<<B>biobank</B><BR/><FONT POINT-SIZE="8">ballot</FONT>>, fillcolor="#d4edda", color="#2a6249"];
-  consent [label=<<B>consent</B><BR/><FONT POINT-SIZE="8">ballot.rc1</FONT>>, fillcolor="#d4edda", color="#2a6249"];
+  consent [label=<<B>consent</B><BR/><FONT POINT-SIZE="8">ballot</FONT>>, fillcolor="#d4edda", color="#2a6249"];
   dokument [label=<<B>dokument</B><BR/><FONT POINT-SIZE="8">ballot.2</FONT>>, fillcolor="#d4edda", color="#2a6249"];
   kardiologie [label=<<B>kardiologie</B><BR/><FONT POINT-SIZE="8">ballot</FONT>>, fillcolor="#d4edda", color="#2a6249"];
   laborbefund [label=<<B>laborbefund</B><BR/><FONT POINT-SIZE="8">ballot</FONT>>, fillcolor="#d4edda", color="#2a6249"];

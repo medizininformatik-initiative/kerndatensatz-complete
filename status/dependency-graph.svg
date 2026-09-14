@@ -207,7 +207,7 @@
 <title>consent</title>
 <path fill="#d4edda" stroke="#2a6249" d="M245.35,-133.26C245.35,-133.26 200.92,-133.26 200.92,-133.26 194.92,-133.26 188.92,-127.26 188.92,-121.26 188.92,-121.26 188.92,-109.26 188.92,-109.26 188.92,-103.26 194.92,-97.26 200.92,-97.26 200.92,-97.26 245.35,-97.26 245.35,-97.26 251.35,-97.26 257.35,-103.26 257.35,-109.26 257.35,-109.26 257.35,-121.26 257.35,-121.26 257.35,-127.26 251.35,-133.26 245.35,-133.26"/>
 <text xml:space="preserve" text-anchor="start" x="204.76" y="-115.76" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="10.00">consent</text>
-<text xml:space="preserve" text-anchor="start" x="207.01" y="-107.66" font-family="Helvetica,sans-Serif" font-size="8.00">ballot.rc1</text>
+<text xml:space="preserve" text-anchor="start" x="213.76" y="-107.66" font-family="Helvetica,sans-Serif" font-size="8.00">ballot</text>
 </g>
 <!-- consent&#45;&gt;mtb -->
 <g id="edge23" class="edge">

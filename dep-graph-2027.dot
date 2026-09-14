@@ -104,7 +104,7 @@ digraph MII_KDS_2027_Ballot {
     studie     -> mtb [color="#c0392b", style=dashed];
 
     // ════════════ Einwilligung (keine MII-internen Deps) ════════════
-    consent    [label=<Consent 2027.0.0-ballot.rc1<BR/><FONT POINT-SIZE="8">(Ballot) · → de.einwilligungsmanagement 2.0.4-rc1</FONT>>, fillcolor="#fff3cd"];
+    consent    [label=<Consent 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot) · → de.einwilligungsmanagement 2.0.4</FONT>>, fillcolor="#fff3cd"];
 
     // ════════════ Neue Ballot-Module ════════════
     kardiologie [label=<Kardiologie 2027.0.0-ballot.rc1<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];

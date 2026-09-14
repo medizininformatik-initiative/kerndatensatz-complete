@@ -36,7 +36,7 @@ RUN mkdir -p /packages /work && cd /work && \
       de.medizininformatikinitiative.kerndatensatz.kardiologie/2027.0.0-ballot \
       de.medizininformatikinitiative.kerndatensatz.lungenfunktion/2027.0.0-ballot.rc2 \
       de.medizininformatikinitiative.kerndatensatz.symptom/2027.0.0-ballot \
-      de.medizininformatikinitiative.kerndatensatz.consent/2027.0.0-ballot.rc1 \
+      de.medizininformatikinitiative.kerndatensatz.consent/2027.0.0-ballot \
       hl7.terminology.r4/7.3.0 \
       hl7.fhir.uv.extensions.r4/5.3.0 \
       hl7.fhir.uv.genomics-reporting/3.0.0 \
@@ -45,7 +45,7 @@ RUN mkdir -p /packages /work && cd /work && \
       hl7.fhir.eu.extensions.r4/1.3.0 \
       eu.miabis.r4/1.3.0 \
       de.gematik.isik/6.0.0 \
-      de.einwilligungsmanagement/2.0.4-rc1 \
+      de.einwilligungsmanagement/2.0.4 \
     " && \
     FAILED="" && \
     for PKG in $PACKAGES; do \

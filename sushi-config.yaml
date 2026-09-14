@@ -9,7 +9,7 @@ name: MIIKerndatensatzComplete
 title: MII Kerndatensatz Complete
 description: Bill of Materials (BOM) aller Module des MII Kerndatensatzes samt gepinnter externer Abhaengigkeiten (Ballot-Stand 2027.0.0)
 status: active
-version: 2027.0.0-ballot.12
+version: 2027.0.0-ballot.13
 fhirVersion: 4.0.1
 copyrightYear: 2025+
 releaseLabel: ballot
@@ -73,7 +73,7 @@ dependencies:
   # der BOM brechen -- siehe mii-kds-complete-e1x.
 
   # Einwilligungsmanagement
-  de.medizininformatikinitiative.kerndatensatz.consent: 2027.0.0-ballot.rc1
+  de.medizininformatikinitiative.kerndatensatz.consent: 2027.0.0-ballot
 
   # Externe Abhaengigkeiten
   #

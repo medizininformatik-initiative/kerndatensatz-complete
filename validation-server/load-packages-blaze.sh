@@ -27,9 +27,9 @@ PACKAGES=(
   "de.medizininformatikinitiative.kerndatensatz.lungenfunktion/2027.0.0-ballot.rc2"
   "de.medizininformatikinitiative.kerndatensatz.symptom/2027.0.0-ballot"
   # soziodemographie: Package noch nicht publiziert (mii-kds-complete-e1x)
-  "de.medizininformatikinitiative.kerndatensatz.consent/2027.0.0-ballot.rc1"
+  "de.medizininformatikinitiative.kerndatensatz.consent/2027.0.0-ballot"
   "de.basisprofil.r4/1.6.0"
-  "de.einwilligungsmanagement/2.0.4-rc1"
+  "de.einwilligungsmanagement/2.0.4"
   # Externe Abhaengigkeiten, explizit gepinnt (siehe package.json / sushi-config.yaml)
   "hl7.terminology.r4/7.3.0"
   "hl7.fhir.uv.extensions.r4/5.3.0"

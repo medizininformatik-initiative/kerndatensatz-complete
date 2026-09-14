@@ -518,7 +518,7 @@
 <title>einw</title>
 <path fill="#eef0f2" stroke="#999999" stroke-dasharray="5,2" d="M820.76,-102C820.76,-102 693.59,-102 693.59,-102 687.59,-102 681.59,-96 681.59,-90 681.59,-90 681.59,-78 681.59,-78 681.59,-72 687.59,-66 693.59,-66 693.59,-66 820.76,-66 820.76,-66 826.76,-66 832.76,-72 832.76,-78 832.76,-78 832.76,-90 832.76,-90 832.76,-96 826.76,-102 820.76,-102"/>
 <text xml:space="preserve" text-anchor="middle" x="757.18" y="-85.75" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#404040">de.einwilligungsmanagement</text>
-<text xml:space="preserve" text-anchor="middle" x="757.18" y="-74.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#404040">2.0.4&#45;rc1</text>
+<text xml:space="preserve" text-anchor="middle" x="757.18" y="-74.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#404040">2.0.4</text>
 </g>
 <!-- m_cons&#45;&gt;einw -->
 <g id="edge45" class="edge">

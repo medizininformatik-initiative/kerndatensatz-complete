@@ -89,7 +89,7 @@ digraph MII_KDS_2027_Extern {
         ihed  [label="de.ihe-d.terminology\n3.0.1"];
         fmt   [label="ihe.formatcode.fhir\n1.4.0"];
         demed [label="de.fhir.medication\n1.0.x"];
-        einw  [label="de.einwilligungsmanagement\n2.0.4-rc1"];
+        einw  [label="de.einwilligungsmanagement\n2.0.4"];
         gtermi[label="de.gematik.terminology\n1.0.6 – 1.0.9"];
     }
 
