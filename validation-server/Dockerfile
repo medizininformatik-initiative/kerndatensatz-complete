@@ -23,10 +23,10 @@ RUN mkdir -p /packages /work && cd /work && \
       de.medizininformatikinitiative.kerndatensatz.laborbefund/2027.0.0-ballot \
       de.medizininformatikinitiative.kerndatensatz.biobank/2027.0.0-ballot \
       de.medizininformatikinitiative.kerndatensatz.icu/2027.0.0-ballot.rc2 \
-      de.medizininformatikinitiative.kerndatensatz.mikrobiologie/2027.0.0-ballot \
+      de.medizininformatikinitiative.kerndatensatz.mikrobiologie/2027.0.0-ballot2 \
       de.medizininformatikinitiative.kerndatensatz.molgen/2027.0.0-ballot.1 \
       de.medizininformatikinitiative.kerndatensatz.patho/2027.0.0-ballot \
-      de.medizininformatikinitiative.kerndatensatz.studie/2027.0.0-ballot.rc1 \
+      de.medizininformatikinitiative.kerndatensatz.studie/2027.0.0-ballot \
       de.medizininformatikinitiative.kerndatensatz.bildgebung/2027.0.0-ballot.rc2 \
       de.medizininformatikinitiative.kerndatensatz.dokument/2027.0.0-ballot.2 \
       de.medizininformatikinitiative.kerndatensatz.onkologie/2027.0.0-ballot \
@@ -77,7 +77,7 @@ RUN mkdir -p /packages /work && cd /work && \
 FROM hapiproject/hapi:v7.6.0
 
 LABEL org.opencontainers.image.title="MII KDS Validation Server (HAPI)"
-LABEL org.opencontainers.image.description="HAPI FHIR Server mit allen MII Kerndatensatz Paketen (BOM 2027.0.0-ballot.11)"
+LABEL org.opencontainers.image.description="HAPI FHIR Server mit allen MII Kerndatensatz Paketen (BOM 2027.0.0-ballot.12)"
 LABEL org.opencontainers.image.source="https://github.com/medizininformatik-initiative/kerndatensatz-complete"
 
 # hapiproject/hapi laeuft als User 65532 (nonroot).
