@@ -41,6 +41,24 @@ MODULES = ["base", "meta", "medikation", "laborbefund", "biobank", "icu", "mikro
 PREFIX = "de.medizininformatikinitiative.kerndatensatz."
 
 
+def ignored_versions(root=None):
+    """Versionen, die in der Registry stehen, aber nicht verwendet werden sollen.
+
+    Gepflegt in ignored-versions.json im Repo-Wurzelverzeichnis. Grund: eine
+    versehentlich publizierte Version kann in der Sortierung hoeher stehen als
+    die gewollte -- ein finales 2027.0.0 schlaegt jedes 2027.0.0-ballot -- und
+    wuerde sonst bei jedem Lauf erneut als "neuer verfuegbar" vorgeschlagen.
+    """
+    root = root or ROOT
+    p = os.path.join(root, "ignored-versions.json")
+    if not os.path.isfile(p):
+        return {}
+    try:
+        d = json.load(open(p))
+    except Exception:
+        return {}
+    return {k: set(v) for k, v in d.items() if not k.startswith("_")}
+
 def version_key(v):
     """Versionsschluessel fuer das MII-Schema.
 
@@ -85,7 +103,7 @@ def http(url, timeout=180):
         return None
 
 
-def select_ballot(versions):
+def select_ballot(versions, pkg=None):
     """Hoechste 2027er Version, sonst hoechste ueberhaupt.
 
     Nicht "hoechste ballot.*": icu ist vom Ballot bereits zum finalen 2027.0.0
@@ -94,6 +112,8 @@ def select_ballot(versions):
     """
     if not versions:
         return None
+    if pkg:
+        versions = [v for v in versions if v not in ignored_versions().get(pkg, set())]
     y2027 = [v for v in versions if v.startswith("2027.")]
     return sorted(y2027 or versions, key=version_key)[-1]
 
@@ -209,7 +229,7 @@ def main():
             if args.all_versions:
                 work += [(pkg, v) for v in vs]
             else:
-                pick = select_ballot(vs)
+                pick = select_ballot(vs, pkg)
                 kind = ("2027 final" if pick.startswith("2027.") and "-" not in pick
                         else "2027 ballot" if pick.startswith("2027.") else "hoechste")
                 print(f"  {m:<18} {pick:<24} ({kind})")

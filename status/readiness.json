@@ -96,7 +96,7 @@
  },
  {
   "modul": "icu",
-  "version": "2027.0.0",
+  "version": "2027.0.0-ballot.rc2",
   "stufe": "nummer-ohne-umzug",
   "deps": {
    "base": "2026.0.1"
@@ -203,16 +203,22 @@
  },
  {
   "modul": "mikrobiologie",
-  "version": "2027.0.0-alpha.5",
-  "stufe": "nummer-ohne-umzug",
+  "version": "2027.0.0-ballot",
+  "stufe": "final",
   "deps": {
-   "laborbefund": "2026.0.3"
+   "biobank": "2027.0.0-ballot",
+   "laborbefund": "2027.0.0-ballot"
   },
-  "offen_2026": [
-   "laborbefund"
-  ],
+  "offen_2026": [],
   "auf_rc": [],
-  "extern": {}
+  "extern": {
+   "hl7.fhir.r4.core": "4.0.1",
+   "hl7.fhir.uv.crmi": "2.0.0",
+   "hl7.fhir.uv.extensions.r4": "5.2.0",
+   "hl7.fhir.uv.ips": "2.0.1",
+   "hl7.fhir.uv.xver-r5.r4": "0.1.0",
+   "hl7.terminology.r4": "7.1.0"
+  }
  },
  {
   "modul": "molgen",
@@ -268,27 +274,26 @@
  },
  {
   "modul": "onkologie",
-  "version": "2026.0.3",
-  "stufe": "alt",
+  "version": "2027.0.0-ballot",
+  "stufe": "final",
   "deps": {
-   "biobank": "2026.0.0",
-   "medikation": "2026.0.x",
-   "meta": "2026.0.x",
-   "molgen": "2026.0.x",
-   "base": "2026.0.x",
-   "studie": "2026.0.2"
+   "meta": "2027.0.0-ballot",
+   "base": "2027.0.0-ballot",
+   "biobank": "2027.0.0-ballot",
+   "laborbefund": "2027.0.0-ballot",
+   "medikation": "2027.0.0-ballot",
+   "molgen": "2027.0.0-ballot"
   },
-  "offen_2026": [
-   "biobank",
-   "medikation",
-   "meta",
-   "molgen",
-   "base",
-   "studie"
-  ],
+  "offen_2026": [],
   "auf_rc": [],
   "extern": {
-   "de.basisprofil.r4": "1.5.x"
+   "hl7.fhir.r4.core": "4.0.1",
+   "de.basisprofil.r4": "1.6.0",
+   "hl7.fhir.uv.xver-r5.r4": "0.1.0",
+   "hl7.fhir.uv.crmi": "2.0.0",
+   "hl7.fhir.uv.genomics-reporting": "3.0.0",
+   "hl7.terminology.r4": "7.3.0",
+   "hl7.fhir.uv.extensions.r4": "5.3.0"
   }
  },
  {

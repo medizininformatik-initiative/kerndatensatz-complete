@@ -1,0 +1,6 @@
+{
+  "_comment": "Versionen, die es zwar in der Registry gibt, die aber nicht verwendet werden sollen. Werkzeuge im Repo blenden sie bei der Auswahl der hoechsten Version aus.",
+  "de.medizininformatikinitiative.kerndatensatz.icu": {
+    "2027.0.0": "Versehentlich publiziert. Enthaelt 256 statt 267 Ressourcen und es fehlen die fuenf Score-Profile (GCS, RASS, numerische Ratingskala, visuelle Analogskala, FPS-R), die 2027.0.0-ballot.rc2 hat. Kein Tag, kein GitHub-Release, kein Branch mit dieser Version. Die Abhaengigkeiten sind identisch zu rc2, es ist also kein inhaltlicher Fortschritt. Wird durch eine noch zu bauende 2027.0.0-ballot ersetzt."
+  }
+}

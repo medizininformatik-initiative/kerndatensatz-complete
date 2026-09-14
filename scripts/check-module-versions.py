@@ -51,6 +51,24 @@ EXEMPT = {
 }
 
 
+def ignored_versions(root=None):
+    """Versionen, die in der Registry stehen, aber nicht verwendet werden sollen.
+
+    Gepflegt in ignored-versions.json im Repo-Wurzelverzeichnis. Grund: eine
+    versehentlich publizierte Version kann in der Sortierung hoeher stehen als
+    die gewollte -- ein finales 2027.0.0 schlaegt jedes 2027.0.0-ballot -- und
+    wuerde sonst bei jedem Lauf erneut als "neuer verfuegbar" vorgeschlagen.
+    """
+    root = root or ROOT
+    p = os.path.join(root, "ignored-versions.json")
+    if not os.path.isfile(p):
+        return {}
+    try:
+        d = json.load(open(p))
+    except Exception:
+        return {}
+    return {k: set(v) for k, v in d.items() if not k.startswith("_")}
+
 def version_key(v):
     """Versionsschluessel fuer das MII-Schema.
 
@@ -178,6 +196,10 @@ def main():
             row["issues"].append("index.md: nicht erwaehnt")
 
         vs = available.get(name)
+        if vs:
+            skip = ignored_versions().get(name, set())
+            if skip:
+                vs = [v for v in vs if v not in skip]
         if vs is None and not args.offline:
             row["issues"].append("Registry: nicht aufloesbar")
         elif vs:

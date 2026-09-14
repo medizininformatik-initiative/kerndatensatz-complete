@@ -9,7 +9,7 @@ name: MIIKerndatensatzComplete
 title: MII Kerndatensatz Complete
 description: Bill of Materials (BOM) aller Module des MII Kerndatensatzes samt gepinnter externer Abhaengigkeiten (Ballot-Stand 2027.0.0)
 status: active
-version: 2027.0.0-ballot.10
+version: 2027.0.0-ballot.11
 fhirVersion: 4.0.1
 copyrightYear: 2025+
 releaseLabel: ballot
@@ -51,14 +51,14 @@ dependencies:
 
   # MII Kerndatensatz Erweiterungsmodule
   de.medizininformatikinitiative.kerndatensatz.biobank: 2027.0.0-ballot
-  de.medizininformatikinitiative.kerndatensatz.icu: 2027.0.0
-  de.medizininformatikinitiative.kerndatensatz.mikrobiologie: 2027.0.0-alpha.5
+  de.medizininformatikinitiative.kerndatensatz.icu: 2027.0.0-ballot.rc2
+  de.medizininformatikinitiative.kerndatensatz.mikrobiologie: 2027.0.0-ballot
   de.medizininformatikinitiative.kerndatensatz.molgen: 2027.0.0-ballot.1
   de.medizininformatikinitiative.kerndatensatz.patho: 2027.0.0-ballot
   de.medizininformatikinitiative.kerndatensatz.studie: 2027.0.0-ballot.rc1
   de.medizininformatikinitiative.kerndatensatz.bildgebung: 2027.0.0-ballot.rc2
   de.medizininformatikinitiative.kerndatensatz.dokument: 2027.0.0-ballot.2
-  de.medizininformatikinitiative.kerndatensatz.onkologie: 2026.0.3
+  de.medizininformatikinitiative.kerndatensatz.onkologie: 2027.0.0-ballot
   de.medizininformatikinitiative.kerndatensatz.seltene: 2026.0.1
   de.medizininformatikinitiative.kerndatensatz.mtb: 2026.0.1
   de.medizininformatikinitiative.kerndatensatz.pros: 2027.0.0-ballot.1
@@ -88,6 +88,10 @@ dependencies:
   #
   # eu.miabis.r4 steht seit biobank 2027.0.0-ballot auf 1.3.0 -- das Modul hat den
   # Umzug auf die neuen MIABIS-Pfade (ohne /fhir/-Segment) vollzogen.
+
+  # icu ist bewusst auf 2027.0.0-ballot.rc2 gepinnt und NICHT auf 2027.0.0:
+  # letzteres wurde versehentlich publiziert, enthaelt 256 statt 267 Ressourcen
+  # und es fehlen die fuenf Score-Profile. Siehe ignored-versions.json.
 
   # Terminologie
   hl7.terminology.r4: 7.3.0

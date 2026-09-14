@@ -19,6 +19,20 @@ cmv = importlib.util.module_from_spec(spec); spec.loader.exec_module(cmv)
 vkey = cmv.version_key
 
 
+def ignored_versions(root=None):
+    """Versionen, die in der Registry stehen, aber nicht verwendet werden sollen.
+    Gepflegt in ignored-versions.json im Repo-Wurzelverzeichnis."""
+    import json as _j
+    p = os.path.join(root or ROOT, "ignored-versions.json")
+    if not os.path.isfile(p):
+        return {}
+    try:
+        d = _j.load(open(p))
+    except Exception:
+        return {}
+    return {k: set(v) for k, v in d.items() if not k.startswith("_")}
+
+
 def manifest(pkg, ver):
     local = os.path.join(ROOT, "package-corpus", f"{pkg}#{ver}", "package", "package.json")
     if os.path.isfile(local):
