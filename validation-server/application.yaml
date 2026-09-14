@@ -27,8 +27,8 @@ hapi:
         packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.medikation-2027.0.0-ballot.tgz
       labor:
         name: de.medizininformatikinitiative.kerndatensatz.laborbefund
-        version: 2027.0.0-ballot.rc4
-        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.laborbefund-2027.0.0-ballot.rc4.tgz
+        version: 2027.0.0-ballot
+        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.laborbefund-2027.0.0-ballot.tgz
       biobank:
         name: de.medizininformatikinitiative.kerndatensatz.biobank
         version: 2027.0.0-ballot
@@ -47,8 +47,8 @@ hapi:
         packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.molgen-2027.0.0-ballot.1.tgz
       patho:
         name: de.medizininformatikinitiative.kerndatensatz.patho
-        version: 2027.0.0-ballot.rc2
-        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.patho-2027.0.0-ballot.rc2.tgz
+        version: 2027.0.0-ballot
+        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.patho-2027.0.0-ballot.tgz
       studie:
         name: de.medizininformatikinitiative.kerndatensatz.studie
         version: 2027.0.0-ballot.rc1
@@ -59,8 +59,8 @@ hapi:
         packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.bildgebung-2027.0.0-ballot.rc2.tgz
       dokument:
         name: de.medizininformatikinitiative.kerndatensatz.dokument
-        version: 2027.0.0-ballot
-        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.dokument-2027.0.0-ballot.tgz
+        version: 2027.0.0-ballot.2
+        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.dokument-2027.0.0-ballot.2.tgz
       onkologie:
         name: de.medizininformatikinitiative.kerndatensatz.onkologie
         version: 2026.0.3
@@ -79,8 +79,8 @@ hapi:
         packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.pros-2027.0.0-ballot.1.tgz
       kardiologie:
         name: de.medizininformatikinitiative.kerndatensatz.kardiologie
-        version: 2027.0.0-ballot.rc1
-        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.kardiologie-2027.0.0-ballot.rc1.tgz
+        version: 2027.0.0-ballot
+        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.kardiologie-2027.0.0-ballot.tgz
       lungenfunktion:
         name: de.medizininformatikinitiative.kerndatensatz.lungenfunktion
         version: 2027.0.0-ballot.rc2
