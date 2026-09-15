@@ -9,7 +9,7 @@ name: MIIKerndatensatzComplete
 title: MII Kerndatensatz Complete
 description: Bill of Materials (BOM) aller Module des MII Kerndatensatzes samt gepinnter externer Abhaengigkeiten (Ballot-Stand 2027.0.0)
 status: active
-version: 2027.0.0-ballot.16
+version: 2027.0.0-ballot.17
 fhirVersion: 4.0.1
 copyrightYear: 2025+
 releaseLabel: ballot
@@ -23,25 +23,30 @@ publisher:
 # package id and the value is the version (or dev/current). For advanced
 # use cases, the value can be an object with keys for id, uri, and version.
 #
-# ACHTUNG (Ballot-Stand 2026-09-15): Die 2027er Linie ist fast vollstaendig,
-# aber noch nicht durchgaengig kohaerent. Abweichungen gegenueber dieser BOM,
-# ermittelt aus der package.json der jeweils gepinnten Pakete:
+# ACHTUNG (Ballot-Stand 2026-09-15): Die 2027er Linie ist bis auf ein Modul
+# kohaerent. Einzige verbleibende Abweichung gegenueber dieser BOM, ermittelt
+# aus der package.json der gepinnten Pakete:
 #
-#   bildgebung 2027.0.0-ballot -> base 2026.0.1 / medikation 2026.0.1 / meta 2026.0.0
-#     (finale Ballot-Nummer, Deps aber nicht umgezogen)
-#   icu 2027.0.0-ballot.rc2   -> base 2026.0.1
-#   mtb 2026.0.1              -> durchgaengig 2026er Deps; der Umzug liegt auf dem
-#     Branch dev und ist noch nicht publiziert (consent dort bereits entfernt,
-#     weil kein Artefakt es konsumiert)
-#   onkologie 2027.0.0-ballot -> molgen 2027.0.0-ballot, die BOM pinnt aber
-#     molgen 2027.0.0-ballot.1. Keine 2026er-Altlast, sondern eine Abweichung
-#     innerhalb der finalen Linie: Onko wurde vor dem MolGen-Patch gebaut.
+#   icu 2027.0.0-ballot.rc2 -> base 2026.0.1
 #
-# Alle uebrigen MII-Kanten stimmen mit dieser BOM ueberein. Der Abgleich steckt
-# in dep-graph-2027.dot: rot gestrichelt = eine der obigen Abweichungen.
+# Eine icu 2027.0.0-ballot.3 ist angekuendigt und loest das auf.
 #
-# Erledigt: der Tippfehler 'de.basiprofil.r4' in lungenfunktion (fehlendes s) ist
-# in 2027.0.0-ballot behoben, das Paket deklariert jetzt de.basisprofil.r4 1.6.0.
+# icu 2027.0.0 ist in ignored-versions.json ausgeschlossen: versehentlich
+# publiziert, 256 statt 267 Ressourcen, ohne die fuenf Score-Profile. Ohne den
+# Ausschluss wuerde sie als hoechste Version greifen, weil eine finale CalVer
+# ueber jedem Ballot sortiert. Es ist ausdruecklich die Ballot-Linie zu pinnen.
+#
+# Erledigt seit dem letzten Stand:
+#   bildgebung 2027.0.0-ballot.1  Deps umgezogen (waren base/medikation 2026.0.1,
+#                                 meta 2026.0.0)
+#   onkologie  2027.0.0-ballot.1  nimmt jetzt molgen 2027.0.0-ballot.1
+#   mtb        2027.0.0-ballot.1  vollstaendig umgezogen; consent entfernt, weil
+#                                 kein Artefakt es konsumierte
+#   kardiologie                   deklariert icu nicht mehr
+#   lungenfunktion                Tippfehler 'de.basiprofil.r4' behoben
+#
+# Der Abgleich steckt in dep-graph-2027.dot: rot gestrichelt = Abweichung.
+# Knotenlabel und Kantenfarben werden aus package.json erzeugt, nicht gepflegt.
 # Siehe mii-kds-complete-alr, mii-kds-complete-d3d.
 dependencies:
   # Deutsche Basisprofile
@@ -64,7 +69,7 @@ dependencies:
   de.medizininformatikinitiative.kerndatensatz.dokument: 2027.0.0-ballot.2
   de.medizininformatikinitiative.kerndatensatz.onkologie: 2027.0.0-ballot.1
   de.medizininformatikinitiative.kerndatensatz.seltene: 2027.0.0-ballot
-  de.medizininformatikinitiative.kerndatensatz.mtb: 2026.0.1
+  de.medizininformatikinitiative.kerndatensatz.mtb: 2027.0.0-ballot.1
   de.medizininformatikinitiative.kerndatensatz.pros: 2027.0.0-ballot.1
   de.medizininformatikinitiative.kerndatensatz.kardiologie: 2027.0.0-ballot
   de.medizininformatikinitiative.kerndatensatz.lungenfunktion: 2027.0.0-ballot.1

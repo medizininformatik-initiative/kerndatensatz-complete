@@ -71,8 +71,8 @@ hapi:
         packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.seltene-2027.0.0-ballot.tgz
       mtb:
         name: de.medizininformatikinitiative.kerndatensatz.mtb
-        version: 2026.0.1
-        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.mtb-2026.0.1.tgz
+        version: 2027.0.0-ballot.1
+        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.mtb-2027.0.0-ballot.1.tgz
       pros:
         name: de.medizininformatikinitiative.kerndatensatz.pros
         version: 2027.0.0-ballot.1

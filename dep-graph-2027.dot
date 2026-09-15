@@ -92,16 +92,15 @@ digraph MII_KDS_2027_Ballot {
     studie     -> seltene;
 
     // ════════════ Layer 5 ════════════
-    mtb        [label=<MTB 2026.0.1<BR/><FONT POINT-SIZE="8">(final)</FONT>>,         fillcolor="#d4edda"];
-    meta       -> mtb [color="#c0392b", style=dashed];
-    base       -> mtb [color="#c0392b", style=dashed];
-    biobank    -> mtb [color="#c0392b", style=dashed];
-    medikation -> mtb [color="#c0392b", style=dashed];
-    molgen     -> mtb [color="#c0392b", style=dashed];
-    onko       -> mtb [color="#c0392b", style=dashed];
-    patho      -> mtb [color="#c0392b", style=dashed];
-    studie     -> mtb [color="#c0392b", style=dashed];
-    consent    -> mtb [color="#c0392b", style=dashed];
+    mtb        [label=<MTB 2027.0.0-ballot.1<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>,         fillcolor="#fff3cd"];
+    meta       -> mtb;
+    base       -> mtb;
+    biobank    -> mtb;
+    medikation -> mtb;
+    molgen     -> mtb;
+    onko       -> mtb;
+    patho      -> mtb;
+    studie     -> mtb;
 
     // ════════════ Einwilligung (keine MII-internen Deps) ════════════
     consent    [label=<Consent 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
@@ -110,7 +109,6 @@ digraph MII_KDS_2027_Ballot {
     kardiologie [label=<Kardiologie 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
     meta -> kardiologie;
     base -> kardiologie;
-    icu  -> kardiologie;
 
     symptom    [label=<Symptome 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
     meta -> symptom;

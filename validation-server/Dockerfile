@@ -31,7 +31,7 @@ RUN mkdir -p /packages /work && cd /work && \
       de.medizininformatikinitiative.kerndatensatz.dokument/2027.0.0-ballot.2 \
       de.medizininformatikinitiative.kerndatensatz.onkologie/2027.0.0-ballot.1 \
       de.medizininformatikinitiative.kerndatensatz.seltene/2027.0.0-ballot \
-      de.medizininformatikinitiative.kerndatensatz.mtb/2026.0.1 \
+      de.medizininformatikinitiative.kerndatensatz.mtb/2027.0.0-ballot.1 \
       de.medizininformatikinitiative.kerndatensatz.pros/2027.0.0-ballot.1 \
       de.medizininformatikinitiative.kerndatensatz.kardiologie/2027.0.0-ballot \
       de.medizininformatikinitiative.kerndatensatz.lungenfunktion/2027.0.0-ballot.1 \
