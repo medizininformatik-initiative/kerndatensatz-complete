@@ -45,8 +45,8 @@ digraph MII_KDS_2027_Ballot {
     meta -> labor;
     meta -> medikation;
     meta -> biobank;
-    meta -> studie      [color="#c0392b", style=dashed];
-    meta -> pros        [color="#c0392b", style=dashed];
+    meta -> studie;
+    meta -> pros;
 
     // ════════════ Layer 2: Erweiterungsmodule ════════════
     icu        [label=<ICU 2027.0.0<BR/><FONT POINT-SIZE="8">(final)</FONT>>, fillcolor="#d4edda"];
@@ -60,23 +60,23 @@ digraph MII_KDS_2027_Ballot {
     bildgebung [label=<Bildgebung 2027.0.0-ballot.rc2<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
     meta       -> bildgebung [color="#c0392b", style=dashed];
     base       -> bildgebung [color="#c0392b", style=dashed];
-    medikation -> bildgebung;
+    medikation -> bildgebung [color="#c0392b", style=dashed];
 
     dokument   [label=<Dokument 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
     meta -> dokument;
     base -> dokument;
 
     mikrobio   [label=<Mikrobiologie 2027.0.0-alpha.5<BR/><FONT POINT-SIZE="8">(Alpha)</FONT>>, fillcolor="#fff3cd"];
-    labor -> mikrobio [color="#c0392b", style=dashed];
+    labor -> mikrobio;
 
     // ════════════ Layer 3: Komplexe Module ════════════
     onko       [label="Onkologie\n2026.0.3",   fillcolor="#d4edda"];
-    meta       -> onko [color="#c0392b", style=dashed];
-    base       -> onko [color="#c0392b", style=dashed];
-    biobank    -> onko [color="#c0392b", style=dashed];
+    meta       -> onko;
+    base       -> onko;
+    biobank    -> onko;
     medikation -> onko;
-    molgen     -> onko;
-    studie     -> onko [color="#c0392b", style=dashed];
+    molgen     -> onko [color="#c0392b", style=dashed];
+    studie     -> onko;
 
     patho      [label=<Pathologie 2027.0.0-ballot.rc2<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
     meta    -> patho;
@@ -96,20 +96,21 @@ digraph MII_KDS_2027_Ballot {
     meta       -> mtb [color="#c0392b", style=dashed];
     base       -> mtb [color="#c0392b", style=dashed];
     biobank    -> mtb [color="#c0392b", style=dashed];
-    medikation -> mtb;
-    molgen     -> mtb;
-    onko       -> mtb;
-    patho      -> mtb;
+    medikation -> mtb [color="#c0392b", style=dashed];
+    molgen     -> mtb [color="#c0392b", style=dashed];
+    onko       -> mtb [color="#c0392b", style=dashed];
+    patho      -> mtb [color="#c0392b", style=dashed];
     studie     -> mtb [color="#c0392b", style=dashed];
+    consent    -> mtb [color="#c0392b", style=dashed];
 
     // ════════════ Einwilligung (keine MII-internen Deps) ════════════
     consent    [label=<Consent 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot) · → de.einwilligungsmanagement 2.0.4</FONT>>, fillcolor="#fff3cd"];
 
     // ════════════ Neue Ballot-Module ════════════
     kardiologie [label=<Kardiologie 2027.0.0-ballot.rc1<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
-    meta -> kardiologie [color="#c0392b", style=dashed];
-    base -> kardiologie [color="#c0392b", style=dashed];
-    icu  -> kardiologie [color="#c0392b", style=dashed];
+    meta -> kardiologie;
+    base -> kardiologie;
+    icu  -> kardiologie;
 
     symptom    [label=<Symptome 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(Ballot) · vollständig kohärent</FONT>>, fillcolor="#fff3cd"];
     meta -> symptom;
@@ -117,7 +118,7 @@ digraph MII_KDS_2027_Ballot {
     lungenfunktion [label=<Lungenfunktion 2027.0.0-ballot.rc2<BR/><FONT POINT-SIZE="8">(Ballot) · <FONT COLOR="#c0392b">Dep-Tippfehler de.basiprofil.r4</FONT></FONT>>, fillcolor="#fff3cd"];
     meta       -> lungenfunktion [color="#c0392b", style=dashed];
     base       -> lungenfunktion [color="#c0392b", style=dashed];
-    medikation -> lungenfunktion;
+    medikation -> lungenfunktion [color="#c0392b", style=dashed];
 
     // ════════════ Angekündigt, noch nicht publiziert ════════════
     subgraph cluster_nonfinal {
