@@ -9,7 +9,7 @@ name: MIIKerndatensatzComplete
 title: MII Kerndatensatz Complete
 description: Bill of Materials (BOM) aller Module des MII Kerndatensatzes samt gepinnter externer Abhaengigkeiten (Ballot-Stand 2027.0.0)
 status: active
-version: 2027.0.0-ballot.14
+version: 2027.0.0-ballot.15
 fhirVersion: 4.0.1
 copyrightYear: 2025+
 releaseLabel: ballot
@@ -23,22 +23,26 @@ publisher:
 # package id and the value is the version (or dev/current). For advanced
 # use cases, the value can be an object with keys for id, uri, and version.
 #
-# ACHTUNG (Ballot-Stand 2026-09-02): Die 2027.0.0-Releases deklarieren untereinander
-# noch die 2026er Basismodule. bildgebung -> base 2026.0.1 / meta 2026.0.0,
-# dokument -> base 2026.0.0 / meta 2026.0.0, studie -> meta 2026.0.0,
-# icu 2027.0.0 -> base 2026.0.1, kardiologie -> base 2026.0.0 / meta 2026.0.0 / icu 2026.0.1,
-# lungenfunktion -> base 2026.0.x / meta 2026.0.x, mikrobiologie -> laborbefund 2026.0.3,
-# patho 2027.0.0-ballot.rc1 -> base 2026.0.1 / biobank 2026.0.1 / meta 2026.0.0,
-# pros 2027.0.0-ballot.rc3 -> meta 2026.0.x (Deps gegenueber 2026.7.0 unveraendert).
-# Vollstaendig kohaerent ist bisher nur molgen 2027.0.0-ballot.rc2.
-# Stimmig sind ausserdem
-# base 2027.0.0-ballot.rc1, biobank 2027.0.0-ballot.rc2 und laborbefund 2027.0.0-ballot.rc3
-# -> jeweils meta 2027.0.0-ballot.rc3 (in den jeweiligen rc repariert). base und meta koennen daher transitiv
-# doppelt aufgeloest werden. Siehe Issue mii-kds-complete-d3d.
+# ACHTUNG (Ballot-Stand 2026-09-15): Die 2027er Linie ist fast vollstaendig,
+# aber noch nicht durchgaengig kohaerent. Abweichungen gegenueber dieser BOM,
+# ermittelt aus der package.json der jeweils gepinnten Pakete:
 #
-# lungenfunktion 2027.0.0-ballot.rc1 deklariert ausserdem 'de.basiprofil.r4' (Tippfehler,
-# fehlendes s) -- dieses Paket existiert nicht, die Dependency ist nicht aufloesbar.
-# Siehe mii-kds-complete-alr.
+#   bildgebung 2027.0.0-ballot -> base 2026.0.1 / medikation 2026.0.1 / meta 2026.0.0
+#     (finale Ballot-Nummer, Deps aber nicht umgezogen)
+#   icu 2027.0.0-ballot.rc2   -> base 2026.0.1
+#   mtb 2026.0.1              -> durchgaengig 2026er Deps; der Umzug liegt auf dem
+#     Branch dev und ist noch nicht publiziert (consent dort bereits entfernt,
+#     weil kein Artefakt es konsumiert)
+#   onkologie 2027.0.0-ballot -> molgen 2027.0.0-ballot, die BOM pinnt aber
+#     molgen 2027.0.0-ballot.1. Keine 2026er-Altlast, sondern eine Abweichung
+#     innerhalb der finalen Linie: Onko wurde vor dem MolGen-Patch gebaut.
+#
+# Alle uebrigen MII-Kanten stimmen mit dieser BOM ueberein. Der Abgleich steckt
+# in dep-graph-2027.dot: rot gestrichelt = eine der obigen Abweichungen.
+#
+# Erledigt: der Tippfehler 'de.basiprofil.r4' in lungenfunktion (fehlendes s) ist
+# in 2027.0.0-ballot behoben, das Paket deklariert jetzt de.basisprofil.r4 1.6.0.
+# Siehe mii-kds-complete-alr, mii-kds-complete-d3d.
 dependencies:
   # Deutsche Basisprofile
   de.basisprofil.r4: 1.6.0
@@ -56,14 +60,14 @@ dependencies:
   de.medizininformatikinitiative.kerndatensatz.molgen: 2027.0.0-ballot.1
   de.medizininformatikinitiative.kerndatensatz.patho: 2027.0.0-ballot
   de.medizininformatikinitiative.kerndatensatz.studie: 2027.0.0-ballot
-  de.medizininformatikinitiative.kerndatensatz.bildgebung: 2027.0.0-ballot.rc2
+  de.medizininformatikinitiative.kerndatensatz.bildgebung: 2027.0.0-ballot
   de.medizininformatikinitiative.kerndatensatz.dokument: 2027.0.0-ballot.2
   de.medizininformatikinitiative.kerndatensatz.onkologie: 2027.0.0-ballot
   de.medizininformatikinitiative.kerndatensatz.seltene: 2027.0.0-ballot
   de.medizininformatikinitiative.kerndatensatz.mtb: 2026.0.1
   de.medizininformatikinitiative.kerndatensatz.pros: 2027.0.0-ballot.1
   de.medizininformatikinitiative.kerndatensatz.kardiologie: 2027.0.0-ballot
-  de.medizininformatikinitiative.kerndatensatz.lungenfunktion: 2027.0.0-ballot.rc2
+  de.medizininformatikinitiative.kerndatensatz.lungenfunktion: 2027.0.0-ballot
   de.medizininformatikinitiative.kerndatensatz.symptom: 2027.0.0-ballot
 
   # Soziodemographie ist NICHT gepinnt: das Repo deklariert packageId

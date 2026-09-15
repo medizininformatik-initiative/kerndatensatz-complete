@@ -49,8 +49,21 @@
 <path fill="none" stroke="#8c8c8c" d="M785.13,-275.37C810.5,-259.55 844.65,-238.25 868.31,-223.5"/>
 <polygon fill="#8c8c8c" stroke="#8c8c8c" points="784.16,-273.09 779.51,-278.87 786.75,-277.25 784.16,-273.09"/>
 </g>
+<!-- lungenfunktion -->
+<g id="node7" class="node">
+<title>lungenfunktion</title>
+<path fill="#d4edda" stroke="#2a6249" d="M1116.04,-223.26C1116.04,-223.26 1037.86,-223.26 1037.86,-223.26 1031.86,-223.26 1025.86,-217.26 1025.86,-211.26 1025.86,-211.26 1025.86,-199.26 1025.86,-199.26 1025.86,-193.26 1031.86,-187.26 1037.86,-187.26 1037.86,-187.26 1116.04,-187.26 1116.04,-187.26 1122.04,-187.26 1128.04,-193.26 1128.04,-199.26 1128.04,-199.26 1128.04,-211.26 1128.04,-211.26 1128.04,-217.26 1122.04,-223.26 1116.04,-223.26"/>
+<text xml:space="preserve" text-anchor="start" x="1041.7" y="-205.76" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="10.00">lungenfunktion</text>
+<text xml:space="preserve" text-anchor="start" x="1067.58" y="-197.66" font-family="Helvetica,sans-Serif" font-size="8.00">ballot</text>
+</g>
+<!-- base&#45;&gt;lungenfunktion -->
+<g id="edge12" class="edge">
+<title>base&#45;&gt;lungenfunktion</title>
+<path fill="none" stroke="#8c8c8c" d="M786.28,-286.88C843.99,-270.87 958.76,-239.04 1025.53,-220.52"/>
+<polygon fill="#8c8c8c" stroke="#8c8c8c" points="785.74,-284.49 779.65,-288.72 787.05,-289.21 785.74,-284.49"/>
+</g>
 <!-- molgen -->
-<g id="node10" class="node">
+<g id="node11" class="node">
 <title>molgen</title>
 <path fill="#d4edda" stroke="#2a6249" d="M349.42,-223.26C349.42,-223.26 306.49,-223.26 306.49,-223.26 300.49,-223.26 294.49,-217.26 294.49,-211.26 294.49,-211.26 294.49,-199.26 294.49,-199.26 294.49,-193.26 300.49,-187.26 306.49,-187.26 306.49,-187.26 349.42,-187.26 349.42,-187.26 355.42,-187.26 361.42,-193.26 361.42,-199.26 361.42,-199.26 361.42,-211.26 361.42,-211.26 361.42,-217.26 355.42,-223.26 349.42,-223.26"/>
 <text xml:space="preserve" text-anchor="start" x="310.33" y="-205.76" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="10.00">molgen</text>
@@ -63,7 +76,7 @@
 <polygon fill="#8c8c8c" stroke="#8c8c8c" points="714.94,-294.74 722.19,-293.2 715.56,-289.88 714.94,-294.74"/>
 </g>
 <!-- onkologie -->
-<g id="node11" class="node">
+<g id="node12" class="node">
 <title>onkologie</title>
 <path fill="#d4edda" stroke="#2a6249" d="M399.04,-130.84C399.04,-130.84 344.86,-130.84 344.86,-130.84 338.86,-130.84 332.86,-124.84 332.86,-118.84 332.86,-118.84 332.86,-106.84 332.86,-106.84 332.86,-100.84 338.86,-94.84 344.86,-94.84 344.86,-94.84 399.04,-94.84 399.04,-94.84 405.04,-94.84 411.04,-100.84 411.04,-106.84 411.04,-106.84 411.04,-118.84 411.04,-118.84 411.04,-124.84 405.04,-130.84 399.04,-130.84"/>
 <text xml:space="preserve" text-anchor="start" x="348.7" y="-113.34" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="10.00">onkologie</text>
@@ -76,7 +89,7 @@
 <polygon fill="#8c8c8c" stroke="#8c8c8c" points="715.31,-279.73 722.62,-281.02 717.71,-275.46 715.31,-279.73"/>
 </g>
 <!-- patho -->
-<g id="node12" class="node">
+<g id="node13" class="node">
 <title>patho</title>
 <path fill="#d4edda" stroke="#2a6249" d="M435.92,-223.26C435.92,-223.26 401.99,-223.26 401.99,-223.26 395.99,-223.26 389.99,-217.26 389.99,-211.26 389.99,-211.26 389.99,-199.26 389.99,-199.26 389.99,-193.26 395.99,-187.26 401.99,-187.26 401.99,-187.26 435.92,-187.26 435.92,-187.26 441.92,-187.26 447.92,-193.26 447.92,-199.26 447.92,-199.26 447.92,-211.26 447.92,-211.26 447.92,-217.26 441.92,-223.26 435.92,-223.26"/>
 <text xml:space="preserve" text-anchor="start" x="405.83" y="-205.76" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="10.00">patho</text>
@@ -89,7 +102,7 @@
 <polygon fill="#8c8c8c" stroke="#8c8c8c" points="714.96,-292.54 722.3,-291.45 715.88,-287.73 714.96,-292.54"/>
 </g>
 <!-- seltene -->
-<g id="node14" class="node">
+<g id="node15" class="node">
 <title>seltene</title>
 <path fill="#d4edda" stroke="#2a6249" d="M1002.29,-130.84C1002.29,-130.84 961.61,-130.84 961.61,-130.84 955.61,-130.84 949.61,-124.84 949.61,-118.84 949.61,-118.84 949.61,-106.84 949.61,-106.84 949.61,-100.84 955.61,-94.84 961.61,-94.84 961.61,-94.84 1002.29,-94.84 1002.29,-94.84 1008.29,-94.84 1014.29,-100.84 1014.29,-106.84 1014.29,-106.84 1014.29,-118.84 1014.29,-118.84 1014.29,-124.84 1008.29,-130.84 1002.29,-130.84"/>
 <text xml:space="preserve" text-anchor="start" x="965.45" y="-113.34" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="10.00">seltene</text>
@@ -102,21 +115,21 @@
 <polygon fill="#8c8c8c" stroke="#8c8c8c" points="763.68,-270.67 762.03,-277.9 767.83,-273.27 763.68,-270.67"/>
 </g>
 <!-- bildgebung -->
-<g id="node17" class="node">
+<g id="node18" class="node">
 <title>bildgebung</title>
-<path fill="#fbe3e0" stroke="#a32e2e" d="M1098.42,-225.68C1098.42,-225.68 1037.49,-225.68 1037.49,-225.68 1031.49,-225.68 1025.49,-219.68 1025.49,-213.68 1025.49,-213.68 1025.49,-196.84 1025.49,-196.84 1025.49,-190.84 1031.49,-184.84 1037.49,-184.84 1037.49,-184.84 1098.42,-184.84 1098.42,-184.84 1104.42,-184.84 1110.42,-190.84 1110.42,-196.84 1110.42,-196.84 1110.42,-213.68 1110.42,-213.68 1110.42,-219.68 1104.42,-225.68 1098.42,-225.68"/>
-<text xml:space="preserve" text-anchor="start" x="1041.33" y="-209.26" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="10.00">bildgebung</text>
-<text xml:space="preserve" text-anchor="start" x="1051.83" y="-201.16" font-family="Helvetica,sans-Serif" font-size="8.00">ballot.rc2</text>
-<text xml:space="preserve" text-anchor="start" x="1055.58" y="-194.11" font-family="Helvetica,sans-Serif" font-size="7.00">3× 2026</text>
+<path fill="#fbe3e0" stroke="#a32e2e" d="M1230.42,-225.68C1230.42,-225.68 1169.49,-225.68 1169.49,-225.68 1163.49,-225.68 1157.49,-219.68 1157.49,-213.68 1157.49,-213.68 1157.49,-196.84 1157.49,-196.84 1157.49,-190.84 1163.49,-184.84 1169.49,-184.84 1169.49,-184.84 1230.42,-184.84 1230.42,-184.84 1236.42,-184.84 1242.42,-190.84 1242.42,-196.84 1242.42,-196.84 1242.42,-213.68 1242.42,-213.68 1242.42,-219.68 1236.42,-225.68 1230.42,-225.68"/>
+<text xml:space="preserve" text-anchor="start" x="1173.33" y="-209.26" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="10.00">bildgebung</text>
+<text xml:space="preserve" text-anchor="start" x="1190.58" y="-201.16" font-family="Helvetica,sans-Serif" font-size="8.00">ballot</text>
+<text xml:space="preserve" text-anchor="start" x="1187.58" y="-194.11" font-family="Helvetica,sans-Serif" font-size="7.00">3× 2026</text>
 </g>
 <!-- base&#45;&gt;bildgebung -->
 <g id="edge2" class="edge">
 <title>base&#45;&gt;bildgebung</title>
-<path fill="none" stroke="#c0392b" stroke-dasharray="5,2" d="M786.12,-286.65C844.68,-269.95 961.98,-236.49 1025.21,-218.45"/>
-<polygon fill="#c0392b" stroke="#c0392b" points="785.77,-284.2 779.71,-288.48 787.11,-288.91 785.77,-284.2"/>
+<path fill="none" stroke="#c0392b" stroke-dasharray="5,2" d="M786.76,-292.02C856.17,-282.59 1013.59,-259.23 1142.95,-225.68 1147.61,-224.47 1152.43,-223.07 1157.21,-221.59"/>
+<polygon fill="#c0392b" stroke="#c0392b" points="786.46,-289.59 779.85,-292.95 787.11,-294.44 786.46,-289.59"/>
 </g>
 <!-- icu -->
-<g id="node18" class="node">
+<g id="node19" class="node">
 <title>icu</title>
 <path fill="#fbe3e0" stroke="#a32e2e" d="M694.92,-225.68C694.92,-225.68 654.99,-225.68 654.99,-225.68 648.99,-225.68 642.99,-219.68 642.99,-213.68 642.99,-213.68 642.99,-196.84 642.99,-196.84 642.99,-190.84 648.99,-184.84 654.99,-184.84 654.99,-184.84 694.92,-184.84 694.92,-184.84 700.92,-184.84 706.92,-190.84 706.92,-196.84 706.92,-196.84 706.92,-213.68 706.92,-213.68 706.92,-219.68 700.92,-225.68 694.92,-225.68"/>
 <text xml:space="preserve" text-anchor="start" x="667.83" y="-209.26" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="10.00">icu</text>
@@ -128,20 +141,6 @@
 <title>base&#45;&gt;icu</title>
 <path fill="none" stroke="#c0392b" stroke-dasharray="5,2" d="M730.94,-272.86C718.71,-258.32 703.25,-239.93 691.68,-226.16"/>
 <polygon fill="#c0392b" stroke="#c0392b" points="728.95,-274.31 735.33,-278.09 732.7,-271.15 728.95,-274.31"/>
-</g>
-<!-- lungenfunktion -->
-<g id="node19" class="node">
-<title>lungenfunktion</title>
-<path fill="#fbe3e0" stroke="#a32e2e" d="M1230.04,-225.68C1230.04,-225.68 1151.86,-225.68 1151.86,-225.68 1145.86,-225.68 1139.86,-219.68 1139.86,-213.68 1139.86,-213.68 1139.86,-196.84 1139.86,-196.84 1139.86,-190.84 1145.86,-184.84 1151.86,-184.84 1151.86,-184.84 1230.04,-184.84 1230.04,-184.84 1236.04,-184.84 1242.04,-190.84 1242.04,-196.84 1242.04,-196.84 1242.04,-213.68 1242.04,-213.68 1242.04,-219.68 1236.04,-225.68 1230.04,-225.68"/>
-<text xml:space="preserve" text-anchor="start" x="1155.7" y="-209.26" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="10.00">lungenfunktion</text>
-<text xml:space="preserve" text-anchor="start" x="1174.83" y="-201.16" font-family="Helvetica,sans-Serif" font-size="8.00">ballot.rc2</text>
-<text xml:space="preserve" text-anchor="start" x="1178.58" y="-194.11" font-family="Helvetica,sans-Serif" font-size="7.00">3× 2026</text>
-</g>
-<!-- base&#45;&gt;lungenfunktion -->
-<g id="edge12" class="edge">
-<title>base&#45;&gt;lungenfunktion</title>
-<path fill="none" stroke="#c0392b" stroke-dasharray="5,2" d="M786.48,-291.14C853.22,-280.45 1001.74,-255.43 1124.95,-225.68 1129.71,-224.53 1134.64,-223.25 1139.56,-221.91"/>
-<polygon fill="#c0392b" stroke="#c0392b" points="786.39,-288.67 779.86,-292.19 787.16,-293.51 786.39,-288.67"/>
 </g>
 <!-- mtb -->
 <g id="node20" class="node">
@@ -165,7 +164,7 @@
 <text xml:space="preserve" text-anchor="start" x="284.58" y="-290.08" font-family="Helvetica,sans-Serif" font-size="8.00">ballot</text>
 </g>
 <!-- mikrobiologie -->
-<g id="node9" class="node">
+<g id="node10" class="node">
 <title>mikrobiologie</title>
 <path fill="#d4edda" stroke="#2a6249" d="M136.42,-223.26C136.42,-223.26 63.49,-223.26 63.49,-223.26 57.49,-223.26 51.49,-217.26 51.49,-211.26 51.49,-211.26 51.49,-199.26 51.49,-199.26 51.49,-193.26 57.49,-187.26 63.49,-187.26 63.49,-187.26 136.42,-187.26 136.42,-187.26 142.42,-187.26 148.42,-193.26 148.42,-199.26 148.42,-199.26 148.42,-211.26 148.42,-211.26 148.42,-217.26 142.42,-223.26 136.42,-223.26"/>
 <text xml:space="preserve" text-anchor="start" x="67.33" y="-205.76" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="10.00">mikrobiologie</text>
@@ -234,44 +233,44 @@
 <polygon fill="#8c8c8c" stroke="#8c8c8c" points="69.56,-275.41 76.43,-278.2 72.8,-271.73 69.56,-275.41"/>
 </g>
 <!-- medikation -->
-<g id="node7" class="node">
+<g id="node8" class="node">
 <title>medikation</title>
-<path fill="#d4edda" stroke="#2a6249" d="M1232.67,-315.68C1232.67,-315.68 1173.24,-315.68 1173.24,-315.68 1167.24,-315.68 1161.24,-309.68 1161.24,-303.68 1161.24,-303.68 1161.24,-291.68 1161.24,-291.68 1161.24,-285.68 1167.24,-279.68 1173.24,-279.68 1173.24,-279.68 1232.67,-279.68 1232.67,-279.68 1238.67,-279.68 1244.67,-285.68 1244.67,-291.68 1244.67,-291.68 1244.67,-303.68 1244.67,-303.68 1244.67,-309.68 1238.67,-315.68 1232.67,-315.68"/>
-<text xml:space="preserve" text-anchor="start" x="1177.08" y="-298.18" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="10.00">medikation</text>
-<text xml:space="preserve" text-anchor="start" x="1193.58" y="-290.08" font-family="Helvetica,sans-Serif" font-size="8.00">ballot</text>
-</g>
-<!-- medikation&#45;&gt;onkologie -->
-<g id="edge33" class="edge">
-<title>medikation&#45;&gt;onkologie</title>
-<path fill="none" stroke="#8c8c8c" d="M1228.52,-273.43C1252.32,-249.03 1280.82,-210.69 1256.95,-184.84 1227.85,-153.3 579.36,-122.89 411.39,-115.53"/>
-<polygon fill="#8c8c8c" stroke="#8c8c8c" points="1226.91,-271.57 1223.68,-278.25 1230.37,-275.04 1226.91,-271.57"/>
-</g>
-<!-- medikation&#45;&gt;seltene -->
-<g id="edge41" class="edge">
-<title>medikation&#45;&gt;seltene</title>
-<path fill="none" stroke="#8c8c8c" d="M1247.43,-275.31C1286.97,-253.43 1334.69,-218.03 1307.95,-184.84 1271.3,-139.34 1089.95,-121.46 1014.73,-115.92"/>
-<polygon fill="#8c8c8c" stroke="#8c8c8c" points="1246.49,-273.03 1241.49,-278.51 1248.81,-277.34 1246.49,-273.03"/>
-</g>
-<!-- medikation&#45;&gt;bildgebung -->
-<g id="edge3" class="edge">
-<title>medikation&#45;&gt;bildgebung</title>
-<path fill="none" stroke="#c0392b" stroke-dasharray="5,2" d="M1170.01,-274.61C1147.91,-259.81 1119.05,-240.48 1097.66,-226.16"/>
-<polygon fill="#c0392b" stroke="#c0392b" points="1168.49,-276.54 1175.67,-278.4 1171.21,-272.47 1168.49,-276.54"/>
+<path fill="#d4edda" stroke="#2a6249" d="M1245.67,-315.68C1245.67,-315.68 1186.24,-315.68 1186.24,-315.68 1180.24,-315.68 1174.24,-309.68 1174.24,-303.68 1174.24,-303.68 1174.24,-291.68 1174.24,-291.68 1174.24,-285.68 1180.24,-279.68 1186.24,-279.68 1186.24,-279.68 1245.67,-279.68 1245.67,-279.68 1251.67,-279.68 1257.67,-285.68 1257.67,-291.68 1257.67,-291.68 1257.67,-303.68 1257.67,-303.68 1257.67,-309.68 1251.67,-315.68 1245.67,-315.68"/>
+<text xml:space="preserve" text-anchor="start" x="1190.08" y="-298.18" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="10.00">medikation</text>
+<text xml:space="preserve" text-anchor="start" x="1206.58" y="-290.08" font-family="Helvetica,sans-Serif" font-size="8.00">ballot</text>
 </g>
 <!-- medikation&#45;&gt;lungenfunktion -->
 <g id="edge13" class="edge">
 <title>medikation&#45;&gt;lungenfunktion</title>
-<path fill="none" stroke="#c0392b" stroke-dasharray="5,2" d="M1199.53,-270.87C1197.64,-256.67 1195.34,-239.31 1193.59,-226.16"/>
-<polygon fill="#c0392b" stroke="#c0392b" points="1197.09,-271.13 1200.44,-277.75 1201.95,-270.48 1197.09,-271.13"/>
+<path fill="none" stroke="#8c8c8c" d="M1182.25,-274.76C1158.12,-259.06 1126.05,-238.2 1103.67,-223.64"/>
+<polygon fill="#8c8c8c" stroke="#8c8c8c" points="1180.68,-276.66 1187.88,-278.42 1183.35,-272.55 1180.68,-276.66"/>
+</g>
+<!-- medikation&#45;&gt;onkologie -->
+<g id="edge33" class="edge">
+<title>medikation&#45;&gt;onkologie</title>
+<path fill="none" stroke="#8c8c8c" d="M1237.16,-273.11C1256.83,-248.37 1279.87,-209.67 1256.95,-184.84 1227.85,-153.3 579.36,-122.89 411.39,-115.53"/>
+<polygon fill="#8c8c8c" stroke="#8c8c8c" points="1235.52,-271.26 1232.97,-278.22 1239.3,-274.37 1235.52,-271.26"/>
+</g>
+<!-- medikation&#45;&gt;seltene -->
+<g id="edge41" class="edge">
+<title>medikation&#45;&gt;seltene</title>
+<path fill="none" stroke="#8c8c8c" d="M1254.89,-275.03C1290.28,-252.58 1333.39,-216.41 1307.95,-184.84 1271.3,-139.34 1089.95,-121.46 1014.73,-115.92"/>
+<polygon fill="#8c8c8c" stroke="#8c8c8c" points="1253.88,-272.77 1249.22,-278.54 1256.46,-276.94 1253.88,-272.77"/>
+</g>
+<!-- medikation&#45;&gt;bildgebung -->
+<g id="edge3" class="edge">
+<title>medikation&#45;&gt;bildgebung</title>
+<path fill="none" stroke="#c0392b" stroke-dasharray="5,2" d="M1211.39,-270.87C1208.87,-256.67 1205.8,-239.31 1203.48,-226.16"/>
+<polygon fill="#c0392b" stroke="#c0392b" points="1208.97,-271.29 1212.61,-277.76 1213.8,-270.44 1208.97,-271.29"/>
 </g>
 <!-- medikation&#45;&gt;mtb -->
 <g id="edge24" class="edge">
 <title>medikation&#45;&gt;mtb</title>
-<path fill="none" stroke="#c0392b" stroke-dasharray="5,2" d="M1253.19,-293.38C1344.26,-285.48 1522.06,-260.16 1463.95,-184.84 1348.63,-35.36 698.65,-22.43 546.03,-21.46"/>
-<polygon fill="#c0392b" stroke="#c0392b" points="1253.2,-290.92 1246.43,-293.94 1253.61,-295.8 1253.2,-290.92"/>
+<path fill="none" stroke="#c0392b" stroke-dasharray="5,2" d="M1266.6,-292.51C1354.07,-283.34 1519.03,-256.23 1463.95,-184.84 1348.63,-35.36 698.65,-22.43 546.03,-21.46"/>
+<polygon fill="#c0392b" stroke="#c0392b" points="1266.36,-290.07 1259.64,-293.22 1266.85,-294.95 1266.36,-290.07"/>
 </g>
 <!-- meta -->
-<g id="node8" class="node">
+<g id="node9" class="node">
 <title>meta</title>
 <path fill="#d4edda" stroke="#2a6249" d="M967.04,-448.35C967.04,-448.35 936.86,-448.35 936.86,-448.35 930.86,-448.35 924.86,-442.35 924.86,-436.35 924.86,-436.35 924.86,-424.35 924.86,-424.35 924.86,-418.35 930.86,-412.35 936.86,-412.35 936.86,-412.35 967.04,-412.35 967.04,-412.35 973.04,-412.35 979.04,-418.35 979.04,-424.35 979.04,-424.35 979.04,-436.35 979.04,-436.35 979.04,-442.35 973.04,-448.35 967.04,-448.35"/>
 <text xml:space="preserve" text-anchor="start" x="940.7" y="-430.85" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="10.00">meta</text>
@@ -307,11 +306,17 @@
 <path fill="none" stroke="#8c8c8c" d="M916.51,-423.91C780.79,-403.1 294.18,-328.47 144.25,-305.47"/>
 <polygon fill="#8c8c8c" stroke="#8c8c8c" points="915.78,-426.28 923.08,-424.92 916.53,-421.44 915.78,-426.28"/>
 </g>
+<!-- meta&#45;&gt;lungenfunktion -->
+<g id="edge14" class="edge">
+<title>meta&#45;&gt;lungenfunktion</title>
+<path fill="none" stroke="#8c8c8c" d="M965.68,-404.85C991.19,-359.32 1045.29,-262.77 1067.32,-223.45"/>
+<polygon fill="#8c8c8c" stroke="#8c8c8c" points="963.58,-403.59 962.29,-410.89 967.85,-405.99 963.58,-403.59"/>
+</g>
 <!-- meta&#45;&gt;medikation -->
 <g id="edge15" class="edge">
 <title>meta&#45;&gt;medikation</title>
-<path fill="none" stroke="#8c8c8c" d="M961.59,-404.51C968.36,-390.1 978.75,-372.68 992.95,-361.68 999.76,-356.41 1101.92,-327.1 1161.2,-310.38"/>
-<polygon fill="#8c8c8c" stroke="#8c8c8c" points="959.41,-403.37 958.82,-410.76 963.89,-405.36 959.41,-403.37"/>
+<path fill="none" stroke="#8c8c8c" d="M961.53,-404.43C968.27,-389.99 978.66,-372.56 992.95,-361.68 1000.29,-356.1 1111.39,-326.23 1173.94,-309.7"/>
+<polygon fill="#8c8c8c" stroke="#8c8c8c" points="959.34,-403.31 958.76,-410.7 963.83,-405.28 959.34,-403.31"/>
 </g>
 <!-- meta&#45;&gt;molgen -->
 <g id="edge20" class="edge">
@@ -332,7 +337,7 @@
 <polygon fill="#8c8c8c" stroke="#8c8c8c" points="915.81,-420.36 923.22,-420.19 917.32,-415.7 915.81,-420.36"/>
 </g>
 <!-- pros -->
-<g id="node13" class="node">
+<g id="node14" class="node">
 <title>pros</title>
 <path fill="#d4edda" stroke="#2a6249" d="M1641.54,-315.68C1641.54,-315.68 1608.36,-315.68 1608.36,-315.68 1602.36,-315.68 1596.36,-309.68 1596.36,-303.68 1596.36,-303.68 1596.36,-291.68 1596.36,-291.68 1596.36,-285.68 1602.36,-279.68 1608.36,-279.68 1608.36,-279.68 1641.54,-279.68 1641.54,-279.68 1647.54,-279.68 1653.54,-285.68 1653.54,-291.68 1653.54,-291.68 1653.54,-303.68 1653.54,-303.68 1653.54,-309.68 1647.54,-315.68 1641.54,-315.68"/>
 <text xml:space="preserve" text-anchor="start" x="1614.45" y="-298.18" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="10.00">pros</text>
@@ -351,7 +356,7 @@
 <polygon fill="#8c8c8c" stroke="#8c8c8c" points="951.98,-403.23 953.75,-410.43 956.85,-403.69 951.98,-403.23"/>
 </g>
 <!-- studie -->
-<g id="node15" class="node">
+<g id="node16" class="node">
 <title>studie</title>
 <path fill="#d4edda" stroke="#2a6249" d="M1437.04,-223.26C1437.04,-223.26 1400.86,-223.26 1400.86,-223.26 1394.86,-223.26 1388.86,-217.26 1388.86,-211.26 1388.86,-211.26 1388.86,-199.26 1388.86,-199.26 1388.86,-193.26 1394.86,-187.26 1400.86,-187.26 1400.86,-187.26 1437.04,-187.26 1437.04,-187.26 1443.04,-187.26 1449.04,-193.26 1449.04,-199.26 1449.04,-199.26 1449.04,-211.26 1449.04,-211.26 1449.04,-217.26 1443.04,-223.26 1437.04,-223.26"/>
 <text xml:space="preserve" text-anchor="start" x="1404.7" y="-205.76" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="10.00">studie</text>
@@ -360,11 +365,11 @@
 <!-- meta&#45;&gt;studie -->
 <g id="edge45" class="edge">
 <title>meta&#45;&gt;studie</title>
-<path fill="none" stroke="#8c8c8c" d="M961.01,-404.17C967.6,-389.47 978.02,-371.87 992.95,-361.68 1092.07,-294.07 1147.78,-360.8 1258.95,-315.68 1315.08,-292.9 1371.38,-248.06 1399.86,-223.44"/>
-<polygon fill="#8c8c8c" stroke="#8c8c8c" points="958.77,-403.17 958.32,-410.57 963.29,-405.07 958.77,-403.17"/>
+<path fill="none" stroke="#8c8c8c" d="M960.98,-404.13C967.56,-389.41 977.98,-371.81 992.95,-361.68 1097.05,-291.27 1156.28,-364.81 1271.95,-315.68 1324.66,-293.29 1375.92,-248.29 1401.72,-223.55"/>
+<polygon fill="#8c8c8c" stroke="#8c8c8c" points="958.74,-403.14 958.29,-410.54 963.26,-405.03 958.74,-403.14"/>
 </g>
 <!-- symptom -->
-<g id="node16" class="node">
+<g id="node17" class="node">
 <title>symptom</title>
 <path fill="#d4edda" stroke="#2a6249" d="M1745.54,-315.68C1745.54,-315.68 1694.36,-315.68 1694.36,-315.68 1688.36,-315.68 1682.36,-309.68 1682.36,-303.68 1682.36,-303.68 1682.36,-291.68 1682.36,-291.68 1682.36,-285.68 1688.36,-279.68 1694.36,-279.68 1694.36,-279.68 1745.54,-279.68 1745.54,-279.68 1751.54,-279.68 1757.54,-285.68 1757.54,-291.68 1757.54,-291.68 1757.54,-303.68 1757.54,-303.68 1757.54,-309.68 1751.54,-315.68 1745.54,-315.68"/>
 <text xml:space="preserve" text-anchor="start" x="1698.2" y="-298.18" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="10.00">symptom</text>
@@ -379,20 +384,14 @@
 <!-- meta&#45;&gt;bildgebung -->
 <g id="edge4" class="edge">
 <title>meta&#45;&gt;bildgebung</title>
-<path fill="none" stroke="#c0392b" stroke-dasharray="5,2" d="M964.76,-404.73C987.96,-360.1 1036.52,-266.72 1057.7,-225.98"/>
-<polygon fill="#c0392b" stroke="#c0392b" points="962.62,-403.53 961.56,-410.87 966.97,-405.79 962.62,-403.53"/>
-</g>
-<!-- meta&#45;&gt;lungenfunktion -->
-<g id="edge14" class="edge">
-<title>meta&#45;&gt;lungenfunktion</title>
-<path fill="none" stroke="#c0392b" stroke-dasharray="5,2" d="M963.96,-404.92C971.27,-391.38 981.43,-374.69 992.95,-361.68 1020.41,-330.69 1115.71,-260.42 1163.37,-226"/>
-<polygon fill="#c0392b" stroke="#c0392b" points="961.99,-403.41 960.9,-410.74 966.32,-405.69 961.99,-403.41"/>
+<path fill="none" stroke="#c0392b" stroke-dasharray="5,2" d="M963.85,-404.83C971.13,-391.25 981.29,-374.57 992.95,-361.68 1007.62,-345.48 1119.49,-264.18 1172.39,-226.05"/>
+<polygon fill="#c0392b" stroke="#c0392b" points="961.87,-403.33 960.81,-410.67 966.22,-405.59 961.87,-403.33"/>
 </g>
 <!-- meta&#45;&gt;mtb -->
 <g id="edge25" class="edge">
 <title>meta&#45;&gt;mtb</title>
-<path fill="none" stroke="#c0392b" stroke-dasharray="5,2" d="M960.9,-404.01C967.46,-389.26 977.87,-371.65 992.95,-361.68 1113.18,-282.19 1176.49,-358.99 1313.95,-315.68 1407.6,-286.17 1537.36,-271.89 1491.95,-184.84 1459.62,-122.86 1428.68,-118.66 1362.95,-94.84 1208.21,-38.76 681.12,-24.7 545.81,-21.98"/>
-<polygon fill="#c0392b" stroke="#c0392b" points="958.65,-403.05 958.23,-410.45 963.18,-404.93 958.65,-403.05"/>
+<path fill="none" stroke="#c0392b" stroke-dasharray="5,2" d="M960.76,-404.27C967.31,-389.45 977.75,-371.68 992.95,-361.68 1117.02,-280.03 1182.73,-361.69 1323.95,-315.68 1413.94,-286.36 1535.73,-268.75 1491.95,-184.84 1459.62,-122.86 1428.68,-118.66 1362.95,-94.84 1208.21,-38.76 681.12,-24.7 545.81,-21.98"/>
+<polygon fill="#c0392b" stroke="#c0392b" points="958.5,-403.33 958.1,-410.74 963.03,-405.2 958.5,-403.33"/>
 </g>
 <!-- molgen&#45;&gt;onkologie -->
 <g id="edge35" class="edge">

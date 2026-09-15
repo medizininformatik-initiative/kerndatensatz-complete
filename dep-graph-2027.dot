@@ -57,7 +57,7 @@ digraph MII_KDS_2027_Ballot {
     base    -> molgen;
     biobank -> molgen;
 
-    bildgebung [label=<Bildgebung 2027.0.0-ballot.rc2<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
+    bildgebung [label=<Bildgebung 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
     meta       -> bildgebung [color="#c0392b", style=dashed];
     base       -> bildgebung [color="#c0392b", style=dashed];
     medikation -> bildgebung [color="#c0392b", style=dashed];
@@ -115,10 +115,10 @@ digraph MII_KDS_2027_Ballot {
     symptom    [label=<Symptome 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(Ballot) · vollständig kohärent</FONT>>, fillcolor="#fff3cd"];
     meta -> symptom;
 
-    lungenfunktion [label=<Lungenfunktion 2027.0.0-ballot.rc2<BR/><FONT POINT-SIZE="8">(Ballot) · <FONT COLOR="#c0392b">Dep-Tippfehler de.basiprofil.r4</FONT></FONT>>, fillcolor="#fff3cd"];
-    meta       -> lungenfunktion [color="#c0392b", style=dashed];
-    base       -> lungenfunktion [color="#c0392b", style=dashed];
-    medikation -> lungenfunktion [color="#c0392b", style=dashed];
+    lungenfunktion [label=<Lungenfunktion 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+    meta       -> lungenfunktion;
+    base       -> lungenfunktion;
+    medikation -> lungenfunktion;
 
     // ════════════ Angekündigt, noch nicht publiziert ════════════
     subgraph cluster_nonfinal {

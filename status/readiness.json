@@ -20,7 +20,7 @@
  },
  {
   "modul": "bildgebung",
-  "version": "2027.0.0-ballot.rc2",
+  "version": "2027.0.0-ballot",
   "stufe": "nummer-ohne-umzug",
   "deps": {
    "meta": "2026.0.0",
@@ -151,21 +151,17 @@
  },
  {
   "modul": "lungenfunktion",
-  "version": "2027.0.0-ballot.rc2",
-  "stufe": "nummer-ohne-umzug",
+  "version": "2027.0.0-ballot",
+  "stufe": "final",
   "deps": {
-   "meta": "2026.0.x",
-   "base": "2026.0.x",
-   "medikation": "2026.0.x"
+   "meta": "2027.0.0-ballot",
+   "base": "2027.0.0-ballot",
+   "medikation": "2027.0.0-ballot"
   },
-  "offen_2026": [
-   "meta",
-   "base",
-   "medikation"
-  ],
+  "offen_2026": [],
   "auf_rc": [],
   "extern": {
-   "de.basiprofil.r4": "1.5.x",
+   "de.basisprofil.r4": "1.6.0",
    "hl7.fhir.r4.core": "4.0.1"
   }
  },
