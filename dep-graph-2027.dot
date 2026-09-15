@@ -34,12 +34,12 @@ digraph MII_KDS_2027_Ballot {
     meta [label=<Meta 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
 
     // ════════════ Layer 1: Basismodule ════════════
-    base       [label=<Base 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(Person, Fall, Diagnose, Prozedur) · Ballot</FONT>>, fillcolor="#fff3cd"];
-    labor      [label=<Labor 2027.0.0-ballot.rc4<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
-    medikation [label=<Medikation 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(Ballot) · vollständig kohärent</FONT>>, fillcolor="#fff3cd"];
-    biobank    [label=<Biobank 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
-    studie     [label=<Studie 2027.0.0-ballot.rc1<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
-    pros       [label=<PROs 2027.0.0-ballot.1<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
+    base       [label=<Base 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+    labor      [label=<Laborbefund 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+    medikation [label=<Medikation 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+    biobank    [label=<Biobank 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+    studie     [label=<Studie 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+    pros       [label=<PROs 2027.0.0-ballot.1<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
 
     meta -> base;
     meta -> labor;
@@ -49,36 +49,36 @@ digraph MII_KDS_2027_Ballot {
     meta -> pros;
 
     // ════════════ Layer 2: Erweiterungsmodule ════════════
-    icu        [label=<ICU 2027.0.0<BR/><FONT POINT-SIZE="8">(final)</FONT>>, fillcolor="#d4edda"];
+    icu        [label=<Intensivmedizin 2027.0.0-ballot.rc2<BR/><FONT POINT-SIZE="8">(Ballot RC)</FONT>>, fillcolor="#fff3cd"];
     base -> icu [color="#c0392b", style=dashed];
 
-    molgen     [label=<MolGen 2027.0.0-ballot.1<BR/><FONT POINT-SIZE="8">(Ballot) · vollständig kohärent</FONT>>, fillcolor="#fff3cd"];
+    molgen     [label=<Molekulargenetik 2027.0.0-ballot.1<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
     meta    -> molgen;
     base    -> molgen;
     biobank -> molgen;
 
-    bildgebung [label=<Bildgebung 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
-    meta       -> bildgebung [color="#c0392b", style=dashed];
-    base       -> bildgebung [color="#c0392b", style=dashed];
-    medikation -> bildgebung [color="#c0392b", style=dashed];
+    bildgebung [label=<Bildgebung 2027.0.0-ballot.1<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+    meta       -> bildgebung;
+    base       -> bildgebung;
+    medikation -> bildgebung;
 
-    dokument   [label=<Dokument 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
+    dokument   [label=<Dokument 2027.0.0-ballot.2<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
     meta -> dokument;
     base -> dokument;
 
-    mikrobio   [label=<Mikrobiologie 2027.0.0-alpha.5<BR/><FONT POINT-SIZE="8">(Alpha)</FONT>>, fillcolor="#fff3cd"];
+    mikrobio   [label=<Mikrobiologie 2027.0.0-ballot2<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
     labor -> mikrobio;
 
     // ════════════ Layer 3: Komplexe Module ════════════
-    onko       [label="Onkologie\n2026.0.3",   fillcolor="#d4edda"];
+    onko       [label=<Onkologie 2027.0.0-ballot.1<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>,   fillcolor="#fff3cd"];
     meta       -> onko;
     base       -> onko;
     biobank    -> onko;
     medikation -> onko;
-    molgen     -> onko [color="#c0392b", style=dashed];
+    molgen     -> onko;
     studie     -> onko;
 
-    patho      [label=<Pathologie 2027.0.0-ballot.rc2<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
+    patho      [label=<Pathologie 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
     meta    -> patho;
     base    -> patho;
     biobank -> patho;
@@ -92,7 +92,7 @@ digraph MII_KDS_2027_Ballot {
     studie     -> seltene;
 
     // ════════════ Layer 5 ════════════
-    mtb        [label="MTB\n2026.0.1",         fillcolor="#d4edda"];
+    mtb        [label=<MTB 2026.0.1<BR/><FONT POINT-SIZE="8">(final)</FONT>>,         fillcolor="#d4edda"];
     meta       -> mtb [color="#c0392b", style=dashed];
     base       -> mtb [color="#c0392b", style=dashed];
     biobank    -> mtb [color="#c0392b", style=dashed];
@@ -104,18 +104,18 @@ digraph MII_KDS_2027_Ballot {
     consent    -> mtb [color="#c0392b", style=dashed];
 
     // ════════════ Einwilligung (keine MII-internen Deps) ════════════
-    consent    [label=<Consent 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot) · → de.einwilligungsmanagement 2.0.4</FONT>>, fillcolor="#fff3cd"];
+    consent    [label=<Consent 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
 
     // ════════════ Neue Ballot-Module ════════════
-    kardiologie [label=<Kardiologie 2027.0.0-ballot.rc1<BR/><FONT POINT-SIZE="8">(Ballot)</FONT>>, fillcolor="#fff3cd"];
+    kardiologie [label=<Kardiologie 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
     meta -> kardiologie;
     base -> kardiologie;
     icu  -> kardiologie;
 
-    symptom    [label=<Symptome 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(Ballot) · vollständig kohärent</FONT>>, fillcolor="#fff3cd"];
+    symptom    [label=<Symptome 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
     meta -> symptom;
 
-    lungenfunktion [label=<Lungenfunktion 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+    lungenfunktion [label=<Lungenfunktion 2027.0.0-ballot.1<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
     meta       -> lungenfunktion;
     base       -> lungenfunktion;
     medikation -> lungenfunktion;

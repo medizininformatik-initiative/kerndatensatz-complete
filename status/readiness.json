@@ -20,24 +20,21 @@
  },
  {
   "modul": "bildgebung",
-  "version": "2027.0.0-ballot",
-  "stufe": "nummer-ohne-umzug",
+  "version": "2027.0.0-ballot.1",
+  "stufe": "final",
   "deps": {
-   "meta": "2026.0.0",
-   "base": "2026.0.1",
-   "medikation": "2026.0.1"
+   "base": "2027.0.0-ballot",
+   "medikation": "2027.0.0-ballot",
+   "meta": "2027.0.0-ballot"
   },
-  "offen_2026": [
-   "meta",
-   "base",
-   "medikation"
-  ],
+  "offen_2026": [],
   "auf_rc": [],
   "extern": {
-   "hl7.fhir.r4.core": "4.0.1",
    "fhir.dicom": "2025.3.20250714",
-   "hl7.fhir.uv.extensions.r4": "5.2.0",
-   "de.basisprofil.r4": "1.6.0"
+   "hl7.fhir.uv.extensions.r4": "5.3.0",
+   "de.basisprofil.r4": "1.6.0",
+   "hl7.fhir.uv.crmi": "2.0.0",
+   "hl7.terminology.r4": "7.3.0"
   }
  },
  {
@@ -151,7 +148,7 @@
  },
  {
   "modul": "lungenfunktion",
-  "version": "2027.0.0-ballot",
+  "version": "2027.0.0-ballot.1",
   "stufe": "final",
   "deps": {
    "meta": "2027.0.0-ballot",
@@ -162,7 +159,9 @@
   "auf_rc": [],
   "extern": {
    "de.basisprofil.r4": "1.6.0",
-   "hl7.fhir.r4.core": "4.0.1"
+   "hl7.fhir.uv.crmi": "2.0.0",
+   "hl7.terminology.r4": "7.3.0",
+   "hl7.fhir.uv.extensions.r4": "5.3.0"
   }
  },
  {
@@ -273,7 +272,7 @@
  },
  {
   "modul": "onkologie",
-  "version": "2027.0.0-ballot",
+  "version": "2027.0.0-ballot.1",
   "stufe": "final",
   "deps": {
    "meta": "2027.0.0-ballot",
@@ -281,7 +280,7 @@
    "biobank": "2027.0.0-ballot",
    "laborbefund": "2027.0.0-ballot",
    "medikation": "2027.0.0-ballot",
-   "molgen": "2027.0.0-ballot"
+   "molgen": "2027.0.0-ballot.1"
   },
   "offen_2026": [],
   "auf_rc": [],

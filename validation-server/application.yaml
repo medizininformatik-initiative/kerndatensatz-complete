@@ -55,16 +55,16 @@ hapi:
         packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.studie-2027.0.0-ballot.tgz
       bildgebung:
         name: de.medizininformatikinitiative.kerndatensatz.bildgebung
-        version: 2027.0.0-ballot
-        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.bildgebung-2027.0.0-ballot.tgz
+        version: 2027.0.0-ballot.1
+        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.bildgebung-2027.0.0-ballot.1.tgz
       dokument:
         name: de.medizininformatikinitiative.kerndatensatz.dokument
         version: 2027.0.0-ballot.2
         packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.dokument-2027.0.0-ballot.2.tgz
       onkologie:
         name: de.medizininformatikinitiative.kerndatensatz.onkologie
-        version: 2027.0.0-ballot
-        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.onkologie-2027.0.0-ballot.tgz
+        version: 2027.0.0-ballot.1
+        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.onkologie-2027.0.0-ballot.1.tgz
       seltene:
         name: de.medizininformatikinitiative.kerndatensatz.seltene
         version: 2027.0.0-ballot
@@ -83,8 +83,8 @@ hapi:
         packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.kardiologie-2027.0.0-ballot.tgz
       lungenfunktion:
         name: de.medizininformatikinitiative.kerndatensatz.lungenfunktion
-        version: 2027.0.0-ballot
-        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.lungenfunktion-2027.0.0-ballot.tgz
+        version: 2027.0.0-ballot.1
+        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.lungenfunktion-2027.0.0-ballot.1.tgz
       symptom:
         name: de.medizininformatikinitiative.kerndatensatz.symptom
         version: 2027.0.0-ballot
