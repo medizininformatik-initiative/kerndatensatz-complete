@@ -113,6 +113,13 @@ digraph MII_KDS_2027_Ballot {
     symptom    [label=<Symptome 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
     meta -> symptom;
 
+
+    soziodemographie [label=<Soziodemographie 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+
+    meta -> soziodemographie;
+
+    base -> soziodemographie;
+
     lungenfunktion [label=<Lungenfunktion 2027.0.0-ballot.1<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
     meta       -> lungenfunktion;
     base       -> lungenfunktion;
@@ -129,7 +136,7 @@ digraph MII_KDS_2027_Ballot {
 
     // ════════════ Ranking ════════════
     {rank=min;  meta}
-    {rank=same; base; labor; medikation; biobank; studie; pros; consent; symptom}
+    {rank=same; base; labor; medikation; biobank; studie; pros; consent; symptom; soziodemographie}
     {rank=same; icu; molgen; bildgebung; dokument; mikrobio; lungenfunktion}
     {rank=same; onko; patho; kardiologie}
     {rank=same; seltene}

@@ -1,6 +1,6 @@
 {
   "name": "de.medizininformatikinitiative.kerndatensatz.complete",
-  "version": "2027.0.0-ballot.17",
+  "version": "2027.0.0-ballot.18",
   "description": "MII Kerndatensatz Complete v2027.0.0-ballot.12 - Bill of Materials (BOM) aller Module des MII Kerndatensatzes samt der verbindlich gepinnten externen Abhaengigkeiten (Terminology, Extensions, ISiK, EU-Profile, MIABIS, Clinical Genomics). Ballot-Stand: Module mit einem 2027.0.0-Release sind auf dieses gepinnt, alle uebrigen auf ihre hoechste stabile 2026er Version.",
   "license": "CC-BY-4.0",
   "dependencies": {
@@ -25,6 +25,7 @@
     "de.medizininformatikinitiative.kerndatensatz.kardiologie": "2027.0.0-ballot",
     "de.medizininformatikinitiative.kerndatensatz.lungenfunktion": "2027.0.0-ballot.1",
     "de.medizininformatikinitiative.kerndatensatz.symptom": "2027.0.0-ballot",
+    "de.medizininformatikinitiative.kerndatensatz.soziodemographie": "2027.0.0-ballot",
     "de.medizininformatikinitiative.kerndatensatz.consent": "2027.0.0-ballot",
     "hl7.terminology.r4": "7.3.0",
     "hl7.fhir.uv.extensions.r4": "5.3.0",

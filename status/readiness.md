@@ -1,12 +1,12 @@
 # Reifegrad der KDS-Module
 
-BOM `2027.0.0-ballot.17` · 20 Module · automatisch erzeugt von `scripts/build-status.py`
+BOM `2027.0.0-ballot.18` · 21 Module · automatisch erzeugt von `scripts/build-status.py`
 
 Der Reifegrad misst **Version und Abhängigkeiten zusammen**. Eine 2027er Versionsnummer allein sagt wenig — entscheidend ist, worauf das Paket intern zeigt.
 
 | Stufe | Module |
 |---|---|
-| **finale Linie** | base, bildgebung, biobank, consent, dokument, kardiologie, laborbefund, lungenfunktion, medikation, meta, mikrobiologie, molgen, mtb, onkologie, patho, pros, seltene, studie, symptom |
+| **finale Linie** | base, bildgebung, biobank, consent, dokument, kardiologie, laborbefund, lungenfunktion, medikation, meta, mikrobiologie, molgen, mtb, onkologie, patho, pros, seltene, soziodemographie, studie, symptom |
 | **Nummer ohne Umzug** | icu |
 
 **1 offene 2026er Referenzen** über alle Module.
@@ -33,6 +33,7 @@ Der Reifegrad misst **Version und Abhängigkeiten zusammen**. Eine 2027er Versio
 | patho | `2027.0.0-ballot` | 3 | — | — |
 | pros | `2027.0.0-ballot.1` | 1 | — | — |
 | seltene | `2027.0.0-ballot` | 5 | — | — |
+| soziodemographie | `2027.0.0-ballot` | 2 | — | — |
 | studie | `2027.0.0-ballot` | 1 | — | — |
 | symptom | `2027.0.0-ballot` | 1 | — | — |
 

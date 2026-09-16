@@ -89,7 +89,10 @@ hapi:
         name: de.medizininformatikinitiative.kerndatensatz.symptom
         version: 2027.0.0-ballot
         packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.symptom-2027.0.0-ballot.tgz
-      # soziodemographie: Package noch nicht publiziert (mii-kds-complete-e1x)
+      soziodemographie:
+        name: de.medizininformatikinitiative.kerndatensatz.soziodemographie
+        version: 2027.0.0-ballot
+        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.soziodemographie-2027.0.0-ballot.tgz
       basisprofil:
         name: de.basisprofil.r4
         version: 1.6.0

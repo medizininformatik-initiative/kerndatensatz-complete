@@ -26,7 +26,7 @@ PACKAGES=(
   "de.medizininformatikinitiative.kerndatensatz.kardiologie/2027.0.0-ballot"
   "de.medizininformatikinitiative.kerndatensatz.lungenfunktion/2027.0.0-ballot.1"
   "de.medizininformatikinitiative.kerndatensatz.symptom/2027.0.0-ballot"
-  # soziodemographie: Package noch nicht publiziert (mii-kds-complete-e1x)
+  "de.medizininformatikinitiative.kerndatensatz.soziodemographie/2027.0.0-ballot"
   "de.medizininformatikinitiative.kerndatensatz.consent/2027.0.0-ballot"
   "de.basisprofil.r4/1.6.0"
   "de.einwilligungsmanagement/2.0.4"

@@ -9,7 +9,7 @@ name: MIIKerndatensatzComplete
 title: MII Kerndatensatz Complete
 description: Bill of Materials (BOM) aller Module des MII Kerndatensatzes samt gepinnter externer Abhaengigkeiten (Ballot-Stand 2027.0.0)
 status: active
-version: 2027.0.0-ballot.17
+version: 2027.0.0-ballot.18
 fhirVersion: 4.0.1
 copyrightYear: 2025+
 releaseLabel: ballot
@@ -74,12 +74,12 @@ dependencies:
   de.medizininformatikinitiative.kerndatensatz.kardiologie: 2027.0.0-ballot
   de.medizininformatikinitiative.kerndatensatz.lungenfunktion: 2027.0.0-ballot.1
   de.medizininformatikinitiative.kerndatensatz.symptom: 2027.0.0-ballot
+  de.medizininformatikinitiative.kerndatensatz.soziodemographie: 2027.0.0-ballot
 
-  # Soziodemographie ist NICHT gepinnt: das Repo deklariert packageId
-  # de.medizininformatikinitiative.kerndatensatz.soziodemographie in 2027.0.0-ballot.rc1,
-  # das Package ist aber in keiner Registry publiziert (404 auf Simplifier und
-  # packages.fhir.org). Eine nicht aufloesbare Dependency wuerde jeden Konsumenten
-  # der BOM brechen -- siehe mii-kds-complete-e1x.
+  # Soziodemographie ist seit 2026-09-16 gepinnt: Package 2027.0.0-ballot liegt auf
+  # Simplifier und packages.fhir.org, Deps base/meta 2027.0.0-ballot. Zuvor war es
+  # bewusst ausgelassen, weil das Package in keiner Registry auffindbar war
+  # (mii-kds-complete-e1x).
 
   # Einwilligungsmanagement
   de.medizininformatikinitiative.kerndatensatz.consent: 2027.0.0-ballot

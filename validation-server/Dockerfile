@@ -36,6 +36,7 @@ RUN mkdir -p /packages /work && cd /work && \
       de.medizininformatikinitiative.kerndatensatz.kardiologie/2027.0.0-ballot \
       de.medizininformatikinitiative.kerndatensatz.lungenfunktion/2027.0.0-ballot.1 \
       de.medizininformatikinitiative.kerndatensatz.symptom/2027.0.0-ballot \
+      de.medizininformatikinitiative.kerndatensatz.soziodemographie/2027.0.0-ballot \
       de.medizininformatikinitiative.kerndatensatz.consent/2027.0.0-ballot \
       hl7.terminology.r4/7.3.0 \
       hl7.fhir.uv.extensions.r4/5.3.0 \
