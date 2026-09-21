@@ -41,10 +41,11 @@ MARK_END = "<!-- BALLOT-TICKETS:END -->"
 FILTER_PREFIX = "MII KDS Ballot 2027 – "
 WINDOW_DAYS = 200  # nur Tickets aus diesem Zeitfenster zaehlen/filtern
 
-# Werte des Auswahlfelds "Project" (cf[10066]) im Ballotportal — die Melder ordnen
-# ihr Ticket damit einer ballotierten Spezifikation zu. Module ohne Eintrag haben
-# (noch) keine Option im Portal und werden per Volltext gesucht (NAMES unten).
-CF_PROJECT = 10066
+# Werte des Auswahlfelds "Project" (customfield_10066) im Ballotportal — die Melder
+# ordnen ihr Ticket damit einer ballotierten Spezifikation zu. Module ohne Eintrag
+# haben (noch) keine Option im Portal und werden per Volltext gesucht (NAMES unten).
+# Die Namens-Syntax statt cf[10066], damit die Jira-UI die Klausel lesbar anzeigt.
+CF_PROJECT = '"Project[Dropdown]"'
 CF_OPTIONS = {
     "base": ["MII - Modul Person", "MII - Modul Fall",
              "MII - Modul Diagnose", "MII - Modul Prozedur"],
@@ -160,7 +161,7 @@ def jql_for(mod, info, project=BALLOT_PROJECT, open_only=False):
         parts.append("statusCategory != Done")
     if project == BALLOT_PROJECT and mod in CF_OPTIONS:
         opts = ", ".join(f'"{o}"' for o in CF_OPTIONS[mod])
-        parts.append(f"cf[{CF_PROJECT}] in ({opts})")
+        parts.append(f"{CF_PROJECT} in ({opts})")
     else:
         terms = [info["package"]] + NAMES.get(mod, [mod])
         clause = " OR ".join(f'text ~ "{t}"' for t in terms)
