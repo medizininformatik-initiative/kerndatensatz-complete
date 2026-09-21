@@ -1,0 +1,53 @@
+name: Ballot-Tickets aktualisieren
+
+on:
+  schedule:
+    - cron: '30 4 * * *'   # taeglich 04:30 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: ballot-tickets
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Ballotportal abfragen und Seite aktualisieren
+        env:
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
+        run: |
+          if [ ! -f input/pagecontent/ballot.md ]; then
+            echo "Keine ballot.md auf diesem Branch - nichts zu tun."
+            exit 0
+          fi
+          ./scripts/ballot-tickets.py --markdown
+
+      # Push mit GITHUB_TOKEN loest keine on:push-Workflows aus,
+      # deshalb wird der IG-Build explizit per workflow_dispatch angestossen.
+      - name: Committen und IG-Build anstossen
+        run: |
+          if [ ! -f input/pagecontent/ballot.md ] || git diff --quiet input/pagecontent/ballot.md; then
+            echo "Keine Aenderungen an der Ballotseite."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add input/pagecontent/ballot.md
+          git commit -m "Ballotseite: Ticketstand automatisch aktualisiert"
+          git pull --rebase origin "$BRANCH"
+          git push origin "HEAD:$BRANCH"
+          if [ "$BRANCH" = "main" ]; then
+            gh workflow run ig-publish.yml --ref main
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: ${{ github.ref_name }}
