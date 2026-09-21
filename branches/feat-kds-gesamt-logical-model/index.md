@@ -201,7 +201,7 @@ dotnet tool install -g Firely.Terminal --version 3.4.0
   "name" : "MIIKerndatensatzComplete",
   "title" : "MII Kerndatensatz Complete",
   "status" : "active",
-  "date" : "2026-09-21T12:22:18+00:00",
+  "date" : "2026-09-21T12:42:44+00:00",
   "publisher" : "Medizininformatik Initiative",
   "contact" : [{
     "name" : "Medizininformatik Initiative",
@@ -970,22 +970,6 @@ dotnet tool install -g Firely.Terminal --version 3.4.0
       },
       "name" : "MII CPS Kerndatensatz Complete CapabilityStatement",
       "description" : "Aggregiertes CapabilityStatement des MII Kerndatensatz Complete-Pakets. Beschreibt alle verpflichtenden Interaktionen, Profile und Suchparameter aus allen Modulen des MII Kerndatensatzes, die ein konformes System unterstützen muss.",
-      "exampleBoolean" : false
-    },
-    {
-      "extension" : [{
-        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
-        "valueString" : "StructureDefinition:logical"
-      },
-      {
-        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
-        "valueUri" : "StructureDefinition-mii-kds-gesamt.html"
-      }],
-      "reference" : {
-        "reference" : "StructureDefinition/mii-kds-gesamt"
-      },
-      "name" : "MII KDS – Gesamtmodell",
-      "description" : "Zentrales Logical Model, das alle Module des MII Kerndatensatzes als typisierte Slots zusammenführt. Inhalte stammen per Typ-Referenz aus den Modul-Logical-Models.",
       "exampleBoolean" : false
     }],
     "page" : {

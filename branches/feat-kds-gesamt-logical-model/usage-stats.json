@@ -25,9 +25,6 @@
     "http://hl7.org/fhir/tools/StructureDefinition/resource-information": [
       "ImplementationGuide.definition.resource"
     ],
-    "http://hl7.org/fhir/tools/StructureDefinition/snapshot-base-version": [
-      "StructureDefinition.snapshot"
-    ],
     "https://www.medizininformatik-initiative.de/fhir/modul-meta/StructureDefinition/mii-ex-meta-license-codeable": [
       "CapabilityStatement"
     ]

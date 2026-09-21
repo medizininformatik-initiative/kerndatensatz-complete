@@ -15,11 +15,3 @@ The following artifacts define the specific capabilities that different types of
 | :--- | :--- |
 | [MII CPS Kerndatensatz Complete CapabilityStatement](CapabilityStatement-mii-cps-kerndatensatz-complete.md) | Aggregiertes CapabilityStatement des MII Kerndatensatz Complete-Pakets. Beschreibt alle verpflichtenden Interaktionen, Profile und Suchparameter aus allen Modulen des MII Kerndatensatzes, die ein konformes System unterstützen muss. |
 
-### Structures: Logical Models 
-
-These define data models that represent the domain covered by this implementation guide in more business-friendly terms than the underlying FHIR resources.
-
-| | |
-| :--- | :--- |
-| [MII KDS – Gesamtmodell](StructureDefinition-mii-kds-gesamt.md) | Zentrales Logical Model, das alle Module des MII Kerndatensatzes als typisierte Slots zusammenführt. Inhalte stammen per Typ-Referenz aus den Modul-Logical-Models. |
-

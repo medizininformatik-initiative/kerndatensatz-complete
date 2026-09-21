@@ -11,7 +11,7 @@
   <name value="MIIKerndatensatzComplete"/>
   <title value="MII Kerndatensatz Complete"/>
   <status value="active"/>
-  <date value="2026-09-21T12:22:18+00:00"/>
+  <date value="2026-09-21T12:42:44+00:00"/>
   <publisher value="Medizininformatik Initiative"/>
   <contact>
     <name value="Medizininformatik Initiative"/>
@@ -594,17 +594,6 @@
       </reference>
       <name value="MII CPS Kerndatensatz Complete CapabilityStatement"/>
       <description value="Aggregiertes CapabilityStatement des MII Kerndatensatz Complete-Pakets. Beschreibt alle verpflichtenden Interaktionen, Profile und Suchparameter aus allen Modulen des MII Kerndatensatzes, die ein konformes System unterstützen muss."/>
-      <exampleBoolean value="false"/>
-    </resource>
-    <resource>
-      <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
-        <valueString value="StructureDefinition:logical"/>
-      </extension>
-      <reference>
-        <reference value="StructureDefinition/mii-kds-gesamt"/>
-      </reference>
-      <name value="MII KDS – Gesamtmodell"/>
-      <description value="Zentrales Logical Model, das alle Module des MII Kerndatensatzes als typisierte Slots zusammenführt. Inhalte stammen per Typ-Referenz aus den Modul-Logical-Models."/>
       <exampleBoolean value="false"/>
     </resource>
     <page>

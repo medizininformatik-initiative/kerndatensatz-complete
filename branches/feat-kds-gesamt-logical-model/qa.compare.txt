@@ -1,12 +1,11 @@
 MIIKerndatensatzComplete : Validation Results
 =========================================
 
-err = 23, warn = 445, info = 8
+err = 23, warn = 409, info = 5
 $--
 Generated $--. FHIR version $-- for de.medizininformatikinitiative.kerndatensatz.complete#$-- (canonical = https://www.medizininformatik-initiative.de/fhir/core/complete)
  Build Errors : 1 / 9 / 0
  /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/fsh-generated/resources/ImplementationGuide-de.medizininformatikinitiative.kerndatensatz.complete : 3 / 17 / 3
- /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/fsh-generated/resources/StructureDefinition-mii-kds-gesamt : 0 / 36 / 4
  /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/input/resources/CapabilityStatement-mii-cps-kerndatensatz-complete : 19 / 383 / 4
 </table>
 == n/a ==
@@ -43,46 +42,6 @@ WARNING: ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.comple
 ERROR: ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.complete: ImplementationGuide.dependsOn[28]: The URL should refer directly to the ImplementationGuide resource (e.g. include '/ImplementationGuide/')
 WARNING: ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.complete: ImplementationGuide.dependsOn[29]: The canonical URL http://fhir.org/packages/de.gematik.isik/ImplementationGuide/de.gematik.isik doesn't point to an actual ImplementationGuide resource
 INFORMATION: Resource: The resource ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.complete could usefully have an OID assigned (OIDs are easy to assign - see https://build.fhir.org/ig/FHIR/fhir-tools-ig/CodeSystem-ig-parameters.html#ig-parameters-auto-oid-root)
-== fsh-generated/resources/StructureDefinition-mii-kds-gesamt.json ==
-INFORMATION: StructureDefinition/mii-kds-gesamt: StructureDefinition.text.div: Hyperlink scheme 'file' in 'file:///home/runner/work/kerndatensatzmodul-biobank/kerndatensatzmodul-biobank/output/StructureDefinition-Biobank.html' at 'div/table/tr/td/a' for 'Biobank' is not a widely supported protocol and should be checked
-INFORMATION: StructureDefinition/mii-kds-gesamt: StructureDefinition.jurisdiction[0]: Reference to experimental CodeSystem urn:iso:std:iso:3166|2027.0.0-ballot.2
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.snapshot.element[0]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.snapshot.element[1]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.snapshot.element[2]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.snapshot.element[3]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.snapshot.element[4]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.snapshot.element[5]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.snapshot.element[6]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.snapshot.element[7]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.snapshot.element[8]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.snapshot.element[9]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.snapshot.element[10]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.snapshot.element[11]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.snapshot.element[12]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.snapshot.element[13]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.snapshot.element[14]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.snapshot.element[15]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.snapshot.element[16]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.snapshot.element[17]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.differential.element[0]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.differential.element[1]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.differential.element[2]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.differential.element[3]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.differential.element[4]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.differential.element[5]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.differential.element[6]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.differential.element[7]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.differential.element[8]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.differential.element[9]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.differential.element[10]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.differential.element[11]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.differential.element[12]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.differential.element[13]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.differential.element[14]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.differential.element[15]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.differential.element[16]: Regel eld-20 fehlgeschlagen
-WARNING: StructureDefinition/mii-kds-gesamt: StructureDefinition.differential.element[17]: Regel eld-20 fehlgeschlagen
-INFORMATION: Resource: The resource StructureDefinition/mii-kds-gesamt could usefully have an OID assigned (OIDs are easy to assign - see https://build.fhir.org/ig/FHIR/fhir-tools-ig/CodeSystem-ig-parameters.html#ig-parameters-auto-oid-root)
 == input/resources/CapabilityStatement-mii-cps-kerndatensatz-complete.json ==
 INFORMATION: CapabilityStatement/mii-cps-kerndatensatz-complete: CapabilityStatement.extension[0].value.ofType(CodeableConcept): Reference to draft CodeSystem http://hl7.org/fhir/spdx-license|84728b7
 INFORMATION: CapabilityStatement/mii-cps-kerndatensatz-complete: CapabilityStatement.jurisdiction[0]: Reference to experimental CodeSystem urn:iso:std:iso:3166|2027.0.0-ballot.2

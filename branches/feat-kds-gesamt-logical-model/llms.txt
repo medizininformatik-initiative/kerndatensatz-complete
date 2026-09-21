@@ -8,10 +8,6 @@
 
 ## Resources
 
-### Logicals
-
-* [MII KDS – Gesamtmodell](StructureDefinition-mii-kds-gesamt.md)
-
 ### CapabilityStatements
 
 * [MII CPS Kerndatensatz Complete CapabilityStatement](CapabilityStatement-mii-cps-kerndatensatz-complete.md)
