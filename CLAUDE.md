@@ -108,6 +108,24 @@ gzip-Tarball — die deklarierten Dependencies stehen darin in `package/package.
 
 
 <!-- BEGIN BEADS INTEGRATION v:1 profile:minimal hash:ca08a54f -->
+## Ballot-Tickets
+
+Die IG-Seite `input/pagecontent/ballot.md` zeigt den Ticketstand aus dem
+HL7-DE-Ballotportal (Jira `hl7germany.atlassian.net`, Projekt `HDB`). Die Tabelle zwischen
+den `BALLOT-TICKETS`-Markern wird generiert:
+
+```bash
+export JIRA_EMAIL=... JIRA_TOKEN=...          # Atlassian-API-Token
+./scripts/ballot-tickets.py --markdown        # Tabelle in ballot.md aktualisieren
+./scripts/ballot-tickets.py --create-filters  # gespeicherte Jira-Filter je Modul pflegen
+./scripts/ballot-tickets.py --module icu      # Tickets eines Moduls auf der Konsole
+```
+
+Die Modulzuordnung läuft über das Portal-Auswahlfeld `cf[10066]` („Project",
+Mapping in `CF_OPTIONS` im Script); Module ohne Portaloption werden per Volltext gesucht.
+Der Workflow `.github/workflows/ballot-tickets.yml` aktualisiert die Seite täglich per Cron
+(Secrets `JIRA_EMAIL`/`JIRA_TOKEN`) und stößt danach den IG-Build an.
+
 ## Beads Issue Tracker
 
 This project uses **bd (beads)** for issue tracking. Run `bd prime` to see full workflow context and commands.
