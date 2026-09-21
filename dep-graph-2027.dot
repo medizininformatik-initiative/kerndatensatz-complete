@@ -24,7 +24,7 @@ digraph MII_KDS_2027_Ballot {
     ranksep=0.7;
 
     labelloc="t";
-    label=<<B>MII KDS 2027 Ballot — Abhängigkeitsgraph</B><BR/><FONT POINT-SIZE="10">Pfeil = „hängt ab von" · Nur MII-interne Deps · Stand 2026-09-13<BR/><FONT COLOR="#c0392b">Rot gestrichelt = Modul deklariert noch die 2026er Version des Ziels</FONT></FONT>>;
+    label=<<B>MII KDS 2027 Ballot — Abhängigkeitsgraph</B><BR/><FONT POINT-SIZE="10">Pfeil = „hängt ab von" · Nur MII-interne Deps · Stand 2026-09-21<BR/><FONT COLOR="#c0392b">Rot gestrichelt = Modul deklariert noch die 2026er Version des Ziels</FONT></FONT>>;
     fontsize=15;
 
     // Kantenstil für den 2026/2027-Bruch
@@ -124,15 +124,6 @@ digraph MII_KDS_2027_Ballot {
     meta       -> lungenfunktion;
     base       -> lungenfunktion;
     medikation -> lungenfunktion;
-
-    // ════════════ Angekündigt, noch nicht publiziert ════════════
-    subgraph cluster_nonfinal {
-        label=<<B>Angekündigt, Package nicht publiziert</B>>;
-        style="dashed"; color="gray60"; bgcolor="#f8f9fa";
-        fontname="Helvetica"; fontsize=10;
-
-        soziodem [label=<Soziodemographie<BR/><FONT POINT-SIZE="8">2027.0.0-ballot.rc1 im Repo,<BR/>in keiner Registry</FONT>>, fillcolor="#e2e3e5", color="gray60", fontcolor="gray30"];
-    }
 
     // ════════════ Ranking ════════════
     {rank=min;  meta}

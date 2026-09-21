@@ -39,6 +39,7 @@ BALLOT_PAGE = os.path.join(ROOT, "input", "pagecontent", "ballot.md")
 MARK_START = "<!-- BALLOT-TICKETS:START -->"
 MARK_END = "<!-- BALLOT-TICKETS:END -->"
 FILTER_PREFIX = "MII KDS Ballot 2027 – "
+WINDOW_DAYS = 200  # nur Tickets aus diesem Zeitfenster zaehlen/filtern
 
 # Werte des Auswahlfelds "Project" (cf[10066]) im Ballotportal — die Melder ordnen
 # ihr Ticket damit einer ballotierten Spezifikation zu. Module ohne Eintrag haben
@@ -154,6 +155,7 @@ def jql_for(mod, info, project=BALLOT_PROJECT, open_only=False):
     parts = []
     if project:
         parts.append(f"project = {project}")
+    parts.append(f"created >= -{WINDOW_DAYS}d")
     if open_only:
         parts.append("statusCategory != Done")
     if project == BALLOT_PROJECT and mod in CF_OPTIONS:

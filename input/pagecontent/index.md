@@ -14,29 +14,11 @@ Während das [Meta-Modul](https://github.com/medizininformatik-initiative/kernda
 
 > **Ballot-Stand 2027.0.0 (Stand 2026-09-21)**
 >
-> **ICU `2027.0.0-ballot.3`** (publiziert 2026-09-17) löst die letzte 2026er-Kante auf: das Modul deklariert jetzt Base und Meta `2027.0.0-ballot`, Basisprofile 1.6.0, ISiK 6.0.0, Terminology 7.3.0 und DVMD KDL 2026.0.0 — und enthält wieder alle fünf Score-Profile, die der versehentlich publizierten `2027.0.0` fehlen. **Damit ist die Ballot-Linie über alle 21 Module kohärent.** Die älteren Notizen unten beschreiben den Weg dorthin.
+> Alle 21 Module sind auf die 2027er Ballot-Linie gepinnt. Die **aktuellen Fassungen** heißen `2027.0.0-ballot`, `…-ballot.1`, `…-ballot.2`, `…-ballot.3` bzw. `…-ballot2` (Mikrobiologie) — die früheren Release-Kandidaten (`…-ballot.rcN`) sind durchgehend abgelöst. Welche Version je Modul gepinnt ist, zeigt die [Gesamtübersicht](#gesamtübersicht).
 >
-> Diese BOM bildet den laufenden Ballot ab: Module mit einem 2027.0.0-Release sind auf dieses gepinnt (Base, Meta, Biobank, Studie, Bildgebung, Dokument, ICU, Mikrobiologie), alle übrigen auf ihre höchste stabile 2026er Version.
+> Mit **ICU `2027.0.0-ballot.3`** (publiziert 2026-09-17) ist die Ballot-Linie untereinander **kohärent**: Alle Module deklarieren Base und Meta der 2027er Linie, doppelte Canonicals beim transitiven Auflösen treten nicht mehr auf. Diese BOM bleibt dennoch ein **Ballot-Arbeitsstand zum Review, kein freigegebener Versionsstand**.
 >
-> Die Ballot-Linie ist untereinander **noch nicht kohärent**: Die 2027.0.0-Releases deklarieren teilweise weiterhin die 2026er Basismodule als Abhängigkeit — Bildgebung erwartet Base 2026.0.1 und Meta 2026.0.0, Dokument erwartet Base 2026.0.0 und Meta 2026.0.0, Biobank und Studie erwarten Meta 2026.0.0, ICU 2027.0.0 erwartet Base 2026.0.1. Lediglich Base 2027.0.0-ballot.rc1 → Meta 2027.0.0-ballot.rc3 ist in sich stimmig.
->
-> Beim Auflösen können Base und Meta dadurch transitiv in zwei Versionen gezogen werden, was bei der Validierung doppelte Canonicals erzeugt. Im Abhängigkeitsgraphen unten sind diese Stellen rot gestrichelt markiert. Diese BOM ist deshalb ein **Ballot-Arbeitsstand zum Review, kein freigegebener Versionsstand**.
->
-> Neu in dieser BOM sind **Kardiologie** und **Lungenfunktion** (beide 2027.0.0-ballot.rc1). Lungenfunktion deklariert dabei die Abhängigkeit `de.basiprofil.r4` — ein Tippfehler, das Paket existiert nicht und die Abhängigkeit ist nicht auflösbar. **Soziodemographie** ist angekündigt, aber in keiner Registry publiziert und daher nicht gepinnt.
->
-> **Meta ist in der finalen Ballot-Fassung**: `2027.0.0-ballot` vom 10.09.2026 löst `ballot.rc3` ab — 0 Errors statt 386, 182 statt 175 Ressourcen.
->
-> **MolGen `2027.0.0-ballot.1`** verweist als erstes Modul durchgängig auf die finalen Fassungen von Base, Biobank und Meta. **Dokument** ist ebenfalls final, deklariert aber noch Base `ballot.rc1` und Meta `ballot.rc3`.
->
-> **Dokument ist umgezogen**: `ballot.rc2` verweist auf Base und Meta der 2027er Linie — das letzte Modul, das noch an Base 2026.0.0 hing. **Medikation** ist in der finalen Fassung.
->
-> **Neu in der BOM: Symptome** mit `2027.0.0-ballot` — vollständig kohärent und mit 0 QA-Errors. **PROs** ist ebenfalls final, hängt aber unverändert an Meta `2026.0.x`.
->
-> **Base und Biobank sind ebenfalls in der finalen Ballot-Fassung** und verweisen auf Meta `2027.0.0-ballot`. Biobank hat dabei den Umzug auf **MIABIS 1.3.0** vollzogen.
->
-> Vollständig auf 2027er Abhängigkeiten sind damit **Base, Biobank, Laborbefund, Medikation, MolGen und Pathologie**.
->
-> Weiterhin am 2026er Stand hängen **PROs** (Meta 2026.0.x, unverändert seit 2026.7.0), **Lungenfunktion** (Base, Meta und Medikation je 2026.0.x — und weiterhin mit dem Tippfehler `de.basiprofil.r4`), **Bildgebung**, **Dokument**, **ICU**, **Kardiologie** sowie **Mikrobiologie**, das Laborbefund 2026.0.3 fordert.
+> Den Weg dorthin — die rc-Zwischenstände und die schrittweise aufgelösten 2026er-Kanten — dokumentiert die Git-Historie dieser Seite.
 
 
 ## Gesamtübersicht
@@ -101,7 +83,7 @@ Alle Module dieser BOM auf einen Blick — die gepinnte Ballot-Version, das Pack
 | Onkologie | `de.medizininformatikinitiative.kerndatensatz.onkologie` | 2027.0.0-ballot.1 | [kerndatensatzmodul-onkologie](https://github.com/medizininformatik-initiative/kerndatensatzmodul-onkologie) | [2027.0.0-ballot.1](https://medizininformatik-initiative.github.io/kerndatensatzmodul-onkologie/) · 4669 Fehler | [v2027.0.0-ballot.1](https://github.com/medizininformatik-initiative/kerndatensatzmodul-onkologie/releases/tag/v2027.0.0-ballot.1) (2026-09-15) |
 | Seltene Erkrankungen | `de.medizininformatikinitiative.kerndatensatz.seltene` | 2027.0.0-ballot | [kerndatensatzmodul-seltene-erkrankungen](https://github.com/medizininformatik-initiative/kerndatensatzmodul-seltene-erkrankungen) | [2027.0.0-ballot](https://medizininformatik-initiative.github.io/kerndatensatzmodul-seltene-erkrankungen/) · 353 Fehler | [v2026.0.1](https://github.com/medizininformatik-initiative/kerndatensatzmodul-seltene-erkrankungen/releases/tag/v2026.0.1) (2026-03-30) |
 | Molekulares Tumorboard | `de.medizininformatikinitiative.kerndatensatz.mtb` | 2027.0.0-ballot.1 | [kerndatensatzmodul-molekulares-tumorboard](https://github.com/medizininformatik-initiative/kerndatensatzmodul-molekulares-tumorboard) | [2027.0.0-ballot.1](https://medizininformatik-initiative.github.io/kerndatensatzmodul-molekulares-tumorboard/) · 55 Fehler | [v2027.0.0-ballot.1](https://github.com/medizininformatik-initiative/kerndatensatzmodul-molekulares-tumorboard/releases/tag/v2027.0.0-ballot.1) (2026-09-15) |
-| PROs | `de.medizininformatikinitiative.kerndatensatz.pros` | 2027.0.0-ballot.1 | [kerndatensatzmodul-proms](https://github.com/medizininformatik-initiative/kerndatensatzmodul-proms) | [2027.0.0-ballot.1](https://medizininformatik-initiative.github.io/kerndatensatzmodul-proms/) · 214 Fehler | [v2027.0.0-ballot.rc5](https://github.com/medizininformatik-initiative/kerndatensatzmodul-proms/releases/tag/v2027.0.0-ballot.rc5) (2026-09-11) |
+| PROs | `de.medizininformatikinitiative.kerndatensatz.pros` | 2027.0.0-ballot.1 | [kerndatensatzmodul-proms](https://github.com/medizininformatik-initiative/kerndatensatzmodul-proms) | [2027.0.0-ballot.1](https://medizininformatik-initiative.github.io/kerndatensatzmodul-proms/) · 214 Fehler | [v2027.0.0-ballot.1](https://github.com/medizininformatik-initiative/kerndatensatzmodul-proms/releases/tag/v2027.0.0-ballot.1) (2026-09-11) |
 | Consent | `de.medizininformatikinitiative.kerndatensatz.consent` | 2027.0.0-ballot | [kerndatensatzmodul-consent](https://github.com/medizininformatik-initiative/kerndatensatzmodul-consent) | [2027.0.0-ballot](https://medizininformatik-initiative.github.io/kerndatensatzmodul-consent/) · 0 Fehler | [v2027.0.0-ballot](https://github.com/medizininformatik-initiative/kerndatensatzmodul-consent/releases/tag/v2027.0.0-ballot) (2026-09-14) |
 | Kardiologie | `de.medizininformatikinitiative.kerndatensatz.kardiologie` | 2027.0.0-ballot | [kerndatensatz-kardiologie](https://github.com/medizininformatik-initiative/kerndatensatz-kardiologie) | [2027.0.0-ballot](https://medizininformatik-initiative.github.io/kerndatensatz-kardiologie/branches/release/v2027.0.0-ballot/) · 42 Fehler | [v2027.0.0-ballot](https://github.com/medizininformatik-initiative/kerndatensatz-kardiologie/releases/tag/v2027.0.0-ballot) (2026-09-14) |
 | Lungenfunktion | `de.medizininformatikinitiative.kerndatensatz.lungenfunktion` | 2027.0.0-ballot.1 | [kerndatensatz-lungenfunktion](https://github.com/medizininformatik-initiative/kerndatensatz-lungenfunktion) | [2027.0.0-ballot.1](https://medizininformatik-initiative.github.io/kerndatensatz-lungenfunktion/) · 1147 Fehler | [v2027.0.0-ballot.1](https://github.com/medizininformatik-initiative/kerndatensatz-lungenfunktion/releases/tag/v2027.0.0-ballot.1) (2026-09-15) |
