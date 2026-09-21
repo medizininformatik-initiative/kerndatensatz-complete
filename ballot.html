@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML>
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
+    <title>Ballot - MII Kerndatensatz Complete v2027.0.0-ballot.19</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content="http://hl7.org/fhir"/>
+
+    <link href="fhir.css" rel="stylesheet"/>
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap-fhir.css" rel="stylesheet"/>
+
+    <!-- Project extras -->
+    <link href="assets/css/project.css" rel="stylesheet"/>
+    <link href="assets/css/pygments-manni.css" rel="stylesheet"/>
+    <link href="assets/css/jquery-ui.css" rel="stylesheet"/>
+  	<link href="assets/css/prism.css" rel="stylesheet" />
+  	<link href="assets/css/cqf.css" rel="stylesheet" />
+    <!-- Placeholder for child template CSS declarations -->
+
+    <script type="text/javascript" src="fhir-table-scripts.js"> </script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="assets/js/html5shiv.js"></script>
+    <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/icon-fhir-144.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/icon-fhir-114.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/icon-fhir-72.png"/>
+    <link rel="apple-touch-icon-precomposed" href="assets/ico/icon-fhir-57.png"/>
+    <link rel="shortcut icon" href="assets/ico/favicon.png"/>
+  </head>
+  <body onload="document.body.style.opacity='1'">
+
+	  <script src="assets/js/prism.js"></script>
+    <script type="text/javascript" src="assets/js/mermaid.js"></script>
+    <script type="text/javascript" src="assets/js/mermaid-init.js"></script>
+    <style type="text/css">h2{--heading-prefix:"2"}
+    h3,h4,h5,h6{--heading-prefix:"2"}</style>
+    <div id="segment-header" class="segment">  <!-- segment-header -->
+      <div class="container">  <!-- container -->
+
+        <!-- Placeholder for child template header declarations -->
+
+
+        <div id="ig-status">
+          <p><span style="font-size:12pt;font-weight:bold">MII Kerndatensatz Complete</span>
+            <br/>
+            <span style="display:inline-block;">2027.0.0-ballot.19 - ballot
+
+
+
+  <img alt="Germany flag" src="assets/images/deu.svg" height="16" title="Germany"/>
+
+
+            </span>
+          </p>
+        </div>
+      </div> <!-- /container -->
+    </div>  <!-- /segment-header -->
+
+    <div id="segment-navbar" class="segment">  <!-- segment-navbar -->
+      <div id="stripe"> </div>
+      <div class="container">  <!-- container -->
+        <!-- HEADER CONTENT -->
+
+        <nav class="navbar navbar-inverse">
+          <!--status-bar-->
+          <div class="container">
+            <button data-target=".navbar-inverse-collapse" class="navbar-toggle" data-toggle="collapse" type="button">
+              <span class="icon-bar"> </span>
+              <span class="icon-bar"> </span>
+              <span class="icon-bar"> </span>
+            </button>
+            <a class="navbar-brand hidden" href="http://hl7.org/fhir/R4/index.html">FHIR</a>
+            <div class="nav-collapse collapse navbar-inverse-collapse">
+              <!-- menu.xml  -->
+
+<ul xmlns="http://www.w3.org/1999/xhtml" class="nav navbar-nav">
+  <li>
+    <a href="index.html">Home</a>
+  </li>
+  <li>
+    <a href="ballot.html">Ballot 2027</a>
+  </li>
+  <li>
+    <a href="artifacts.html">Artifacts</a>
+  </li>
+</ul>
+            </div>  <!-- /.nav-collapse -->
+          </div>  <!-- /.container -->
+        </nav>  <!-- /.navbar -->
+      <!-- /HEADER CONTENT -->
+      </div>  <!-- /container -->
+    </div>  <!-- /segment-navbar -->
+    <!--status-bar-->
+
+    <div id="segment-breadcrumb" class="segment">  <!-- segment-breadcrumb -->
+      <div class="container">  <!-- container -->
+        <ul class="breadcrumb">
+          <li><a href='toc.html'><b>Table of Contents</b></a></li><li><b>Ballot</b></li>
+
+        </ul>
+      </div>  <!-- /container -->
+    </div>  <!-- /segment-breadcrumb -->
+
+    <a name="top"> </a>
+    <div id="segment-content" class="segment">  <!-- segment-content -->
+      <div class="container">  <!-- container -->
+        <div class="row">
+          <div class="inner-wrapper">
+
+<style type="text/css">
+h2:before{color:silver;counter-increment:section;content:var(--heading-prefix) " ";}
+h3:before{color:silver;counter-increment:sub-section;content:var(--heading-prefix) "." counter(sub-section) " ";}
+h4:before{color:silver;counter-increment:composite;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) " ";}
+h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) " ";}
+h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
+</style>
+<div class="col-12">
+  <!--ReleaseHeader--><p id="publish-box">MII Kerndatensatz Complete - Local Development build (v2027.0.0-ballot.19) built by the FHIR (HL7® FHIR® Standard) Build Tools. See the <a href='https://www.medizininformatik-initiative.de/fhir/core/complete/history.html'>Directory of published versions</a></p><!--EndReleaseHeader-->
+  <h2>Ballot</h2>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+    <p><!-- white space is critical inside of capture --></p>
+<div class="markdown-toc">
+<ul id="markdown-toc">
+  <li><a href="#ballotierung-202700" id="markdown-toc-ballotierung-202700">Ballotierung 2027.0.0</a>    <ul>
+      <li><a href="#ticketstand-je-modul" id="markdown-toc-ticketstand-je-modul">Ticketstand je Modul</a></li>
+      <li><a href="#gespeicherte-filter-im-portal" id="markdown-toc-gespeicherte-filter-im-portal">Gespeicherte Filter im Portal</a></li>
+    </ul>
+  </li>
+</ul>
+
+</div>
+<h1 id="ballotierung-202700">Ballotierung 2027.0.0</h1>
+
+<p>Die Module dieser BOM durchlaufen die Ballotierung über das
+<a href="https://ballots.hl7.de">HL7-Deutschland-Ballotportal</a>. Die Ballot-Tickets werden dort im
+Jira-Projekt <a href="https://hl7germany.atlassian.net/browse/HDB">HDB — HL7 Deutschland Ballotierung</a>
+geführt. <strong>Alle Links auf dieser Seite benötigen einen Portal-Account</strong> — die Ballotprojekte
+sind nicht anonym lesbar.</p>
+
+<h3 id="ticketstand-je-modul">Ticketstand je Modul</h3>
+
+<p>Die Zuordnung der Tickets zu den Modulen folgt dem Auswahlfeld <strong>„Project"</strong> des
+Ballotportals, mit dem die Melder ihr Ticket einer ballotierten Spezifikation zuordnen
+(Base fasst dabei die Portaleinträge Person, Fall, Diagnose und Prozedur zusammen).
+Module, für die das Portal noch keine Auswahloption hat (Meta, Consent, Kardiologie,
+Lungenfunktion, Soziodemographie), werden ersatzweise per Volltext gesucht — dort ist
+Beifang möglich. Und generell gilt: Ein Ticket bezieht sich nicht zwingend auf die
+Version, die diese BOM pinnt — im Zweifel das Ticket selbst prüfen.</p>
+
+<!-- BALLOT-TICKETS:START -->
+
+<table>
+  <thead>
+    <tr>
+      <th>Modul</th>
+      <th style="text-align: right">Offen</th>
+      <th style="text-align: right">In Arbeit</th>
+      <th style="text-align: right">Erledigt</th>
+      <th style="text-align: right">Gesamt</th>
+      <th>Portal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Basismodul</td>
+      <td style="text-align: right">27</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">14</td>
+      <td style="text-align: right">41</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Person%22%2C%20%22MII%20-%20Modul%20Fall%22%2C%20%22MII%20-%20Modul%20Diagnose%22%2C%20%22MII%20-%20Modul%20Prozedur%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Person%22%2C%20%22MII%20-%20Modul%20Fall%22%2C%20%22MII%20-%20Modul%20Diagnose%22%2C%20%22MII%20-%20Modul%20Prozedur%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+    </tr>
+    <tr>
+      <td>Bildgebung</td>
+      <td style="text-align: right">2</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">19</td>
+      <td style="text-align: right">21</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Bildgebene%20Verfahren%22%2C%20%22MII%20-%20Modul%20Bildgebung%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Bildgebene%20Verfahren%22%2C%20%22MII%20-%20Modul%20Bildgebung%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+    </tr>
+    <tr>
+      <td>Biobank</td>
+      <td style="text-align: right">3</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">4</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Bioprobendaten%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Bioprobendaten%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+    </tr>
+    <tr>
+      <td>Consent</td>
+      <td style="text-align: right">10</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">3</td>
+      <td style="text-align: right">14</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.consent%22%20OR%20text%20~%20%22Consent%22%20OR%20text%20~%20%22Einwilligung%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.consent%22%20OR%20text%20~%20%22Consent%22%20OR%20text%20~%20%22Einwilligung%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+    </tr>
+    <tr>
+      <td>Dokument</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">16</td>
+      <td style="text-align: right">17</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Dokument%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Dokument%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+    </tr>
+    <tr>
+      <td>Intensivmedizin</td>
+      <td style="text-align: right">2</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">11</td>
+      <td style="text-align: right">13</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Intensivmedizin%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Intensivmedizin%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+    </tr>
+    <tr>
+      <td>Kardiologie</td>
+      <td style="text-align: right">2</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">3</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.kardiologie%22%20OR%20text%20~%20%22Kardiologie%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.kardiologie%22%20OR%20text%20~%20%22Kardiologie%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+    </tr>
+    <tr>
+      <td>Laborbefund</td>
+      <td style="text-align: right">15</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">15</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Laborbefund%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Laborbefund%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+    </tr>
+    <tr>
+      <td>Lungenfunktion</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.lungenfunktion%22%20OR%20text%20~%20%22Lungenfunktion%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.lungenfunktion%22%20OR%20text%20~%20%22Lungenfunktion%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+    </tr>
+    <tr>
+      <td>Medikation</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">7</td>
+      <td style="text-align: right">7</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Medikation%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Medikation%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+    </tr>
+    <tr>
+      <td>Metadaten</td>
+      <td style="text-align: right">5</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">5</td>
+      <td style="text-align: right">10</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.meta%22%20OR%20text%20~%20%22Metadaten%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.meta%22%20OR%20text%20~%20%22Metadaten%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+    </tr>
+    <tr>
+      <td>Mikrobiologie</td>
+      <td style="text-align: right">24</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">7</td>
+      <td style="text-align: right">31</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Mikrobiologie%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Mikrobiologie%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+    </tr>
+    <tr>
+      <td>Molekulargenetik</td>
+      <td style="text-align: right">8</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">13</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Molekulargenetischer%20Befundbericht%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Molekulargenetischer%20Befundbericht%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+    </tr>
+    <tr>
+      <td>Molekulares Tumorboard</td>
+      <td style="text-align: right">6</td>
+      <td style="text-align: right">5</td>
+      <td style="text-align: right">6</td>
+      <td style="text-align: right">17</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Tumorboard%22%2C%20%22MII%20-%20Modul%20Molekulares%20Tumorboard%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Tumorboard%22%2C%20%22MII%20-%20Modul%20Molekulares%20Tumorboard%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+    </tr>
+    <tr>
+      <td>Onkologie</td>
+      <td style="text-align: right">18</td>
+      <td style="text-align: right">20</td>
+      <td style="text-align: right">112</td>
+      <td style="text-align: right">150</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Onkologie%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Onkologie%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+    </tr>
+    <tr>
+      <td>Pathologie</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">16</td>
+      <td style="text-align: right">16</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Pathologiebefund%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Pathologiebefund%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+    </tr>
+    <tr>
+      <td>PRO</td>
+      <td style="text-align: right">8</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">2</td>
+      <td style="text-align: right">10</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Patient%20Reported%20Outcomes%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Patient%20Reported%20Outcomes%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+    </tr>
+    <tr>
+      <td>Seltene Erkrankungen</td>
+      <td style="text-align: right">9</td>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">12</td>
+      <td style="text-align: right">25</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Seltene%20Erkrankungen%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Seltene%20Erkrankungen%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+    </tr>
+    <tr>
+      <td>Soziodemographie</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.soziodemographie%22%20OR%20text%20~%20%22Soziodemographie%22%20OR%20text%20~%20%22Soziodemographisch%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.soziodemographie%22%20OR%20text%20~%20%22Soziodemographie%22%20OR%20text%20~%20%22Soziodemographisch%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+    </tr>
+    <tr>
+      <td>Studie</td>
+      <td style="text-align: right">116</td>
+      <td style="text-align: right">8</td>
+      <td style="text-align: right">33</td>
+      <td style="text-align: right">157</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Medizinisches%20Forschungsvorhaben%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Medizinisches%20Forschungsvorhaben%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+    </tr>
+    <tr>
+      <td>Symptom</td>
+      <td style="text-align: right">3</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">4</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Symptom%20%2F%20klinischer%20Ph%C3%A4notyp%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Symptom%20%2F%20klinischer%20Ph%C3%A4notyp%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+    </tr>
+    <tr>
+      <td><strong>Summe</strong></td>
+      <td style="text-align: right"><strong>260</strong></td>
+      <td style="text-align: right"><strong>40</strong></td>
+      <td style="text-align: right"><strong>269</strong></td>
+      <td style="text-align: right"><strong>569</strong></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><small>Stand: 2026-09-21 11:41 UTC · Zählung über Projekt <a href="https://hl7germany.atlassian.net/browse/HDB">HDB</a> · automatisch aktualisiert</small>
+<!-- BALLOT-TICKETS:END --></p>
+
+<p>Die Tabelle wird täglich automatisch aktualisiert
+(GitHub Action <a href="https://github.com/medizininformatik-initiative/kerndatensatz-complete/actions/workflows/ballot-tickets.yml"><code class="language-plaintext highlighter-rouge">ballot-tickets.yml</code></a>).</p>
+
+<h3 id="gespeicherte-filter-im-portal">Gespeicherte Filter im Portal</h3>
+
+<p>Für jedes Modul gibt es im Portal einen gespeicherten Filter <strong>„MII KDS Ballot 2027 –
+&lt;Modul&gt;"</strong> (geteilt mit allen angemeldeten Nutzern, gepflegt über
+<code class="language-plaintext highlighter-rouge">scripts/ballot-tickets.py --create-filters</code>). Die Filter finden sich im Portal unter
+<a href="https://hl7germany.atlassian.net/issues/?jql="><strong>Filter → Alle Filter</strong></a>, Suche nach
+„MII KDS Ballot 2027". Sie eignen sich auch als Grundlage für eigene Dashboards
+(Dashboard → Gadget „Filterergebnisse" bzw. „Statistiken").</p>
+
+<p>Die Spalten-Links in der Tabelle oben führen direkt auf die entsprechende JQL-Suche —
+<em>offen</em> blendet erledigte Tickets aus, <em>alle</em> zeigt den gesamten Verlauf.</p>
+
+
+
+
+</div>
+        </div>  <!-- /inner-wrapper -->
+      </div>  <!-- /row -->
+    </div>  <!-- /container -->
+  </div>  <!-- /segment-content -->
+
+  <script type="text/javascript" src="assets/js/jquery.js"> </script>     <!-- note keep space here, otherwise it will be transformed to empty tag -> fails -->
+  <script type="text/javascript" src="assets/js/jquery-ui.min.js"> </script>
+
+  <script type="text/javascript" src="assets/js/window-hash.js"> </script>
+  <a name="bottom"> </a>
+  <div id="segment-footer" igtool="footer" class="segment">  <!-- segment-footer -->
+    <div class="container">  <!-- container -->
+
+      <div class="inner-wrapper">
+        <p>
+          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.medizininformatik-initiative.de">Medizininformatik Initiative</a>.  Package de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, Sep 21, 2026 12:43+0000">2026-09-21</span>
+          <br/>
+          <span style="color: var(--footer-highlight-text-color)">
+                      Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
+                 <a style="color: var(--footer-hyperlink-text-color)" href="qa.html">QA Report</a>
+                 
+                
+          </span>
+        </p>
+      </div>  <!-- /inner-wrapper -->
+    </div>  <!-- /container -->
+  </div>  <!-- /segment-footer -->
+  
+  <div id="segment-post-footer" class="segment hidden">  <!-- segment-post-footer -->
+    <div class="container">  <!-- container -->
+    </div>  <!-- /container -->
+  </div>  <!-- /segment-post-footer -->
+
+  <!-- JS and analytics only. -->
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script type="text/javascript" src="assets/js/bootstrap.min.js"> </script>
+  <script type="text/javascript" src="assets/js/respond.min.js"> </script>
+  <script type="text/javascript" src="assets/js/anchor.min.js"> </script>
+  <script type="text/javascript" src="assets/js/clipboard.min.js"> </script>
+  <script type="text/javascript" src="assets/js/clipboard-btn.js"> </script>
+  <script type="text/javascript" src="assets/js/anchor-hover.js"> </script>
+  <!-- Analytics Below
+  ================================================== -->
+  </body>
+</html>
+

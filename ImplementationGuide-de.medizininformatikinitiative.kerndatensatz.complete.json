@@ -3,14 +3,14 @@
   "id" : "de.medizininformatikinitiative.kerndatensatz.complete",
   "text" : {
     "status" : "generated",
-    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: ImplementationGuide de.medizininformatikinitiative.kerndatensatz.complete</b></p><a name=\"de.medizininformatikinitiative.kerndatensatz.complete\"> </a><a name=\"hcde.medizininformatikinitiative.kerndatensatz.complete\"> </a><h2>MIIKerndatensatzComplete</h2><p>The official URL for this implementation guide is: </p><pre>https://www.medizininformatik-initiative.de/fhir/core/complete/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.complete</pre><div><p>Bill of Materials (BOM) aller Module des MII Kerndatensatzes mit kompatiblen Versionen</p>\n</div></div>"
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: ImplementationGuide de.medizininformatikinitiative.kerndatensatz.complete</b></p><a name=\"de.medizininformatikinitiative.kerndatensatz.complete\"> </a><a name=\"hcde.medizininformatikinitiative.kerndatensatz.complete\"> </a><h2>MIIKerndatensatzComplete</h2><p>The official URL for this implementation guide is: </p><pre>https://www.medizininformatik-initiative.de/fhir/core/complete/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.complete</pre><div><p>Bill of Materials (BOM) aller Module des MII Kerndatensatzes samt gepinnter externer Abhaengigkeiten (Ballot-Stand 2027.0.0)</p>\n</div></div>"
   },
   "url" : "https://www.medizininformatik-initiative.de/fhir/core/complete/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.complete",
-  "version" : "2026.0.1-rc.1",
+  "version" : "2027.0.0-ballot.19",
   "name" : "MIIKerndatensatzComplete",
   "title" : "MII Kerndatensatz Complete",
   "status" : "active",
-  "date" : "2026-09-21T12:19:34+00:00",
+  "date" : "2026-09-21T12:43:44+00:00",
   "publisher" : "Medizininformatik Initiative",
   "contact" : [{
     "name" : "Medizininformatik Initiative",
@@ -19,7 +19,7 @@
       "value" : "https://www.medizininformatik-initiative.de"
     }]
   }],
-  "description" : "Bill of Materials (BOM) aller Module des MII Kerndatensatzes mit kompatiblen Versionen",
+  "description" : "Bill of Materials (BOM) aller Module des MII Kerndatensatzes samt gepinnter externer Abhaengigkeiten (Ballot-Stand 2027.0.0)",
   "jurisdiction" : [{
     "coding" : [{
       "system" : "urn:iso:std:iso:3166",
@@ -31,132 +31,184 @@
   "license" : "CC-BY-4.0",
   "fhirVersion" : ["4.0.1"],
   "dependsOn" : [{
-    "id" : "hl7tx",
-    "extension" : [{
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/implementationguide-dependency-comment",
-      "valueMarkdown" : "Automatically added as a dependency - all IGs depend on HL7 Terminology"
-    }],
-    "uri" : "http://terminology.hl7.org/ImplementationGuide/hl7.terminology",
-    "packageId" : "hl7.terminology.r4",
-    "version" : "7.3.0"
-  },
-  {
-    "id" : "hl7ext",
-    "extension" : [{
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/implementationguide-dependency-comment",
-      "valueMarkdown" : "Automatically added as a dependency - all IGs depend on the HL7 Extension Pack"
-    }],
-    "uri" : "http://hl7.org/fhir/extensions/ImplementationGuide/hl7.fhir.uv.extensions",
-    "packageId" : "hl7.fhir.uv.extensions.r4",
-    "version" : "5.3.0"
-  },
-  {
     "id" : "de_basisprofil_r4",
     "uri" : "http://fhir.org/packages/de.basisprofil.r4/ImplementationGuide/de.basisprofil.r4",
     "packageId" : "de.basisprofil.r4",
-    "version" : "1.5.4"
+    "version" : "1.6.0"
   },
   {
     "id" : "de_medizininformatikinitiative_kerndatensatz_base",
     "uri" : "https://www.medizininformatik-initiative.de/fhir/modul-base/ImplementationGuide/mii-ig-base",
     "packageId" : "de.medizininformatikinitiative.kerndatensatz.base",
-    "version" : "2026.0.0"
+    "version" : "2027.0.0-ballot"
   },
   {
     "id" : "de_medizininformatikinitiative_kerndatensatz_meta",
     "uri" : "https://www.medizininformatik-initiative.de/fhir/modul-meta/ImplementationGuide/mii-ig-meta",
     "packageId" : "de.medizininformatikinitiative.kerndatensatz.meta",
-    "version" : "2026.0.0"
+    "version" : "2027.0.0-ballot"
   },
   {
     "id" : "de_medizininformatikinitiative_kerndatensatz_medikation",
     "uri" : "https://www.medizininformatik-initiative.de/fhir/core/modul-medikation/ImplementationGuide/mii-ig-medikation",
     "packageId" : "de.medizininformatikinitiative.kerndatensatz.medikation",
-    "version" : "2026.0.1"
+    "version" : "2027.0.0-ballot"
   },
   {
     "id" : "de_medizininformatikinitiative_kerndatensatz_laborbefund",
     "uri" : "http://fhir.org/packages/de.medizininformatikinitiative.kerndatensatz.laborbefund/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.laborbefund",
     "packageId" : "de.medizininformatikinitiative.kerndatensatz.laborbefund",
-    "version" : "2026.0.1"
+    "version" : "2027.0.0-ballot"
   },
   {
     "id" : "de_medizininformatikinitiative_kerndatensatz_biobank",
-    "uri" : "http://fhir.org/packages/de.medizininformatikinitiative.kerndatensatz.biobank/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.biobank",
+    "uri" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-biobank/ImplementationGuide/mii-ig-biobank",
     "packageId" : "de.medizininformatikinitiative.kerndatensatz.biobank",
-    "version" : "2026.0.1"
+    "version" : "2027.0.0-ballot"
   },
   {
     "id" : "de_medizininformatikinitiative_kerndatensatz_icu",
-    "uri" : "http://fhir.org/packages/de.medizininformatikinitiative.kerndatensatz.icu/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.icu",
+    "uri" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/ImplementationGuide/mii-ig-icu",
     "packageId" : "de.medizininformatikinitiative.kerndatensatz.icu",
-    "version" : "2026.0.2"
+    "version" : "2027.0.0-ballot.3"
   },
   {
     "id" : "de_medizininformatikinitiative_kerndatensatz_mikrobiologie",
     "uri" : "http://fhir.org/packages/de.medizininformatikinitiative.kerndatensatz.mikrobiologie/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.mikrobiologie",
     "packageId" : "de.medizininformatikinitiative.kerndatensatz.mikrobiologie",
-    "version" : "2025.0.1"
+    "version" : "2027.0.0-ballot2"
   },
   {
     "id" : "de_medizininformatikinitiative_kerndatensatz_molgen",
-    "uri" : "http://fhir.org/packages/de.medizininformatikinitiative.kerndatensatz.molgen/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.molgen",
+    "uri" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-molgen/ImplementationGuide/mii-ig-molgen",
     "packageId" : "de.medizininformatikinitiative.kerndatensatz.molgen",
-    "version" : "2026.0.4"
+    "version" : "2027.0.0-ballot.1"
   },
   {
     "id" : "de_medizininformatikinitiative_kerndatensatz_patho",
-    "uri" : "http://fhir.org/packages/de.medizininformatikinitiative.kerndatensatz.patho/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.patho",
+    "uri" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho",
     "packageId" : "de.medizininformatikinitiative.kerndatensatz.patho",
-    "version" : "2026.0.1"
+    "version" : "2027.0.0-ballot"
   },
   {
     "id" : "de_medizininformatikinitiative_kerndatensatz_studie",
-    "uri" : "http://fhir.org/packages/de.medizininformatikinitiative.kerndatensatz.studie/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.studie",
+    "uri" : "https://www.medizininformatik-initiative.de/fhir/modul-studie/ImplementationGuide/mii-ig-studie",
     "packageId" : "de.medizininformatikinitiative.kerndatensatz.studie",
-    "version" : "2026.0.2"
+    "version" : "2027.0.0-ballot"
   },
   {
     "id" : "de_medizininformatikinitiative_kerndatensatz_bildgebung",
     "uri" : "http://fhir.org/packages/de.medizininformatikinitiative.kerndatensatz.bildgebung/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.bildgebung",
     "packageId" : "de.medizininformatikinitiative.kerndatensatz.bildgebung",
-    "version" : "2026.0.0"
+    "version" : "2027.0.0-ballot.1"
   },
   {
     "id" : "de_medizininformatikinitiative_kerndatensatz_dokument",
     "uri" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-dokument/ImplementationGuide/mii-ig-dokument",
     "packageId" : "de.medizininformatikinitiative.kerndatensatz.dokument",
-    "version" : "2026.0.1"
+    "version" : "2027.0.0-ballot.2"
   },
   {
     "id" : "de_medizininformatikinitiative_kerndatensatz_onkologie",
-    "uri" : "http://fhir.org/packages/de.medizininformatikinitiative.kerndatensatz.onkologie/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.onkologie",
+    "uri" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ImplementationGuide/mii-ig-onko-de",
     "packageId" : "de.medizininformatikinitiative.kerndatensatz.onkologie",
-    "version" : "2026.0.3"
+    "version" : "2027.0.0-ballot.1"
   },
   {
     "id" : "de_medizininformatikinitiative_kerndatensatz_seltene",
-    "uri" : "http://fhir.org/packages/de.medizininformatikinitiative.kerndatensatz.seltene/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.seltene",
+    "uri" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-seltene/ImplementationGuide/mii-ig-seltene",
     "packageId" : "de.medizininformatikinitiative.kerndatensatz.seltene",
-    "version" : "2026.0.1"
+    "version" : "2027.0.0-ballot"
   },
   {
     "id" : "de_medizininformatikinitiative_kerndatensatz_mtb",
-    "uri" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-mtb/ImplementationGuide/mii-ig-mtb-de",
+    "uri" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-mtb/ImplementationGuide/mii-ig-mtb",
     "packageId" : "de.medizininformatikinitiative.kerndatensatz.mtb",
-    "version" : "2026.0.1"
+    "version" : "2027.0.0-ballot.1"
   },
   {
     "id" : "de_medizininformatikinitiative_kerndatensatz_pros",
-    "uri" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-dok/ImplementationGuide/mii-ig-pro",
+    "uri" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-pro/ImplementationGuide/mii-ig-pro",
     "packageId" : "de.medizininformatikinitiative.kerndatensatz.pros",
-    "version" : "2026.2.0"
+    "version" : "2027.0.0-ballot.1"
+  },
+  {
+    "id" : "de_medizininformatikinitiative_kerndatensatz_kardiologie",
+    "uri" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-kardio/",
+    "packageId" : "de.medizininformatikinitiative.kerndatensatz.kardiologie",
+    "version" : "2027.0.0-ballot"
+  },
+  {
+    "id" : "de_medizininformatikinitiative_kerndatensatz_lungenfunktion",
+    "uri" : "http://fhir.org/packages/de.medizininformatikinitiative.kerndatensatz.lungenfunktion/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.lungenfunktion",
+    "packageId" : "de.medizininformatikinitiative.kerndatensatz.lungenfunktion",
+    "version" : "2027.0.0-ballot.1"
+  },
+  {
+    "id" : "de_medizininformatikinitiative_kerndatensatz_symptom",
+    "uri" : "https://www.medizininformatik-initiative.de/fhir/modul-symptom/ImplementationGuide/mii-ig-symptom",
+    "packageId" : "de.medizininformatikinitiative.kerndatensatz.symptom",
+    "version" : "2027.0.0-ballot"
+  },
+  {
+    "id" : "de_medizininformatikinitiative_kerndatensatz_soziodemographie",
+    "uri" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-soziodemographie/ImplementationGuide/mii-ig-soziodemographie",
+    "packageId" : "de.medizininformatikinitiative.kerndatensatz.soziodemographie",
+    "version" : "2027.0.0-ballot"
   },
   {
     "id" : "de_medizininformatikinitiative_kerndatensatz_consent",
-    "uri" : "http://fhir.org/packages/de.medizininformatikinitiative.kerndatensatz.consent/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.consent",
+    "uri" : "https://www.medizininformatik-initiative.de/fhir/modul-consent/ImplementationGuide/mii-ig-consent",
     "packageId" : "de.medizininformatikinitiative.kerndatensatz.consent",
-    "version" : "2026.0.1-rc-2"
+    "version" : "2027.0.0-ballot"
+  },
+  {
+    "id" : "hl7_terminology_r4",
+    "uri" : "http://terminology.hl7.org/ImplementationGuide/hl7.terminology",
+    "packageId" : "hl7.terminology.r4",
+    "version" : "7.3.0"
+  },
+  {
+    "id" : "hl7_fhir_uv_extensions_r4",
+    "uri" : "http://hl7.org/fhir/extensions/ImplementationGuide/hl7.fhir.uv.extensions",
+    "packageId" : "hl7.fhir.uv.extensions.r4",
+    "version" : "5.3.0"
+  },
+  {
+    "id" : "hl7_fhir_uv_genomics_reporting",
+    "uri" : "http://hl7.org/fhir/uv/genomics-reporting/ImplementationGuide/hl7.fhir.uv.genomics-reporting",
+    "packageId" : "hl7.fhir.uv.genomics-reporting",
+    "version" : "3.0.0"
+  },
+  {
+    "id" : "hl7_fhir_eu_base",
+    "uri" : "http://hl7.eu/fhir/base/ImplementationGuide/hl7.fhir.eu.base",
+    "packageId" : "hl7.fhir.eu.base",
+    "version" : "2.0.0"
+  },
+  {
+    "id" : "hl7_fhir_eu_laboratory",
+    "uri" : "http://hl7.eu/fhir/laboratory/ImplementationGuide/hl7.fhir.eu.laboratory",
+    "packageId" : "hl7.fhir.eu.laboratory",
+    "version" : "2.0.0"
+  },
+  {
+    "id" : "hl7_fhir_eu_extensions_r4",
+    "uri" : "http://hl7.eu/fhir/extensions/ImplementationGuide/hl7.fhir.eu.extensions",
+    "packageId" : "hl7.fhir.eu.extensions.r4",
+    "version" : "1.3.0"
+  },
+  {
+    "id" : "eu_miabis_r4",
+    "uri" : "https://fhir.miabis.bbmri-eric.eu",
+    "packageId" : "eu.miabis.r4",
+    "version" : "1.3.0"
+  },
+  {
+    "id" : "de_gematik_isik",
+    "uri" : "http://fhir.org/packages/de.gematik.isik/ImplementationGuide/de.gematik.isik",
+    "packageId" : "de.gematik.isik",
+    "version" : "6.0.0"
   }],
   "definition" : {
     "extension" : [{
@@ -177,7 +229,7 @@
       },
       {
         "url" : "value",
-        "valueString" : "rc"
+        "valueString" : "ballot"
       }],
       "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
     },
@@ -456,7 +508,7 @@
       },
       {
         "url" : "value",
-        "valueString" : "rc"
+        "valueString" : "ballot"
       }],
       "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
     },
@@ -713,6 +765,18 @@
       }],
       "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
     }],
+    "resource" : [{
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CapabilityStatement"
+      }],
+      "reference" : {
+        "reference" : "CapabilityStatement/mii-cps-kerndatensatz-complete"
+      },
+      "name" : "MII CPS Kerndatensatz Complete CapabilityStatement",
+      "description" : "Aggregiertes CapabilityStatement des MII Kerndatensatz Complete-Pakets. Beschreibt alle verpflichtenden Interaktionen, Profile und Suchparameter aus allen Modulen des MII Kerndatensatzes, die ein konformes System unterstützen muss.",
+      "exampleBoolean" : false
+    }],
     "page" : {
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
@@ -728,6 +792,15 @@
         }],
         "nameUrl" : "index.html",
         "title" : "Home",
+        "generation" : "markdown"
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+          "valueUrl" : "ballot.html"
+        }],
+        "nameUrl" : "ballot.html",
+        "title" : "Ballot",
         "generation" : "markdown"
       }]
     },

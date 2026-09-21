@@ -1,11 +1,16 @@
-# de.medizininformatikinitiative.kerndatensatz.complete#2026.0.1-rc.1: MII Kerndatensatz Complete
+# de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19: MII Kerndatensatz Complete
 
 ## Pages
 
 * [Home](index.md)
 * [Artifacts Summary](artifacts.md)
+* [Ballot](ballot.md)
 
 ## Resources
+
+### CapabilityStatements
+
+* [MII CPS Kerndatensatz Complete CapabilityStatement](CapabilityStatement-mii-cps-kerndatensatz-complete.md)
 
 ### ImplementationGuides
 

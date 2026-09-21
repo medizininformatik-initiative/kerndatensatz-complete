@@ -1,7 +1,14 @@
 [{
+  "id" : "mii-cps-kerndatensatz-complete",
+  "type" : "CapabilityStatement",
+  "url" : "https://www.medizininformatik-initiative.de/fhir/core/complete/CapabilityStatement/mii-cps-kerndatensatz-complete",
+  "version" : "2027.0.0-ballot.19",
+  "name" : "MII_CPS_Kerndatensatz_Complete"
+},
+{
   "id" : "de.medizininformatikinitiative.kerndatensatz.complete",
   "type" : "ImplementationGuide",
   "url" : "https://www.medizininformatik-initiative.de/fhir/core/complete/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.complete",
-  "version" : "2026.0.1-rc.1",
+  "version" : "2027.0.0-ballot.19",
   "name" : "MIIKerndatensatzComplete"
 }]
