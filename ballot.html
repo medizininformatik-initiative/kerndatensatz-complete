@@ -160,7 +160,9 @@ sind nicht anonym lesbar.</p>
 
 <h3 id="ticketstand-je-modul">Ticketstand je Modul</h3>
 
-<p>Die Zuordnung der Tickets zu den Modulen folgt dem Auswahlfeld <strong>„Project"</strong> des
+<p>Gezählt werden die Tickets der <strong>letzten 200 Tage</strong>, damit die Übersicht den laufenden
+Ballot zeigt und nicht die Historie früherer Kommentierungsrunden. Die Zuordnung der
+Tickets zu den Modulen folgt dem Auswahlfeld <strong>„Project"</strong> des
 Ballotportals, mit dem die Melder ihr Ticket einer ballotierten Spezifikation zuordnen
 (Base fasst dabei die Portaleinträge Person, Fall, Diagnose und Prozedur zusammen).
 Module, für die das Portal noch keine Auswahloption hat (Meta, Consent, Kardiologie,
@@ -184,67 +186,67 @@ Version, die diese BOM pinnt — im Zweifel das Ticket selbst prüfen.</p>
   <tbody>
     <tr>
       <td>Basismodul</td>
-      <td style="text-align: right">27</td>
       <td style="text-align: right">0</td>
-      <td style="text-align: right">14</td>
-      <td style="text-align: right">41</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Person%22%2C%20%22MII%20-%20Modul%20Fall%22%2C%20%22MII%20-%20Modul%20Diagnose%22%2C%20%22MII%20-%20Modul%20Prozedur%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Person%22%2C%20%22MII%20-%20Modul%20Fall%22%2C%20%22MII%20-%20Modul%20Diagnose%22%2C%20%22MII%20-%20Modul%20Prozedur%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Person%22%2C%20%22MII%20-%20Modul%20Fall%22%2C%20%22MII%20-%20Modul%20Diagnose%22%2C%20%22MII%20-%20Modul%20Prozedur%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Person%22%2C%20%22MII%20-%20Modul%20Fall%22%2C%20%22MII%20-%20Modul%20Diagnose%22%2C%20%22MII%20-%20Modul%20Prozedur%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Bildgebung</td>
-      <td style="text-align: right">2</td>
+      <td style="text-align: right">1</td>
       <td style="text-align: right">0</td>
-      <td style="text-align: right">19</td>
-      <td style="text-align: right">21</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Bildgebene%20Verfahren%22%2C%20%22MII%20-%20Modul%20Bildgebung%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Bildgebene%20Verfahren%22%2C%20%22MII%20-%20Modul%20Bildgebung%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Bildgebene%20Verfahren%22%2C%20%22MII%20-%20Modul%20Bildgebung%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Bildgebene%20Verfahren%22%2C%20%22MII%20-%20Modul%20Bildgebung%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Biobank</td>
-      <td style="text-align: right">3</td>
-      <td style="text-align: right">1</td>
       <td style="text-align: right">0</td>
-      <td style="text-align: right">4</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Bioprobendaten%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Bioprobendaten%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Bioprobendaten%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Bioprobendaten%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Consent</td>
-      <td style="text-align: right">10</td>
-      <td style="text-align: right">1</td>
-      <td style="text-align: right">3</td>
-      <td style="text-align: right">14</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.consent%22%20OR%20text%20~%20%22Consent%22%20OR%20text%20~%20%22Einwilligung%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.consent%22%20OR%20text%20~%20%22Consent%22%20OR%20text%20~%20%22Einwilligung%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.consent%22%20OR%20text%20~%20%22Consent%22%20OR%20text%20~%20%22Einwilligung%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.consent%22%20OR%20text%20~%20%22Consent%22%20OR%20text%20~%20%22Einwilligung%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Dokument</td>
       <td style="text-align: right">1</td>
       <td style="text-align: right">0</td>
-      <td style="text-align: right">16</td>
-      <td style="text-align: right">17</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Dokument%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Dokument%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Dokument%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Dokument%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Intensivmedizin</td>
-      <td style="text-align: right">2</td>
+      <td style="text-align: right">1</td>
       <td style="text-align: right">0</td>
-      <td style="text-align: right">11</td>
-      <td style="text-align: right">13</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Intensivmedizin%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Intensivmedizin%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Intensivmedizin%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Intensivmedizin%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Kardiologie</td>
-      <td style="text-align: right">2</td>
       <td style="text-align: right">0</td>
-      <td style="text-align: right">1</td>
-      <td style="text-align: right">3</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.kardiologie%22%20OR%20text%20~%20%22Kardiologie%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.kardiologie%22%20OR%20text%20~%20%22Kardiologie%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.kardiologie%22%20OR%20text%20~%20%22Kardiologie%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.kardiologie%22%20OR%20text%20~%20%22Kardiologie%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Laborbefund</td>
-      <td style="text-align: right">15</td>
       <td style="text-align: right">0</td>
       <td style="text-align: right">0</td>
-      <td style="text-align: right">15</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Laborbefund%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Laborbefund%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Laborbefund%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Laborbefund%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Lungenfunktion</td>
@@ -252,116 +254,116 @@ Version, die diese BOM pinnt — im Zweifel das Ticket selbst prüfen.</p>
       <td style="text-align: right">0</td>
       <td style="text-align: right">0</td>
       <td style="text-align: right">0</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.lungenfunktion%22%20OR%20text%20~%20%22Lungenfunktion%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.lungenfunktion%22%20OR%20text%20~%20%22Lungenfunktion%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.lungenfunktion%22%20OR%20text%20~%20%22Lungenfunktion%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.lungenfunktion%22%20OR%20text%20~%20%22Lungenfunktion%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Medikation</td>
       <td style="text-align: right">0</td>
       <td style="text-align: right">0</td>
-      <td style="text-align: right">7</td>
-      <td style="text-align: right">7</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Medikation%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Medikation%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Medikation%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Medikation%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Metadaten</td>
-      <td style="text-align: right">5</td>
       <td style="text-align: right">0</td>
-      <td style="text-align: right">5</td>
-      <td style="text-align: right">10</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.meta%22%20OR%20text%20~%20%22Metadaten%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.meta%22%20OR%20text%20~%20%22Metadaten%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.meta%22%20OR%20text%20~%20%22Metadaten%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.meta%22%20OR%20text%20~%20%22Metadaten%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Mikrobiologie</td>
-      <td style="text-align: right">24</td>
       <td style="text-align: right">0</td>
-      <td style="text-align: right">7</td>
-      <td style="text-align: right">31</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Mikrobiologie%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Mikrobiologie%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Mikrobiologie%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Mikrobiologie%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Molekulargenetik</td>
-      <td style="text-align: right">8</td>
-      <td style="text-align: right">1</td>
-      <td style="text-align: right">4</td>
-      <td style="text-align: right">13</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Molekulargenetischer%20Befundbericht%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Molekulargenetischer%20Befundbericht%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Molekulargenetischer%20Befundbericht%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Molekulargenetischer%20Befundbericht%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Molekulares Tumorboard</td>
-      <td style="text-align: right">6</td>
-      <td style="text-align: right">5</td>
-      <td style="text-align: right">6</td>
-      <td style="text-align: right">17</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Tumorboard%22%2C%20%22MII%20-%20Modul%20Molekulares%20Tumorboard%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Tumorboard%22%2C%20%22MII%20-%20Modul%20Molekulares%20Tumorboard%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Tumorboard%22%2C%20%22MII%20-%20Modul%20Molekulares%20Tumorboard%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Tumorboard%22%2C%20%22MII%20-%20Modul%20Molekulares%20Tumorboard%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Onkologie</td>
-      <td style="text-align: right">18</td>
-      <td style="text-align: right">20</td>
-      <td style="text-align: right">112</td>
-      <td style="text-align: right">150</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Onkologie%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Onkologie%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Onkologie%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Onkologie%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Pathologie</td>
       <td style="text-align: right">0</td>
       <td style="text-align: right">0</td>
-      <td style="text-align: right">16</td>
-      <td style="text-align: right">16</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Pathologiebefund%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Pathologiebefund%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Pathologiebefund%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Pathologiebefund%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>PRO</td>
-      <td style="text-align: right">8</td>
+      <td style="text-align: right">1</td>
       <td style="text-align: right">0</td>
-      <td style="text-align: right">2</td>
-      <td style="text-align: right">10</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Patient%20Reported%20Outcomes%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Patient%20Reported%20Outcomes%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Patient%20Reported%20Outcomes%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Patient%20Reported%20Outcomes%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Seltene Erkrankungen</td>
-      <td style="text-align: right">9</td>
-      <td style="text-align: right">4</td>
-      <td style="text-align: right">12</td>
-      <td style="text-align: right">25</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Seltene%20Erkrankungen%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Seltene%20Erkrankungen%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Seltene%20Erkrankungen%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Seltene%20Erkrankungen%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Soziodemographie</td>
-      <td style="text-align: right">1</td>
       <td style="text-align: right">0</td>
       <td style="text-align: right">0</td>
-      <td style="text-align: right">1</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.soziodemographie%22%20OR%20text%20~%20%22Soziodemographie%22%20OR%20text%20~%20%22Soziodemographisch%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.soziodemographie%22%20OR%20text%20~%20%22Soziodemographie%22%20OR%20text%20~%20%22Soziodemographisch%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.soziodemographie%22%20OR%20text%20~%20%22Soziodemographie%22%20OR%20text%20~%20%22Soziodemographisch%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.soziodemographie%22%20OR%20text%20~%20%22Soziodemographie%22%20OR%20text%20~%20%22Soziodemographisch%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Studie</td>
-      <td style="text-align: right">116</td>
-      <td style="text-align: right">8</td>
-      <td style="text-align: right">33</td>
-      <td style="text-align: right">157</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Medizinisches%20Forschungsvorhaben%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Medizinisches%20Forschungsvorhaben%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Medizinisches%20Forschungsvorhaben%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Medizinisches%20Forschungsvorhaben%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Symptom</td>
-      <td style="text-align: right">3</td>
       <td style="text-align: right">0</td>
-      <td style="text-align: right">1</td>
-      <td style="text-align: right">4</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Symptom%20%2F%20klinischer%20Ph%C3%A4notyp%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Symptom%20%2F%20klinischer%20Ph%C3%A4notyp%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Symptom%20%2F%20klinischer%20Ph%C3%A4notyp%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Symptom%20%2F%20klinischer%20Ph%C3%A4notyp%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td><strong>Summe</strong></td>
-      <td style="text-align: right"><strong>260</strong></td>
-      <td style="text-align: right"><strong>40</strong></td>
-      <td style="text-align: right"><strong>269</strong></td>
-      <td style="text-align: right"><strong>569</strong></td>
+      <td style="text-align: right"><strong>5</strong></td>
+      <td style="text-align: right"><strong>0</strong></td>
+      <td style="text-align: right"><strong>0</strong></td>
+      <td style="text-align: right"><strong>5</strong></td>
       <td> </td>
     </tr>
   </tbody>
 </table>
 
-<p><small>Stand: 2026-09-21 11:41 UTC · Zählung über Projekt <a href="https://hl7germany.atlassian.net/browse/HDB">HDB</a> · automatisch aktualisiert</small>
+<p><small>Stand: 2026-09-21 12:45 UTC · Zählung über Projekt <a href="https://hl7germany.atlassian.net/browse/HDB">HDB</a> · automatisch aktualisiert</small>
 <!-- BALLOT-TICKETS:END --></p>
 
 <p>Die Tabelle wird täglich automatisch aktualisiert
@@ -398,7 +400,7 @@ Version, die diese BOM pinnt — im Zweifel das Ticket selbst prüfen.</p>
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.medizininformatik-initiative.de">Medizininformatik Initiative</a>.  Package de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, Sep 21, 2026 12:43+0000">2026-09-21</span>
+          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.medizininformatik-initiative.de">Medizininformatik Initiative</a>.  Package de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, Sep 21, 2026 12:47+0000">2026-09-21</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |

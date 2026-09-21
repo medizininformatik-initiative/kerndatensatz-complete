@@ -222,29 +222,11 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 <blockquote>
   <p><strong>Ballot-Stand 2027.0.0 (Stand 2026-09-21)</strong></p>
 
-  <p><strong>ICU <code class="language-plaintext highlighter-rouge">2027.0.0-ballot.3</code></strong> (publiziert 2026-09-17) löst die letzte 2026er-Kante auf: das Modul deklariert jetzt Base und Meta <code class="language-plaintext highlighter-rouge">2027.0.0-ballot</code>, Basisprofile 1.6.0, ISiK 6.0.0, Terminology 7.3.0 und DVMD KDL 2026.0.0 — und enthält wieder alle fünf Score-Profile, die der versehentlich publizierten <code class="language-plaintext highlighter-rouge">2027.0.0</code> fehlen. <strong>Damit ist die Ballot-Linie über alle 21 Module kohärent.</strong> Die älteren Notizen unten beschreiben den Weg dorthin.</p>
+  <p>Alle 21 Module sind auf die 2027er Ballot-Linie gepinnt. Die <strong>aktuellen Fassungen</strong> heißen <code class="language-plaintext highlighter-rouge">2027.0.0-ballot</code>, <code class="language-plaintext highlighter-rouge">…-ballot.1</code>, <code class="language-plaintext highlighter-rouge">…-ballot.2</code>, <code class="language-plaintext highlighter-rouge">…-ballot.3</code> bzw. <code class="language-plaintext highlighter-rouge">…-ballot2</code> (Mikrobiologie) — die früheren Release-Kandidaten (<code class="language-plaintext highlighter-rouge">…-ballot.rcN</code>) sind durchgehend abgelöst. Welche Version je Modul gepinnt ist, zeigt die <a href="#gesamtübersicht">Gesamtübersicht</a>.</p>
 
-  <p>Diese BOM bildet den laufenden Ballot ab: Module mit einem 2027.0.0-Release sind auf dieses gepinnt (Base, Meta, Biobank, Studie, Bildgebung, Dokument, ICU, Mikrobiologie), alle übrigen auf ihre höchste stabile 2026er Version.</p>
+  <p>Mit <strong>ICU <code class="language-plaintext highlighter-rouge">2027.0.0-ballot.3</code></strong> (publiziert 2026-09-17) ist die Ballot-Linie untereinander <strong>kohärent</strong>: Alle Module deklarieren Base und Meta der 2027er Linie, doppelte Canonicals beim transitiven Auflösen treten nicht mehr auf. Diese BOM bleibt dennoch ein <strong>Ballot-Arbeitsstand zum Review, kein freigegebener Versionsstand</strong>.</p>
 
-  <p>Die Ballot-Linie ist untereinander <strong>noch nicht kohärent</strong>: Die 2027.0.0-Releases deklarieren teilweise weiterhin die 2026er Basismodule als Abhängigkeit — Bildgebung erwartet Base 2026.0.1 und Meta 2026.0.0, Dokument erwartet Base 2026.0.0 und Meta 2026.0.0, Biobank und Studie erwarten Meta 2026.0.0, ICU 2027.0.0 erwartet Base 2026.0.1. Lediglich Base 2027.0.0-ballot.rc1 → Meta 2027.0.0-ballot.rc3 ist in sich stimmig.</p>
-
-  <p>Beim Auflösen können Base und Meta dadurch transitiv in zwei Versionen gezogen werden, was bei der Validierung doppelte Canonicals erzeugt. Im Abhängigkeitsgraphen unten sind diese Stellen rot gestrichelt markiert. Diese BOM ist deshalb ein <strong>Ballot-Arbeitsstand zum Review, kein freigegebener Versionsstand</strong>.</p>
-
-  <p>Neu in dieser BOM sind <strong>Kardiologie</strong> und <strong>Lungenfunktion</strong> (beide 2027.0.0-ballot.rc1). Lungenfunktion deklariert dabei die Abhängigkeit <code class="language-plaintext highlighter-rouge">de.basiprofil.r4</code> — ein Tippfehler, das Paket existiert nicht und die Abhängigkeit ist nicht auflösbar. <strong>Soziodemographie</strong> ist angekündigt, aber in keiner Registry publiziert und daher nicht gepinnt.</p>
-
-  <p><strong>Meta ist in der finalen Ballot-Fassung</strong>: <code class="language-plaintext highlighter-rouge">2027.0.0-ballot</code> vom 10.09.2026 löst <code class="language-plaintext highlighter-rouge">ballot.rc3</code> ab — 0 Errors statt 386, 182 statt 175 Ressourcen.</p>
-
-  <p><strong>MolGen <code class="language-plaintext highlighter-rouge">2027.0.0-ballot.1</code></strong> verweist als erstes Modul durchgängig auf die finalen Fassungen von Base, Biobank und Meta. <strong>Dokument</strong> ist ebenfalls final, deklariert aber noch Base <code class="language-plaintext highlighter-rouge">ballot.rc1</code> und Meta <code class="language-plaintext highlighter-rouge">ballot.rc3</code>.</p>
-
-  <p><strong>Dokument ist umgezogen</strong>: <code class="language-plaintext highlighter-rouge">ballot.rc2</code> verweist auf Base und Meta der 2027er Linie — das letzte Modul, das noch an Base 2026.0.0 hing. <strong>Medikation</strong> ist in der finalen Fassung.</p>
-
-  <p><strong>Neu in der BOM: Symptome</strong> mit <code class="language-plaintext highlighter-rouge">2027.0.0-ballot</code> — vollständig kohärent und mit 0 QA-Errors. <strong>PROs</strong> ist ebenfalls final, hängt aber unverändert an Meta <code class="language-plaintext highlighter-rouge">2026.0.x</code>.</p>
-
-  <p><strong>Base und Biobank sind ebenfalls in der finalen Ballot-Fassung</strong> und verweisen auf Meta <code class="language-plaintext highlighter-rouge">2027.0.0-ballot</code>. Biobank hat dabei den Umzug auf <strong>MIABIS 1.3.0</strong> vollzogen.</p>
-
-  <p>Vollständig auf 2027er Abhängigkeiten sind damit <strong>Base, Biobank, Laborbefund, Medikation, MolGen und Pathologie</strong>.</p>
-
-  <p>Weiterhin am 2026er Stand hängen <strong>PROs</strong> (Meta 2026.0.x, unverändert seit 2026.7.0), <strong>Lungenfunktion</strong> (Base, Meta und Medikation je 2026.0.x — und weiterhin mit dem Tippfehler <code class="language-plaintext highlighter-rouge">de.basiprofil.r4</code>), <strong>Bildgebung</strong>, <strong>Dokument</strong>, <strong>ICU</strong>, <strong>Kardiologie</strong> sowie <strong>Mikrobiologie</strong>, das Laborbefund 2026.0.3 fordert.</p>
+  <p>Den Weg dorthin — die rc-Zwischenstände und die schrittweise aufgelösten 2026er-Kanten — dokumentiert die Git-Historie dieser Seite.</p>
 </blockquote>
 
 <h2 id="gesamtübersicht">Gesamtübersicht</h2>
@@ -559,7 +541,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
       <td>2027.0.0-ballot.1</td>
       <td><a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-proms">kerndatensatzmodul-proms</a></td>
       <td><a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-proms/">2027.0.0-ballot.1</a> · 214 Fehler</td>
-      <td><a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-proms/releases/tag/v2027.0.0-ballot.rc5">v2027.0.0-ballot.rc5</a> (2026-09-11)</td>
+      <td><a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-proms/releases/tag/v2027.0.0-ballot.1">v2027.0.0-ballot.1</a> (2026-09-11)</td>
     </tr>
     <tr>
       <td>Consent</td>
@@ -826,7 +808,7 @@ fhir <span class="nb">install </span>de.medizininformatikinitiative.kerndatensat
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.medizininformatik-initiative.de">Medizininformatik Initiative</a>.  Package de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, Sep 21, 2026 12:43+0000">2026-09-21</span>
+          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.medizininformatik-initiative.de">Medizininformatik Initiative</a>.  Package de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, Sep 21, 2026 12:47+0000">2026-09-21</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
