@@ -1,58 +1,53 @@
 {
-  "date" : "Mon, 21 Sep, 2026 12:47:34 +0000",
+  "date" : "Mon, 21 Sep, 2026 13:04:46 +0000",
   "doco" : "For each file: start is seconds after start activity occurred. Length = milliseconds activity took",
   "files" : [{
     "name" : "/fsh-generated/resources/ImplementationGuide-de.medizininformatikinitiative.kerndatensatz.complete.json",
     "size" : 10721,
     "processes" : [{
       "activity" : "load",
-      "start" : 62,
-      "length" : 1
-    },
-    {
-      "activity" : "load",
-      "start" : 62,
-      "length" : 18
-    },
-    {
-      "activity" : "checkR4R4B",
-      "start" : 64,
+      "start" : 53,
       "length" : 11
     },
     {
+      "activity" : "checkR4R4B",
+      "start" : 54,
+      "length" : 10
+    },
+    {
       "activity" : "generateNarratives",
-      "start" : 64,
-      "length" : 51
+      "start" : 54,
+      "length" : 38
     },
     {
       "activity" : "validate",
-      "start" : 119,
-      "length" : 17626
+      "start" : 87,
+      "length" : 10515
     },
     {
       "activity" : "scanForUsageStats",
-      "start" : 136,
+      "start" : 98,
       "length" : 1
     },
     {
       "activity" : "generate1",
-      "start" : 137,
-      "length" : 98
+      "start" : 101,
+      "length" : 343
     },
     {
       "activity" : "generate2",
-      "start" : 140,
-      "length" : 63
+      "start" : 103,
+      "length" : 40
     },
     {
       "activity" : "generateValidationPack",
-      "start" : 180,
-      "length" : 10
+      "start" : 135,
+      "length" : 3
     },
     {
       "activity" : "scanExamplesForR5",
-      "start" : 208,
-      "length" : 3
+      "start" : 155,
+      "length" : 1
     }]
   },
   {
@@ -60,68 +55,68 @@
     "size" : 488664,
     "processes" : [{
       "activity" : "loadResources",
-      "start" : 62,
-      "length" : 66
+      "start" : 53,
+      "length" : 42
     },
     {
       "activity" : "load",
-      "start" : 62,
-      "length" : 138
+      "start" : 53,
+      "length" : 82
     },
     {
       "activity" : "load-configure",
-      "start" : 64,
+      "start" : 54,
       "length" : 4
     },
     {
-      "activity" : "loadDepInfo",
-      "start" : 64,
+      "activity" : "scan",
+      "start" : 54,
       "length" : 1
     },
     {
       "activity" : "checkR4R4B",
-      "start" : 64,
-      "length" : 50
+      "start" : 54,
+      "length" : 29
     },
     {
       "activity" : "generateNarratives",
-      "start" : 64,
-      "length" : 2002
+      "start" : 54,
+      "length" : 1027
     },
     {
       "activity" : "validate",
-      "start" : 66,
-      "length" : 52932
+      "start" : 55,
+      "length" : 32065
     },
     {
       "activity" : "scanForUsageStats",
-      "start" : 136,
-      "length" : 3
+      "start" : 98,
+      "length" : 2
     },
     {
       "activity" : "generate1",
-      "start" : 137,
-      "length" : 928
+      "start" : 101,
+      "length" : 386
     },
     {
       "activity" : "generate2",
-      "start" : 140,
-      "length" : 604
+      "start" : 103,
+      "length" : 617
     },
     {
       "activity" : "makeDependencies",
-      "start" : 142,
-      "length" : 10
+      "start" : 105,
+      "length" : 8
     },
     {
       "activity" : "generateValidationPack",
-      "start" : 180,
-      "length" : 74
+      "start" : 135,
+      "length" : 25
     },
     {
       "activity" : "scanExamplesForR5",
-      "start" : 208,
-      "length" : 13
+      "start" : 155,
+      "length" : 6
     }]
   },
   {
@@ -129,7 +124,7 @@
     "size" : 1100,
     "processes" : [{
       "activity" : "generate2",
-      "start" : 141,
+      "start" : 104,
       "length" : 1
     }]
   },
@@ -139,10 +134,10 @@
   },
   {
     "name" : "/input/pagecontent/ballot.md",
-    "size" : 14079,
+    "size" : 14825,
     "processes" : [{
       "activity" : "generate2",
-      "start" : 141,
+      "start" : 104,
       "length" : 1
     }]
   },
@@ -151,18 +146,13 @@
     "size" : 24414,
     "processes" : [{
       "activity" : "generate2",
-      "start" : 141,
+      "start" : 104,
       "length" : 2
     }]
   },
   {
     "name" : "/template/config",
-    "size" : 0,
-    "processes" : [{
-      "activity" : "generate2",
-      "start" : 141,
-      "length" : 1
-    }]
+    "size" : 0
   },
   {
     "name" : "/template/config/_config.yml",
@@ -189,7 +179,7 @@
     "size" : 34156,
     "processes" : [{
       "activity" : "generate2",
-      "start" : 141,
+      "start" : 104,
       "length" : 1
     }]
   },
