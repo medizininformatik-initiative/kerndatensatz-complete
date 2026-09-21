@@ -24,13 +24,18 @@ jobs:
         env:
           JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
           JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
-        run: ./scripts/ballot-tickets.py --markdown
+        run: |
+          if [ ! -f input/pagecontent/ballot.md ]; then
+            echo "Keine ballot.md auf diesem Branch - nichts zu tun."
+            exit 0
+          fi
+          ./scripts/ballot-tickets.py --markdown
 
       # Push mit GITHUB_TOKEN loest keine on:push-Workflows aus,
       # deshalb wird der IG-Build explizit per workflow_dispatch angestossen.
       - name: Committen und IG-Build anstossen
         run: |
-          if git diff --quiet input/pagecontent/ballot.md; then
+          if [ ! -f input/pagecontent/ballot.md ] || git diff --quiet input/pagecontent/ballot.md; then
             echo "Keine Aenderungen an der Ballotseite."
             exit 0
           fi
