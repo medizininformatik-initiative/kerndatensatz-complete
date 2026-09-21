@@ -43,7 +43,7 @@ Version, die diese BOM pinnt — im Zweifel das Ticket selbst prüfen.
 | Symptom | 3 | 0 | 1 | 4 | [offen](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Symptom%20%2F%20klinischer%20Ph%C3%A4notyp%22%29%20ORDER%20BY%20created%20DESC) · [alle](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Symptom%20%2F%20klinischer%20Ph%C3%A4notyp%22%29%20ORDER%20BY%20created%20DESC) |
 | **Summe** | **260** | **40** | **269** | **569** | |
 
-<small>Stand: 2026-09-21 11:03 UTC · Zählung über Projekt [HDB](https://hl7germany.atlassian.net/browse/HDB) · automatisch aktualisiert</small>
+<small>Stand: 2026-09-21 11:41 UTC · Zählung über Projekt [HDB](https://hl7germany.atlassian.net/browse/HDB) · automatisch aktualisiert</small>
 <!-- BALLOT-TICKETS:END -->
 
 Die Tabelle wird täglich automatisch aktualisiert
