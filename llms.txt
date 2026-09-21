@@ -1,0 +1,12 @@
+# de.medizininformatikinitiative.kerndatensatz.complete#2026.0.1-rc.1: MII Kerndatensatz Complete
+
+## Pages
+
+* [Home](index.md)
+* [Artifacts Summary](artifacts.md)
+
+## Resources
+
+### ImplementationGuides
+
+* [MII Kerndatensatz Complete](index.md)

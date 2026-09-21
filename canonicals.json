@@ -1,0 +1,7 @@
+[{
+  "id" : "de.medizininformatikinitiative.kerndatensatz.complete",
+  "type" : "ImplementationGuide",
+  "url" : "https://www.medizininformatik-initiative.de/fhir/core/complete/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.complete",
+  "version" : "2026.0.1-rc.1",
+  "name" : "MIIKerndatensatzComplete"
+}]
