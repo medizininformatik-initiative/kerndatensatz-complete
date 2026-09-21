@@ -1,0 +1,90 @@
+// Erzeugt von scripts/build-status.py — nicht von Hand pflegen.
+digraph MII_KDS_Status {
+  rankdir=TB; bgcolor="white"; fontname="Helvetica";
+  node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=10, margin="0.22,0.11"];
+  edge [color="gray55", arrowsize=0.7, penwidth=1.0, dir=back];
+  nodesep=0.4; ranksep=0.75; labelloc="t"; fontsize=15;
+  label=<<B>MII KDS — Abhängigkeiten und Reifegrad</B><BR/><FONT POINT-SIZE="9">Pfeil = „hängt ab von" · Nur MII-interne Deps · aus den publizierten Paketen abgeleitet</FONT>>;
+  base [label=<<B>base</B><BR/><FONT POINT-SIZE="8">ballot</FONT>>, fillcolor="#d4edda", color="#2a6249"];
+  bildgebung [label=<<B>bildgebung</B><BR/><FONT POINT-SIZE="8">ballot.1</FONT>>, fillcolor="#d4edda", color="#2a6249"];
+  biobank [label=<<B>biobank</B><BR/><FONT POINT-SIZE="8">ballot</FONT>>, fillcolor="#d4edda", color="#2a6249"];
+  consent [label=<<B>consent</B><BR/><FONT POINT-SIZE="8">ballot</FONT>>, fillcolor="#d4edda", color="#2a6249"];
+  dokument [label=<<B>dokument</B><BR/><FONT POINT-SIZE="8">ballot.2</FONT>>, fillcolor="#d4edda", color="#2a6249"];
+  icu [label=<<B>icu</B><BR/><FONT POINT-SIZE="8">ballot.3</FONT>>, fillcolor="#d4edda", color="#2a6249"];
+  kardiologie [label=<<B>kardiologie</B><BR/><FONT POINT-SIZE="8">ballot</FONT>>, fillcolor="#d4edda", color="#2a6249"];
+  laborbefund [label=<<B>laborbefund</B><BR/><FONT POINT-SIZE="8">ballot</FONT>>, fillcolor="#d4edda", color="#2a6249"];
+  lungenfunktion [label=<<B>lungenfunktion</B><BR/><FONT POINT-SIZE="8">ballot.1</FONT>>, fillcolor="#d4edda", color="#2a6249"];
+  medikation [label=<<B>medikation</B><BR/><FONT POINT-SIZE="8">ballot</FONT>>, fillcolor="#d4edda", color="#2a6249"];
+  meta [label=<<B>meta</B><BR/><FONT POINT-SIZE="8">ballot</FONT>>, fillcolor="#d4edda", color="#2a6249"];
+  mikrobiologie [label=<<B>mikrobiologie</B><BR/><FONT POINT-SIZE="8">ballot2</FONT>>, fillcolor="#d4edda", color="#2a6249"];
+  molgen [label=<<B>molgen</B><BR/><FONT POINT-SIZE="8">ballot.1</FONT>>, fillcolor="#d4edda", color="#2a6249"];
+  mtb [label=<<B>mtb</B><BR/><FONT POINT-SIZE="8">ballot.1</FONT>>, fillcolor="#d4edda", color="#2a6249"];
+  onkologie [label=<<B>onkologie</B><BR/><FONT POINT-SIZE="8">ballot.1</FONT>>, fillcolor="#d4edda", color="#2a6249"];
+  patho [label=<<B>patho</B><BR/><FONT POINT-SIZE="8">ballot</FONT>>, fillcolor="#d4edda", color="#2a6249"];
+  pros [label=<<B>pros</B><BR/><FONT POINT-SIZE="8">ballot.1</FONT>>, fillcolor="#d4edda", color="#2a6249"];
+  seltene [label=<<B>seltene</B><BR/><FONT POINT-SIZE="8">ballot</FONT>>, fillcolor="#d4edda", color="#2a6249"];
+  soziodemographie [label=<<B>soziodemographie</B><BR/><FONT POINT-SIZE="8">ballot</FONT>>, fillcolor="#d4edda", color="#2a6249"];
+  studie [label=<<B>studie</B><BR/><FONT POINT-SIZE="8">ballot</FONT>>, fillcolor="#d4edda", color="#2a6249"];
+  symptom [label=<<B>symptom</B><BR/><FONT POINT-SIZE="8">ballot</FONT>>, fillcolor="#d4edda", color="#2a6249"];
+  meta -> base;
+  base -> bildgebung;
+  medikation -> bildgebung;
+  meta -> bildgebung;
+  meta -> biobank;
+  base -> dokument;
+  meta -> dokument;
+  base -> icu;
+  meta -> icu;
+  base -> kardiologie;
+  meta -> kardiologie;
+  meta -> laborbefund;
+  base -> lungenfunktion;
+  medikation -> lungenfunktion;
+  meta -> lungenfunktion;
+  meta -> medikation;
+  biobank -> mikrobiologie;
+  laborbefund -> mikrobiologie;
+  base -> molgen;
+  biobank -> molgen;
+  meta -> molgen;
+  base -> mtb;
+  biobank -> mtb;
+  medikation -> mtb;
+  meta -> mtb;
+  molgen -> mtb;
+  onkologie -> mtb;
+  patho -> mtb;
+  studie -> mtb;
+  base -> onkologie;
+  biobank -> onkologie;
+  laborbefund -> onkologie;
+  medikation -> onkologie;
+  meta -> onkologie;
+  molgen -> onkologie;
+  base -> patho;
+  biobank -> patho;
+  meta -> patho;
+  meta -> pros;
+  base -> seltene;
+  medikation -> seltene;
+  meta -> seltene;
+  molgen -> seltene;
+  studie -> seltene;
+  base -> soziodemographie;
+  meta -> soziodemographie;
+  meta -> studie;
+  meta -> symptom;
+
+  subgraph cluster_legend {
+    label=<<B>Legende</B>>; style="rounded"; color="gray70"; fontsize=9;
+    node [shape=plaintext, style="", fillcolor="white"];
+    legende [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2">
+      <TR><TD BGCOLOR="#d4edda">&#160;&#160;</TD><TD ALIGN="LEFT">finale Linie, Deps final</TD></TR>
+      <TR><TD BGCOLOR="#fff3cd">&#160;&#160;</TD><TD ALIGN="LEFT">Deps auf RCs</TD></TR>
+      <TR><TD BGCOLOR="#fbe3e0">&#160;&#160;</TD><TD ALIGN="LEFT">2027er Nummer, Deps noch 2026</TD></TR>
+      <TR><TD BGCOLOR="#e2e3e5">&#160;&#160;</TD><TD ALIGN="LEFT">noch ganz auf 2026</TD></TR>
+      <TR><TD><FONT COLOR="#c0392b">— —</FONT></TD><TD ALIGN="LEFT">Kante zeigt auf eine 2026er Version</TD></TR>
+      <TR><TD><FONT COLOR="#8a5d0f">· · ·</FONT></TD><TD ALIGN="LEFT">Kante zeigt auf eine RC</TD></TR>
+    </TABLE>>];
+  }
+}

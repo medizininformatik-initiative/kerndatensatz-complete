@@ -5,3 +5,13 @@ Thumbs.db
 /output
 /temp
 /template
+/.bake
+*.tgz
+
+# Beads / Dolt files (added by bd init)
+.dolt/
+*.db
+.beads-credential-key
+
+# Lokale Rohdatenbasis (Paket-Korpus), nicht eingecheckt
+/package-corpus

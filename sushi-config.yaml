@@ -7,12 +7,12 @@ id: de.medizininformatikinitiative.kerndatensatz.complete
 canonical: https://www.medizininformatik-initiative.de/fhir/core/complete
 name: MIIKerndatensatzComplete
 title: MII Kerndatensatz Complete
-description: Bill of Materials (BOM) aller Module des MII Kerndatensatzes mit kompatiblen Versionen
+description: Bill of Materials (BOM) aller Module des MII Kerndatensatzes samt gepinnter externer Abhaengigkeiten (Ballot-Stand 2027.0.0)
 status: active
-version: 2026.0.1-rc.1
+version: 2027.0.0-ballot.19
 fhirVersion: 4.0.1
 copyrightYear: 2025+
-releaseLabel: rc
+releaseLabel: ballot
 license: CC-BY-4.0
 jurisdiction: urn:iso:std:iso:3166#DE "Germany"
 publisher:
@@ -23,32 +23,101 @@ publisher:
 # package id and the value is the version (or dev/current). For advanced
 # use cases, the value can be an object with keys for id, uri, and version.
 #
+# Ballot-Stand 2026-09-21: Die 2027er Linie ist vollstaendig kohaerent.
+# icu 2027.0.0-ballot.3 (publiziert 2026-09-17) hat die letzte Abweichung
+# (icu -> base 2026.0.1) aufgeloest; deklariert jetzt base/meta 2027.0.0-ballot,
+# basisprofil 1.6.0, isik 6.0.0, terminology 7.3.0, dvmd.kdl.r4 2026.0.0.
+#
+# icu 2027.0.0 ist in ignored-versions.json ausgeschlossen: versehentlich
+# publiziert, 256 statt 267 Ressourcen, ohne die fuenf Score-Profile. Ohne den
+# Ausschluss wuerde sie als hoechste Version greifen, weil eine finale CalVer
+# ueber jedem Ballot sortiert. Es ist ausdruecklich die Ballot-Linie zu pinnen.
+#
+# Erledigt seit dem letzten Stand:
+#   bildgebung 2027.0.0-ballot.1  Deps umgezogen (waren base/medikation 2026.0.1,
+#                                 meta 2026.0.0)
+#   onkologie  2027.0.0-ballot.1  nimmt jetzt molgen 2027.0.0-ballot.1
+#   mtb        2027.0.0-ballot.1  vollstaendig umgezogen; consent entfernt, weil
+#                                 kein Artefakt es konsumierte
+#   kardiologie                   deklariert icu nicht mehr
+#   lungenfunktion                Tippfehler 'de.basiprofil.r4' behoben
+#
+# Der Abgleich steckt in dep-graph-2027.dot: rot gestrichelt = Abweichung.
+# Knotenlabel und Kantenfarben werden aus package.json erzeugt, nicht gepflegt.
+# Siehe mii-kds-complete-alr, mii-kds-complete-d3d.
 dependencies:
   # Deutsche Basisprofile
-  de.basisprofil.r4: 1.5.4
+  de.basisprofil.r4: 1.6.0
 
   # MII Kerndatensatz Basismodule
-  de.medizininformatikinitiative.kerndatensatz.base: 2026.0.0
-  de.medizininformatikinitiative.kerndatensatz.meta: 2026.0.0
-  de.medizininformatikinitiative.kerndatensatz.medikation: 2026.0.1
-  de.medizininformatikinitiative.kerndatensatz.laborbefund: 2026.0.1
+  de.medizininformatikinitiative.kerndatensatz.base: 2027.0.0-ballot
+  de.medizininformatikinitiative.kerndatensatz.meta: 2027.0.0-ballot
+  de.medizininformatikinitiative.kerndatensatz.medikation: 2027.0.0-ballot
+  de.medizininformatikinitiative.kerndatensatz.laborbefund: 2027.0.0-ballot
 
   # MII Kerndatensatz Erweiterungsmodule
-  de.medizininformatikinitiative.kerndatensatz.biobank: 2026.0.1
-  de.medizininformatikinitiative.kerndatensatz.icu: 2026.0.2
-  de.medizininformatikinitiative.kerndatensatz.mikrobiologie: 2025.0.1
-  de.medizininformatikinitiative.kerndatensatz.molgen: 2026.0.4
-  de.medizininformatikinitiative.kerndatensatz.patho: 2026.0.1
-  de.medizininformatikinitiative.kerndatensatz.studie: 2026.0.2
-  de.medizininformatikinitiative.kerndatensatz.bildgebung: 2026.0.0
-  de.medizininformatikinitiative.kerndatensatz.dokument: 2026.0.1
-  de.medizininformatikinitiative.kerndatensatz.onkologie: 2026.0.3
-  de.medizininformatikinitiative.kerndatensatz.seltene: 2026.0.1
-  de.medizininformatikinitiative.kerndatensatz.mtb: 2026.0.1
-  de.medizininformatikinitiative.kerndatensatz.pros: 2026.2.0
+  de.medizininformatikinitiative.kerndatensatz.biobank: 2027.0.0-ballot
+  de.medizininformatikinitiative.kerndatensatz.icu: 2027.0.0-ballot.3
+  de.medizininformatikinitiative.kerndatensatz.mikrobiologie: 2027.0.0-ballot2
+  de.medizininformatikinitiative.kerndatensatz.molgen: 2027.0.0-ballot.1
+  de.medizininformatikinitiative.kerndatensatz.patho: 2027.0.0-ballot
+  de.medizininformatikinitiative.kerndatensatz.studie: 2027.0.0-ballot
+  de.medizininformatikinitiative.kerndatensatz.bildgebung: 2027.0.0-ballot.1
+  de.medizininformatikinitiative.kerndatensatz.dokument: 2027.0.0-ballot.2
+  de.medizininformatikinitiative.kerndatensatz.onkologie: 2027.0.0-ballot.1
+  de.medizininformatikinitiative.kerndatensatz.seltene: 2027.0.0-ballot
+  de.medizininformatikinitiative.kerndatensatz.mtb: 2027.0.0-ballot.1
+  de.medizininformatikinitiative.kerndatensatz.pros: 2027.0.0-ballot.1
+  de.medizininformatikinitiative.kerndatensatz.kardiologie: 2027.0.0-ballot
+  de.medizininformatikinitiative.kerndatensatz.lungenfunktion: 2027.0.0-ballot.1
+  de.medizininformatikinitiative.kerndatensatz.symptom: 2027.0.0-ballot
+  de.medizininformatikinitiative.kerndatensatz.soziodemographie: 2027.0.0-ballot
+
+  # Soziodemographie ist seit 2026-09-16 gepinnt: Package 2027.0.0-ballot liegt auf
+  # Simplifier und packages.fhir.org, Deps base/meta 2027.0.0-ballot. Zuvor war es
+  # bewusst ausgelassen, weil das Package in keiner Registry auffindbar war
+  # (mii-kds-complete-e1x).
 
   # Einwilligungsmanagement
-  de.medizininformatikinitiative.kerndatensatz.consent: 2026.0.1-rc-2
+  de.medizininformatikinitiative.kerndatensatz.consent: 2027.0.0-ballot
+
+  # Externe Abhaengigkeiten
+  #
+  # Gepinnt wird jeweils die hoechste Version, die ein MII-Modul transitiv tatsaechlich
+  # anfordert -- nicht die neueste verfuegbare. Eine Version, gegen die kein Modul gebaut
+  # wurde, gehoert nicht in eine BOM.
+  #
+  # Uneinigkeit zwischen den Modulen (jeweils hoechste gewinnt):
+  #   hl7.terminology.r4        5.0.0 / 6.1.0 / 6.5.0 / 7.1.0 / 7.2.0 / 7.3.0 (icu 2027.0.0-ballot.3)
+  #   hl7.fhir.uv.extensions.r4 5.1.0 / 5.2.0 / 5.3.0 (base 2026.0.1, crmi 2.0.0)
+  #   de.gematik.isik           5.1.0 (patho) / 5.1.1 (pros) / 6.0.0 (icu, dokument)
+  #
+  # eu.miabis.r4 steht seit biobank 2027.0.0-ballot auf 1.3.0 -- das Modul hat den
+  # Umzug auf die neuen MIABIS-Pfade (ohne /fhir/-Segment) vollzogen.
+
+  # icu ist bewusst auf 2027.0.0-ballot.3 gepinnt und NICHT auf 2027.0.0:
+  # letzteres wurde versehentlich publiziert, enthaelt 256 statt 267 Ressourcen
+  # und es fehlen die fuenf Score-Profile. Siehe ignored-versions.json.
+
+  # Terminologie
+  hl7.terminology.r4: 7.3.0
+
+  # Extensions
+  hl7.fhir.uv.extensions.r4: 5.3.0
+
+  # Clinical Genomics
+  hl7.fhir.uv.genomics-reporting: 3.0.0
+
+  # EU-Profile
+  hl7.fhir.eu.base: 2.0.0
+  hl7.fhir.eu.laboratory: 2.0.0
+  hl7.fhir.eu.extensions.r4: 1.3.0
+
+  # Biobank (MIABIS)
+  eu.miabis.r4: 1.3.0
+
+  # ISiK
+  de.gematik.isik: 6.0.0
 #
 #
 # The pages property corresponds to IG.definition.page. SUSHI can
@@ -95,6 +164,7 @@ dependencies:
 # ╰────────────────────────────────────────────────────────────────────────────────────────────────╯
 menu:
   Home: index.html
+  Ballot 2027: ballot.html
   Artifacts: artifacts.html
 
 # ╭───────────────────────────Less Common Implementation Guide Properties──────────────────────────╮

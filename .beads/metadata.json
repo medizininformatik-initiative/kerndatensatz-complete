@@ -1,0 +1,7 @@
+{
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "embedded",
+  "dolt_database": "mii_kds_complete",
+  "project_id": "6a0c4632-2717-4752-8fa7-3be7d30dae97"
+}

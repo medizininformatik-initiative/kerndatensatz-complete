@@ -1,5 +1,5 @@
 #!/bin/bash
-# Load all MII KDS packages into Blaze FHIR server
+# Load all MII KDS packages into Blaze FHIR server (Ballot-Stand 2027.0.0)
 # Usage: ./load-packages-blaze.sh [BLAZE_URL]
 
 BLAZE_URL="${1:-http://localhost:8082/fhir}"
@@ -7,25 +7,43 @@ BLAZE_URL="${1:-http://localhost:8082/fhir}"
 echo "Loading MII KDS packages into Blaze at $BLAZE_URL"
 
 PACKAGES=(
-  "de.medizininformatikinitiative.kerndatensatz.base/2026.0.0"
-  "de.medizininformatikinitiative.kerndatensatz.meta/2026.0.0"
-  "de.medizininformatikinitiative.kerndatensatz.medikation/2026.0.1"
-  "de.medizininformatikinitiative.kerndatensatz.laborbefund/2026.0.1"
-  "de.medizininformatikinitiative.kerndatensatz.biobank/2026.0.1"
-  "de.medizininformatikinitiative.kerndatensatz.icu/2026.0.2"
-  "de.medizininformatikinitiative.kerndatensatz.mikrobiologie/2025.0.1"
-  "de.medizininformatikinitiative.kerndatensatz.molgen/2026.0.4"
-  "de.medizininformatikinitiative.kerndatensatz.patho/2026.0.1"
-  "de.medizininformatikinitiative.kerndatensatz.studie/2026.0.2"
-  "de.medizininformatikinitiative.kerndatensatz.bildgebung/2026.0.0"
-  "de.medizininformatikinitiative.kerndatensatz.dokument/2026.0.1"
-  "de.medizininformatikinitiative.kerndatensatz.onkologie/2026.0.3"
-  "de.medizininformatikinitiative.kerndatensatz.seltene/2026.0.1"
-  "de.medizininformatikinitiative.kerndatensatz.mtb/2026.0.1"
-  "de.medizininformatikinitiative.kerndatensatz.pros/2026.2.0"
-  "de.basisprofil.r4/1.5.4"
-  "de.einwilligungsmanagement/1.0.2"
+  "de.medizininformatikinitiative.kerndatensatz.base/2027.0.0-ballot"
+  "de.medizininformatikinitiative.kerndatensatz.meta/2027.0.0-ballot"
+  "de.medizininformatikinitiative.kerndatensatz.medikation/2027.0.0-ballot"
+  "de.medizininformatikinitiative.kerndatensatz.laborbefund/2027.0.0-ballot"
+  "de.medizininformatikinitiative.kerndatensatz.biobank/2027.0.0-ballot"
+  "de.medizininformatikinitiative.kerndatensatz.icu/2027.0.0-ballot.3"
+  "de.medizininformatikinitiative.kerndatensatz.mikrobiologie/2027.0.0-ballot2"
+  "de.medizininformatikinitiative.kerndatensatz.molgen/2027.0.0-ballot.1"
+  "de.medizininformatikinitiative.kerndatensatz.patho/2027.0.0-ballot"
+  "de.medizininformatikinitiative.kerndatensatz.studie/2027.0.0-ballot"
+  "de.medizininformatikinitiative.kerndatensatz.bildgebung/2027.0.0-ballot.1"
+  "de.medizininformatikinitiative.kerndatensatz.dokument/2027.0.0-ballot.2"
+  "de.medizininformatikinitiative.kerndatensatz.onkologie/2027.0.0-ballot.1"
+  "de.medizininformatikinitiative.kerndatensatz.seltene/2027.0.0-ballot"
+  "de.medizininformatikinitiative.kerndatensatz.mtb/2027.0.0-ballot.1"
+  "de.medizininformatikinitiative.kerndatensatz.pros/2027.0.0-ballot.1"
+  "de.medizininformatikinitiative.kerndatensatz.kardiologie/2027.0.0-ballot"
+  "de.medizininformatikinitiative.kerndatensatz.lungenfunktion/2027.0.0-ballot.1"
+  "de.medizininformatikinitiative.kerndatensatz.symptom/2027.0.0-ballot"
+  "de.medizininformatikinitiative.kerndatensatz.soziodemographie/2027.0.0-ballot"
+  "de.medizininformatikinitiative.kerndatensatz.consent/2027.0.0-ballot"
+  "de.basisprofil.r4/1.6.0"
+  "de.einwilligungsmanagement/2.0.4"
+  # Externe Abhaengigkeiten, explizit gepinnt (siehe package.json / sushi-config.yaml)
+  "hl7.terminology.r4/7.3.0"
+  "hl7.fhir.uv.extensions.r4/5.3.0"
+  "hl7.fhir.uv.genomics-reporting/3.0.0"
+  "hl7.fhir.eu.base/2.0.0"
+  "hl7.fhir.eu.laboratory/2.0.0"
+  "hl7.fhir.eu.extensions.r4/1.3.0"
+  "eu.miabis.r4/1.3.0"
+  "de.gematik.isik/6.0.0"
 )
+
+# Reihenfolge entspricht der BOM (package.json / sushi-config.yaml).
+# Ballot-Stand 2027.0.0: base und meta liegen auf der Ballot-Linie, die uebrigen
+# Module deklarieren teilweise noch die 2026er Versionen -- siehe mii-kds-complete-d3d.
 
 TMPDIR=$(mktemp -d)
 trap "rm -rf $TMPDIR" EXIT

@@ -1,0 +1,144 @@
+// MII KDS 2027 Ballot — Abhängigkeitsgraph
+//
+// Quelle:     dep-graph-2027.dot
+// Generiert:  dot -Tpng dep-graph-2027.dot -o input/images/dep-graph-2027.png
+//             dot -Tsvg dep-graph-2027.dot -o input/images/dep-graph-2027.svg
+//
+// Knotenfarben:
+//   #d4edda  grün    = finale Version (normative / STU-abgeschlossen)
+//   #fff3cd  gelb    = Ballot / RC / Alpha
+//   #e2e3e5  grau    = in Entwicklung / nicht publiziert
+//
+// Kantenfarben:
+//   grau            = deklarierte Dependency passt zur BOM
+//   rot, gestrichelt = Modul deklariert noch die 2026er Version, während die BOM
+//                      das Ziel auf die 2027er Ballot-Linie pinnt (Issue mii-kds-complete-d3d)
+
+digraph MII_KDS_2027_Ballot {
+    rankdir=TB;
+    bgcolor="white";
+    fontname="Helvetica";
+    node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=11, margin="0.25,0.12"];
+    edge [color="gray50", arrowsize=0.7, penwidth=1.0, dir=back];
+    nodesep=0.5;
+    ranksep=0.7;
+
+    labelloc="t";
+    label=<<B>MII KDS 2027 Ballot — Abhängigkeitsgraph</B><BR/><FONT POINT-SIZE="10">Pfeil = „hängt ab von" · Nur MII-interne Deps · Stand 2026-09-13<BR/><FONT COLOR="#c0392b">Rot gestrichelt = Modul deklariert noch die 2026er Version des Ziels</FONT></FONT>>;
+    fontsize=15;
+
+    // Kantenstil für den 2026/2027-Bruch
+    // (als Makro-Ersatz: jede betroffene Kante trägt die Attribute explizit)
+
+    // ════════════ Layer 0: Foundation ════════════
+    meta [label=<Meta 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+
+    // ════════════ Layer 1: Basismodule ════════════
+    base       [label=<Base 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+    labor      [label=<Laborbefund 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+    medikation [label=<Medikation 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+    biobank    [label=<Biobank 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+    studie     [label=<Studie 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+    pros       [label=<PROs 2027.0.0-ballot.1<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+
+    meta -> base;
+    meta -> labor;
+    meta -> medikation;
+    meta -> biobank;
+    meta -> studie;
+    meta -> pros;
+
+    // ════════════ Layer 2: Erweiterungsmodule ════════════
+    icu        [label=<Intensivmedizin 2027.0.0-ballot.3<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+    base -> icu;
+
+    molgen     [label=<Molekulargenetik 2027.0.0-ballot.1<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+    meta    -> molgen;
+    base    -> molgen;
+    biobank -> molgen;
+
+    bildgebung [label=<Bildgebung 2027.0.0-ballot.1<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+    meta       -> bildgebung;
+    base       -> bildgebung;
+    medikation -> bildgebung;
+
+    dokument   [label=<Dokument 2027.0.0-ballot.2<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+    meta -> dokument;
+    base -> dokument;
+
+    mikrobio   [label=<Mikrobiologie 2027.0.0-ballot2<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+    labor -> mikrobio;
+
+    // ════════════ Layer 3: Komplexe Module ════════════
+    onko       [label=<Onkologie 2027.0.0-ballot.1<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>,   fillcolor="#fff3cd"];
+    meta       -> onko;
+    base       -> onko;
+    biobank    -> onko;
+    medikation -> onko;
+    molgen     -> onko;
+    studie     -> onko;
+
+    patho      [label=<Pathologie 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+    meta    -> patho;
+    base    -> patho;
+    biobank -> patho;
+
+    // ════════════ Layer 4 ════════════
+    seltene    [label=<Seltene Erkr. 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+    meta       -> seltene;
+    base       -> seltene;
+    molgen     -> seltene;
+    medikation -> seltene;
+    studie     -> seltene;
+
+    // ════════════ Layer 5 ════════════
+    mtb        [label=<MTB 2027.0.0-ballot.1<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>,         fillcolor="#fff3cd"];
+    meta       -> mtb;
+    base       -> mtb;
+    biobank    -> mtb;
+    medikation -> mtb;
+    molgen     -> mtb;
+    onko       -> mtb;
+    patho      -> mtb;
+    studie     -> mtb;
+
+    // ════════════ Einwilligung (keine MII-internen Deps) ════════════
+    consent    [label=<Consent 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+
+    // ════════════ Neue Ballot-Module ════════════
+    kardiologie [label=<Kardiologie 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+    meta -> kardiologie;
+    base -> kardiologie;
+
+    symptom    [label=<Symptome 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+    meta -> symptom;
+
+
+    soziodemographie [label=<Soziodemographie 2027.0.0-ballot<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+
+    meta -> soziodemographie;
+
+    base -> soziodemographie;
+
+    lungenfunktion [label=<Lungenfunktion 2027.0.0-ballot.1<BR/><FONT POINT-SIZE="8">(finaler Ballot)</FONT>>, fillcolor="#fff3cd"];
+    meta       -> lungenfunktion;
+    base       -> lungenfunktion;
+    medikation -> lungenfunktion;
+
+    // ════════════ Angekündigt, noch nicht publiziert ════════════
+    subgraph cluster_nonfinal {
+        label=<<B>Angekündigt, Package nicht publiziert</B>>;
+        style="dashed"; color="gray60"; bgcolor="#f8f9fa";
+        fontname="Helvetica"; fontsize=10;
+
+        soziodem [label=<Soziodemographie<BR/><FONT POINT-SIZE="8">2027.0.0-ballot.rc1 im Repo,<BR/>in keiner Registry</FONT>>, fillcolor="#e2e3e5", color="gray60", fontcolor="gray30"];
+    }
+
+    // ════════════ Ranking ════════════
+    {rank=min;  meta}
+    {rank=same; base; labor; medikation; biobank; studie; pros; consent; symptom; soziodemographie}
+    {rank=same; icu; molgen; bildgebung; dokument; mikrobio; lungenfunktion}
+    {rank=same; onko; patho; kardiologie}
+    {rank=same; seltene}
+    {rank=max;  mtb}
+}

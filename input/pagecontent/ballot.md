@@ -1,0 +1,62 @@
+# Ballotierung 2027.0.0
+
+Die Module dieser BOM durchlaufen die Ballotierung über das
+[HL7-Deutschland-Ballotportal](https://ballots.hl7.de). Die Ballot-Tickets werden dort im
+Jira-Projekt [HDB — HL7 Deutschland Ballotierung](https://hl7germany.atlassian.net/browse/HDB)
+geführt. **Alle Links auf dieser Seite benötigen einen Portal-Account** — die Ballotprojekte
+sind nicht anonym lesbar.
+
+### Ticketstand je Modul
+
+Die Zuordnung der Tickets zu den Modulen folgt dem Auswahlfeld **„Project"** des
+Ballotportals, mit dem die Melder ihr Ticket einer ballotierten Spezifikation zuordnen
+(Base fasst dabei die Portaleinträge Person, Fall, Diagnose und Prozedur zusammen).
+Module, für die das Portal noch keine Auswahloption hat (Meta, Consent, Kardiologie,
+Lungenfunktion, Soziodemographie), werden ersatzweise per Volltext gesucht — dort ist
+Beifang möglich. Und generell gilt: Ein Ticket bezieht sich nicht zwingend auf die
+Version, die diese BOM pinnt — im Zweifel das Ticket selbst prüfen.
+
+<!-- BALLOT-TICKETS:START -->
+
+| Modul | Offen | In Arbeit | Erledigt | Gesamt | Portal |
+|-------|------:|----------:|---------:|-------:|--------|
+| Basismodul | 27 | 0 | 14 | 41 | [offen](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Person%22%2C%20%22MII%20-%20Modul%20Fall%22%2C%20%22MII%20-%20Modul%20Diagnose%22%2C%20%22MII%20-%20Modul%20Prozedur%22%29%20ORDER%20BY%20created%20DESC) · [alle](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Person%22%2C%20%22MII%20-%20Modul%20Fall%22%2C%20%22MII%20-%20Modul%20Diagnose%22%2C%20%22MII%20-%20Modul%20Prozedur%22%29%20ORDER%20BY%20created%20DESC) |
+| Bildgebung | 2 | 0 | 19 | 21 | [offen](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Bildgebene%20Verfahren%22%2C%20%22MII%20-%20Modul%20Bildgebung%22%29%20ORDER%20BY%20created%20DESC) · [alle](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Bildgebene%20Verfahren%22%2C%20%22MII%20-%20Modul%20Bildgebung%22%29%20ORDER%20BY%20created%20DESC) |
+| Biobank | 3 | 1 | 0 | 4 | [offen](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Bioprobendaten%22%29%20ORDER%20BY%20created%20DESC) · [alle](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Bioprobendaten%22%29%20ORDER%20BY%20created%20DESC) |
+| Consent | 10 | 1 | 3 | 14 | [offen](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.consent%22%20OR%20text%20~%20%22Consent%22%20OR%20text%20~%20%22Einwilligung%22%29%20ORDER%20BY%20created%20DESC) · [alle](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.consent%22%20OR%20text%20~%20%22Consent%22%20OR%20text%20~%20%22Einwilligung%22%29%20ORDER%20BY%20created%20DESC) |
+| Dokument | 1 | 0 | 16 | 17 | [offen](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Dokument%22%29%20ORDER%20BY%20created%20DESC) · [alle](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Dokument%22%29%20ORDER%20BY%20created%20DESC) |
+| Intensivmedizin | 2 | 0 | 11 | 13 | [offen](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Intensivmedizin%22%29%20ORDER%20BY%20created%20DESC) · [alle](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Intensivmedizin%22%29%20ORDER%20BY%20created%20DESC) |
+| Kardiologie | 2 | 0 | 1 | 3 | [offen](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.kardiologie%22%20OR%20text%20~%20%22Kardiologie%22%29%20ORDER%20BY%20created%20DESC) · [alle](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.kardiologie%22%20OR%20text%20~%20%22Kardiologie%22%29%20ORDER%20BY%20created%20DESC) |
+| Laborbefund | 15 | 0 | 0 | 15 | [offen](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Laborbefund%22%29%20ORDER%20BY%20created%20DESC) · [alle](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Laborbefund%22%29%20ORDER%20BY%20created%20DESC) |
+| Lungenfunktion | 0 | 0 | 0 | 0 | [offen](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.lungenfunktion%22%20OR%20text%20~%20%22Lungenfunktion%22%29%20ORDER%20BY%20created%20DESC) · [alle](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.lungenfunktion%22%20OR%20text%20~%20%22Lungenfunktion%22%29%20ORDER%20BY%20created%20DESC) |
+| Medikation | 0 | 0 | 7 | 7 | [offen](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Medikation%22%29%20ORDER%20BY%20created%20DESC) · [alle](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Medikation%22%29%20ORDER%20BY%20created%20DESC) |
+| Metadaten | 5 | 0 | 5 | 10 | [offen](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.meta%22%20OR%20text%20~%20%22Metadaten%22%29%20ORDER%20BY%20created%20DESC) · [alle](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.meta%22%20OR%20text%20~%20%22Metadaten%22%29%20ORDER%20BY%20created%20DESC) |
+| Mikrobiologie | 24 | 0 | 7 | 31 | [offen](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Mikrobiologie%22%29%20ORDER%20BY%20created%20DESC) · [alle](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Mikrobiologie%22%29%20ORDER%20BY%20created%20DESC) |
+| Molekulargenetik | 8 | 1 | 4 | 13 | [offen](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Molekulargenetischer%20Befundbericht%22%29%20ORDER%20BY%20created%20DESC) · [alle](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Molekulargenetischer%20Befundbericht%22%29%20ORDER%20BY%20created%20DESC) |
+| Molekulares Tumorboard | 6 | 5 | 6 | 17 | [offen](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Tumorboard%22%2C%20%22MII%20-%20Modul%20Molekulares%20Tumorboard%22%29%20ORDER%20BY%20created%20DESC) · [alle](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Tumorboard%22%2C%20%22MII%20-%20Modul%20Molekulares%20Tumorboard%22%29%20ORDER%20BY%20created%20DESC) |
+| Onkologie | 18 | 20 | 112 | 150 | [offen](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Onkologie%22%29%20ORDER%20BY%20created%20DESC) · [alle](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Onkologie%22%29%20ORDER%20BY%20created%20DESC) |
+| Pathologie | 0 | 0 | 16 | 16 | [offen](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Pathologiebefund%22%29%20ORDER%20BY%20created%20DESC) · [alle](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Pathologiebefund%22%29%20ORDER%20BY%20created%20DESC) |
+| PRO | 8 | 0 | 2 | 10 | [offen](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Patient%20Reported%20Outcomes%22%29%20ORDER%20BY%20created%20DESC) · [alle](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Patient%20Reported%20Outcomes%22%29%20ORDER%20BY%20created%20DESC) |
+| Seltene Erkrankungen | 9 | 4 | 12 | 25 | [offen](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Seltene%20Erkrankungen%22%29%20ORDER%20BY%20created%20DESC) · [alle](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Seltene%20Erkrankungen%22%29%20ORDER%20BY%20created%20DESC) |
+| Soziodemographie | 1 | 0 | 0 | 1 | [offen](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.soziodemographie%22%20OR%20text%20~%20%22Soziodemographie%22%20OR%20text%20~%20%22Soziodemographisch%22%29%20ORDER%20BY%20created%20DESC) · [alle](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.soziodemographie%22%20OR%20text%20~%20%22Soziodemographie%22%20OR%20text%20~%20%22Soziodemographisch%22%29%20ORDER%20BY%20created%20DESC) |
+| Studie | 116 | 8 | 33 | 157 | [offen](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Medizinisches%20Forschungsvorhaben%22%29%20ORDER%20BY%20created%20DESC) · [alle](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Medizinisches%20Forschungsvorhaben%22%29%20ORDER%20BY%20created%20DESC) |
+| Symptom | 3 | 0 | 1 | 4 | [offen](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20statusCategory%20%21%3D%20Done%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Symptom%20%2F%20klinischer%20Ph%C3%A4notyp%22%29%20ORDER%20BY%20created%20DESC) · [alle](https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20cf%5B10066%5D%20in%20%28%22MII%20-%20Modul%20Symptom%20%2F%20klinischer%20Ph%C3%A4notyp%22%29%20ORDER%20BY%20created%20DESC) |
+| **Summe** | **260** | **40** | **269** | **569** | |
+
+<small>Stand: 2026-09-21 11:41 UTC · Zählung über Projekt [HDB](https://hl7germany.atlassian.net/browse/HDB) · automatisch aktualisiert</small>
+<!-- BALLOT-TICKETS:END -->
+
+Die Tabelle wird täglich automatisch aktualisiert
+(GitHub Action [`ballot-tickets.yml`](https://github.com/medizininformatik-initiative/kerndatensatz-complete/actions/workflows/ballot-tickets.yml)).
+
+### Gespeicherte Filter im Portal
+
+Für jedes Modul gibt es im Portal einen gespeicherten Filter **„MII KDS Ballot 2027 –
+&lt;Modul&gt;"** (geteilt mit allen angemeldeten Nutzern, gepflegt über
+`scripts/ballot-tickets.py --create-filters`). Die Filter finden sich im Portal unter
+[**Filter → Alle Filter**](https://hl7germany.atlassian.net/issues/?jql=), Suche nach
+„MII KDS Ballot 2027". Sie eignen sich auch als Grundlage für eigene Dashboards
+(Dashboard → Gadget „Filterergebnisse" bzw. „Statistiken").
+
+Die Spalten-Links in der Tabelle oben führen direkt auf die entsprechende JQL-Suche —
+_offen_ blendet erledigte Tickets aus, _alle_ zeigt den gesamten Verlauf.
