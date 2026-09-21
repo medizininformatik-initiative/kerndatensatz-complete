@@ -1,0 +1,35 @@
+{
+  "package": "de.medizininformatikinitiative.kerndatensatz.complete",
+  "version": "2027.0.0-ballot.19",
+  "fhirVersion": "4.0.1",
+  "jurisdiction": "DE",
+  "extensions": [],
+  "profiles": {},
+  "usage": {
+    "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation": [
+      "CapabilityStatement.rest.resource",
+      "CapabilityStatement.rest.resource.interaction",
+      "CapabilityStatement.rest.resource.searchParam",
+      "CapabilityStatement.rest.resource.supportedProfile"
+    ],
+    "http://hl7.org/fhir/tools/StructureDefinition/ig-internal-dependency": [
+      "ImplementationGuide.definition"
+    ],
+    "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name": [
+      "ImplementationGuide.definition.page",
+      "ImplementationGuide.definition.page.page"
+    ],
+    "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter": [
+      "ImplementationGuide.definition"
+    ],
+    "http://hl7.org/fhir/tools/StructureDefinition/resource-information": [
+      "ImplementationGuide.definition.resource"
+    ],
+    "http://hl7.org/fhir/tools/StructureDefinition/snapshot-base-version": [
+      "StructureDefinition.snapshot"
+    ],
+    "https://www.medizininformatik-initiative.de/fhir/modul-meta/StructureDefinition/mii-ex-meta-license-codeable": [
+      "CapabilityStatement"
+    ]
+  }
+}
