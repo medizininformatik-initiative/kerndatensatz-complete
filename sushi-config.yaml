@@ -9,7 +9,7 @@ name: MIIKerndatensatzComplete
 title: MII Kerndatensatz Complete
 description: Bill of Materials (BOM) aller Module des MII Kerndatensatzes samt gepinnter externer Abhaengigkeiten (Ballot-Stand 2027.0.0)
 status: active
-version: 2027.0.0-ballot.18
+version: 2027.0.0-ballot.19
 fhirVersion: 4.0.1
 copyrightYear: 2025+
 releaseLabel: ballot
@@ -23,13 +23,10 @@ publisher:
 # package id and the value is the version (or dev/current). For advanced
 # use cases, the value can be an object with keys for id, uri, and version.
 #
-# ACHTUNG (Ballot-Stand 2026-09-15): Die 2027er Linie ist bis auf ein Modul
-# kohaerent. Einzige verbleibende Abweichung gegenueber dieser BOM, ermittelt
-# aus der package.json der gepinnten Pakete:
-#
-#   icu 2027.0.0-ballot.rc2 -> base 2026.0.1
-#
-# Eine icu 2027.0.0-ballot.3 ist angekuendigt und loest das auf.
+# Ballot-Stand 2026-09-21: Die 2027er Linie ist vollstaendig kohaerent.
+# icu 2027.0.0-ballot.3 (publiziert 2026-09-17) hat die letzte Abweichung
+# (icu -> base 2026.0.1) aufgeloest; deklariert jetzt base/meta 2027.0.0-ballot,
+# basisprofil 1.6.0, isik 6.0.0, terminology 7.3.0, dvmd.kdl.r4 2026.0.0.
 #
 # icu 2027.0.0 ist in ignored-versions.json ausgeschlossen: versehentlich
 # publiziert, 256 statt 267 Ressourcen, ohne die fuenf Score-Profile. Ohne den
@@ -60,7 +57,7 @@ dependencies:
 
   # MII Kerndatensatz Erweiterungsmodule
   de.medizininformatikinitiative.kerndatensatz.biobank: 2027.0.0-ballot
-  de.medizininformatikinitiative.kerndatensatz.icu: 2027.0.0-ballot.rc2
+  de.medizininformatikinitiative.kerndatensatz.icu: 2027.0.0-ballot.3
   de.medizininformatikinitiative.kerndatensatz.mikrobiologie: 2027.0.0-ballot2
   de.medizininformatikinitiative.kerndatensatz.molgen: 2027.0.0-ballot.1
   de.medizininformatikinitiative.kerndatensatz.patho: 2027.0.0-ballot
@@ -91,14 +88,14 @@ dependencies:
   # wurde, gehoert nicht in eine BOM.
   #
   # Uneinigkeit zwischen den Modulen (jeweils hoechste gewinnt):
-  #   hl7.terminology.r4        5.0.0 / 6.1.0 / 6.5.0 / 7.1.0 / 7.2.0 / 7.3.0 (icu 2027.0.0)
+  #   hl7.terminology.r4        5.0.0 / 6.1.0 / 6.5.0 / 7.1.0 / 7.2.0 / 7.3.0 (icu 2027.0.0-ballot.3)
   #   hl7.fhir.uv.extensions.r4 5.1.0 / 5.2.0 / 5.3.0 (base 2026.0.1, crmi 2.0.0)
   #   de.gematik.isik           5.1.0 (patho) / 5.1.1 (pros) / 6.0.0 (icu, dokument)
   #
   # eu.miabis.r4 steht seit biobank 2027.0.0-ballot auf 1.3.0 -- das Modul hat den
   # Umzug auf die neuen MIABIS-Pfade (ohne /fhir/-Segment) vollzogen.
 
-  # icu ist bewusst auf 2027.0.0-ballot.rc2 gepinnt und NICHT auf 2027.0.0:
+  # icu ist bewusst auf 2027.0.0-ballot.3 gepinnt und NICHT auf 2027.0.0:
   # letzteres wurde versehentlich publiziert, enthaelt 256 statt 267 Ressourcen
   # und es fehlen die fuenf Score-Profile. Siehe ignored-versions.json.
 

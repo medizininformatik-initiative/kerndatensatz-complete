@@ -12,7 +12,9 @@ Die Module des Kerndatensatzes werden von verschiedenen Teams eigenständig weit
 
 Während das [Meta-Modul](https://github.com/medizininformatik-initiative/kerndatensatz-meta) (`de.medizininformatikinitiative.kerndatensatz.meta`) modulübergreifende Ressourcen bereitstellt, die von den einzelnen KDS-Modulen als Grundlage genutzt werden (Extensions, CodeSystems, Naming-Conventions), dient dieses Complete-Paket als gebündelter Output: Eine einzelne Abhängigkeit, die alle Module des Kerndatensatzes in ein Projekt einbindet.
 
-> **Ballot-Stand 2027.0.0 (Stand 2026-09-13)**
+> **Ballot-Stand 2027.0.0 (Stand 2026-09-21)**
+>
+> **ICU `2027.0.0-ballot.3`** (publiziert 2026-09-17) löst die letzte 2026er-Kante auf: das Modul deklariert jetzt Base und Meta `2027.0.0-ballot`, Basisprofile 1.6.0, ISiK 6.0.0, Terminology 7.3.0 und DVMD KDL 2026.0.0 — und enthält wieder alle fünf Score-Profile, die der versehentlich publizierten `2027.0.0` fehlen. **Damit ist die Ballot-Linie über alle 21 Module kohärent.** Die älteren Notizen unten beschreiben den Weg dorthin.
 >
 > Diese BOM bildet den laufenden Ballot ab: Module mit einem 2027.0.0-Release sind auf dieses gepinnt (Base, Meta, Biobank, Studie, Bildgebung, Dokument, ICU, Mikrobiologie), alle übrigen auf ihre höchste stabile 2026er Version.
 >

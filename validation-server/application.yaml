@@ -35,8 +35,8 @@ hapi:
         packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.biobank-2027.0.0-ballot.tgz
       icu:
         name: de.medizininformatikinitiative.kerndatensatz.icu
-        version: 2027.0.0-ballot.rc2
-        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.icu-2027.0.0-ballot.rc2.tgz
+        version: 2027.0.0-ballot.3
+        packageUrl: file:///app/packages/de.medizininformatikinitiative.kerndatensatz.icu-2027.0.0-ballot.3.tgz
       mikrobiologie:
         name: de.medizininformatikinitiative.kerndatensatz.mikrobiologie
         version: 2027.0.0-ballot2

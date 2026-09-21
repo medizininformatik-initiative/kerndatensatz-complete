@@ -22,7 +22,7 @@ RUN mkdir -p /packages /work && cd /work && \
       de.medizininformatikinitiative.kerndatensatz.medikation/2027.0.0-ballot \
       de.medizininformatikinitiative.kerndatensatz.laborbefund/2027.0.0-ballot \
       de.medizininformatikinitiative.kerndatensatz.biobank/2027.0.0-ballot \
-      de.medizininformatikinitiative.kerndatensatz.icu/2027.0.0-ballot.rc2 \
+      de.medizininformatikinitiative.kerndatensatz.icu/2027.0.0-ballot.3 \
       de.medizininformatikinitiative.kerndatensatz.mikrobiologie/2027.0.0-ballot2 \
       de.medizininformatikinitiative.kerndatensatz.molgen/2027.0.0-ballot.1 \
       de.medizininformatikinitiative.kerndatensatz.patho/2027.0.0-ballot \
