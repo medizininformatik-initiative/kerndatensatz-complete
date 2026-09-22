@@ -3,7 +3,7 @@ MIIKerndatensatzComplete : Validation Results
 
 err = 23, warn = 409, info = 5
 IG Publisher Version: 2.3.4
-Generated Tue Sep 22 09:19:44 UTC 2026. FHIR version 4.0.1 for de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19 (canonical = https://www.medizininformatik-initiative.de/fhir/core/complete)
+Generated Tue Sep 22 09:30:07 UTC 2026. FHIR version 4.0.1 for de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19 (canonical = https://www.medizininformatik-initiative.de/fhir/core/complete)
  Build Errors : 1 / 9 / 0
  /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/fsh-generated/resources/ImplementationGuide-de.medizininformatikinitiative.kerndatensatz.complete : 3 / 17 / 3
  /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/input/resources/CapabilityStatement-mii-cps-kerndatensatz-complete : 19 / 383 / 4
@@ -13,7 +13,7 @@ ERROR: ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.complete
 WARNING: ImplementationGuide.dependency[9].url: The canonical URL for an Implementation Guide must point directly to the implementation guide resource, not to the Implementation Guide as a whole
 WARNING: ImplementationGuide.dependency[17].url: The canonical URL for an Implementation Guide must point directly to the implementation guide resource, not to the Implementation Guide as a whole
 WARNING: ImplementationGuide.dependency[28].url: The canonical URL for an Implementation Guide must point directly to the implementation guide resource, not to the Implementation Guide as a whole
-WARNING: /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/output/de/ballot.html: Illegal HTML: illegal html element: small (Stand: 2026-09-21 12:59 UTC · Zählung über Projekt HDB · automatisch aktualisiert)
+WARNING: /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/output/de/ballot.html: Illegal HTML: illegal html element: small (Stand: 2026-09-22 09:25 UTC · Zählung über Projekt HDB · automatisch aktualisiert)
 WARNING: /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/output/de/index.html: Illegal HTML: illegal html element: small (Automatisch generiert aus dep-graph-2027.dot via Graphviz. Knoten: grün = finale Version, gelb = Ballot/RC/Alpha, grau = in Entwicklung. Kanten: rot gestrichelt = das Modul deklariert noch die 2026er Version des Ziels, während diese BOM auf die 2027er Ballot-Linie pinnt.)
 WARNING: 1: The HTML fragment 'ip-statements.xhtml' is not included anywhere in the produced implementation guide
 WARNING: 2: An HTML fragment from the set [cross-version-analysis.xhtml, cross-version-analysis-inline.xhtml] is not included anywhere in the produced implementation guide

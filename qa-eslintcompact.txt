@@ -5,7 +5,7 @@ Generic: line 0, col 0, Error - This IG is for FHIR version 4.0.1, while the pac
 Generic: line 0, col 0, Warning - The canonical URL for an Implementation Guide must point directly to the implementation guide resource, not to the Implementation Guide as a whole (INVALID)
 Generic: line 0, col 0, Warning - The canonical URL for an Implementation Guide must point directly to the implementation guide resource, not to the Implementation Guide as a whole (INVALID)
 Generic: line 0, col 0, Warning - The canonical URL for an Implementation Guide must point directly to the implementation guide resource, not to the Implementation Guide as a whole (INVALID)
-Generic: line 0, col 0, Warning - Illegal HTML: illegal html element: small (Stand: 2026-09-21 12:59 UTC · Zählung über Projekt HDB · automatisch aktualisiert) (INVALID)
+Generic: line 0, col 0, Warning - Illegal HTML: illegal html element: small (Stand: 2026-09-22 09:25 UTC · Zählung über Projekt HDB · automatisch aktualisiert) (INVALID)
 Generic: line 0, col 0, Warning - Illegal HTML: illegal html element: small (Automatisch generiert aus dep-graph-2027.dot via Graphviz. Knoten: grün = finale Version, gelb = Ballot/RC/Alpha, grau = in Entwicklung. Kanten: rot gestrichelt = das Modul deklariert noch die 2026er Version des Ziels, während diese BOM auf die 2027er Ballot-Linie pinnt.) (INVALID)
 Generic: line 0, col 0, Warning - The HTML fragment 'ip-statements.xhtml' is not included anywhere in the produced implementation guide (NOTFOUND)
 Generic: line 0, col 0, Warning - An HTML fragment from the set [cross-version-analysis.xhtml, cross-version-analysis-inline.xhtml] is not included anywhere in the produced implementation guide (NOTFOUND)
