@@ -155,7 +155,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
         
           Active
           
-            as of 2026-09-21
+            as of 2026-09-22
           
         
       </td>
@@ -612,43 +612,43 @@ Haupttabelle geführt.</em></p>
     <tr>
       <td>Deutsche Basisprofile R4 (<code class="language-plaintext highlighter-rouge">de.basisprofil.r4</code>)</td>
       <td>1.6.0</td>
-      <td>Base, Biobank, ICU, Bildgebung, Dokument, Kardiologie</td>
-      <td>ältere Module fordern noch 1.5.x; Lungenfunktion fordert das nicht existierende <code class="language-plaintext highlighter-rouge">de.basiprofil.r4</code></td>
+      <td>14 Module (Base, Biobank, Bildgebung, Dokument, ICU, Kardiologie, Lungenfunktion, Medikation, MolGen, MTB, Onkologie, PROs, Seltene, Symptome)</td>
+      <td>einheitlich 1.6.0 — der frühere Tippfehler <code class="language-plaintext highlighter-rouge">de.basiprofil.r4</code> (Lungenfunktion) ist behoben</td>
     </tr>
     <tr>
       <td>HL7 Terminology (<code class="language-plaintext highlighter-rouge">hl7.terminology.r4</code>)</td>
       <td>7.3.0</td>
-      <td>ICU 2027.0.0</td>
-      <td>Module uneinig: 5.0.0 / 6.1.0 / 6.5.0 / 7.1.0 / 7.2.0 / 7.3.0</td>
+      <td>ICU, Bildgebung, Consent, Lungenfunktion, Medikation, MolGen, MTB, Onkologie, PROs, Soziodemographie, Studie, Symptome</td>
+      <td>acht Module fordern noch 7.1.0 (Base, Meta, Biobank, Dokument, Kardiologie, Laborbefund, Mikrobiologie, Seltene)</td>
     </tr>
     <tr>
       <td>HL7 Extensions R4 (<code class="language-plaintext highlighter-rouge">hl7.fhir.uv.extensions.r4</code>)</td>
       <td>5.3.0</td>
-      <td>Base 2026.0.1, CRMI 2.0.0</td>
-      <td>Module uneinig: 5.1.0 / 5.2.0 / 5.3.0</td>
+      <td>zwölf Module + CRMI 2.0.0</td>
+      <td>sieben Module fordern noch 5.2.0 (Base, Meta, Dokument, Laborbefund, Mikrobiologie, PROs, Seltene)</td>
     </tr>
     <tr>
       <td>HL7 Clinical Genomics (<code class="language-plaintext highlighter-rouge">hl7.fhir.uv.genomics-reporting</code>)</td>
       <td>3.0.0</td>
-      <td>Molekulargenetik, MTB</td>
+      <td>Molekulargenetik, MTB, Onkologie</td>
       <td>einheitlich</td>
     </tr>
     <tr>
       <td>HL7 Europe Base (<code class="language-plaintext highlighter-rouge">hl7.fhir.eu.base</code>)</td>
       <td>2.0.0</td>
-      <td>EU Laboratory (transitiv über Biobank)</td>
+      <td>Symptome (direkt), EU Laboratory (transitiv über Biobank)</td>
       <td>einheitlich</td>
     </tr>
     <tr>
       <td>HL7 Europe Laboratory (<code class="language-plaintext highlighter-rouge">hl7.fhir.eu.laboratory</code>)</td>
       <td>2.0.0</td>
-      <td>Biobank 2027.0.0-ballot.rc1</td>
+      <td>Biobank</td>
       <td>einheitlich</td>
     </tr>
     <tr>
       <td>HL7 Europe Extensions R4 (<code class="language-plaintext highlighter-rouge">hl7.fhir.eu.extensions.r4</code>)</td>
       <td>1.3.0</td>
-      <td>EU Base, EU Laboratory</td>
+      <td>EU Base, EU Laboratory, Pathologie (direkt)</td>
       <td>einheitlich</td>
     </tr>
     <tr>
@@ -660,8 +660,8 @@ Haupttabelle geführt.</em></p>
     <tr>
       <td>ISiK (<code class="language-plaintext highlighter-rouge">de.gematik.isik</code>)</td>
       <td>6.0.0</td>
-      <td>ICU 2027.0.0, Dokument 2027.0.0-ballot.rc1, Kardiologie</td>
-      <td>Pathologie fordert 5.1.2, PROs 5.1.1</td>
+      <td>ICU, Dokument, Kardiologie, PROs</td>
+      <td>Pathologie fordert noch 5.1.2</td>
     </tr>
   </tbody>
 </table>
@@ -684,7 +684,7 @@ Haupttabelle geführt.</em></p>
     </tr>
     <tr>
       <td>Deutsche Medikation (<code class="language-plaintext highlighter-rouge">de.fhir.medication</code>)</td>
-      <td>1.0.x</td>
+      <td>1.0.7</td>
       <td>Medikation</td>
     </tr>
     <tr>
@@ -714,28 +714,23 @@ Haupttabelle geführt.</em></p>
     </tr>
     <tr>
       <td>HL7 International Patient Summary (<code class="language-plaintext highlighter-rouge">hl7.fhir.uv.ips</code>)</td>
-      <td>2.0.0 (Medikation), 2.0.1 (Laborbefund)</td>
-      <td>Medikation, Laborbefund</td>
+      <td>2.0.0 (Medikation), 2.0.1 (Base, Laborbefund, Mikrobiologie)</td>
+      <td>Base, Laborbefund, Medikation, Mikrobiologie</td>
     </tr>
     <tr>
       <td>HL7 Structured Data Capture (<code class="language-plaintext highlighter-rouge">hl7.fhir.uv.sdc</code>)</td>
-      <td>3.0.0 (PROs), 4.0.0 (ISiK 6.0.0)</td>
+      <td>4.0.0</td>
       <td>PROs, ISiK</td>
-    </tr>
-    <tr>
-      <td>HL7 mCODE (<code class="language-plaintext highlighter-rouge">hl7.fhir.us.mcode</code>)</td>
-      <td>2.1.x</td>
-      <td>Pathologie</td>
     </tr>
     <tr>
       <td>HL7 CRMI (<code class="language-plaintext highlighter-rouge">hl7.fhir.uv.crmi</code>)</td>
       <td>2.0.0</td>
-      <td>Base, Meta</td>
+      <td>alle Module außer Pathologie und Soziodemographie</td>
     </tr>
     <tr>
       <td>HL7 Cross-Version R5 (<code class="language-plaintext highlighter-rouge">hl7.fhir.uv.xver-r5.r4</code>)</td>
       <td>0.1.0</td>
-      <td>Base, EU Laboratory, ISiK</td>
+      <td>Base, Dokument, ICU, Medikation, Mikrobiologie, MTB, Onkologie, Pathologie, PROs, Studie</td>
     </tr>
   </tbody>
 </table>
@@ -808,7 +803,7 @@ fhir <span class="nb">install </span>de.medizininformatikinitiative.kerndatensat
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.medizininformatik-initiative.de">Medizininformatik Initiative</a>.  Package de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, Sep 21, 2026 13:04+0000">2026-09-21</span>
+          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.medizininformatik-initiative.de">Medizininformatik Initiative</a>.  Package de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Tue, Sep 22, 2026 07:14+0000">2026-09-22</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
