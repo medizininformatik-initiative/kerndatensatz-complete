@@ -113,7 +113,7 @@ MII Kerndatensatz Complete - Local Development build (v2027.0.0-ballot.19) built
 .  
           Package de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19 basiert auf           <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>
 .
-          Erstellt           <span title="Tue, Sep 22, 2026 09:26+0000">2026-09-22</span>
+          Erstellt           <span title="Tue, Sep 22, 2026 09:34+0000">2026-09-22</span>
 
                     <br/>
 
@@ -1970,6 +1970,89 @@ Solange das Paket noch nicht auf packages.fhir.org verfügbar ist, kann es vom  
         </td>
         <td>
           <a href="https://github.com/medizininformatik-initiative">MII GitHub Organisation</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="de/testabdeckung.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/mii-testdata">github.com</a>
+        </td>
+        <td>
+Die MII-Testdaten bestehen aus zwei Schichten mit unterschiedlichen Zielen
+(siehe           <a href="https://github.com/medizininformatik-initiative/mii-testdata">mii-testdata</a>
+):
+          <strong>klinisch plausible Patienten-Bundles</strong>
+, die das Zusammenspiel der Module testen, und
+          <strong>technische Modul-Instanzen</strong>
+, deren Zweck die messbare Abdeckung der Profile ist.
+Die Vollständigkeitsmetrik der technischen Schicht ist die           <strong>Must-Support-Coverage</strong>
+:
+der Anteil der MS-Elemente eines Moduls, die von mindestens einer Testdaten-Instanz
+befüllt werden.
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="de/testabdeckung.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/mii-testdata/releases">github.com</a>
+        </td>
+        <td>
+Gemessen werden die Instanzen des jüngsten
+          <a href="https://github.com/medizininformatik-initiative/mii-testdata/releases">mii-testdata-Releases</a>
+
+gegen die           <strong>in dieser BOM gepinnten Profilversionen</strong>
+. Eine niedrige Zahl hat dabei
+drei mögliche Ursachen, die die Tabelle nicht unterscheidet:
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="de/testabdeckung.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/mii-testdata/releases/tag/v2026.0.0-rc.1">github.com</a>
+        </td>
+        <td>
+Stand: 2026-09-22 · Testdaten:           <a href="https://github.com/medizininformatik-initiative/mii-testdata/releases/tag/v2026.0.0-rc.1">mii-testdata v2026.0.0-rc.1</a>
+ (268 Instanzen) · gemessen gegen die BOM-Pins · generiert mit           <code>scripts/testdata-coverage.py</code>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="de/testabdeckung.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/mii-testdata/pull/46">github.com</a>
+        </td>
+        <td>
+Die Detail-Auswertung (unbedeckte Element-IDs je Profil) liefert
+          <a href="https://github.com/medizininformatik-initiative/mii-testdata/pull/46">
+<code class="language-plaintext highlighter-rouge">ms-coverage.py</code>          </a>
+
+im mii-testdata-Repo; die Schichten-Definition steht in
+          <a href="https://github.com/medizininformatik-initiative/mii-testdata/pull/45">PR #45</a>
+.
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="de/testabdeckung.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/mii-testdata/pull/45">github.com</a>
+        </td>
+        <td>
+Die Detail-Auswertung (unbedeckte Element-IDs je Profil) liefert
+          <a href="https://github.com/medizininformatik-initiative/mii-testdata/pull/46">
+<code class="language-plaintext highlighter-rouge">ms-coverage.py</code>          </a>
+
+im mii-testdata-Repo; die Schichten-Definition steht in
+          <a href="https://github.com/medizininformatik-initiative/mii-testdata/pull/45">PR #45</a>
+.
         </td>
       </tr>
     </table>

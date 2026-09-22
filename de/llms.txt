@@ -3,6 +3,7 @@
 ## Pages
 
 * [Home](index.md)
+* [Testabdeckung](testabdeckung.md)
 * [Artefaktübersicht](artifacts.md)
 * [Ballot](ballot.md)
 
