@@ -91,7 +91,9 @@ def testdata_instances(local_zip=None):
         rel = json.loads(fetch(f"https://api.github.com/repos/{TESTDATA_REPO}/releases/latest",
                                {"Accept": "application/vnd.github+json"}))
         tag = rel["tag_name"]
-        asset = next(a for a in rel["assets"] if a["name"].startswith("testdata-bundles-ndjson"))
+        # kds-testdata-*.zip ist der vollstaendige fsh-generated-Stand (Patienten-
+        # UND Modul-Instanzen); das ndjson-Asset enthaelt nur die Patienten-Bundles.
+        asset = next(a for a in rel["assets"] if a["name"].startswith("kds-testdata"))
         print(f"  lade {asset['name']} ({tag}) ...", file=sys.stderr)
         blob = fetch(asset["browser_download_url"])
 
@@ -111,15 +113,19 @@ def testdata_instances(local_zip=None):
 
     with zipfile.ZipFile(io.BytesIO(blob)) as z:
         for name in z.namelist():
-            if not name.endswith(".ndjson"):
-                continue
-            for line in z.read(name).decode("utf-8").splitlines():
-                line = line.strip()
-                if line:
-                    try:
-                        add(json.loads(line))
-                    except json.JSONDecodeError:
-                        pass
+            if name.endswith(".ndjson"):
+                for line in z.read(name).decode("utf-8").splitlines():
+                    line = line.strip()
+                    if line:
+                        try:
+                            add(json.loads(line))
+                        except json.JSONDecodeError:
+                            pass
+            elif name.endswith(".json"):
+                try:
+                    add(json.loads(z.read(name).decode("utf-8")))
+                except (json.JSONDecodeError, UnicodeDecodeError):
+                    pass
     return out, tag
 
 
