@@ -7,7 +7,13 @@
 
 # Ballotierung 2027.0.0
 
-Die Module dieser BOM durchlaufen die Ballotierung über das [HL7-Deutschland-Ballotportal](https://ballots.hl7.de). Die Ballot-Tickets werden dort im Jira-Projekt [HDB — HL7 Deutschland Ballotierung](https://hl7germany.atlassian.net/browse/HDB) geführt. **Alle Links auf dieser Seite benötigen einen im Portal angemeldeten Account mit Zugriff auf das Projekt HDB** — die Ballotprojekte sind nicht anonym lesbar, und ohne Projektzugriff meldet Jira irreführend „Der Wert 'HDB' existiert nicht für das Feld 'project'". Reine Portal-Melder (Kundenkonten) sehen ihre Tickets nur über das [Kundenportal](https://ballots.hl7.de), nicht über diese Suchansichten.
+Die Module dieser BOM durchlaufen die Ballotierung über das [HL7-Deutschland-Ballotportal](https://ballots.hl7.de).
+
+### Verfahren und Zeitraum
+
+* **Kommentieren**: über das [Kundenportal des Ballotierungsportals](https://hl7germany.atlassian.net/servicedesk/customer/portals) — funktioniert mit jedem Portal-Account, auch ohne interne Jira-Sicht.
+* **Verfahren und Regeln**: [Abstimmungs- und Kommentierungsverfahren bei HL7 Deutschland](https://hl7.de/technische-komitees/ballotierung/) · [Abstimmungsregeln (PDF, Stand 2022-12-13)](https://hl7.de/wp-content/uploads/Abstimmungsregeln-20221213.pdf)
+* **Kommentierungszeitraum**: wird von HL7 Deutschland über das Portal und den [Newsletter](https://hl7.de/category/news/) angekündigt.  Die Ballot-Tickets werden dort im Jira-Projekt [HDB — HL7 Deutschland Ballotierung](https://hl7germany.atlassian.net/browse/HDB) geführt. **Alle Links auf dieser Seite benötigen einen im Portal angemeldeten Account mit Zugriff auf das Projekt HDB** — die Ballotprojekte sind nicht anonym lesbar, und ohne Projektzugriff meldet Jira irreführend „Der Wert 'HDB' existiert nicht für das Feld 'project'". Reine Portal-Melder (Kundenkonten) sehen ihre Tickets nur über das [Kundenportal](https://ballots.hl7.de), nicht über diese Suchansichten.
 
 ### Ticketstand je Modul
 

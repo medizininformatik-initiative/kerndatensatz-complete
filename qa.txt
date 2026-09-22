@@ -2,8 +2,8 @@ MIIKerndatensatzComplete : Validation Results
 =========================================
 
 err = 23, warn = 410, info = 5
-IG Publisher Version: 2.3.4 Out of date - current version is null
-Generated Tue Sep 22 10:13:32 UTC 2026. FHIR version 4.0.1 for de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19 (canonical = https://www.medizininformatik-initiative.de/fhir/core/complete)
+IG Publisher Version: 2.3.4
+Generated Tue Sep 22 11:05:33 UTC 2026. FHIR version 4.0.1 for de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19 (canonical = https://www.medizininformatik-initiative.de/fhir/core/complete)
  Build Errors : 1 / 10 / 0
  /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/fsh-generated/resources/ImplementationGuide-de.medizininformatikinitiative.kerndatensatz.complete : 3 / 17 / 3
  /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/input/resources/CapabilityStatement-mii-cps-kerndatensatz-complete : 19 / 383 / 4

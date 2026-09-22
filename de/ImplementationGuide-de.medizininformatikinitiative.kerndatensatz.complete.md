@@ -14,7 +14,7 @@
   "name" : "MIIKerndatensatzComplete",
   "title" : "MII Kerndatensatz Complete",
   "status" : "active",
-  "date" : "2026-09-22T10:10:52+00:00",
+  "date" : "2026-09-22T11:03:15+00:00",
   "publisher" : "Medizininformatik Initiative",
   "contact" : [{
     "name" : "Medizininformatik Initiative",
