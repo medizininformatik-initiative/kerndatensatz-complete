@@ -1,0 +1,1992 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>IP Review</title>
+    <link rel="stylesheet" href="fhir.css"/>
+  </head>
+  <body>
+    <h2>Unattributed Code Systems</h2>
+    <ul>
+      <li>
+        <a href="CapabilityStatement-mii-cps-kerndatensatz-complete.html">
+<code>urn:iso:std:iso:3166</code>        </a>
+      </li>
+    </ul>
+    <h2>Copyright Fragment</h2>
+    <p style="color: maroon">
+      <b>This fragment is not visible to the reader</b>
+    </p>
+    <div>No use of external IP (other than from the FHIR specification)</div>
+    <h2>Copyright and Registered Trademark Uses</h2>
+    <ul>
+      <li>
+
+
+
+
+          IG &copy; 2025+ Medizininformatik Initiative.  
+          Package de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19 based on FHIR 4.0.1.
+          Generated 2026-09-22
+          
+          
+            
+
+          Links: Table of Contents |
+                 QA Report
+                 
+                 | netzwerk-universitaetsmedizin.de
+                 | medizininformatik-initiative.de
+                 | Legal notice
+                 
+                 
+                 HL7&reg;, FHIR&reg; and the FHIR flame design are registered trademarks of Health Level Seven International. Their use does not constitute endorsement by HL7.
+
+          
+         (        <a href="en/toc.html">src</a>
+)
+      </li>
+      <li>
+
+          hl7.fhir.us.hai: Healthcare Associated Infection Implementation Guide  &reg;&copy; HL7 |
+             
+                CC0
+         (        <a href="searchform.html">src</a>
+)
+      </li>
+      <li>
+HL7&reg;, FHIR&reg; and the FHIR flame design are registered trademarks of Health Level Seven International. Their use does not constitute endorsement by HL7. (        <a href="en/toc.html">src</a>
+)
+      </li>
+      <li>
+MII Kerndatensatz Complete - Local Development build (v2027.0.0-ballot.19) built by the FHIR (HL7&reg; FHIR&reg; Standard) Build Tools. See the Directory of published versions (        <a href="toc.html">src</a>
+)
+      </li>
+    </ul>
+    <h2>External References</h2>
+    <table class="grid">
+      <tr>
+        <th>
+          <b>Type</b>
+        </th>
+        <th>
+          <b>Reference</b>
+        </th>
+        <th>
+          <b>Content</b>
+        </th>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/CapabilityStatement-mii-cps-kerndatensatz-complete-testing.html">web</a>
+        </td>
+        <td>
+          <a href="https://www.netzwerk-universitaetsmedizin.de/forschung/num-diz">www.netzwerk-universitaetsmedizin.de</a>
+        </td>
+        <td>
+
+
+            <a no-external="true" id="project-logo" href="https://www.netzwerk-universitaetsmedizin.de/forschung/num-diz">
+
+
+    <img src="assets/images/logo-num-diz-en.svg" alt="NUM-DIZ (Network of University Medicine — Data Integration Center)" height="50"/>
+
+  
+          </a>
+
+
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/CapabilityStatement-mii-cps-kerndatensatz-complete-testing.html">web</a>
+        </td>
+        <td>
+          <a href="https://www.medizininformatik-initiative.de">www.medizininformatik-initiative.de</a>
+        </td>
+        <td>
+
+
+
+
+          IG &copy; 2025+           <a style="color:var(--footer-hyperlink-text-color)" href="https://www.medizininformatik-initiative.de">Medizininformatik Initiative</a>
+.  
+          Package de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19 based on           <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>
+.
+          Generated           <span title="Tue, Sep 22, 2026 09:04+0000">2026-09-22</span>
+
+                    <br/>
+
+                    <span style="color: var(--footer-highlight-text-color)">
+
+                        <!-- Branding override for the fhir2.base.template footer fragment.
+     Unlike header/css, the base footer fragment is NOT an empty placeholder: it
+     renders "Links: Table of Contents | QA Report [| feedback dashboards]".
+     The base uses site.data.stringsBase[include.lang][...] for the labels. The
+     reason this override supplies its own is the Imprint label: the base ships no
+     stringsBase key for it and a child template cannot add one (docs/styleguide.md
+     section 6), and the same include.lang branch then has to carry the other
+     labels too. (The blank-label problem that first motivated this is separately
+     mitigated: this repo vendors the base's own German catalogs into
+     translations/ — see translations/README.md.) The override preserves the base
+     links (TOC, QA, feedback dashboards) and appends the project information links.
+     NUM-DIZ takes over IG development and maintenance when MII funding ends
+     (end-2026), so the NUM-DIZ website link renders BEFORE the MII website link —
+     in BOTH brand designs and both languages; the MII links stay because the
+     modules remain MII content. Both anchors are the SITE ROOTS with the bare
+     domain as anchor text (TF-KDS feedback 2026-08-14: aligned anchor style;
+     domains are language-neutral, styleguide §6).
+     Imprint: points at the NUM-DIZ website's legal pages since 2026-08-14
+     (TF-KDS: NUM-DIZ takes over from MII in 2027, so legal-aspect links use
+     the NUM-DIZ counterpart where one exists) - German /impressum and English
+     /en/legal-notice (both verified HTTP 200 on 2026-08-14). -->
+
+          Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
+                 <a style="color: var(--footer-hyperlink-text-color)" href="../qa.html">QA Report</a>
+                 
+                 | <a style="color: var(--footer-hyperlink-text-color)" href="https://www.netzwerk-universitaetsmedizin.de/" target="_blank">netzwerk-universitaetsmedizin.de</a>
+                 | <a style="color: var(--footer-hyperlink-text-color)" href="https://www.medizininformatik-initiative.de/" target="_blank">medizininformatik-initiative.de</a>
+                 | <a style="color: var(--footer-hyperlink-text-color)" href="https://www.netzwerk-universitaetsmedizin.de/en/legal-notice" target="_blank">Legal notice</a>
+                 <br/>
+                             <!-- HL7 trademark attribution (required wherever the FHIR flame
+                      renders - the header shows it on every page; see HL7's
+                      trademark guidelines; permission request tracked in issue #109). The sentence is
+                      HL7's prescribed formula and stays in English on every
+                      language's pages (legal wording, styleguide §6). -->
+                 <span>HL7&reg;, FHIR&reg; and the FHIR flame design are registered trademarks of Health Level Seven International. Their use does not constitute endorsement by HL7.</span>
+
+          
+          </span>
+
+        
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/CapabilityStatement-mii-cps-kerndatensatz-complete-testing.html">web</a>
+        </td>
+        <td>
+          <a href="https://www.netzwerk-universitaetsmedizin.de/">www.netzwerk-universitaetsmedizin.de</a>
+        </td>
+        <td>
+
+                      <!-- Branding override for the fhir2.base.template footer fragment.
+     Unlike header/css, the base footer fragment is NOT an empty placeholder: it
+     renders "Links: Table of Contents | QA Report [| feedback dashboards]".
+     The base uses site.data.stringsBase[include.lang][...] for the labels. The
+     reason this override supplies its own is the Imprint label: the base ships no
+     stringsBase key for it and a child template cannot add one (docs/styleguide.md
+     section 6), and the same include.lang branch then has to carry the other
+     labels too. (The blank-label problem that first motivated this is separately
+     mitigated: this repo vendors the base's own German catalogs into
+     translations/ — see translations/README.md.) The override preserves the base
+     links (TOC, QA, feedback dashboards) and appends the project information links.
+     NUM-DIZ takes over IG development and maintenance when MII funding ends
+     (end-2026), so the NUM-DIZ website link renders BEFORE the MII website link —
+     in BOTH brand designs and both languages; the MII links stay because the
+     modules remain MII content. Both anchors are the SITE ROOTS with the bare
+     domain as anchor text (TF-KDS feedback 2026-08-14: aligned anchor style;
+     domains are language-neutral, styleguide §6).
+     Imprint: points at the NUM-DIZ website's legal pages since 2026-08-14
+     (TF-KDS: NUM-DIZ takes over from MII in 2027, so legal-aspect links use
+     the NUM-DIZ counterpart where one exists) - German /impressum and English
+     /en/legal-notice (both verified HTTP 200 on 2026-08-14). -->
+
+
+          Links:           <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a>
+ |
+                           <a style="color: var(--footer-hyperlink-text-color)" href="../qa.html">QA Report</a>
+
+                 
+                 |           <a style="color: var(--footer-hyperlink-text-color)" href="https://www.netzwerk-universitaetsmedizin.de/" target="_blank">netzwerk-universitaetsmedizin.de</a>
+
+                 |           <a style="color: var(--footer-hyperlink-text-color)" href="https://www.medizininformatik-initiative.de/" target="_blank">medizininformatik-initiative.de</a>
+
+                 |           <a style="color: var(--footer-hyperlink-text-color)" href="https://www.netzwerk-universitaetsmedizin.de/en/legal-notice" target="_blank">Legal notice</a>
+
+                           <br/>
+
+                           <!-- HL7 trademark attribution (required wherever the FHIR flame
+                      renders - the header shows it on every page; see HL7's
+                      trademark guidelines; permission request tracked in issue #109). The sentence is
+                      HL7's prescribed formula and stays in English on every
+                      language's pages (legal wording, styleguide §6). -->
+
+                           <span>HL7&reg;, FHIR&reg; and the FHIR flame design are registered trademarks of Health Level Seven International. Their use does not constitute endorsement by HL7.</span>
+
+
+          
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/CapabilityStatement-mii-cps-kerndatensatz-complete-testing.html">web</a>
+        </td>
+        <td>
+          <a href="https://www.medizininformatik-initiative.de/">www.medizininformatik-initiative.de</a>
+        </td>
+        <td>
+
+                      <!-- Branding override for the fhir2.base.template footer fragment.
+     Unlike header/css, the base footer fragment is NOT an empty placeholder: it
+     renders "Links: Table of Contents | QA Report [| feedback dashboards]".
+     The base uses site.data.stringsBase[include.lang][...] for the labels. The
+     reason this override supplies its own is the Imprint label: the base ships no
+     stringsBase key for it and a child template cannot add one (docs/styleguide.md
+     section 6), and the same include.lang branch then has to carry the other
+     labels too. (The blank-label problem that first motivated this is separately
+     mitigated: this repo vendors the base's own German catalogs into
+     translations/ — see translations/README.md.) The override preserves the base
+     links (TOC, QA, feedback dashboards) and appends the project information links.
+     NUM-DIZ takes over IG development and maintenance when MII funding ends
+     (end-2026), so the NUM-DIZ website link renders BEFORE the MII website link —
+     in BOTH brand designs and both languages; the MII links stay because the
+     modules remain MII content. Both anchors are the SITE ROOTS with the bare
+     domain as anchor text (TF-KDS feedback 2026-08-14: aligned anchor style;
+     domains are language-neutral, styleguide §6).
+     Imprint: points at the NUM-DIZ website's legal pages since 2026-08-14
+     (TF-KDS: NUM-DIZ takes over from MII in 2027, so legal-aspect links use
+     the NUM-DIZ counterpart where one exists) - German /impressum and English
+     /en/legal-notice (both verified HTTP 200 on 2026-08-14). -->
+
+
+          Links:           <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a>
+ |
+                           <a style="color: var(--footer-hyperlink-text-color)" href="../qa.html">QA Report</a>
+
+                 
+                 |           <a style="color: var(--footer-hyperlink-text-color)" href="https://www.netzwerk-universitaetsmedizin.de/" target="_blank">netzwerk-universitaetsmedizin.de</a>
+
+                 |           <a style="color: var(--footer-hyperlink-text-color)" href="https://www.medizininformatik-initiative.de/" target="_blank">medizininformatik-initiative.de</a>
+
+                 |           <a style="color: var(--footer-hyperlink-text-color)" href="https://www.netzwerk-universitaetsmedizin.de/en/legal-notice" target="_blank">Legal notice</a>
+
+                           <br/>
+
+                           <!-- HL7 trademark attribution (required wherever the FHIR flame
+                      renders - the header shows it on every page; see HL7's
+                      trademark guidelines; permission request tracked in issue #109). The sentence is
+                      HL7's prescribed formula and stays in English on every
+                      language's pages (legal wording, styleguide §6). -->
+
+                           <span>HL7&reg;, FHIR&reg; and the FHIR flame design are registered trademarks of Health Level Seven International. Their use does not constitute endorsement by HL7.</span>
+
+
+          
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/CapabilityStatement-mii-cps-kerndatensatz-complete-testing.html">web</a>
+        </td>
+        <td>
+          <a href="https://www.netzwerk-universitaetsmedizin.de/en/legal-notice">www.netzwerk-universitaetsmedizin.de</a>
+        </td>
+        <td>
+
+                      <!-- Branding override for the fhir2.base.template footer fragment.
+     Unlike header/css, the base footer fragment is NOT an empty placeholder: it
+     renders "Links: Table of Contents | QA Report [| feedback dashboards]".
+     The base uses site.data.stringsBase[include.lang][...] for the labels. The
+     reason this override supplies its own is the Imprint label: the base ships no
+     stringsBase key for it and a child template cannot add one (docs/styleguide.md
+     section 6), and the same include.lang branch then has to carry the other
+     labels too. (The blank-label problem that first motivated this is separately
+     mitigated: this repo vendors the base's own German catalogs into
+     translations/ — see translations/README.md.) The override preserves the base
+     links (TOC, QA, feedback dashboards) and appends the project information links.
+     NUM-DIZ takes over IG development and maintenance when MII funding ends
+     (end-2026), so the NUM-DIZ website link renders BEFORE the MII website link —
+     in BOTH brand designs and both languages; the MII links stay because the
+     modules remain MII content. Both anchors are the SITE ROOTS with the bare
+     domain as anchor text (TF-KDS feedback 2026-08-14: aligned anchor style;
+     domains are language-neutral, styleguide §6).
+     Imprint: points at the NUM-DIZ website's legal pages since 2026-08-14
+     (TF-KDS: NUM-DIZ takes over from MII in 2027, so legal-aspect links use
+     the NUM-DIZ counterpart where one exists) - German /impressum and English
+     /en/legal-notice (both verified HTTP 200 on 2026-08-14). -->
+
+
+          Links:           <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a>
+ |
+                           <a style="color: var(--footer-hyperlink-text-color)" href="../qa.html">QA Report</a>
+
+                 
+                 |           <a style="color: var(--footer-hyperlink-text-color)" href="https://www.netzwerk-universitaetsmedizin.de/" target="_blank">netzwerk-universitaetsmedizin.de</a>
+
+                 |           <a style="color: var(--footer-hyperlink-text-color)" href="https://www.medizininformatik-initiative.de/" target="_blank">medizininformatik-initiative.de</a>
+
+                 |           <a style="color: var(--footer-hyperlink-text-color)" href="https://www.netzwerk-universitaetsmedizin.de/en/legal-notice" target="_blank">Legal notice</a>
+
+                           <br/>
+
+                           <!-- HL7 trademark attribution (required wherever the FHIR flame
+                      renders - the header shows it on every page; see HL7's
+                      trademark guidelines; permission request tracked in issue #109). The sentence is
+                      HL7's prescribed formula and stays in English on every
+                      language's pages (legal wording, styleguide §6). -->
+
+                           <span>HL7&reg;, FHIR&reg; and the FHIR flame design are registered trademarks of Health Level Seven International. Their use does not constitute endorsement by HL7.</span>
+
+
+          
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://ballots.hl7.de">ballots.hl7.de</a>
+        </td>
+        <td>
+Die Module dieser BOM durchlaufen die Ballotierung über das
+          <a href="https://ballots.hl7.de">HL7-Deutschland-Ballotportal</a>
+. Die Ballot-Tickets werden dort im
+Jira-Projekt           <a href="https://hl7germany.atlassian.net/browse/HDB">HDB — HL7 Deutschland Ballotierung</a>
+
+geführt.           <strong>Alle Links auf dieser Seite benötigen einen im Portal angemeldeten Account mit
+Zugriff auf das Projekt HDB</strong>
+ — die Ballotprojekte sind nicht anonym lesbar, und ohne
+Projektzugriff meldet Jira irreführend „Der Wert 'HDB' existiert nicht für das Feld
+'project'". Reine Portal-Melder (Kundenkonten) sehen ihre Tickets nur über das
+          <a href="https://ballots.hl7.de">Kundenportal</a>
+, nicht über diese Suchansichten.
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/browse/HDB">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+Die Module dieser BOM durchlaufen die Ballotierung über das
+          <a href="https://ballots.hl7.de">HL7-Deutschland-Ballotportal</a>
+. Die Ballot-Tickets werden dort im
+Jira-Projekt           <a href="https://hl7germany.atlassian.net/browse/HDB">HDB — HL7 Deutschland Ballotierung</a>
+
+geführt.           <strong>Alle Links auf dieser Seite benötigen einen im Portal angemeldeten Account mit
+Zugriff auf das Projekt HDB</strong>
+ — die Ballotprojekte sind nicht anonym lesbar, und ohne
+Projektzugriff meldet Jira irreführend „Der Wert 'HDB' existiert nicht für das Feld
+'project'". Reine Portal-Melder (Kundenkonten) sehen ihre Tickets nur über das
+          <a href="https://ballots.hl7.de">Kundenportal</a>
+, nicht über diese Suchansichten.
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Person%22%2C%20%22MII%20-%20Modul%20Fall%22%2C%20%22MII%20-%20Modul%20Diagnose%22%2C%20%22MII%20-%20Modul%20Prozedur%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Person%22%2C%20%22MII%20-%20Modul%20Fall%22%2C%20%22MII%20-%20Modul%20Diagnose%22%2C%20%22MII%20-%20Modul%20Prozedur%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Person%22%2C%20%22MII%20-%20Modul%20Fall%22%2C%20%22MII%20-%20Modul%20Diagnose%22%2C%20%22MII%20-%20Modul%20Prozedur%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Person%22%2C%20%22MII%20-%20Modul%20Fall%22%2C%20%22MII%20-%20Modul%20Diagnose%22%2C%20%22MII%20-%20Modul%20Prozedur%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Person%22%2C%20%22MII%20-%20Modul%20Fall%22%2C%20%22MII%20-%20Modul%20Diagnose%22%2C%20%22MII%20-%20Modul%20Prozedur%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Person%22%2C%20%22MII%20-%20Modul%20Fall%22%2C%20%22MII%20-%20Modul%20Diagnose%22%2C%20%22MII%20-%20Modul%20Prozedur%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Bildgebene%20Verfahren%22%2C%20%22MII%20-%20Modul%20Bildgebung%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Bildgebene%20Verfahren%22%2C%20%22MII%20-%20Modul%20Bildgebung%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Bildgebene%20Verfahren%22%2C%20%22MII%20-%20Modul%20Bildgebung%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Bildgebene%20Verfahren%22%2C%20%22MII%20-%20Modul%20Bildgebung%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Bildgebene%20Verfahren%22%2C%20%22MII%20-%20Modul%20Bildgebung%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Bildgebene%20Verfahren%22%2C%20%22MII%20-%20Modul%20Bildgebung%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Bioprobendaten%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Bioprobendaten%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Bioprobendaten%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Bioprobendaten%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Bioprobendaten%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Bioprobendaten%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.consent%22%20OR%20text%20~%20%22Consent%22%20OR%20text%20~%20%22Einwilligung%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.consent%22%20OR%20text%20~%20%22Consent%22%20OR%20text%20~%20%22Einwilligung%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.consent%22%20OR%20text%20~%20%22Consent%22%20OR%20text%20~%20%22Einwilligung%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.consent%22%20OR%20text%20~%20%22Consent%22%20OR%20text%20~%20%22Einwilligung%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.consent%22%20OR%20text%20~%20%22Consent%22%20OR%20text%20~%20%22Einwilligung%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.consent%22%20OR%20text%20~%20%22Consent%22%20OR%20text%20~%20%22Einwilligung%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Dokument%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Dokument%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Dokument%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Dokument%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Dokument%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Dokument%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Intensivmedizin%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Intensivmedizin%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Intensivmedizin%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Intensivmedizin%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Intensivmedizin%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Intensivmedizin%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.kardiologie%22%20OR%20text%20~%20%22Kardiologie%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.kardiologie%22%20OR%20text%20~%20%22Kardiologie%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.kardiologie%22%20OR%20text%20~%20%22Kardiologie%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.kardiologie%22%20OR%20text%20~%20%22Kardiologie%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.kardiologie%22%20OR%20text%20~%20%22Kardiologie%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.kardiologie%22%20OR%20text%20~%20%22Kardiologie%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Laborbefund%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Laborbefund%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Laborbefund%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Laborbefund%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Laborbefund%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Laborbefund%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.lungenfunktion%22%20OR%20text%20~%20%22Lungenfunktion%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.lungenfunktion%22%20OR%20text%20~%20%22Lungenfunktion%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.lungenfunktion%22%20OR%20text%20~%20%22Lungenfunktion%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.lungenfunktion%22%20OR%20text%20~%20%22Lungenfunktion%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.lungenfunktion%22%20OR%20text%20~%20%22Lungenfunktion%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.lungenfunktion%22%20OR%20text%20~%20%22Lungenfunktion%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Medikation%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Medikation%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Medikation%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Medikation%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Medikation%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Medikation%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.meta%22%20OR%20text%20~%20%22Metadaten%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.meta%22%20OR%20text%20~%20%22Metadaten%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.meta%22%20OR%20text%20~%20%22Metadaten%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.meta%22%20OR%20text%20~%20%22Metadaten%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.meta%22%20OR%20text%20~%20%22Metadaten%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.meta%22%20OR%20text%20~%20%22Metadaten%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Mikrobiologie%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Mikrobiologie%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Mikrobiologie%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Mikrobiologie%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Mikrobiologie%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Mikrobiologie%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Molekulargenetischer%20Befundbericht%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Molekulargenetischer%20Befundbericht%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Molekulargenetischer%20Befundbericht%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Molekulargenetischer%20Befundbericht%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Molekulargenetischer%20Befundbericht%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Molekulargenetischer%20Befundbericht%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Tumorboard%22%2C%20%22MII%20-%20Modul%20Molekulares%20Tumorboard%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Tumorboard%22%2C%20%22MII%20-%20Modul%20Molekulares%20Tumorboard%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Tumorboard%22%2C%20%22MII%20-%20Modul%20Molekulares%20Tumorboard%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Tumorboard%22%2C%20%22MII%20-%20Modul%20Molekulares%20Tumorboard%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Tumorboard%22%2C%20%22MII%20-%20Modul%20Molekulares%20Tumorboard%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Tumorboard%22%2C%20%22MII%20-%20Modul%20Molekulares%20Tumorboard%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Onkologie%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Onkologie%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Onkologie%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Onkologie%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Onkologie%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Onkologie%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Pathologiebefund%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Pathologiebefund%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Pathologiebefund%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Pathologiebefund%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Pathologiebefund%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Pathologiebefund%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Patient%20Reported%20Outcomes%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Patient%20Reported%20Outcomes%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Patient%20Reported%20Outcomes%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Patient%20Reported%20Outcomes%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Patient%20Reported%20Outcomes%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Patient%20Reported%20Outcomes%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Seltene%20Erkrankungen%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Seltene%20Erkrankungen%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Seltene%20Erkrankungen%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Seltene%20Erkrankungen%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Seltene%20Erkrankungen%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Seltene%20Erkrankungen%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.soziodemographie%22%20OR%20text%20~%20%22Soziodemographie%22%20OR%20text%20~%20%22Soziodemographisch%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.soziodemographie%22%20OR%20text%20~%20%22Soziodemographie%22%20OR%20text%20~%20%22Soziodemographisch%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.soziodemographie%22%20OR%20text%20~%20%22Soziodemographie%22%20OR%20text%20~%20%22Soziodemographisch%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.soziodemographie%22%20OR%20text%20~%20%22Soziodemographie%22%20OR%20text%20~%20%22Soziodemographisch%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.soziodemographie%22%20OR%20text%20~%20%22Soziodemographie%22%20OR%20text%20~%20%22Soziodemographisch%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.soziodemographie%22%20OR%20text%20~%20%22Soziodemographie%22%20OR%20text%20~%20%22Soziodemographisch%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Medizinisches%20Forschungsvorhaben%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Medizinisches%20Forschungsvorhaben%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Medizinisches%20Forschungsvorhaben%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Medizinisches%20Forschungsvorhaben%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Medizinisches%20Forschungsvorhaben%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Medizinisches%20Forschungsvorhaben%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Symptom%20%2F%20klinischer%20Ph%C3%A4notyp%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Symptom%20%2F%20klinischer%20Ph%C3%A4notyp%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Symptom%20%2F%20klinischer%20Ph%C3%A4notyp%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Symptom%20%2F%20klinischer%20Ph%C3%A4notyp%22%29%20ORDER%20BY%20created%20DESC">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Symptom%20%2F%20klinischer%20Ph%C3%A4notyp%22%29%20ORDER%20BY%20created%20DESC">offen</a>
+ ·           <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Symptom%20%2F%20klinischer%20Ph%C3%A4notyp%22%29%20ORDER%20BY%20created%20DESC">alle</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/browse/HDB">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+Stand: 2026-09-21 12:59 UTC · Zählung über Projekt           <a href="https://hl7germany.atlassian.net/browse/HDB">HDB</a>
+ · automatisch aktualisiert
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-complete/actions/workflows/ballot-tickets.yml">github.com</a>
+        </td>
+        <td>
+Die Tabelle wird täglich automatisch aktualisiert
+(GitHub Action           <a href="https://github.com/medizininformatik-initiative/kerndatensatz-complete/actions/workflows/ballot-tickets.yml">
+<code class="language-plaintext highlighter-rouge">ballot-tickets.yml</code>          </a>
+).
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/ballot.html">web</a>
+        </td>
+        <td>
+          <a href="https://hl7germany.atlassian.net/issues/?jql=">hl7germany.atlassian.net</a>
+        </td>
+        <td>
+Für jedes Modul gibt es im Portal einen gespeicherten Filter           <strong>„MII KDS Ballot 2027 –
+&lt;Modul&gt;"</strong>
+ (geteilt mit allen angemeldeten Nutzern, gepflegt über
+          <code class="language-plaintext highlighter-rouge">scripts/ballot-tickets.py --create-filters</code>
+). Die Filter finden sich im Portal unter
+          <a href="https://hl7germany.atlassian.net/issues/?jql=">
+<strong>Filter → Alle Filter</strong>          </a>
+, Suche nach
+„MII KDS Ballot 2027". Sie eignen sich auch als Grundlage für eigene Dashboards
+(Dashboard → Gadget „Filterergebnisse" bzw. „Statistiken").
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-meta">github.com</a>
+        </td>
+        <td>
+Während das           <a href="https://github.com/medizininformatik-initiative/kerndatensatz-meta">Meta-Modul</a>
+ (          <code class="language-plaintext highlighter-rouge">de.medizininformatikinitiative.kerndatensatz.meta</code>
+) modulübergreifende Ressourcen bereitstellt, die von den einzelnen KDS-Modulen als Grundlage genutzt werden (Extensions, CodeSystems, Naming-Conventions), dient dieses Complete-Paket als gebündelter Output: Eine einzelne Abhängigkeit, die alle Module des Kerndatensatzes in ein Projekt einbindet.
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-basis/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-basis/">IG</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-meta/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-meta/">IG</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-medikation/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-medikation/">IG</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-labor/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-labor/">IG</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-biobank/branches/release/v2027.0.0-ballot/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-biobank/branches/release/v2027.0.0-ballot/">IG</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-intensivmedizin/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-intensivmedizin/">IG</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-mikrobiologie/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-mikrobiologie/">IG</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-GenetischeTests/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-GenetischeTests/">IG</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-PathologieBefund/branches/dev/v2027/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-PathologieBefund/branches/dev/v2027/">IG</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-studie/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-studie/">IG</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-bildgebung/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-bildgebung/">IG</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-dokument/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-dokument/">IG</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-onkologie/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-onkologie/">IG</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-seltene-erkrankungen/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-seltene-erkrankungen/">IG</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-molekulares-tumorboard/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-molekulares-tumorboard/">IG</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-proms/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-proms/">IG</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-consent/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-consent/">IG</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-kardiologie/branches/release/v2027.0.0-ballot/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-kardiologie/branches/release/v2027.0.0-ballot/">IG</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-lungenfunktion/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-lungenfunktion/">IG</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-symptome/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-symptome/">IG</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-soziodemographie/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-soziodemographie/">IG</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-basis">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-basis">kerndatensatz-basis</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-basis/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-basis/">2027.0.0-ballot</a>
+ · 22 Fehler
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-basis/releases/tag/v2027.0.0-ballot">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-basis/releases/tag/v2027.0.0-ballot">v2027.0.0-ballot</a>
+ (2026-09-10)
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-meta">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-meta">kerndatensatz-meta</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-meta/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-meta/">2027.0.0-ballot</a>
+ · 0 Fehler
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-meta/releases/tag/v2027.0.0-ballot">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-meta/releases/tag/v2027.0.0-ballot">v2027.0.0-ballot</a>
+ (2026-09-10)
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-medikation">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-medikation">kerndatensatzmodul-medikation</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-medikation/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-medikation/">2027.0.0-ballot</a>
+ · 1 Fehler
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-medikation/releases/tag/v2027.0.0-ballot">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-medikation/releases/tag/v2027.0.0-ballot">v2027.0.0-ballot</a>
+ (2026-09-11)
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-labor">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-labor">kerndatensatzmodul-labor</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-labor/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-labor/">2027.0.0-ballot</a>
+ · 37 Fehler
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-labor/releases/tag/v2027.0.0-ballot">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-labor/releases/tag/v2027.0.0-ballot">v2027.0.0-ballot</a>
+ (2026-09-14)
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-biobank">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-biobank">kerndatensatzmodul-biobank</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-biobank/branches/release/v2027.0.0-ballot/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-biobank/branches/release/v2027.0.0-ballot/">2027.0.0-ballot</a>
+ · 66 Fehler
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-biobank/releases/tag/v2027.0.0-ballot">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-biobank/releases/tag/v2027.0.0-ballot">v2027.0.0-ballot</a>
+ (2026-09-16)
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-intensivmedizin">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-intensivmedizin">kerndatensatzmodul-intensivmedizin</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-intensivmedizin/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-intensivmedizin/">2027.0.0-ballot.3</a>
+ · 698 Fehler
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-intensivmedizin/releases/tag/v2026.0.2">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-intensivmedizin/releases/tag/v2026.0.2">v2026.0.2</a>
+ (2026-03-18)
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-mikrobiologie">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-mikrobiologie">kerndatensatzmodul-mikrobiologie</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-mikrobiologie/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-mikrobiologie/">2027.0.0-ballot2</a>
+ · 206 Fehler
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-mikrobiologie/releases/tag/v2027.0.0-ballot2">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-mikrobiologie/releases/tag/v2027.0.0-ballot2">v2027.0.0-ballot2</a>
+ (2026-09-14)
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-GenetischeTests">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-GenetischeTests">kerndatensatzmodul-GenetischeTests</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-GenetischeTests/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-GenetischeTests/">2027.0.0-ballot.1</a>
+ · 53 Fehler
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-GenetischeTests/releases/tag/v2027.0.0-ballot.1">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-GenetischeTests/releases/tag/v2027.0.0-ballot.1">v2027.0.0-ballot.1</a>
+ (2026-09-13)
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-PathologieBefund">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-PathologieBefund">kerndatensatzmodul-PathologieBefund</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-PathologieBefund/branches/dev/v2027/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-PathologieBefund/branches/dev/v2027/">2027.0.0-ballot</a>
+ · 25 Fehler
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-PathologieBefund/releases/tag/v2027.0.0-ballot">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-PathologieBefund/releases/tag/v2027.0.0-ballot">v2027.0.0-ballot</a>
+ (2026-09-14)
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-studie">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-studie">kerndatensatzmodul-studie</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-studie/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-studie/">2027.0.0-ballot</a>
+ · 0 Fehler
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-studie/releases/tag/v2027.0.0-ballot">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-studie/releases/tag/v2027.0.0-ballot">v2027.0.0-ballot</a>
+ (2026-09-14)
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-bildgebung">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-bildgebung">kerndatensatz-bildgebung</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-bildgebung/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-bildgebung/">2027.0.0-ballot.1</a>
+ · 29 Fehler
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-bildgebung/releases/tag/v2027.0.0-ballot.1">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-bildgebung/releases/tag/v2027.0.0-ballot.1">v2027.0.0-ballot.1</a>
+ (2026-09-15)
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-dokument">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-dokument">kerndatensatz-dokument</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-dokument/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-dokument/">2027.0.0-ballot.2</a>
+ · 2 Fehler
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-dokument/releases/tag/v2027.0.0-ballot.2">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-dokument/releases/tag/v2027.0.0-ballot.2">v2027.0.0-ballot.2</a>
+ (2026-09-14)
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-onkologie">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-onkologie">kerndatensatzmodul-onkologie</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-onkologie/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-onkologie/">2027.0.0-ballot.1</a>
+ · 4669 Fehler
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-onkologie/releases/tag/v2027.0.0-ballot.1">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-onkologie/releases/tag/v2027.0.0-ballot.1">v2027.0.0-ballot.1</a>
+ (2026-09-15)
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-seltene-erkrankungen">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-seltene-erkrankungen">kerndatensatzmodul-seltene-erkrankungen</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-seltene-erkrankungen/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-seltene-erkrankungen/">2027.0.0-ballot</a>
+ · 353 Fehler
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-seltene-erkrankungen/releases/tag/v2026.0.1">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-seltene-erkrankungen/releases/tag/v2026.0.1">v2026.0.1</a>
+ (2026-03-30)
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-molekulares-tumorboard">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-molekulares-tumorboard">kerndatensatzmodul-molekulares-tumorboard</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-molekulares-tumorboard/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-molekulares-tumorboard/">2027.0.0-ballot.1</a>
+ · 55 Fehler
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-molekulares-tumorboard/releases/tag/v2027.0.0-ballot.1">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-molekulares-tumorboard/releases/tag/v2027.0.0-ballot.1">v2027.0.0-ballot.1</a>
+ (2026-09-15)
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-proms">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-proms">kerndatensatzmodul-proms</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-proms/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-proms/">2027.0.0-ballot.1</a>
+ · 214 Fehler
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-proms/releases/tag/v2027.0.0-ballot.1">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-proms/releases/tag/v2027.0.0-ballot.1">v2027.0.0-ballot.1</a>
+ (2026-09-11)
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-consent">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-consent">kerndatensatzmodul-consent</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-consent/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-consent/">2027.0.0-ballot</a>
+ · 0 Fehler
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-consent/releases/tag/v2027.0.0-ballot">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-consent/releases/tag/v2027.0.0-ballot">v2027.0.0-ballot</a>
+ (2026-09-14)
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-kardiologie">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-kardiologie">kerndatensatz-kardiologie</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-kardiologie/branches/release/v2027.0.0-ballot/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-kardiologie/branches/release/v2027.0.0-ballot/">2027.0.0-ballot</a>
+ · 42 Fehler
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-kardiologie/releases/tag/v2027.0.0-ballot">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-kardiologie/releases/tag/v2027.0.0-ballot">v2027.0.0-ballot</a>
+ (2026-09-14)
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-lungenfunktion">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-lungenfunktion">kerndatensatz-lungenfunktion</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-lungenfunktion/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-lungenfunktion/">2027.0.0-ballot.1</a>
+ · 1147 Fehler
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-lungenfunktion/releases/tag/v2027.0.0-ballot.1">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-lungenfunktion/releases/tag/v2027.0.0-ballot.1">v2027.0.0-ballot.1</a>
+ (2026-09-15)
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-symptome">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-symptome">kerndatensatzmodul-symptome</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-symptome/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatzmodul-symptome/">2027.0.0-ballot</a>
+ · 0 Fehler
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-symptome/releases/tag/v2027.0.0-ballot">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatzmodul-symptome/releases/tag/v2027.0.0-ballot">v2027.0.0-ballot</a>
+ (2026-09-11)
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-soziodemographie">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-soziodemographie">kerndatensatz-soziodemographie</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-soziodemographie/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/kerndatensatz-soziodemographie/">2027.0.0-ballot</a>
+ · 1 Fehler
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-soziodemographie/releases/tag/v2027.0.0-ballot">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-soziodemographie/releases/tag/v2027.0.0-ballot">v2027.0.0-ballot</a>
+ (2026-09-14)
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-complete/releases/tag/v2027.0.0-ballot.12">github.com</a>
+        </td>
+        <td>
+Solange das Paket noch nicht auf packages.fhir.org verfügbar ist, kann es vom           <a href="https://github.com/medizininformatik-initiative/kerndatensatz-complete/releases/tag/v2027.0.0-ballot.12">GitHub Release</a>
+ heruntergeladen und lokal installiert werden:
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/orgs/medizininformatik-initiative/repositories?q=kerndatensatzmodul">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/orgs/medizininformatik-initiative/repositories?q=kerndatensatzmodul">Alle KDS-Repositories auf GitHub</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-meta/wiki/%C3%9Cbersicht-%C3%BCber-Versionen-der-Kerndatensatz%E2%80%90Module">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-meta/wiki/%C3%9Cbersicht-%C3%BCber-Versionen-der-Kerndatensatz%E2%80%90Module">Übersicht über Versionen der KDS-Module</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-meta/wiki">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-meta/wiki">MII Kerndatensatz Meta Wiki</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://art-decor.org/art-decor/decor-project--mide-">art-decor.org</a>
+        </td>
+        <td>
+          <a href="https://art-decor.org/art-decor/decor-project--mide-">MII Kerndatensatz auf Art-Decor</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="en/index.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative">github.com</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative">MII GitHub Organisation</a>
+        </td>
+      </tr>
+    </table>
+    <h2>Internal Images</h2>
+    <table class="grid">
+      <tr>
+        <td>
+dep-graph-2027-extern.png          <br/>
+          <img src="dep-graph-2027-extern.png" alt="dep-graph-2027-extern.png" width="600px" height="auto"/>
+        </td>
+      </tr>
+      <tr>
+        <td>
+dep-graph-2027.png          <br/>
+          <img src="dep-graph-2027.png" alt="dep-graph-2027.png" width="600px" height="auto"/>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
