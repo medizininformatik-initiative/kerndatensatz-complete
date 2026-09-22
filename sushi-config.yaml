@@ -165,6 +165,7 @@ dependencies:
 menu:
   Home: index.html
   Ballot 2027: ballot.html
+  Testabdeckung: testabdeckung.html
   Artefakte: artifacts.html
 
 # Das MII-KDS-Template rendert per Default Englisch (MII-Konvention fuer die
