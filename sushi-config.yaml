@@ -167,6 +167,12 @@ menu:
   Ballot 2027: ballot.html
   Artifacts: artifacts.html
 
+# Das MII-KDS-Template rendert per Default Englisch (MII-Konvention fuer die
+# Module). Diese BOM ist rein deutschsprachig — Deutsch ist hier die
+# Standardsprache, weitere Sprachen gibt es nicht.
+parameters:
+  i18n-default-lang: de
+
 # ╭───────────────────────────Less Common Implementation Guide Properties──────────────────────────╮
 # │  Uncomment the properties below to configure additional properties on the ImplementationGuide  │
 # │  resource. These properties are less commonly needed than those above.                         │
