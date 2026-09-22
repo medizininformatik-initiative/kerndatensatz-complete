@@ -1,9 +1,9 @@
-# de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19: MII Kerndatensatz Complete(en)
+# de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19: MII Kerndatensatz Complete(de)
 
 ## Pages
 
 * [Home](index.md)
-* [Artifacts Summary](artifacts.md)
+* [Artefaktübersicht](artifacts.md)
 * [Ballot](ballot.md)
 
 ## Resources

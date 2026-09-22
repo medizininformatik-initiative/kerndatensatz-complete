@@ -1,20 +1,20 @@
 # MII CPS Kerndatensatz Complete CapabilityStatement - MII Kerndatensatz Complete v2027.0.0-ballot.19
 
 * [**Table of Contents**](toc.md)
-* [**Artifacts Summary**](artifacts.md)
+* [**Artefaktübersicht**](artifacts.md)
 * **MII CPS Kerndatensatz Complete CapabilityStatement**
 
 ## CapabilityStatement: MII CPS Kerndatensatz Complete CapabilityStatement 
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://www.medizininformatik-initiative.de/fhir/core/complete/CapabilityStatement/mii-cps-kerndatensatz-complete | *Version*:2027.0.0-ballot.19 |
-| Active as of 2026-04-07 | *Computable Name*:MII_CPS_Kerndatensatz_Complete |
+| *Offizielle URL*:https://www.medizininformatik-initiative.de/fhir/core/complete/CapabilityStatement/mii-cps-kerndatensatz-complete | *Version*:2027.0.0-ballot.19 |
+| Active Stand: 2026-04-07 | *Maschinenlesbarer Name*:MII_CPS_Kerndatensatz_Complete |
 
  
 Aggregiertes CapabilityStatement des MII Kerndatensatz Complete-Pakets. Beschreibt alle verpflichtenden Interaktionen, Profile und Suchparameter aus allen Modulen des MII Kerndatensatzes, die ein konformes System unterstützen muss. 
 
- [Raw OpenAPI-Swagger Definition file](../mii-cps-kerndatensatz-complete.openapi.json) | [Download](../mii-cps-kerndatensatz-complete.openapi.json) 
+ [Rohdatei der OpenAPI-/Swagger-Definition](../mii-cps-kerndatensatz-complete.openapi.json) | [Download](../mii-cps-kerndatensatz-complete.openapi.json) 
 
 
 

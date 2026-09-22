@@ -7,8 +7,8 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://www.medizininformatik-initiative.de/fhir/core/complete/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.complete | *Version*:2027.0.0-ballot.19 |
-| Active as of 2026-09-22 | *Computable Name*:MIIKerndatensatzComplete |
+| *Offizielle URL*:https://www.medizininformatik-initiative.de/fhir/core/complete/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.complete | *Version*:2027.0.0-ballot.19 |
+| Active Stand: 2026-09-22 | *Maschinenlesbarer Name*:MIIKerndatensatzComplete |
 
 # MII Kerndatensatz Complete
 
