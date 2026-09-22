@@ -42,7 +42,7 @@
                  HL7&reg;, FHIR&reg; and the FHIR flame design are registered trademarks of Health Level Seven International. Their use does not constitute endorsement by HL7.
 
           
-         (        <a href="de/toc.html">src</a>
+         (        <a href="de/versionierung.html">src</a>
 )
       </li>
       <li>
@@ -54,11 +54,11 @@
 )
       </li>
       <li>
-HL7&reg;, FHIR&reg; and the FHIR flame design are registered trademarks of Health Level Seven International. Their use does not constitute endorsement by HL7. (        <a href="de/toc.html">src</a>
+HL7&reg;, FHIR&reg; and the FHIR flame design are registered trademarks of Health Level Seven International. Their use does not constitute endorsement by HL7. (        <a href="de/versionierung.html">src</a>
 )
       </li>
       <li>
-MII Kerndatensatz Complete - Local Development build (v2027.0.0-ballot.19) built by the FHIR (HL7&reg; FHIR&reg; Standard) Build Tools. See the Directory of published versions (        <a href="toc.html">src</a>
+MII Kerndatensatz Complete - Local Development build (v2027.0.0-ballot.19) built by the FHIR (HL7&reg; FHIR&reg; Standard) Build Tools. See the Directory of published versions (        <a href="versionierung.html">src</a>
 )
       </li>
     </ul>
@@ -113,7 +113,7 @@ MII Kerndatensatz Complete - Local Development build (v2027.0.0-ballot.19) built
 .  
           Package de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19 basiert auf           <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>
 .
-          Erstellt           <span title="Tue, Sep 22, 2026 11:03+0000">2026-09-22</span>
+          Erstellt           <span title="Tue, Sep 22, 2026 14:38+0000">2026-09-22</span>
 
                     <br/>
 
@@ -2063,6 +2063,85 @@ Solange das Paket noch nicht auf packages.fhir.org verfügbar ist, kann es vom  
       </tr>
       <tr>
         <td>
+          <a href="de/migration.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/mii-kerndatensatz-versionhistory/blob/main/data/rename-candidates-2027.csv">github.com</a>
+        </td>
+        <td>
+Die kuratierte Zuordnung alt → neu entsteht in der
+          <a href="https://github.com/medizininformatik-initiative/mii-kerndatensatz-versionhistory/blob/main/data/rename-candidates-2027.csv">Rename-Kandidatenliste</a>
+
+(Ähnlichkeits-Matching über Element-Fingerprints; Spalte           <code class="language-plaintext highlighter-rouge">confirmed</code>
+ zeigt den
+Kuratierungsstand). Für ETL-Strecken heißt das:           <code class="language-plaintext highlighter-rouge">meta.profile</code>
+-Werte per
+Mapping-Tabelle ersetzen, Profil-basierte Routing-/Validierungsregeln anpassen.
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="de/migration.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/mii-kerndatensatz-versionhistory/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+41 Profil-Übergänge sind strukturell breaking (Elemente entfernt oder
+inkompatibel geändert) — Schwerpunkte           <strong>Onkologie (12)</strong>
+, Mikrobiologie (7),
+Seltene Erkrankungen (7), Bildgebung (3), ICU (3). Welche Elemente konkret,
+zeigt der           <a href="https://medizininformatik-initiative.github.io/mii-kerndatensatz-versionhistory/">Version-History-Explorer</a>
+
+je Profil (bzw.           <code class="language-plaintext highlighter-rouge">profile-pairwise-changes.csv</code>
+ im selben Repo, Spalten
+          <code class="language-plaintext highlighter-rouge">elements_removed</code>
+/          <code class="language-plaintext highlighter-rouge">elements_added</code>
+).
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="de/migration.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-complete/tree/main/validation-server">github.com</a>
+        </td>
+        <td>
+Der           <a href="https://github.com/medizininformatik-initiative/kerndatensatz-complete/tree/main/validation-server">Validation-Server</a>
+
+der BOM (HAPI + Blaze, vorkonfiguriert mit allen Pins) eignet sich als
+Migrations-Prüfstand: 2026er Bestandsinstanzen dagegen validieren zeigt
+Renames (Profil unbekannt) und Breaking-Änderungen (Validierungsfehler)
+unmittelbar. Testdaten zum Vergleich liefert
+          <a href="https://github.com/medizininformatik-initiative/mii-testdata">mii-testdata</a>
+;
+den Abdeckungsstand zeigt die Seite           <a href="testabdeckung.html">Testabdeckung</a>
+.
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="de/migration.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/mii-testdata">github.com</a>
+        </td>
+        <td>
+Der           <a href="https://github.com/medizininformatik-initiative/kerndatensatz-complete/tree/main/validation-server">Validation-Server</a>
+
+der BOM (HAPI + Blaze, vorkonfiguriert mit allen Pins) eignet sich als
+Migrations-Prüfstand: 2026er Bestandsinstanzen dagegen validieren zeigt
+Renames (Profil unbekannt) und Breaking-Änderungen (Validierungsfehler)
+unmittelbar. Testdaten zum Vergleich liefert
+          <a href="https://github.com/medizininformatik-initiative/mii-testdata">mii-testdata</a>
+;
+den Abdeckungsstand zeigt die Seite           <a href="testabdeckung.html">Testabdeckung</a>
+.
+        </td>
+      </tr>
+      <tr>
+        <td>
           <a href="de/testabdeckung.html">web</a>
         </td>
         <td>
@@ -2142,6 +2221,80 @@ Die Detail-Auswertung (unbedeckte Element-IDs je Profil) liefert
 im mii-testdata-Repo; die Schichten-Definition steht in
           <a href="https://github.com/medizininformatik-initiative/mii-testdata/pull/45">PR #45</a>
 .
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="de/versionierung.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-complete/blob/main/ignored-versions.json">github.com</a>
+        </td>
+        <td>
+Die KDS-Module und diese BOM versionieren nach           <strong>CalVer</strong>
+:           <code class="language-plaintext highlighter-rouge">JJJJ.minor.patch</code>
+
+bezeichnet die Generation (z.B.           <code class="language-plaintext highlighter-rouge">2026.0.1</code>
+,           <code class="language-plaintext highlighter-rouge">2027.0.0</code>
+), Vorabstände tragen
+Suffixe (          <code class="language-plaintext highlighter-rouge">-ballot</code>
+,           <code class="language-plaintext highlighter-rouge">-ballot.1</code>
+,           <code class="language-plaintext highlighter-rouge">-rc…</code>
+,           <code class="language-plaintext highlighter-rouge">-alpha…</code>
+). Wichtig für Werkzeuge:
+Eine finale CalVer sortiert           <strong>über</strong>
+ jedem gleichnamigen Vorabstand — deshalb
+pinnt die BOM Versionen exakt und pflegt in
+          <a href="https://github.com/medizininformatik-initiative/kerndatensatz-complete/blob/main/ignored-versions.json">
+<code class="language-plaintext highlighter-rouge">ignored-versions.json</code>          </a>
+
+bekannte Fehlpublikationen (aktuell           <code class="language-plaintext highlighter-rouge">icu 2027.0.0</code>
+: versehentlich publiziert,
+unvollständig, niemals auflösen).
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="de/versionierung.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/mii-kerndatensatz-versionhistory/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+Die Tabelle fasst je Modul zusammen, wie sich die Profile von der letzten
+Vorversion zur gepinnten Ballot-Version verändert haben — Datengrundlage ist
+der           <a href="https://medizininformatik-initiative.github.io/mii-kerndatensatz-versionhistory/">MII KDS Version-History-Explorer</a>
+,
+der alle publizierten Profilversionen seit 2019 strukturell vergleicht
+(Subway-Map-Ansicht je Profil).
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="de/versionierung.html">web</a>
+        </td>
+        <td>
+          <a href="https://medizininformatik-initiative.github.io/mii-kerndatensatz-versionhistory/">medizininformatik-initiative.github.io</a>
+        </td>
+        <td>
+*identisch = strukturgleich oder nur Canonical-Metadaten geändert. Übergänge = Profile mit durchgehender Canonical von der letzten Vorversion zur gepinnten Version; Canonical-Abrisse (beendete URLs, meist Umbenennungen) erscheinen nicht als Übergang — siehe Abschnitt Canonical-Kontinuität. Stand: 2026-09-22 · generiert mit           <code>scripts/version-transitions.py</code>
+ aus dem           <a href="https://medizininformatik-initiative.github.io/mii-kerndatensatz-versionhistory/">Version-History-Explorer</a>
+-Datensatz
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="de/versionierung.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/mii-kerndatensatz-versionhistory/blob/main/data/rename-candidates-2027.csv">github.com</a>
+        </td>
+        <td>
+Die Zuordnung alt → neu wird werkzeuggestützt kuratiert
+(          <a href="https://github.com/medizininformatik-initiative/mii-kerndatensatz-versionhistory/blob/main/data/rename-candidates-2027.csv">Rename-Kandidatenliste</a>
+,
+Ähnlichkeits-Matching über Element-Fingerprints) und fließt als Lineage in den
+Explorer ein, damit umbenannte Profile als durchgehende Linien erscheinen.
         </td>
       </tr>
     </table>

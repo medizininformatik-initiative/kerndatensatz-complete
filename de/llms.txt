@@ -6,6 +6,8 @@
 * [Testabdeckung](testabdeckung.md)
 * [Artefaktübersicht](artifacts.md)
 * [Ballot](ballot.md)
+* [Versionierung](versionierung.md)
+* [Migration](migration.md)
 
 ## Resources
 

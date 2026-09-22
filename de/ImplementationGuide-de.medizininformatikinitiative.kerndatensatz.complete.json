@@ -11,7 +11,7 @@
   "name" : "MIIKerndatensatzComplete",
   "title" : "MII Kerndatensatz Complete",
   "status" : "active",
-  "date" : "2026-09-22T11:03:15+00:00",
+  "date" : "2026-09-22T14:38:06+00:00",
   "publisher" : "Medizininformatik Initiative",
   "contact" : [{
     "name" : "Medizininformatik Initiative",
@@ -829,10 +829,28 @@
       {
         "extension" : [{
           "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+          "valueUrl" : "migration.html"
+        }],
+        "nameUrl" : "migration.html",
+        "title" : "Migration",
+        "generation" : "markdown"
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
           "valueUrl" : "testabdeckung.html"
         }],
         "nameUrl" : "testabdeckung.html",
         "title" : "Testabdeckung",
+        "generation" : "markdown"
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+          "valueUrl" : "versionierung.html"
+        }],
+        "nameUrl" : "versionierung.html",
+        "title" : "Versionierung",
         "generation" : "markdown"
       }]
     },

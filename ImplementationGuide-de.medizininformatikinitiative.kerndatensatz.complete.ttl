@@ -18,7 +18,7 @@
   fhir:ImplementationGuide.name [ fhir:value "MIIKerndatensatzComplete"] ;
   fhir:ImplementationGuide.title [ fhir:value "MII Kerndatensatz Complete"] ;
   fhir:ImplementationGuide.status [ fhir:value "active"] ;
-  fhir:ImplementationGuide.date [ fhir:value "2026-09-22T11:03:15+00:00"^^xsd:dateTime] ;
+  fhir:ImplementationGuide.date [ fhir:value "2026-09-22T14:38:06+00:00"^^xsd:dateTime] ;
   fhir:ImplementationGuide.publisher [ fhir:value "Medizininformatik Initiative"] ;
   fhir:ImplementationGuide.contact [
      fhir:index 0 ;
@@ -995,10 +995,30 @@
          fhir:Element.extension [
            fhir:index 0 ;
            fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name" ] ;
+           fhir:Extension.valueUrl [ fhir:value "migration.html" ]
+         ] ;
+         fhir:ImplementationGuide.definition.page.nameUrl [ fhir:value "migration.html" ] ;
+         fhir:ImplementationGuide.definition.page.title [ fhir:value "Migration" ] ;
+         fhir:ImplementationGuide.definition.page.generation [ fhir:value "markdown" ]
+       ], [
+         fhir:index 3 ;
+         fhir:Element.extension [
+           fhir:index 0 ;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name" ] ;
            fhir:Extension.valueUrl [ fhir:value "testabdeckung.html" ]
          ] ;
          fhir:ImplementationGuide.definition.page.nameUrl [ fhir:value "testabdeckung.html" ] ;
          fhir:ImplementationGuide.definition.page.title [ fhir:value "Testabdeckung" ] ;
+         fhir:ImplementationGuide.definition.page.generation [ fhir:value "markdown" ]
+       ], [
+         fhir:index 4 ;
+         fhir:Element.extension [
+           fhir:index 0 ;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name" ] ;
+           fhir:Extension.valueUrl [ fhir:value "versionierung.html" ]
+         ] ;
+         fhir:ImplementationGuide.definition.page.nameUrl [ fhir:value "versionierung.html" ] ;
+         fhir:ImplementationGuide.definition.page.title [ fhir:value "Versionierung" ] ;
          fhir:ImplementationGuide.definition.page.generation [ fhir:value "markdown" ]
        ]
      ] ;
