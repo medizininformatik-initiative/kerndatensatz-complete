@@ -144,14 +144,22 @@ while IFS= read -r dep; do
     PKG_RESOURCES=$((PKG_RESOURCES + 1))
   done
 
-  # Copy examples if present
-  if [[ -d "$CACHE_DIR/package/examples" ]]; then
-    for f in "$CACHE_DIR/package/examples/"*.json; do
+  # Copy examples if present.
+  # ACHTUNG: Die Module shippen ihre Beispiele unter package/example/
+  # (Singular, IG-Publisher-Konvention); manche Pakete nutzen examples/.
+  # Beide Varianten einsammeln — sonst fehlen fast alle Modul-Beispiele
+  # im BOM (aufgefallen bei onkologie 2027.0.0-ballot.1: 313 Beispiele,
+  # 0 im Paket). Wirksam ab dem naechsten BOM-Build; bereits publizierte
+  # Versionen bleiben unveraendert.
+  for EXDIR in examples example; do
+  if [[ -d "$CACHE_DIR/package/$EXDIR" ]]; then
+    for f in "$CACHE_DIR/package/$EXDIR/"*.json; do
       [[ -f "$f" ]] || continue
       cp "$f" "$PACKAGE_DIR/examples/"
       PKG_EXAMPLES=$((PKG_EXAMPLES + 1))
     done
   fi
+  done
 
   TOTAL_RESOURCES=$((TOTAL_RESOURCES + PKG_RESOURCES))
   TOTAL_EXAMPLES=$((TOTAL_EXAMPLES + PKG_EXAMPLES))
