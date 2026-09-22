@@ -108,32 +108,31 @@ Pakete ohne Pin werden weiterhin transitiv aufgelöst; ihre Version ergibt sich 
 
 | Paket | Version | Angefordert von | Anmerkung |
 |-------|---------|-----------------|-----------|
-| Deutsche Basisprofile R4 (`de.basisprofil.r4`) | 1.6.0 | Base, Biobank, ICU, Bildgebung, Dokument, Kardiologie | ältere Module fordern noch 1.5.x; Lungenfunktion fordert das nicht existierende `de.basiprofil.r4` |
-| HL7 Terminology (`hl7.terminology.r4`) | 7.3.0 | ICU 2027.0.0 | Module uneinig: 5.0.0 / 6.1.0 / 6.5.0 / 7.1.0 / 7.2.0 / 7.3.0 |
-| HL7 Extensions R4 (`hl7.fhir.uv.extensions.r4`) | 5.3.0 | Base 2026.0.1, CRMI 2.0.0 | Module uneinig: 5.1.0 / 5.2.0 / 5.3.0 |
-| HL7 Clinical Genomics (`hl7.fhir.uv.genomics-reporting`) | 3.0.0 | Molekulargenetik, MTB | einheitlich |
-| HL7 Europe Base (`hl7.fhir.eu.base`) | 2.0.0 | EU Laboratory (transitiv über Biobank) | einheitlich |
-| HL7 Europe Laboratory (`hl7.fhir.eu.laboratory`) | 2.0.0 | Biobank 2027.0.0-ballot.rc1 | einheitlich |
-| HL7 Europe Extensions R4 (`hl7.fhir.eu.extensions.r4`) | 1.3.0 | EU Base, EU Laboratory | einheitlich |
+| Deutsche Basisprofile R4 (`de.basisprofil.r4`) | 1.6.0 | 14 Module (Base, Biobank, Bildgebung, Dokument, ICU, Kardiologie, Lungenfunktion, Medikation, MolGen, MTB, Onkologie, PROs, Seltene, Symptome) | einheitlich 1.6.0 — der frühere Tippfehler `de.basiprofil.r4` (Lungenfunktion) ist behoben |
+| HL7 Terminology (`hl7.terminology.r4`) | 7.3.0 | ICU, Bildgebung, Consent, Lungenfunktion, Medikation, MolGen, MTB, Onkologie, PROs, Soziodemographie, Studie, Symptome | acht Module fordern noch 7.1.0 (Base, Meta, Biobank, Dokument, Kardiologie, Laborbefund, Mikrobiologie, Seltene) |
+| HL7 Extensions R4 (`hl7.fhir.uv.extensions.r4`) | 5.3.0 | zwölf Module + CRMI 2.0.0 | sieben Module fordern noch 5.2.0 (Base, Meta, Dokument, Laborbefund, Mikrobiologie, PROs, Seltene) |
+| HL7 Clinical Genomics (`hl7.fhir.uv.genomics-reporting`) | 3.0.0 | Molekulargenetik, MTB, Onkologie | einheitlich |
+| HL7 Europe Base (`hl7.fhir.eu.base`) | 2.0.0 | Symptome (direkt), EU Laboratory (transitiv über Biobank) | einheitlich |
+| HL7 Europe Laboratory (`hl7.fhir.eu.laboratory`) | 2.0.0 | Biobank | einheitlich |
+| HL7 Europe Extensions R4 (`hl7.fhir.eu.extensions.r4`) | 1.3.0 | EU Base, EU Laboratory, Pathologie (direkt) | einheitlich |
 | MIABIS (`eu.miabis.r4`) | 1.3.0 | Biobank | Umzug auf die neuen MIABIS-Pfade in `2027.0.0-ballot` vollzogen |
-| ISiK (`de.gematik.isik`) | 6.0.0 | ICU 2027.0.0, Dokument 2027.0.0-ballot.rc1, Kardiologie | Pathologie fordert 5.1.2, PROs 5.1.1 |
+| ISiK (`de.gematik.isik`) | 6.0.0 | ICU, Dokument, Kardiologie, PROs | Pathologie fordert noch 5.1.2 |
 
 #### Nur transitiv aufgelöst
 
 | Paket | Version | Angefordert von |
 |-------|---------|-----------------|
 | Einwilligungsmanagement (`de.einwilligungsmanagement`) | 2.0.4 | Consent |
-| Deutsche Medikation (`de.fhir.medication`) | 1.0.x | Medikation |
+| Deutsche Medikation (`de.fhir.medication`) | 1.0.7 | Medikation |
 | IHE-D Terminologie (`de.ihe-d.terminology`) | 3.0.1 | Medikation, Dokument |
 | gematik Terminologie (`de.gematik.terminology`) | 1.0.6 – 1.0.9 | ISiK (transitiv) |
 | DVMD KDL (`dvmd.kdl.r4`) | 2025.0.1 (Dokument), 2026.0.0 (ICU) | Dokument, ICU |
 | DICOM (`fhir.dicom`) | 2025.3.20250714 | Bildgebung |
 | IHE FormatCode (`ihe.formatcode.fhir`) | 1.4.0 | Dokument |
-| HL7 International Patient Summary (`hl7.fhir.uv.ips`) | 2.0.0 (Medikation), 2.0.1 (Laborbefund) | Medikation, Laborbefund |
-| HL7 Structured Data Capture (`hl7.fhir.uv.sdc`) | 3.0.0 (PROs), 4.0.0 (ISiK 6.0.0) | PROs, ISiK |
-| HL7 mCODE (`hl7.fhir.us.mcode`) | 2.1.x | Pathologie |
-| HL7 CRMI (`hl7.fhir.uv.crmi`) | 2.0.0 | Base, Meta |
-| HL7 Cross-Version R5 (`hl7.fhir.uv.xver-r5.r4`) | 0.1.0 | Base, EU Laboratory, ISiK |
+| HL7 International Patient Summary (`hl7.fhir.uv.ips`) | 2.0.0 (Medikation), 2.0.1 (Base, Laborbefund, Mikrobiologie) | Base, Laborbefund, Medikation, Mikrobiologie |
+| HL7 Structured Data Capture (`hl7.fhir.uv.sdc`) | 4.0.0 | PROs, ISiK |
+| HL7 CRMI (`hl7.fhir.uv.crmi`) | 2.0.0 | alle Module außer Pathologie und Soziodemographie |
+| HL7 Cross-Version R5 (`hl7.fhir.uv.xver-r5.r4`) | 0.1.0 | Base, Dokument, ICU, Medikation, Mikrobiologie, MTB, Onkologie, Pathologie, PROs, Studie |
 
 #### Graph der externen Abhängigkeiten
 
