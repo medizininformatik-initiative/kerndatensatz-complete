@@ -165,7 +165,7 @@ dependencies:
 menu:
   Home: index.html
   Ballot 2027: ballot.html
-  Artifacts: artifacts.html
+  Artefakte: artifacts.html
 
 # Das MII-KDS-Template rendert per Default Englisch (MII-Konvention fuer die
 # Module). Diese BOM ist rein deutschsprachig — Deutsch ist hier die
