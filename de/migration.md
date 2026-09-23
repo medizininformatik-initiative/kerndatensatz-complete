@@ -29,6 +29,16 @@ Einige Module haben Profil-URLs umbenannt — Instanzen mit `meta.profile` auf d
 
 Die kuratierte Zuordnung alt → neu entsteht in der [Rename-Kandidatenliste](https://github.com/medizininformatik-initiative/mii-kerndatensatz-versionhistory/blob/main/data/rename-candidates-2027.csv) (Ähnlichkeits-Matching über Element-Fingerprints; Spalte `confirmed` zeigt den Kuratierungsstand). Für ETL-Strecken heißt das: `meta.profile`-Werte per Mapping-Tabelle ersetzen, Profil-basierte Routing-/Validierungsregeln anpassen.
 
+**Auch ValueSet-Canonicals sind betroffen** (relevant für eigene Profile mit Bindings auf MII-ValueSets, Questionnaires, Terminologieserver-Konfigurationen und CQL):
+
+* **Onkologie**: 7 ValueSets umbenannt — reines `onko-`-Namenspräfix bei identischem Inhalt (`mii-vs-strahlentherapie-*` → `mii-vs-onko-strahlentherapie-*`).
+* **Seltene Erkrankungen**: 1 inhaltsgleiche Umbenennung.
+* **Mikrobiologie**: 22 ValueSets enden, nur eines davon inhaltsgleich weitergeführt — hier wurde das Terminologie-Inventar tatsächlich restrukturiert, ein reines URL-Mapping genügt nicht.
+
+Details in der [VS-Rename-Kandidatenliste](https://github.com/medizininformatik-initiative/mii-kerndatensatz-versionhistory/blob/main/data/vs-rename-candidates-2027.csv) (Composition-Vergleich; inhaltliche VS-Änderungen bei gleichbleibender URL sind hier ausdrücklich **nicht** erfasst — siehe [Versionierung → Abgrenzung](versionierung.md)).
+
+**Maschinell nutzbar** sind beide Mappings als ConceptMaps im URI-System `urn:ietf:rfc:3986` — damit beantwortet `$translate` (z.B. auf dem Validation-Server) zur Laufzeit, wohin eine alte Canonical zeigt: [Profil-Canonicals](ConceptMap-mii-cm-kds-profile-canonicals-2026-2027.md) · [ValueSet-Canonicals](ConceptMap-mii-cm-kds-vs-canonicals-2026-2027.md). Beide sind als `draft`/`experimental` markiert, solange die Kuratierung läuft (`equivalent` = inhaltsgleich belegt, `relatedto` = Kandidat mit Score, `unmatched` = entfällt ersatzlos).
+
 ### 3. Breaking-Änderungen prüfen
 
 41 Profil-Übergänge sind strukturell breaking (Elemente entfernt oder inkompatibel geändert) — Schwerpunkte **Onkologie (12)**, Mikrobiologie (7), Seltene Erkrankungen (7), Bildgebung (3), ICU (3). Welche Elemente konkret, zeigt der [Version-History-Explorer](https://medizininformatik-initiative.github.io/mii-kerndatensatz-versionhistory/) je Profil (bzw. `profile-pairwise-changes.csv` im selben Repo, Spalten `elements_removed`/`elements_added`).

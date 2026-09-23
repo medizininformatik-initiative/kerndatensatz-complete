@@ -15,6 +15,11 @@
 
 * [MII CPS Kerndatensatz Complete CapabilityStatement](de/CapabilityStatement-mii-cps-kerndatensatz-complete.md)
 
+### ConceptMaps
+
+* [MII KDS Profil-Canonicals 2026 auf 2027](de/ConceptMap-mii-cm-kds-profile-canonicals-2026-2027.md)
+* [MII KDS ValueSet-Canonicals 2026 auf 2027](de/ConceptMap-mii-cm-kds-vs-canonicals-2026-2027.md)
+
 ### ImplementationGuides
 
 * [MII Kerndatensatz Complete](de/ImplementationGuide-de.medizininformatikinitiative.kerndatensatz.complete.md)

@@ -1,18 +1,18 @@
 {
-  "date" : "Wed, 23 Sep, 2026 07:05:27 +0000",
+  "date" : "Wed, 23 Sep, 2026 09:27:22 +0000",
   "doco" : "For each file: start is seconds after start activity occurred. Length = milliseconds activity took",
   "files" : [{
     "name" : "/fsh-generated/resources/ImplementationGuide-de.medizininformatikinitiative.kerndatensatz.complete.json",
-    "size" : 11194,
+    "size" : 12833,
     "processes" : [{
       "activity" : "load",
       "start" : 60,
-      "length" : 16
+      "length" : 18
     },
     {
       "activity" : "checkR4R4B",
       "start" : 61,
-      "length" : 12
+      "length" : 11
     },
     {
       "activity" : "generateNarratives",
@@ -21,32 +21,32 @@
     },
     {
       "activity" : "validate",
-      "start" : 102,
-      "length" : 13554
+      "start" : 111,
+      "length" : 16689
     },
     {
       "activity" : "scanForUsageStats",
-      "start" : 116,
+      "start" : 128,
       "length" : 1
     },
     {
       "activity" : "generate1",
-      "start" : 116,
-      "length" : 206
+      "start" : 128,
+      "length" : 194
     },
     {
       "activity" : "generate2",
-      "start" : 120,
-      "length" : 98
+      "start" : 133,
+      "length" : 120
     },
     {
       "activity" : "generateValidationPack",
-      "start" : 159,
-      "length" : 5
+      "start" : 173,
+      "length" : 4
     },
     {
       "activity" : "scanExamplesForR5",
-      "start" : 183,
+      "start" : 202,
       "length" : 1
     }]
   },
@@ -56,72 +56,165 @@
     "processes" : [{
       "activity" : "loadResources",
       "start" : 60,
-      "length" : 60
+      "length" : 91
     },
     {
       "activity" : "load",
       "start" : 60,
-      "length" : 111
-    },
-    {
-      "activity" : "load",
-      "start" : 60,
-      "length" : 1
+      "length" : 190
     },
     {
       "activity" : "load-configure",
       "start" : 61,
-      "length" : 3
-    },
-    {
-      "activity" : "loadDepInfo",
-      "start" : 61,
-      "length" : 1
+      "length" : 4
     },
     {
       "activity" : "checkR4R4B",
       "start" : 61,
-      "length" : 49
+      "length" : 45
     },
     {
       "activity" : "generateNarratives",
       "start" : 61,
-      "length" : 1656
+      "length" : 1693
     },
     {
       "activity" : "validate",
-      "start" : 63,
-      "length" : 39426
+      "start" : 64,
+      "length" : 47394
     },
     {
       "activity" : "scanForUsageStats",
-      "start" : 116,
-      "length" : 2
+      "start" : 128,
+      "length" : 3
     },
     {
       "activity" : "generate1",
-      "start" : 116,
-      "length" : 1003
+      "start" : 128,
+      "length" : 954
     },
     {
       "activity" : "generate2",
-      "start" : 120,
-      "length" : 1204
+      "start" : 133,
+      "length" : 1244
     },
     {
       "activity" : "makeDependencies",
-      "start" : 123,
+      "start" : 137,
       "length" : 5
     },
     {
       "activity" : "generateValidationPack",
-      "start" : 159,
+      "start" : 173,
       "length" : 41
     },
     {
       "activity" : "scanExamplesForR5",
-      "start" : 183,
+      "start" : 202,
+      "length" : 3
+    }]
+  },
+  {
+    "name" : "input/resources/ConceptMap-mii-cm-kds-profile-canonicals-2026-2027.json",
+    "size" : 98330,
+    "processes" : [{
+      "activity" : "loadResources",
+      "start" : 60,
+      "length" : 24
+    },
+    {
+      "activity" : "load",
+      "start" : 60,
+      "length" : 61
+    },
+    {
+      "activity" : "load",
+      "start" : 60,
+      "length" : 41
+    },
+    {
+      "activity" : "checkR4R4B",
+      "start" : 61,
+      "length" : 6
+    },
+    {
+      "activity" : "generateNarratives",
+      "start" : 63,
+      "length" : 441
+    },
+    {
+      "activity" : "validate",
+      "start" : 63,
+      "length" : 295
+    },
+    {
+      "activity" : "validate",
+      "start" : 111,
+      "length" : 1
+    },
+    {
+      "activity" : "generate1",
+      "start" : 129,
+      "length" : 261
+    },
+    {
+      "activity" : "generate2",
+      "start" : 134,
+      "length" : 571
+    },
+    {
+      "activity" : "generateValidationPack",
+      "start" : 173,
+      "length" : 9
+    }]
+  },
+  {
+    "name" : "input/resources/ConceptMap-mii-cm-kds-vs-canonicals-2026-2027.json",
+    "size" : 14738,
+    "processes" : [{
+      "activity" : "loadResources",
+      "start" : 60,
+      "length" : 7
+    },
+    {
+      "activity" : "load",
+      "start" : 60,
+      "length" : 12
+    },
+    {
+      "activity" : "load",
+      "start" : 60,
       "length" : 11
+    },
+    {
+      "activity" : "checkR4R4B",
+      "start" : 61,
+      "length" : 1
+    },
+    {
+      "activity" : "generateNarratives",
+      "start" : 63,
+      "length" : 99
+    },
+    {
+      "activity" : "validate",
+      "start" : 64,
+      "length" : 31
+    },
+    {
+      "activity" : "generate1",
+      "start" : 129,
+      "length" : 59
+    },
+    {
+      "activity" : "generate2",
+      "start" : 135,
+      "length" : 84
+    },
+    {
+      "activity" : "generateValidationPack",
+      "start" : 173,
+      "length" : 2
     }]
   },
   {
@@ -129,20 +222,20 @@
     "size" : 1300,
     "processes" : [{
       "activity" : "generate2",
-      "start" : 122,
+      "start" : 135,
       "length" : 1
     }]
   },
   {
     "name" : "/fsh-generated/includes/fsh-link-references.md",
-    "size" : 89
+    "size" : 277
   },
   {
     "name" : "/input/pagecontent/migration.md",
-    "size" : 19138,
+    "size" : 27399,
     "processes" : [{
       "activity" : "generate2",
-      "start" : 122,
+      "start" : 135,
       "length" : 3
     }]
   },
@@ -151,8 +244,8 @@
     "size" : 15538,
     "processes" : [{
       "activity" : "generate2",
-      "start" : 122,
-      "length" : 3
+      "start" : 135,
+      "length" : 2
     }]
   },
   {
@@ -160,8 +253,8 @@
     "size" : 77672,
     "processes" : [{
       "activity" : "generate2",
-      "start" : 122,
-      "length" : 6
+      "start" : 135,
+      "length" : 7
     }]
   },
   {
@@ -169,31 +262,26 @@
     "size" : 24778,
     "processes" : [{
       "activity" : "generate2",
-      "start" : 122,
+      "start" : 135,
       "length" : 1
     }]
   },
   {
     "name" : "/input/pagecontent/versionierung.md",
-    "size" : 4651,
-    "processes" : [{
-      "activity" : "generate2",
-      "start" : 122,
-      "length" : 1
-    }]
+    "size" : 4651
   },
   {
     "name" : "/template/config",
-    "size" : 0
+    "size" : 0,
+    "processes" : [{
+      "activity" : "generate2",
+      "start" : 135,
+      "length" : 1
+    }]
   },
   {
     "name" : "/template/config/_config.yml",
-    "size" : 140,
-    "processes" : [{
-      "activity" : "generateExampleZip",
-      "start" : 159,
-      "length" : 1
-    }]
+    "size" : 140
   },
   {
     "name" : "/input/images",
@@ -201,19 +289,14 @@
   },
   {
     "name" : "/input/images/migration-2026-2027.svg",
-    "size" : 14358,
-    "processes" : [{
-      "activity" : "scan",
-      "start" : 61,
-      "length" : 1
-    }]
+    "size" : 14358
   },
   {
     "name" : "/input/images/dep-graph-2026.svg",
     "size" : 30329,
     "processes" : [{
       "activity" : "generate2",
-      "start" : 122,
+      "start" : 135,
       "length" : 1
     }]
   },
@@ -226,7 +309,7 @@
     "size" : 276696,
     "processes" : [{
       "activity" : "generate2",
-      "start" : 122,
+      "start" : 135,
       "length" : 1
     }]
   },
@@ -239,7 +322,7 @@
     "size" : 236361,
     "processes" : [{
       "activity" : "generate2",
-      "start" : 122,
+      "start" : 135,
       "length" : 1
     }]
   },
@@ -249,6 +332,11 @@
   },
   {
     "name" : "/temp/pages/_includes/artifacts.xml",
-    "size" : 1890
+    "size" : 4552,
+    "processes" : [{
+      "activity" : "generate2",
+      "start" : 135,
+      "length" : 1
+    }]
   }]
 }
