@@ -16,8 +16,8 @@ Instanzen: das juengste Release von medizininformatik-initiative/mii-testdata
 (Asset testdata-bundles-ndjson-*.zip). Profile: die in package.json gepinnten
 MII-Packages aus dem FHIR-Cache, bei Bedarf von packages.simplifier.net.
 
-Die Mess-Logik ist eine Kopie von mii-testdata/kds-testdata/scripts/
-ms-coverage.py (PR #46) — Aenderungen dort nachziehen.
+Die Mess-Logik ist eine Kopie von mii-testdata/scripts/
+ms-coverage.py (Stand main) — Aenderungen dort nachziehen.
 """
 
 import argparse
@@ -61,6 +61,47 @@ def ensure_package(pkg, ver):
     return d
 
 
+# Slice-Name-Suffix -> FHIR-Typ fuer [x]-Choices (value[x], effective[x], ...)
+_CHOICE_TYPE = {
+    "Quantity": "Quantity", "CodeableConcept": "CodeableConcept", "String": "string",
+    "Boolean": "boolean", "Integer": "integer", "Range": "Range", "Ratio": "Ratio",
+    "SampledData": "SampledData", "Time": "time", "DateTime": "dateTime",
+    "Period": "Period", "Age": "Age", "Reference": "Reference", "Duration": "Duration",
+}
+
+
+def unreachable_slice_prefixes(elements):
+    """Element-Ids von [x]-Slices, deren Typ das Profil gar nicht (mehr) zulaesst.
+
+    Schraenkt ein abgeleitetes Profil eine Choice auf einen Typ ein, bleiben die
+    geerbten Slices der anderen Typen samt Must-Support im Snapshot stehen,
+    obwohl keine konforme Instanz sie befuellen kann. Solche Phantom-Pflichten
+    gehoeren nicht in den Nenner (siehe mii-testdata/docs/ballot-findings-2027.md).
+    """
+    by_id = {e.get("id", ""): e for e in elements}
+    out = set()
+    for eid, el in by_id.items():
+        if not eid.endswith("[x]"):
+            continue
+        allowed = {t.get("code") for t in el.get("type", [])}
+        if not allowed:
+            continue
+        base = eid[: -len("[x]")].split(".")[-1]
+        for sid in by_id:
+            if not sid.startswith(eid + ":"):
+                continue
+            top = eid + ":" + sid[len(eid) + 1:].split(".")[0]
+            if top in out:
+                continue
+            name = top[len(eid) + 1:]
+            if not name.lower().startswith(base.lower()):
+                continue
+            need = _CHOICE_TYPE.get(name[len(base):])
+            if need and need not in allowed:
+                out.add(top)
+    return out
+
+
 def load_profiles(pkg, ver):
     out = []
     d = ensure_package(pkg, ver)
@@ -77,9 +118,12 @@ def load_profiles(pkg, ver):
                 or sd.get("abstract")):
             continue
         elements = (sd.get("snapshot") or sd.get("differential") or {}).get("element", [])
+        dead = unreachable_slice_prefixes(elements)
+        ms = [e for e in elements if e.get("mustSupport")
+              and not any(e.get("id", "") == d or e.get("id", "").startswith(d + ".")
+                          for d in dead)]
         out.append({"url": sd["url"], "name": sd.get("name", sd["url"]),
-                    "ms": [e for e in elements if e.get("mustSupport")],
-                    "elements": elements})
+                    "ms": ms, "elements": elements})
     return out
 
 

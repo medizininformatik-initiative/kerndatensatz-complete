@@ -10,20 +10,30 @@ befüllt werden.
 
 ### MS-Coverage gegen die Profile dieser BOM
 
-Gemessen werden die Instanzen des jüngsten
-[mii-testdata-Releases](https://github.com/medizininformatik-initiative/mii-testdata/releases)
-gegen die **in dieser BOM gepinnten Profilversionen**. Eine niedrige Zahl hat dabei
-drei mögliche Ursachen, die die Tabelle nicht unterscheidet:
+Gemessen werden die Testdaten-Instanzen gegen die **in dieser BOM gepinnten
+Profilversionen**. Mit dem Umzug der Testdaten auf die 2027er Ballot-Linie sind die
+früheren Hauptursachen niedriger Zahlen entfallen: Die Canonical-Umbenennungen sind
+nachgezogen, und alle Module — auch die neuen (Kardiologie, Lungenfunktion,
+Soziodemographie, Symptome) — haben eigene Instanzen.
 
-1. **Es gibt noch keine Testdaten** — bei den neuen Modulen (Kardiologie,
-   Lungenfunktion, Soziodemographie, Symptome) schlicht der Arbeitsvorrat.
-2. **Canonical-Umbenennungen zwischen den KDS-Generationen** — etliche Module haben
-   auf dem Weg zur 2027er Linie Profile umbenannt (ICU z.B. behält nur 25 von 69
-   URLs); vorhandene Testdaten zeigen per `meta.profile` noch auf die alten
-   Canonicals und zählen deshalb nicht. Das behebt der anstehende Umzug der
-   Testdaten auf die 2027er Abhängigkeiten.
-3. **Der Release-Stand hinkt hinterher** — gemessen wird das publizierte Release,
-   nicht der `main`-Branch der Testdaten.
+Was in den verbleibenden Lücken steckt, ist auf der
+[Testabdeckung-Seite der Testdaten](https://medizininformatik-initiative.github.io/mii-testdata/testabdeckung.html)
+nach vier Kategorien aufgeschlüsselt: Upstream-Widersprüche (Profile, bei denen ein
+MS-Element strukturell unerfüllbar ist), fachlich bewusst ausgelassene Elemente,
+nicht verifizierbare Terminologie und Messgrenzen der Heuristik.
+
+**Zum Vergleich mit der Zahl im Testdaten-Repo:** Dort steht eine höhere
+Gesamt-Coverage, weil sie nur Profile zählt, für die überhaupt Instanzen existieren.
+Diese Tabelle rechnet strenger — **alle** Profile der BOM gehen in den Nenner ein,
+auch solche ohne jede Instanz (Spalte „mit Instanz"). Beide Zahlen sind korrekt, sie
+beantworten verschiedene Fragen: *Wie gut sind die vorhandenen Testdaten?* gegen
+*Wie viel des KDS ist überhaupt abgedeckt?*
+
+Nicht in den Nenner gehen **unerreichbare Must-Support-Slices**: Schränkt ein Profil
+eine `[x]`-Choice auf einen Typ ein, bleiben die geerbten Slices der anderen Typen samt
+MS-Flag im Snapshot stehen, obwohl keine konforme Instanz sie befüllen kann (betrifft
+vor allem die Mikrobiologie). Details in den
+[Ballot-Findings](https://github.com/medizininformatik-initiative/mii-testdata/blob/main/docs/ballot-findings-2027.md).
 
 Abstrakte Profile werden nicht gezählt, weil Instanzen sie nicht direkt claimen
 können — deshalb steht **Symptome** mit 0 Profilen in der Tabelle: das Modul
@@ -38,292 +48,292 @@ deshalb keine Module miteinander.
 
 | Modul | BOM-Version | Profile | mit Instanz | MS-Elemente | befüllt | Coverage |
 |-------|-------------|--------:|------------:|------------:|--------:|---------:|
-| base | 2027.0.0-ballot | 8 | 6 | 485 | 231 | 47.6 % |
-| bildgebung | 2027.0.0-ballot.1 | 12 | 11 | 395 | 213 | 53.9 % |
-| biobank | 2027.0.0-ballot | 11 | 3 | 313 | 61 | 19.5 % |
-| consent | 2027.0.0-ballot | 3 | 1 | 78 | 25 | 32.1 % |
-| dokument | 2027.0.0-ballot.2 | 1 | 1 | 70 | 58 | 82.9 % |
-| icu | 2027.0.0-ballot.3 | 93 | 22 | 3007 | 464 | 15.4 % |
-| kardiologie | 2027.0.0-ballot | 13 | 0 | 366 | 0 | 0.0 % |
-| laborbefund | 2027.0.0-ballot | 3 | 3 | 154 | 91 | 59.1 % |
-| lungenfunktion | 2027.0.0-ballot.1 | 48 | 0 | 1956 | 0 | 0.0 % |
-| medikation | 2027.0.0-ballot | 5 | 5 | 441 | 307 | 69.6 % |
+| base | 2027.0.0-ballot | 8 | 8 | 485 | 356 | 73.4 % |
+| bildgebung | 2027.0.0-ballot.1 | 12 | 12 | 393 | 336 | 85.5 % |
+| biobank | 2027.0.0-ballot | 11 | 11 | 313 | 288 | 92.0 % |
+| consent | 2027.0.0-ballot | 3 | 3 | 78 | 62 | 79.5 % |
+| dokument | 2027.0.0-ballot.2 | 1 | 1 | 70 | 57 | 81.4 % |
+| icu | 2027.0.0-ballot.3 | 93 | 93 | 3005 | 2199 | 73.2 % |
+| kardiologie | 2027.0.0-ballot | 13 | 13 | 365 | 327 | 89.6 % |
+| laborbefund | 2027.0.0-ballot | 3 | 3 | 154 | 122 | 79.2 % |
+| lungenfunktion | 2027.0.0-ballot.1 | 48 | 39 | 1956 | 1333 | 68.1 % |
+| medikation | 2027.0.0-ballot | 5 | 5 | 441 | 429 | 97.3 % |
 | meta | 2027.0.0-ballot | 1 | 0 | 0 | 0 | – |
-| mikrobiologie | 2027.0.0-ballot2 | 21 | 0 | 1604 | 0 | 0.0 % |
-| molgen | 2027.0.0-ballot.1 | 16 | 16 | 248 | 177 | 71.4 % |
-| mtb | 2027.0.0-ballot.1 | 50 | 48 | 1525 | 607 | 39.8 % |
-| onkologie | 2027.0.0-ballot.1 | 76 | 73 | 2050 | 1146 | 55.9 % |
-| patho | 2027.0.0-ballot | 15 | 3 | 479 | 24 | 5.0 % |
-| pros | 2027.0.0-ballot.1 | 23 | 18 | 346 | 199 | 57.5 % |
-| seltene | 2027.0.0-ballot | 23 | 17 | 618 | 299 | 48.4 % |
-| soziodemographie | 2027.0.0-ballot | 15 | 0 | 153 | 0 | 0.0 % |
-| studie | 2027.0.0-ballot | 7 | 2 | 79 | 8 | 10.1 % |
+| mikrobiologie | 2027.0.0-ballot2 | 21 | 21 | 1448 | 1078 | 74.4 % |
+| molgen | 2027.0.0-ballot.1 | 16 | 16 | 248 | 180 | 72.6 % |
+| mtb | 2027.0.0-ballot.1 | 50 | 50 | 1522 | 1186 | 77.9 % |
+| onkologie | 2027.0.0-ballot.1 | 76 | 76 | 2038 | 1883 | 92.4 % |
+| patho | 2027.0.0-ballot | 15 | 14 | 479 | 398 | 83.1 % |
+| pros | 2027.0.0-ballot.1 | 23 | 21 | 346 | 287 | 82.9 % |
+| seltene | 2027.0.0-ballot | 23 | 23 | 618 | 568 | 91.9 % |
+| soziodemographie | 2027.0.0-ballot | 15 | 15 | 153 | 144 | 94.1 % |
+| studie | 2027.0.0-ballot | 7 | 7 | 79 | 75 | 94.9 % |
 | symptom | 2027.0.0-ballot | 0 | 0 | 0 | 0 | – |
-| **Gesamt** | | **444** | **229** | **14367** | **3910** | **27.2 %** |
+| **Gesamt** | | **444** | **431** | **14191** | **11308** | **79.7 %** |
 
 #### Details je Profil
 
-<details><summary><b>base</b> — 8 Profile, 231/485 MS-Elemente befüllt (47.6 %)</summary>
+<details><summary><b>base</b> — 8 Profile, 356/485 MS-Elemente befüllt (73.4 %)</summary>
 <table><tr><th>Profil</th><th>Instanzen</th><th>MS-Elemente</th><th>befüllt</th><th>Coverage</th></tr>
-<tr><td>MII_PR_Diagnose_Condition</td><td align="right">11</td><td align="right">78</td><td align="right">56</td><td align="right">71.8 %</td></tr>
-<tr><td>MII_PR_Fall_KontaktGesundheitseinrichtung</td><td align="right">12</td><td align="right">97</td><td align="right">57</td><td align="right">58.8 %</td></tr>
-<tr><td>MII_PR_Person_AllergieUnvertraeglichkeit</td><td align="right">0</td><td align="right">37</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Person_Patient</td><td align="right">11</td><td align="right">140</td><td align="right">32</td><td align="right">22.9 %</td></tr>
-<tr><td>MII_PR_Person_PatientPseudonymisiert</td><td align="right">0</td><td align="right">28</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Person_Todesursache</td><td align="right">3</td><td align="right">33</td><td align="right">22</td><td align="right">66.7 %</td></tr>
-<tr><td>MII_PR_Person_Vitalstatus</td><td align="right">10</td><td align="right">25</td><td align="right">18</td><td align="right">72.0 %</td></tr>
-<tr><td>MII_PR_Prozedur_Procedure</td><td align="right">23</td><td align="right">47</td><td align="right">46</td><td align="right">97.9 %</td></tr>
+<tr><td>MII_PR_Diagnose_Condition</td><td align="right">18</td><td align="right">78</td><td align="right">74</td><td align="right">94.9 %</td></tr>
+<tr><td>MII_PR_Fall_KontaktGesundheitseinrichtung</td><td align="right">12</td><td align="right">97</td><td align="right">62</td><td align="right">63.9 %</td></tr>
+<tr><td>MII_PR_Person_AllergieUnvertraeglichkeit</td><td align="right">1</td><td align="right">37</td><td align="right">37</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Person_Patient</td><td align="right">11</td><td align="right">140</td><td align="right">78</td><td align="right">55.7 %</td></tr>
+<tr><td>MII_PR_Person_PatientPseudonymisiert</td><td align="right">1</td><td align="right">28</td><td align="right">12</td><td align="right">42.9 %</td></tr>
+<tr><td>MII_PR_Person_Todesursache</td><td align="right">3</td><td align="right">33</td><td align="right">25</td><td align="right">75.8 %</td></tr>
+<tr><td>MII_PR_Person_Vitalstatus</td><td align="right">10</td><td align="right">25</td><td align="right">21</td><td align="right">84.0 %</td></tr>
+<tr><td>MII_PR_Prozedur_Procedure</td><td align="right">23</td><td align="right">47</td><td align="right">47</td><td align="right">100.0 %</td></tr>
 </table></details>
-<details><summary><b>bildgebung</b> — 12 Profile, 213/395 MS-Elemente befüllt (53.9 %)</summary>
+<details><summary><b>bildgebung</b> — 12 Profile, 336/393 MS-Elemente befüllt (85.5 %)</summary>
 <table><tr><th>Profil</th><th>Instanzen</th><th>MS-Elemente</th><th>befüllt</th><th>Coverage</th></tr>
-<tr><td>MII_PR_Bildgebung_Anforderung_Bildgebung</td><td align="right">1</td><td align="right">28</td><td align="right">23</td><td align="right">82.1 %</td></tr>
-<tr><td>MII_PR_Bildgebung_Behandlungsempfehlung</td><td align="right">1</td><td align="right">9</td><td align="right">8</td><td align="right">88.9 %</td></tr>
-<tr><td>MII_PR_Bildgebung_Bildgebungsprozedur</td><td align="right">1</td><td align="right">53</td><td align="right">28</td><td align="right">52.8 %</td></tr>
-<tr><td>MII_PR_Bildgebung_Bildgebungsstudie</td><td align="right">1</td><td align="right">31</td><td align="right">28</td><td align="right">90.3 %</td></tr>
-<tr><td>MII_PR_Bildgebung_Geraet</td><td align="right">1</td><td align="right">6</td><td align="right">5</td><td align="right">83.3 %</td></tr>
-<tr><td>MII_PR_Bildgebung_Koerperstruktur</td><td align="right">1</td><td align="right">8</td><td align="right">7</td><td align="right">87.5 %</td></tr>
-<tr><td>MII_PR_Bildgebung_Kontrastmittelgabe</td><td align="right">1</td><td align="right">71</td><td align="right">22</td><td align="right">31.0 %</td></tr>
-<tr><td>MII_PR_Bildgebung_Radiologische_Befundungsprozedur</td><td align="right">1</td><td align="right">52</td><td align="right">25</td><td align="right">48.1 %</td></tr>
-<tr><td>MII_PR_Bildgebung_Radiologische_Beobachtung</td><td align="right">1</td><td align="right">31</td><td align="right">21</td><td align="right">67.7 %</td></tr>
-<tr><td>MII_PR_Bildgebung_Radiologische_Messung</td><td align="right">0</td><td align="right">39</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Bildgebung_Radiologischer_Befund</td><td align="right">1</td><td align="right">36</td><td align="right">27</td><td align="right">75.0 %</td></tr>
-<tr><td>MII_PR_Bildgebung_Semistrukt_Befundbericht</td><td align="right">1</td><td align="right">31</td><td align="right">19</td><td align="right">61.3 %</td></tr>
+<tr><td>MII_PR_Bildgebung_Anforderung_Bildgebung</td><td align="right">1</td><td align="right">28</td><td align="right">24</td><td align="right">85.7 %</td></tr>
+<tr><td>MII_PR_Bildgebung_Behandlungsempfehlung</td><td align="right">1</td><td align="right">9</td><td align="right">9</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Bildgebung_Bildgebungsprozedur</td><td align="right">1</td><td align="right">53</td><td align="right">49</td><td align="right">92.5 %</td></tr>
+<tr><td>MII_PR_Bildgebung_Bildgebungsstudie</td><td align="right">1</td><td align="right">31</td><td align="right">31</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Bildgebung_Geraet</td><td align="right">1</td><td align="right">6</td><td align="right">6</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Bildgebung_Koerperstruktur</td><td align="right">1</td><td align="right">8</td><td align="right">8</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Bildgebung_Kontrastmittelgabe</td><td align="right">1</td><td align="right">71</td><td align="right">55</td><td align="right">77.5 %</td></tr>
+<tr><td>MII_PR_Bildgebung_Radiologische_Befundungsprozedur</td><td align="right">1</td><td align="right">52</td><td align="right">46</td><td align="right">88.5 %</td></tr>
+<tr><td>MII_PR_Bildgebung_Radiologische_Beobachtung</td><td align="right">3</td><td align="right">31</td><td align="right">27</td><td align="right">87.1 %</td></tr>
+<tr><td>MII_PR_Bildgebung_Radiologische_Messung</td><td align="right">1</td><td align="right">37</td><td align="right">29</td><td align="right">78.4 %</td></tr>
+<tr><td>MII_PR_Bildgebung_Radiologischer_Befund</td><td align="right">1</td><td align="right">36</td><td align="right">30</td><td align="right">83.3 %</td></tr>
+<tr><td>MII_PR_Bildgebung_Semistrukt_Befundbericht</td><td align="right">1</td><td align="right">31</td><td align="right">22</td><td align="right">71.0 %</td></tr>
 </table></details>
-<details><summary><b>biobank</b> — 11 Profile, 61/313 MS-Elemente befüllt (19.5 %)</summary>
+<details><summary><b>biobank</b> — 11 Profile, 288/313 MS-Elemente befüllt (92.0 %)</summary>
 <table><tr><th>Profil</th><th>Instanzen</th><th>MS-Elemente</th><th>befüllt</th><th>Coverage</th></tr>
-<tr><td>MII_PR_Biobank_Observation_DNA_Konzentration</td><td align="right">0</td><td align="right">11</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Biobank_Observation_Karyotyp</td><td align="right">0</td><td align="right">14</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Biobank_Observation_Morphologie</td><td align="right">0</td><td align="right">12</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Biobank_Observation_Proliferation</td><td align="right">0</td><td align="right">13</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Biobank_Observation_Qualitaetspruefung</td><td align="right">0</td><td align="right">18</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Biobank_Observation_Wachstumstyp</td><td align="right">0</td><td align="right">12</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Biobank_Organization_Sammlung_Biobank</td><td align="right">1</td><td align="right">18</td><td align="right">12</td><td align="right">66.7 %</td></tr>
-<tr><td>MII_PR_Biobank_Specimen_Bioprobe</td><td align="right">21</td><td align="right">71</td><td align="right">44</td><td align="right">62.0 %</td></tr>
-<tr><td>MII_PR_Biobank_Specimen_Bioprobe_Core</td><td align="right">0</td><td align="right">63</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Biobank_Specimen_Zellinie_Organoid</td><td align="right">0</td><td align="right">74</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Biobank_Substance_Additiv</td><td align="right">1</td><td align="right">7</td><td align="right">5</td><td align="right">71.4 %</td></tr>
+<tr><td>MII_PR_Biobank_Observation_DNA_Konzentration</td><td align="right">1</td><td align="right">11</td><td align="right">11</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Biobank_Observation_Karyotyp</td><td align="right">1</td><td align="right">14</td><td align="right">14</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Biobank_Observation_Morphologie</td><td align="right">1</td><td align="right">12</td><td align="right">12</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Biobank_Observation_Proliferation</td><td align="right">1</td><td align="right">13</td><td align="right">13</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Biobank_Observation_Qualitaetspruefung</td><td align="right">1</td><td align="right">18</td><td align="right">10</td><td align="right">55.6 %</td></tr>
+<tr><td>MII_PR_Biobank_Observation_Wachstumstyp</td><td align="right">1</td><td align="right">12</td><td align="right">12</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Biobank_Organization_Sammlung_Biobank</td><td align="right">1</td><td align="right">18</td><td align="right">13</td><td align="right">72.2 %</td></tr>
+<tr><td>MII_PR_Biobank_Specimen_Bioprobe</td><td align="right">21</td><td align="right">71</td><td align="right">67</td><td align="right">94.4 %</td></tr>
+<tr><td>MII_PR_Biobank_Specimen_Bioprobe_Core</td><td align="right">7</td><td align="right">63</td><td align="right">59</td><td align="right">93.7 %</td></tr>
+<tr><td>MII_PR_Biobank_Specimen_Zellinie_Organoid</td><td align="right">1</td><td align="right">74</td><td align="right">70</td><td align="right">94.6 %</td></tr>
+<tr><td>MII_PR_Biobank_Substance_Additiv</td><td align="right">1</td><td align="right">7</td><td align="right">7</td><td align="right">100.0 %</td></tr>
 </table></details>
-<details><summary><b>consent</b> — 3 Profile, 25/78 MS-Elemente befüllt (32.1 %)</summary>
+<details><summary><b>consent</b> — 3 Profile, 62/78 MS-Elemente befüllt (79.5 %)</summary>
 <table><tr><th>Profil</th><th>Instanzen</th><th>MS-Elemente</th><th>befüllt</th><th>Coverage</th></tr>
-<tr><td>MII_PR_Consent_DocumentReference</td><td align="right">0</td><td align="right">8</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Consent_Einwilligung</td><td align="right">10</td><td align="right">51</td><td align="right">25</td><td align="right">49.0 %</td></tr>
-<tr><td>MII_PR_Consent_Provenance</td><td align="right">0</td><td align="right">19</td><td align="right">0</td><td align="right">0.0 %</td></tr>
+<tr><td>MII_PR_Consent_DocumentReference</td><td align="right">1</td><td align="right">8</td><td align="right">8</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Consent_Einwilligung</td><td align="right">10</td><td align="right">51</td><td align="right">35</td><td align="right">68.6 %</td></tr>
+<tr><td>MII_PR_Consent_Provenance</td><td align="right">1</td><td align="right">19</td><td align="right">19</td><td align="right">100.0 %</td></tr>
 </table></details>
-<details><summary><b>dokument</b> — 1 Profile, 58/70 MS-Elemente befüllt (82.9 %)</summary>
+<details><summary><b>dokument</b> — 1 Profile, 57/70 MS-Elemente befüllt (81.4 %)</summary>
 <table><tr><th>Profil</th><th>Instanzen</th><th>MS-Elemente</th><th>befüllt</th><th>Coverage</th></tr>
-<tr><td>MII_PR_Dokument_Dokument</td><td align="right">2</td><td align="right">70</td><td align="right">58</td><td align="right">82.9 %</td></tr>
+<tr><td>MII_PR_Dokument_Dokument</td><td align="right">2</td><td align="right">70</td><td align="right">57</td><td align="right">81.4 %</td></tr>
 </table></details>
-<details><summary><b>icu</b> — 93 Profile, 464/3007 MS-Elemente befüllt (15.4 %)</summary>
+<details><summary><b>icu</b> — 93 Profile, 2199/3005 MS-Elemente befüllt (73.2 %)</summary>
 <table><tr><th>Profil</th><th>Instanzen</th><th>MS-Elemente</th><th>befüllt</th><th>Coverage</th></tr>
-<tr><td>MII_PR_ICU_Beatmung</td><td align="right">1</td><td align="right">50</td><td align="right">23</td><td align="right">46.0 %</td></tr>
-<tr><td>MII_PR_ICU_Bilanz</td><td align="right">0</td><td align="right">34</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_Bilanz_Ausfuhr_Blutverlust</td><td align="right">1</td><td align="right">36</td><td align="right">23</td><td align="right">63.9 %</td></tr>
-<tr><td>MII_PR_ICU_Bilanz_Ausfuhr_Drainage_Generisch</td><td align="right">1</td><td align="right">36</td><td align="right">19</td><td align="right">52.8 %</td></tr>
-<tr><td>MII_PR_ICU_Bilanz_Ausfuhr_Fluessigkeit_Gesamt</td><td align="right">2</td><td align="right">36</td><td align="right">23</td><td align="right">63.9 %</td></tr>
-<tr><td>MII_PR_ICU_Bilanz_Ausfuhr_Gallenfluessigkeit</td><td align="right">2</td><td align="right">36</td><td align="right">23</td><td align="right">63.9 %</td></tr>
-<tr><td>MII_PR_ICU_Bilanz_Ausfuhr_Haemofiltration_Einzelmesswerte</td><td align="right">1</td><td align="right">36</td><td align="right">23</td><td align="right">63.9 %</td></tr>
-<tr><td>MII_PR_ICU_Bilanz_Ausfuhr_Magensonde</td><td align="right">1</td><td align="right">36</td><td align="right">23</td><td align="right">63.9 %</td></tr>
-<tr><td>MII_PR_ICU_Bilanz_Ausfuhr_OP_Drainage</td><td align="right">1</td><td align="right">36</td><td align="right">19</td><td align="right">52.8 %</td></tr>
-<tr><td>MII_PR_ICU_Bilanz_Ausfuhr_Pankreasdrainage</td><td align="right">1</td><td align="right">36</td><td align="right">19</td><td align="right">52.8 %</td></tr>
-<tr><td>MII_PR_ICU_Bilanz_Ausfuhr_Stuhlgang</td><td align="right">1</td><td align="right">36</td><td align="right">19</td><td align="right">52.8 %</td></tr>
-<tr><td>MII_PR_ICU_Bilanz_Ausfuhr_Urin</td><td align="right">1</td><td align="right">36</td><td align="right">23</td><td align="right">63.9 %</td></tr>
-<tr><td>MII_PR_ICU_Bilanz_Ausfuhr_Wunddrainage</td><td align="right">1</td><td align="right">36</td><td align="right">23</td><td align="right">63.9 %</td></tr>
-<tr><td>MII_PR_ICU_Bilanz_Einfuhr_Abgepumpte_Muttermilch</td><td align="right">0</td><td align="right">36</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_Bilanz_Einfuhr_Enterale_Fluessigkeit</td><td align="right">1</td><td align="right">36</td><td align="right">23</td><td align="right">63.9 %</td></tr>
-<tr><td>MII_PR_ICU_Bilanz_Einfuhr_Fluessigkeit_Gesamt</td><td align="right">3</td><td align="right">36</td><td align="right">23</td><td align="right">63.9 %</td></tr>
-<tr><td>MII_PR_ICU_Bilanz_Einfuhr_Muttermilch</td><td align="right">0</td><td align="right">36</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_Bilanz_Einfuhr_Orale_Fluessigkeit</td><td align="right">0</td><td align="right">36</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_Bilanz_Einfuhr_Saeuglingsnahrung</td><td align="right">0</td><td align="right">36</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_Bilanz_Einfuhr_Spendermilch</td><td align="right">0</td><td align="right">36</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_Bilanz_Tagesbilanz_Fluessigkeit</td><td align="right">1</td><td align="right">36</td><td align="right">23</td><td align="right">63.9 %</td></tr>
-<tr><td>MII_PR_ICU_Device</td><td align="right">0</td><td align="right">12</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_Devicemetric_Eingestellte_Gemessene_Parameter_Beatmung</td><td align="right">0</td><td align="right">6</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_Devicemetric_Eingestellte_Gemessene_Parameter_Extrakorporale_Verfahren</td><td align="right">0</td><td align="right">6</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_ECT_Arterieller_Druck</td><td align="right">0</td><td align="right">31</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_ECT_Blutfluss_Cardiovasculaeres_Geraet</td><td align="right">0</td><td align="right">31</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_ECT_Blutfluss_Extrakorporaler_Gasaustausch</td><td align="right">0</td><td align="right">31</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_ECT_Blutflussindex_Extrakorporaler_Gasaustausch</td><td align="right">0</td><td align="right">31</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_ECT_Dauer_Extrakorporaler_Gasaustausch</td><td align="right">0</td><td align="right">31</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_ECT_Dauer_Haemodialysesitzung</td><td align="right">0</td><td align="right">31</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_ECT_Gasfluss</td><td align="right">0</td><td align="right">31</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_ECT_Haemodialyse_Blutfluss</td><td align="right">0</td><td align="right">31</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_ECT_Ionisiertes_Kalzium_Nierenersatzverfahren</td><td align="right">0</td><td align="right">31</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_ECT_Substituatfluss</td><td align="right">0</td><td align="right">31</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_ECT_Substituatvolumen</td><td align="right">0</td><td align="right">31</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_ECT_Venoeser_Druck</td><td align="right">0</td><td align="right">31</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_Extrakorporales_Verfahren</td><td align="right">1</td><td align="right">52</td><td align="right">25</td><td align="right">48.1 %</td></tr>
-<tr><td>MII_PR_ICU_MUV_Arterieller_Blutdruck</td><td align="right">1</td><td align="right">91</td><td align="right">14</td><td align="right">15.4 %</td></tr>
-<tr><td>MII_PR_ICU_MUV_Atemfrequenz</td><td align="right">1</td><td align="right">19</td><td align="right">16</td><td align="right">84.2 %</td></tr>
-<tr><td>MII_PR_ICU_MUV_Herzfrequenz</td><td align="right">1</td><td align="right">40</td><td align="right">20</td><td align="right">50.0 %</td></tr>
-<tr><td>MII_PR_ICU_MUV_Koerpergewicht</td><td align="right">1</td><td align="right">34</td><td align="right">22</td><td align="right">64.7 %</td></tr>
-<tr><td>MII_PR_ICU_MUV_Koerpergroesse</td><td align="right">1</td><td align="right">34</td><td align="right">21</td><td align="right">61.8 %</td></tr>
-<tr><td>MII_PR_ICU_MUV_Koerperlaenge</td><td align="right">0</td><td align="right">46</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_MUV_Kopfumfang</td><td align="right">1</td><td align="right">27</td><td align="right">17</td><td align="right">63.0 %</td></tr>
-<tr><td>MII_PR_ICU_Parameter_Von_Beatmung</td><td align="right">0</td><td align="right">31</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_Parameter_Von_Extrakorporalen_Verfahren</td><td align="right">0</td><td align="right">31</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_Score_CAM_ICU</td><td align="right">0</td><td align="right">49</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_Score_Faces_Pain_Scale_Revised</td><td align="right">0</td><td align="right">28</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_Score_GCS</td><td align="right">0</td><td align="right">50</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_Score_ICDSC</td><td align="right">0</td><td align="right">69</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_Score_Numerische_Ratingskala</td><td align="right">0</td><td align="right">28</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_Score_RASS</td><td align="right">0</td><td align="right">15</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_Score_SOFA</td><td align="right">0</td><td align="right">59</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_Score_Visuelle_Analogskala</td><td align="right">0</td><td align="right">28</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_Score_Wong_Baker_Faces_Schmerzskala</td><td align="right">0</td><td align="right">10</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_Score_ZOPA</td><td align="right">0</td><td align="right">31</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_Untersuchung_Pupillenbefund</td><td align="right">0</td><td align="right">17</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_Untersuchung_Pupillenform</td><td align="right">0</td><td align="right">11</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_Untersuchung_Pupillengroesse</td><td align="right">0</td><td align="right">14</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_Untersuchung_Pupillenlichtreaktion_Direkt</td><td align="right">0</td><td align="right">11</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_Untersuchung_Pupillenlichtreaktion_Indirekt</td><td align="right">0</td><td align="right">11</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_Untersuchung_Pupillensymmetrie</td><td align="right">0</td><td align="right">12</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Atemwegsdruck_Bei_Mittlerem_Expiratorischem_Gasfluss</td><td align="right">0</td><td align="right">32</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Atemwegsdruck_Bei_Null_Expiratorischem_Gasfluss</td><td align="right">0</td><td align="right">32</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Atemzugvolumen_Einstellung</td><td align="right">0</td><td align="right">32</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Atemzugvolumen_Waehrend_Beatmung</td><td align="right">0</td><td align="right">32</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Beatmungsvolumen_Pro_Minute_Maschineller_Beatmung</td><td align="right">0</td><td align="right">32</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Beatmungszeit_Hohem_Druck</td><td align="right">0</td><td align="right">32</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Beatmungszeit_Niedrigem_Druck</td><td align="right">0</td><td align="right">32</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Druckdifferenz_Beatmung</td><td align="right">0</td><td align="right">32</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Dynamische_Kompliance</td><td align="right">0</td><td align="right">32</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Eingestellter_Inspiratorischer_Gasfluss</td><td align="right">0</td><td align="right">32</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Einstellung_Ausatmungszeit_Beatmung</td><td align="right">0</td><td align="right">32</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Einstellung_Einatmungszeit_Beatmung</td><td align="right">0</td><td align="right">32</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Endexpiratorischer_Kohlendioxidpartialdruck</td><td align="right">0</td><td align="right">33</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Exspiratorischer_Gasfluss</td><td align="right">0</td><td align="right">32</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Exspiratorischer_Sauerstoffpartialdruck</td><td align="right">0</td><td align="right">33</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Horowitz_In_Arteriellem_Blut</td><td align="right">0</td><td align="right">33</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Inspiratorische_Sauerstofffraktion</td><td align="right">0</td><td align="right">33</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Inspiratorischer_Gasfluss</td><td align="right">0</td><td align="right">32</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Maximaler_Beatmungsdruck</td><td align="right">0</td><td align="right">32</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Maximaler_Inspiratorischer_Beatmungsdruck</td><td align="right">0</td><td align="right">32</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Mechanische_Atemfrequenz_Beatmet</td><td align="right">0</td><td align="right">32</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Mittlerer_Beatmungsdruck</td><td align="right">0</td><td align="right">31</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Mittlerer_Inspiratorischer_Beatmungsdruck</td><td align="right">0</td><td align="right">32</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Plateau_Beatmungsdruck</td><td align="right">0</td><td align="right">32</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Positiv_Endexpiratorischer_Druck</td><td align="right">0</td><td align="right">32</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Spontane_Atemfrequenz_Beatmet</td><td align="right">0</td><td align="right">32</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Spontane_Mechanische_Atemfrequenz_Beatmet</td><td align="right">0</td><td align="right">32</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Spontanes_Atemzugvolumen</td><td align="right">0</td><td align="right">32</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Spontanes_Plus_Mechanisches_Atemzugvolumen</td><td align="right">0</td><td align="right">32</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Unterstuetzungsdruck_Beatmung</td><td align="right">0</td><td align="right">32</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_ICU_VENT_Zeitverhaeltnis_Ein_Ausatmung</td><td align="right">0</td><td align="right">32</td><td align="right">0</td><td align="right">0.0 %</td></tr>
+<tr><td>MII_PR_ICU_Beatmung</td><td align="right">1</td><td align="right">49</td><td align="right">49</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_ICU_Bilanz</td><td align="right">1</td><td align="right">34</td><td align="right">23</td><td align="right">67.6 %</td></tr>
+<tr><td>MII_PR_ICU_Bilanz_Ausfuhr_Blutverlust</td><td align="right">1</td><td align="right">36</td><td align="right">26</td><td align="right">72.2 %</td></tr>
+<tr><td>MII_PR_ICU_Bilanz_Ausfuhr_Drainage_Generisch</td><td align="right">1</td><td align="right">36</td><td align="right">28</td><td align="right">77.8 %</td></tr>
+<tr><td>MII_PR_ICU_Bilanz_Ausfuhr_Fluessigkeit_Gesamt</td><td align="right">2</td><td align="right">36</td><td align="right">26</td><td align="right">72.2 %</td></tr>
+<tr><td>MII_PR_ICU_Bilanz_Ausfuhr_Gallenfluessigkeit</td><td align="right">2</td><td align="right">36</td><td align="right">30</td><td align="right">83.3 %</td></tr>
+<tr><td>MII_PR_ICU_Bilanz_Ausfuhr_Haemofiltration_Einzelmesswerte</td><td align="right">1</td><td align="right">36</td><td align="right">26</td><td align="right">72.2 %</td></tr>
+<tr><td>MII_PR_ICU_Bilanz_Ausfuhr_Magensonde</td><td align="right">1</td><td align="right">36</td><td align="right">30</td><td align="right">83.3 %</td></tr>
+<tr><td>MII_PR_ICU_Bilanz_Ausfuhr_OP_Drainage</td><td align="right">1</td><td align="right">36</td><td align="right">25</td><td align="right">69.4 %</td></tr>
+<tr><td>MII_PR_ICU_Bilanz_Ausfuhr_Pankreasdrainage</td><td align="right">1</td><td align="right">36</td><td align="right">26</td><td align="right">72.2 %</td></tr>
+<tr><td>MII_PR_ICU_Bilanz_Ausfuhr_Stuhlgang</td><td align="right">1</td><td align="right">36</td><td align="right">26</td><td align="right">72.2 %</td></tr>
+<tr><td>MII_PR_ICU_Bilanz_Ausfuhr_Urin</td><td align="right">1</td><td align="right">36</td><td align="right">28</td><td align="right">77.8 %</td></tr>
+<tr><td>MII_PR_ICU_Bilanz_Ausfuhr_Wunddrainage</td><td align="right">1</td><td align="right">36</td><td align="right">29</td><td align="right">80.6 %</td></tr>
+<tr><td>MII_PR_ICU_Bilanz_Einfuhr_Abgepumpte_Muttermilch</td><td align="right">1</td><td align="right">36</td><td align="right">25</td><td align="right">69.4 %</td></tr>
+<tr><td>MII_PR_ICU_Bilanz_Einfuhr_Enterale_Fluessigkeit</td><td align="right">1</td><td align="right">36</td><td align="right">26</td><td align="right">72.2 %</td></tr>
+<tr><td>MII_PR_ICU_Bilanz_Einfuhr_Fluessigkeit_Gesamt</td><td align="right">3</td><td align="right">36</td><td align="right">26</td><td align="right">72.2 %</td></tr>
+<tr><td>MII_PR_ICU_Bilanz_Einfuhr_Muttermilch</td><td align="right">1</td><td align="right">36</td><td align="right">25</td><td align="right">69.4 %</td></tr>
+<tr><td>MII_PR_ICU_Bilanz_Einfuhr_Orale_Fluessigkeit</td><td align="right">1</td><td align="right">36</td><td align="right">29</td><td align="right">80.6 %</td></tr>
+<tr><td>MII_PR_ICU_Bilanz_Einfuhr_Saeuglingsnahrung</td><td align="right">1</td><td align="right">36</td><td align="right">25</td><td align="right">69.4 %</td></tr>
+<tr><td>MII_PR_ICU_Bilanz_Einfuhr_Spendermilch</td><td align="right">1</td><td align="right">36</td><td align="right">25</td><td align="right">69.4 %</td></tr>
+<tr><td>MII_PR_ICU_Bilanz_Tagesbilanz_Fluessigkeit</td><td align="right">1</td><td align="right">36</td><td align="right">27</td><td align="right">75.0 %</td></tr>
+<tr><td>MII_PR_ICU_Device</td><td align="right">4</td><td align="right">12</td><td align="right">12</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_ICU_Devicemetric_Eingestellte_Gemessene_Parameter_Beatmung</td><td align="right">1</td><td align="right">6</td><td align="right">6</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_ICU_Devicemetric_Eingestellte_Gemessene_Parameter_Extrakorporale_Verfahren</td><td align="right">1</td><td align="right">6</td><td align="right">6</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_ICU_ECT_Arterieller_Druck</td><td align="right">1</td><td align="right">31</td><td align="right">24</td><td align="right">77.4 %</td></tr>
+<tr><td>MII_PR_ICU_ECT_Blutfluss_Cardiovasculaeres_Geraet</td><td align="right">1</td><td align="right">31</td><td align="right">24</td><td align="right">77.4 %</td></tr>
+<tr><td>MII_PR_ICU_ECT_Blutfluss_Extrakorporaler_Gasaustausch</td><td align="right">1</td><td align="right">31</td><td align="right">24</td><td align="right">77.4 %</td></tr>
+<tr><td>MII_PR_ICU_ECT_Blutflussindex_Extrakorporaler_Gasaustausch</td><td align="right">1</td><td align="right">31</td><td align="right">24</td><td align="right">77.4 %</td></tr>
+<tr><td>MII_PR_ICU_ECT_Dauer_Extrakorporaler_Gasaustausch</td><td align="right">1</td><td align="right">31</td><td align="right">24</td><td align="right">77.4 %</td></tr>
+<tr><td>MII_PR_ICU_ECT_Dauer_Haemodialysesitzung</td><td align="right">1</td><td align="right">31</td><td align="right">24</td><td align="right">77.4 %</td></tr>
+<tr><td>MII_PR_ICU_ECT_Gasfluss</td><td align="right">1</td><td align="right">31</td><td align="right">24</td><td align="right">77.4 %</td></tr>
+<tr><td>MII_PR_ICU_ECT_Haemodialyse_Blutfluss</td><td align="right">1</td><td align="right">31</td><td align="right">24</td><td align="right">77.4 %</td></tr>
+<tr><td>MII_PR_ICU_ECT_Ionisiertes_Kalzium_Nierenersatzverfahren</td><td align="right">1</td><td align="right">31</td><td align="right">24</td><td align="right">77.4 %</td></tr>
+<tr><td>MII_PR_ICU_ECT_Substituatfluss</td><td align="right">1</td><td align="right">31</td><td align="right">24</td><td align="right">77.4 %</td></tr>
+<tr><td>MII_PR_ICU_ECT_Substituatvolumen</td><td align="right">1</td><td align="right">31</td><td align="right">24</td><td align="right">77.4 %</td></tr>
+<tr><td>MII_PR_ICU_ECT_Venoeser_Druck</td><td align="right">1</td><td align="right">31</td><td align="right">24</td><td align="right">77.4 %</td></tr>
+<tr><td>MII_PR_ICU_Extrakorporales_Verfahren</td><td align="right">1</td><td align="right">51</td><td align="right">51</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_ICU_MUV_Arterieller_Blutdruck</td><td align="right">1</td><td align="right">91</td><td align="right">19</td><td align="right">20.9 %</td></tr>
+<tr><td>MII_PR_ICU_MUV_Atemfrequenz</td><td align="right">1</td><td align="right">19</td><td align="right">18</td><td align="right">94.7 %</td></tr>
+<tr><td>MII_PR_ICU_MUV_Herzfrequenz</td><td align="right">1</td><td align="right">40</td><td align="right">28</td><td align="right">70.0 %</td></tr>
+<tr><td>MII_PR_ICU_MUV_Koerpergewicht</td><td align="right">2</td><td align="right">34</td><td align="right">29</td><td align="right">85.3 %</td></tr>
+<tr><td>MII_PR_ICU_MUV_Koerpergroesse</td><td align="right">2</td><td align="right">34</td><td align="right">23</td><td align="right">67.6 %</td></tr>
+<tr><td>MII_PR_ICU_MUV_Koerperlaenge</td><td align="right">2</td><td align="right">46</td><td align="right">27</td><td align="right">58.7 %</td></tr>
+<tr><td>MII_PR_ICU_MUV_Kopfumfang</td><td align="right">1</td><td align="right">27</td><td align="right">21</td><td align="right">77.8 %</td></tr>
+<tr><td>MII_PR_ICU_Parameter_Von_Beatmung</td><td align="right">1</td><td align="right">31</td><td align="right">23</td><td align="right">74.2 %</td></tr>
+<tr><td>MII_PR_ICU_Parameter_Von_Extrakorporalen_Verfahren</td><td align="right">1</td><td align="right">31</td><td align="right">24</td><td align="right">77.4 %</td></tr>
+<tr><td>MII_PR_ICU_Score_CAM_ICU</td><td align="right">1</td><td align="right">49</td><td align="right">36</td><td align="right">73.5 %</td></tr>
+<tr><td>MII_PR_ICU_Score_Faces_Pain_Scale_Revised</td><td align="right">1</td><td align="right">28</td><td align="right">12</td><td align="right">42.9 %</td></tr>
+<tr><td>MII_PR_ICU_Score_GCS</td><td align="right">1</td><td align="right">50</td><td align="right">36</td><td align="right">72.0 %</td></tr>
+<tr><td>MII_PR_ICU_Score_ICDSC</td><td align="right">1</td><td align="right">69</td><td align="right">50</td><td align="right">72.5 %</td></tr>
+<tr><td>MII_PR_ICU_Score_Numerische_Ratingskala</td><td align="right">2</td><td align="right">28</td><td align="right">10</td><td align="right">35.7 %</td></tr>
+<tr><td>MII_PR_ICU_Score_RASS</td><td align="right">1</td><td align="right">15</td><td align="right">13</td><td align="right">86.7 %</td></tr>
+<tr><td>MII_PR_ICU_Score_SOFA</td><td align="right">1</td><td align="right">59</td><td align="right">32</td><td align="right">54.2 %</td></tr>
+<tr><td>MII_PR_ICU_Score_Visuelle_Analogskala</td><td align="right">1</td><td align="right">28</td><td align="right">11</td><td align="right">39.3 %</td></tr>
+<tr><td>MII_PR_ICU_Score_Wong_Baker_Faces_Schmerzskala</td><td align="right">1</td><td align="right">10</td><td align="right">8</td><td align="right">80.0 %</td></tr>
+<tr><td>MII_PR_ICU_Score_ZOPA</td><td align="right">1</td><td align="right">31</td><td align="right">12</td><td align="right">38.7 %</td></tr>
+<tr><td>MII_PR_ICU_Untersuchung_Pupillenbefund</td><td align="right">1</td><td align="right">17</td><td align="right">15</td><td align="right">88.2 %</td></tr>
+<tr><td>MII_PR_ICU_Untersuchung_Pupillenform</td><td align="right">2</td><td align="right">11</td><td align="right">10</td><td align="right">90.9 %</td></tr>
+<tr><td>MII_PR_ICU_Untersuchung_Pupillengroesse</td><td align="right">2</td><td align="right">14</td><td align="right">13</td><td align="right">92.9 %</td></tr>
+<tr><td>MII_PR_ICU_Untersuchung_Pupillenlichtreaktion_Direkt</td><td align="right">2</td><td align="right">11</td><td align="right">10</td><td align="right">90.9 %</td></tr>
+<tr><td>MII_PR_ICU_Untersuchung_Pupillenlichtreaktion_Indirekt</td><td align="right">2</td><td align="right">11</td><td align="right">10</td><td align="right">90.9 %</td></tr>
+<tr><td>MII_PR_ICU_Untersuchung_Pupillensymmetrie</td><td align="right">1</td><td align="right">12</td><td align="right">10</td><td align="right">83.3 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Atemwegsdruck_Bei_Mittlerem_Expiratorischem_Gasfluss</td><td align="right">1</td><td align="right">32</td><td align="right">20</td><td align="right">62.5 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Atemwegsdruck_Bei_Null_Expiratorischem_Gasfluss</td><td align="right">1</td><td align="right">32</td><td align="right">20</td><td align="right">62.5 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Atemzugvolumen_Einstellung</td><td align="right">1</td><td align="right">32</td><td align="right">27</td><td align="right">84.4 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Atemzugvolumen_Waehrend_Beatmung</td><td align="right">1</td><td align="right">32</td><td align="right">27</td><td align="right">84.4 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Beatmungsvolumen_Pro_Minute_Maschineller_Beatmung</td><td align="right">1</td><td align="right">32</td><td align="right">27</td><td align="right">84.4 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Beatmungszeit_Hohem_Druck</td><td align="right">1</td><td align="right">32</td><td align="right">23</td><td align="right">71.9 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Beatmungszeit_Niedrigem_Druck</td><td align="right">1</td><td align="right">32</td><td align="right">23</td><td align="right">71.9 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Druckdifferenz_Beatmung</td><td align="right">1</td><td align="right">32</td><td align="right">23</td><td align="right">71.9 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Dynamische_Kompliance</td><td align="right">1</td><td align="right">32</td><td align="right">27</td><td align="right">84.4 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Eingestellter_Inspiratorischer_Gasfluss</td><td align="right">1</td><td align="right">32</td><td align="right">20</td><td align="right">62.5 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Einstellung_Ausatmungszeit_Beatmung</td><td align="right">1</td><td align="right">32</td><td align="right">24</td><td align="right">75.0 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Einstellung_Einatmungszeit_Beatmung</td><td align="right">1</td><td align="right">32</td><td align="right">27</td><td align="right">84.4 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Endexpiratorischer_Kohlendioxidpartialdruck</td><td align="right">1</td><td align="right">33</td><td align="right">27</td><td align="right">81.8 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Exspiratorischer_Gasfluss</td><td align="right">1</td><td align="right">32</td><td align="right">23</td><td align="right">71.9 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Exspiratorischer_Sauerstoffpartialdruck</td><td align="right">1</td><td align="right">33</td><td align="right">27</td><td align="right">81.8 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Horowitz_In_Arteriellem_Blut</td><td align="right">1</td><td align="right">33</td><td align="right">23</td><td align="right">69.7 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Inspiratorische_Sauerstofffraktion</td><td align="right">2</td><td align="right">33</td><td align="right">20</td><td align="right">60.6 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Inspiratorischer_Gasfluss</td><td align="right">1</td><td align="right">32</td><td align="right">23</td><td align="right">71.9 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Maximaler_Beatmungsdruck</td><td align="right">1</td><td align="right">32</td><td align="right">27</td><td align="right">84.4 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Maximaler_Inspiratorischer_Beatmungsdruck</td><td align="right">1</td><td align="right">32</td><td align="right">23</td><td align="right">71.9 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Mechanische_Atemfrequenz_Beatmet</td><td align="right">1</td><td align="right">32</td><td align="right">27</td><td align="right">84.4 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Mittlerer_Beatmungsdruck</td><td align="right">1</td><td align="right">31</td><td align="right">30</td><td align="right">96.8 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Mittlerer_Inspiratorischer_Beatmungsdruck</td><td align="right">1</td><td align="right">32</td><td align="right">27</td><td align="right">84.4 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Plateau_Beatmungsdruck</td><td align="right">1</td><td align="right">32</td><td align="right">27</td><td align="right">84.4 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Positiv_Endexpiratorischer_Druck</td><td align="right">1</td><td align="right">32</td><td align="right">27</td><td align="right">84.4 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Spontane_Atemfrequenz_Beatmet</td><td align="right">1</td><td align="right">32</td><td align="right">23</td><td align="right">71.9 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Spontane_Mechanische_Atemfrequenz_Beatmet</td><td align="right">1</td><td align="right">32</td><td align="right">27</td><td align="right">84.4 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Spontanes_Atemzugvolumen</td><td align="right">1</td><td align="right">32</td><td align="right">20</td><td align="right">62.5 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Spontanes_Plus_Mechanisches_Atemzugvolumen</td><td align="right">1</td><td align="right">32</td><td align="right">20</td><td align="right">62.5 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Unterstuetzungsdruck_Beatmung</td><td align="right">1</td><td align="right">32</td><td align="right">20</td><td align="right">62.5 %</td></tr>
+<tr><td>MII_PR_ICU_VENT_Zeitverhaeltnis_Ein_Ausatmung</td><td align="right">1</td><td align="right">32</td><td align="right">27</td><td align="right">84.4 %</td></tr>
 </table></details>
-<details><summary><b>kardiologie</b> — 13 Profile, 0/366 MS-Elemente befüllt (0.0 %)</summary>
+<details><summary><b>kardiologie</b> — 13 Profile, 327/365 MS-Elemente befüllt (89.6 %)</summary>
 <table><tr><th>Profil</th><th>Instanzen</th><th>MS-Elemente</th><th>befüllt</th><th>Coverage</th></tr>
-<tr><td>MII_PR_Kardio_Anzahl_KH_Aufenthalte_wg_HF</td><td align="right">0</td><td align="right">14</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Kardio_Atherosklerotisches_Erstereignis</td><td align="right">0</td><td align="right">13</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Kardio_Device</td><td align="right">0</td><td align="right">8</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Kardio_Diagnose</td><td align="right">0</td><td align="right">86</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Kardio_Diagnose_Prozedur_Nein_Unbekannt</td><td align="right">0</td><td align="right">14</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Kardio_Geraeteprogrammierung</td><td align="right">0</td><td align="right">14</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Kardio_Kardiale_Deviceimplantation</td><td align="right">0</td><td align="right">54</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Kardio_Klappenvitium</td><td align="right">0</td><td align="right">86</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Kardio_Linksventrikulaere_Ejektionsfraktion</td><td align="right">0</td><td align="right">17</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Kardio_NBG_Schrittmachermodus</td><td align="right">0</td><td align="right">7</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Kardio_Observation_Rauchen</td><td align="right">0</td><td align="right">29</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Kardio_Score_Modifizierte_Rankin_Skala</td><td align="right">0</td><td align="right">12</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Kardio_Score_NYHA</td><td align="right">0</td><td align="right">12</td><td align="right">0</td><td align="right">0.0 %</td></tr>
+<tr><td>MII_PR_Kardio_Anzahl_KH_Aufenthalte_wg_HF</td><td align="right">1</td><td align="right">14</td><td align="right">11</td><td align="right">78.6 %</td></tr>
+<tr><td>MII_PR_Kardio_Atherosklerotisches_Erstereignis</td><td align="right">1</td><td align="right">13</td><td align="right">11</td><td align="right">84.6 %</td></tr>
+<tr><td>MII_PR_Kardio_Device</td><td align="right">1</td><td align="right">8</td><td align="right">8</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Kardio_Diagnose</td><td align="right">2</td><td align="right">86</td><td align="right">78</td><td align="right">90.7 %</td></tr>
+<tr><td>MII_PR_Kardio_Diagnose_Prozedur_Nein_Unbekannt</td><td align="right">1</td><td align="right">14</td><td align="right">10</td><td align="right">71.4 %</td></tr>
+<tr><td>MII_PR_Kardio_Geraeteprogrammierung</td><td align="right">1</td><td align="right">14</td><td align="right">14</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Kardio_Kardiale_Deviceimplantation</td><td align="right">1</td><td align="right">54</td><td align="right">54</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Kardio_Klappenvitium</td><td align="right">1</td><td align="right">86</td><td align="right">77</td><td align="right">89.5 %</td></tr>
+<tr><td>MII_PR_Kardio_Linksventrikulaere_Ejektionsfraktion</td><td align="right">1</td><td align="right">17</td><td align="right">16</td><td align="right">94.1 %</td></tr>
+<tr><td>MII_PR_Kardio_NBG_Schrittmachermodus</td><td align="right">1</td><td align="right">7</td><td align="right">7</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Kardio_Observation_Rauchen</td><td align="right">1</td><td align="right">28</td><td align="right">17</td><td align="right">60.7 %</td></tr>
+<tr><td>MII_PR_Kardio_Score_Modifizierte_Rankin_Skala</td><td align="right">1</td><td align="right">12</td><td align="right">12</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Kardio_Score_NYHA</td><td align="right">1</td><td align="right">12</td><td align="right">12</td><td align="right">100.0 %</td></tr>
 </table></details>
-<details><summary><b>laborbefund</b> — 3 Profile, 91/154 MS-Elemente befüllt (59.1 %)</summary>
+<details><summary><b>laborbefund</b> — 3 Profile, 122/154 MS-Elemente befüllt (79.2 %)</summary>
 <table><tr><th>Profil</th><th>Instanzen</th><th>MS-Elemente</th><th>befüllt</th><th>Coverage</th></tr>
-<tr><td>MII_PR_Labor_Laboranforderung</td><td align="right">10</td><td align="right">38</td><td align="right">21</td><td align="right">55.3 %</td></tr>
-<tr><td>MII_PR_Labor_Laborbefund</td><td align="right">10</td><td align="right">44</td><td align="right">25</td><td align="right">56.8 %</td></tr>
-<tr><td>MII_PR_Labor_Laboruntersuchung</td><td align="right">35</td><td align="right">72</td><td align="right">45</td><td align="right">62.5 %</td></tr>
+<tr><td>MII_PR_Labor_Laboranforderung</td><td align="right">10</td><td align="right">38</td><td align="right">29</td><td align="right">76.3 %</td></tr>
+<tr><td>MII_PR_Labor_Laborbefund</td><td align="right">10</td><td align="right">44</td><td align="right">33</td><td align="right">75.0 %</td></tr>
+<tr><td>MII_PR_Labor_Laboruntersuchung</td><td align="right">37</td><td align="right">72</td><td align="right">60</td><td align="right">83.3 %</td></tr>
 </table></details>
-<details><summary><b>lungenfunktion</b> — 48 Profile, 0/1956 MS-Elemente befüllt (0.0 %)</summary>
+<details><summary><b>lungenfunktion</b> — 48 Profile, 1333/1956 MS-Elemente befüllt (68.1 %)</summary>
 <table><tr><th>Profil</th><th>Instanzen</th><th>MS-Elemente</th><th>befüllt</th><th>Coverage</th></tr>
 <tr><td>MII_PR_Lungenfunktion_1_Viskositaet</td><td align="right">0</td><td align="right">41</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_BF</td><td align="right">0</td><td align="right">46</td><td align="right">0</td><td align="right">0.0 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_BF</td><td align="right">1</td><td align="right">46</td><td align="right">30</td><td align="right">65.2 %</td></tr>
 <tr><td>MII_PR_Lungenfunktion_Befund</td><td align="right">0</td><td align="right">26</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_Bodyplethysmographie</td><td align="right">0</td><td align="right">43</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_Bodyplethysmographie_Messung</td><td align="right">0</td><td align="right">50</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_CO2_Konzentration</td><td align="right">0</td><td align="right">19</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_DLCO</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_DLCOc</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_Diffusion</td><td align="right">0</td><td align="right">38</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_Diffusion_Messung</td><td align="right">0</td><td align="right">50</td><td align="right">0</td><td align="right">0.0 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_Bodyplethysmographie</td><td align="right">1</td><td align="right">43</td><td align="right">41</td><td align="right">95.3 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_Bodyplethysmographie_Messung</td><td align="right">1</td><td align="right">50</td><td align="right">50</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_CO2_Konzentration</td><td align="right">1</td><td align="right">19</td><td align="right">19</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_DLCO</td><td align="right">1</td><td align="right">42</td><td align="right">38</td><td align="right">90.5 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_DLCOc</td><td align="right">1</td><td align="right">42</td><td align="right">25</td><td align="right">59.5 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_Diffusion</td><td align="right">1</td><td align="right">38</td><td align="right">36</td><td align="right">94.7 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_Diffusion_Messung</td><td align="right">1</td><td align="right">50</td><td align="right">50</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_Lungenfunktion_Diffusionskapzitaet</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_Dosis</td><td align="right">0</td><td align="right">19</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_Dosis_Gabe</td><td align="right">0</td><td align="right">72</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_FEV</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_FEV_FVC</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_FRC</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_FVC</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_Dosis</td><td align="right">2</td><td align="right">19</td><td align="right">19</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_Dosis_Gabe</td><td align="right">3</td><td align="right">72</td><td align="right">62</td><td align="right">86.1 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_FEV</td><td align="right">3</td><td align="right">42</td><td align="right">42</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_FEV_FVC</td><td align="right">1</td><td align="right">42</td><td align="right">41</td><td align="right">97.6 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_FRC</td><td align="right">2</td><td align="right">42</td><td align="right">34</td><td align="right">81.0 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_FVC</td><td align="right">1</td><td align="right">42</td><td align="right">40</td><td align="right">95.2 %</td></tr>
 <tr><td>MII_PR_Lungenfunktion_Fluss</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_Gewicht</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_Hb</td><td align="right">0</td><td align="right">31</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_IC</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_IRV_ERV</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_KCO</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_KCOc</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_Luftfeuchtigkeit</td><td align="right">0</td><td align="right">19</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_Lufttemperatur</td><td align="right">0</td><td align="right">19</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_MEF</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_Methacholine</td><td align="right">0</td><td align="right">92</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_PEF</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_Provokationstest</td><td align="right">0</td><td align="right">33</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_Provokationstest_Messung</td><td align="right">0</td><td align="right">50</td><td align="right">0</td><td align="right">0.0 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_Gewicht</td><td align="right">1</td><td align="right">42</td><td align="right">20</td><td align="right">47.6 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_Hb</td><td align="right">1</td><td align="right">31</td><td align="right">23</td><td align="right">74.2 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_IC</td><td align="right">1</td><td align="right">42</td><td align="right">38</td><td align="right">90.5 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_IRV_ERV</td><td align="right">1</td><td align="right">42</td><td align="right">33</td><td align="right">78.6 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_KCO</td><td align="right">1</td><td align="right">42</td><td align="right">39</td><td align="right">92.9 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_KCOc</td><td align="right">1</td><td align="right">42</td><td align="right">25</td><td align="right">59.5 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_Luftfeuchtigkeit</td><td align="right">1</td><td align="right">19</td><td align="right">19</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_Lufttemperatur</td><td align="right">1</td><td align="right">19</td><td align="right">19</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_MEF</td><td align="right">1</td><td align="right">42</td><td align="right">24</td><td align="right">57.1 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_Methacholine</td><td align="right">1</td><td align="right">92</td><td align="right">58</td><td align="right">63.0 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_PEF</td><td align="right">2</td><td align="right">42</td><td align="right">41</td><td align="right">97.6 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_Provokationstest</td><td align="right">1</td><td align="right">33</td><td align="right">31</td><td align="right">93.9 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_Provokationstest_Messung</td><td align="right">1</td><td align="right">50</td><td align="right">50</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_Lungenfunktion_Prozent</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_R</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_RV</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_RV_TLC</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_R_Effektiv</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_R_Spezifisch</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_Spirometrie</td><td align="right">0</td><td align="right">35</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_Spirometrie_Messung</td><td align="right">0</td><td align="right">50</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_TLC</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_R</td><td align="right">2</td><td align="right">42</td><td align="right">34</td><td align="right">81.0 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_RV</td><td align="right">1</td><td align="right">42</td><td align="right">38</td><td align="right">90.5 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_RV_TLC</td><td align="right">1</td><td align="right">42</td><td align="right">38</td><td align="right">90.5 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_R_Effektiv</td><td align="right">1</td><td align="right">42</td><td align="right">34</td><td align="right">81.0 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_R_Spezifisch</td><td align="right">2</td><td align="right">42</td><td align="right">34</td><td align="right">81.0 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_Spirometrie</td><td align="right">1</td><td align="right">35</td><td align="right">34</td><td align="right">97.1 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_Spirometrie_Messung</td><td align="right">1</td><td align="right">50</td><td align="right">41</td><td align="right">82.0 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_TLC</td><td align="right">1</td><td align="right">42</td><td align="right">39</td><td align="right">92.9 %</td></tr>
 <tr><td>MII_PR_Lungenfunktion_Transferkoeffizient</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_Umgebung</td><td align="right">0</td><td align="right">6</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_VA</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_VC</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_Umgebung</td><td align="right">1</td><td align="right">6</td><td align="right">6</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_VA</td><td align="right">1</td><td align="right">42</td><td align="right">24</td><td align="right">57.1 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_VC</td><td align="right">1</td><td align="right">42</td><td align="right">40</td><td align="right">95.2 %</td></tr>
 <tr><td>MII_PR_Lungenfunktion_Viskositaet</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
 <tr><td>MII_PR_Lungenfunktion_Volumen</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
 <tr><td>MII_PR_Lungenfunktion_Widerstand</td><td align="right">0</td><td align="right">42</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Lungenfunktion_sG_Total</td><td align="right">0</td><td align="right">41</td><td align="right">0</td><td align="right">0.0 %</td></tr>
+<tr><td>MII_PR_Lungenfunktion_sG_Total</td><td align="right">1</td><td align="right">41</td><td align="right">24</td><td align="right">58.5 %</td></tr>
 </table></details>
-<details><summary><b>medikation</b> — 5 Profile, 307/441 MS-Elemente befüllt (69.6 %)</summary>
+<details><summary><b>medikation</b> — 5 Profile, 429/441 MS-Elemente befüllt (97.3 %)</summary>
 <table><tr><th>Profil</th><th>Instanzen</th><th>MS-Elemente</th><th>befüllt</th><th>Coverage</th></tr>
-<tr><td>MII_PR_Medikation_Medication</td><td align="right">27</td><td align="right">46</td><td align="right">41</td><td align="right">89.1 %</td></tr>
-<tr><td>MII_PR_Medikation_MedicationAdministration</td><td align="right">23</td><td align="right">72</td><td align="right">54</td><td align="right">75.0 %</td></tr>
-<tr><td>MII_PR_Medikation_MedicationRequest</td><td align="right">26</td><td align="right">151</td><td align="right">91</td><td align="right">60.3 %</td></tr>
-<tr><td>MII_PR_Medikation_MedicationStatement</td><td align="right">28</td><td align="right">153</td><td align="right">106</td><td align="right">69.3 %</td></tr>
-<tr><td>MII_PR_Medikation_Medikationsliste</td><td align="right">21</td><td align="right">19</td><td align="right">15</td><td align="right">78.9 %</td></tr>
+<tr><td>MII_PR_Medikation_Medication</td><td align="right">27</td><td align="right">46</td><td align="right">46</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Medikation_MedicationAdministration</td><td align="right">23</td><td align="right">72</td><td align="right">69</td><td align="right">95.8 %</td></tr>
+<tr><td>MII_PR_Medikation_MedicationRequest</td><td align="right">26</td><td align="right">151</td><td align="right">145</td><td align="right">96.0 %</td></tr>
+<tr><td>MII_PR_Medikation_MedicationStatement</td><td align="right">28</td><td align="right">153</td><td align="right">150</td><td align="right">98.0 %</td></tr>
+<tr><td>MII_PR_Medikation_Medikationsliste</td><td align="right">21</td><td align="right">19</td><td align="right">19</td><td align="right">100.0 %</td></tr>
 </table></details>
 <details><summary><b>meta</b> — 1 Profile, 0/0 MS-Elemente befüllt (–)</summary>
 <table><tr><th>Profil</th><th>Instanzen</th><th>MS-Elemente</th><th>befüllt</th><th>Coverage</th></tr>
 <tr><td>MII_PR_Meta_SearchParameter</td><td align="right">0</td><td align="right">0</td><td align="right">0</td><td align="right">–</td></tr>
 </table></details>
-<details><summary><b>mikrobiologie</b> — 21 Profile, 0/1604 MS-Elemente befüllt (0.0 %)</summary>
+<details><summary><b>mikrobiologie</b> — 21 Profile, 1078/1448 MS-Elemente befüllt (74.4 %)</summary>
 <table><tr><th>Profil</th><th>Instanzen</th><th>MS-Elemente</th><th>befüllt</th><th>Coverage</th></tr>
-<tr><td>MII_PR_Mikrobio_Allgemeine_Bestimmung</td><td align="right">0</td><td align="right">78</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Mikrobio_Allgemeine_Kultur</td><td align="right">0</td><td align="right">78</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Mikrobio_Allgemeine_Mikroskopie</td><td align="right">0</td><td align="right">80</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Mikrobio_Antigen_Antikoerper_Quantitativ</td><td align="right">0</td><td align="right">78</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Mikrobio_Aviditaet</td><td align="right">0</td><td align="right">78</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Mikrobio_Bartlett_Score</td><td align="right">0</td><td align="right">78</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Mikrobio_Ct_Wert</td><td align="right">0</td><td align="right">79</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Mikrobio_Diagnostic_Report</td><td align="right">0</td><td align="right">47</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Mikrobio_Empfindlichkeit</td><td align="right">0</td><td align="right">80</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Mikrobio_Keimzahl</td><td align="right">0</td><td align="right">78</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Mikrobio_MRGN_Klasse</td><td align="right">0</td><td align="right">79</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Mikrobio_Molekulare_Pathogenlast</td><td align="right">0</td><td align="right">78</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Mikrobio_Nugent_Score</td><td align="right">0</td><td align="right">78</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Mikrobio_Probe</td><td align="right">0</td><td align="right">63</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Mikrobio_Resistenzkategorie_Status</td><td align="right">0</td><td align="right">79</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Mikrobio_Resistenzmechanismen_Determinanten</td><td align="right">0</td><td align="right">78</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Mikrobio_Spezifische_Bestimmung</td><td align="right">0</td><td align="right">78</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Mikrobio_Spezifische_Mikroskopie</td><td align="right">0</td><td align="right">80</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Mikrobio_Titer</td><td align="right">0</td><td align="right">81</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Mikrobio_Virulenzfaktor</td><td align="right">0</td><td align="right">78</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Mikrobio_Voraussichtliche_Empfindlichkeit</td><td align="right">0</td><td align="right">78</td><td align="right">0</td><td align="right">0.0 %</td></tr>
+<tr><td>MII_PR_Mikrobio_Allgemeine_Bestimmung</td><td align="right">3</td><td align="right">69</td><td align="right">50</td><td align="right">72.5 %</td></tr>
+<tr><td>MII_PR_Mikrobio_Allgemeine_Kultur</td><td align="right">3</td><td align="right">69</td><td align="right">50</td><td align="right">72.5 %</td></tr>
+<tr><td>MII_PR_Mikrobio_Allgemeine_Mikroskopie</td><td align="right">3</td><td align="right">71</td><td align="right">51</td><td align="right">71.8 %</td></tr>
+<tr><td>MII_PR_Mikrobio_Antigen_Antikoerper_Quantitativ</td><td align="right">3</td><td align="right">71</td><td align="right">54</td><td align="right">76.1 %</td></tr>
+<tr><td>MII_PR_Mikrobio_Aviditaet</td><td align="right">3</td><td align="right">71</td><td align="right">54</td><td align="right">76.1 %</td></tr>
+<tr><td>MII_PR_Mikrobio_Bartlett_Score</td><td align="right">3</td><td align="right">69</td><td align="right">50</td><td align="right">72.5 %</td></tr>
+<tr><td>MII_PR_Mikrobio_Ct_Wert</td><td align="right">3</td><td align="right">72</td><td align="right">55</td><td align="right">76.4 %</td></tr>
+<tr><td>MII_PR_Mikrobio_Diagnostic_Report</td><td align="right">1</td><td align="right">47</td><td align="right">35</td><td align="right">74.5 %</td></tr>
+<tr><td>MII_PR_Mikrobio_Empfindlichkeit</td><td align="right">4</td><td align="right">78</td><td align="right">61</td><td align="right">78.2 %</td></tr>
+<tr><td>MII_PR_Mikrobio_Keimzahl</td><td align="right">3</td><td align="right">71</td><td align="right">54</td><td align="right">76.1 %</td></tr>
+<tr><td>MII_PR_Mikrobio_MRGN_Klasse</td><td align="right">3</td><td align="right">70</td><td align="right">51</td><td align="right">72.9 %</td></tr>
+<tr><td>MII_PR_Mikrobio_Molekulare_Pathogenlast</td><td align="right">3</td><td align="right">71</td><td align="right">54</td><td align="right">76.1 %</td></tr>
+<tr><td>MII_PR_Mikrobio_Nugent_Score</td><td align="right">3</td><td align="right">71</td><td align="right">54</td><td align="right">76.1 %</td></tr>
+<tr><td>MII_PR_Mikrobio_Probe</td><td align="right">2</td><td align="right">63</td><td align="right">56</td><td align="right">88.9 %</td></tr>
+<tr><td>MII_PR_Mikrobio_Resistenzkategorie_Status</td><td align="right">3</td><td align="right">70</td><td align="right">49</td><td align="right">70.0 %</td></tr>
+<tr><td>MII_PR_Mikrobio_Resistenzmechanismen_Determinanten</td><td align="right">3</td><td align="right">69</td><td align="right">50</td><td align="right">72.5 %</td></tr>
+<tr><td>MII_PR_Mikrobio_Spezifische_Bestimmung</td><td align="right">3</td><td align="right">69</td><td align="right">50</td><td align="right">72.5 %</td></tr>
+<tr><td>MII_PR_Mikrobio_Spezifische_Mikroskopie</td><td align="right">1</td><td align="right">71</td><td align="right">48</td><td align="right">67.6 %</td></tr>
+<tr><td>MII_PR_Mikrobio_Titer</td><td align="right">3</td><td align="right">68</td><td align="right">52</td><td align="right">76.5 %</td></tr>
+<tr><td>MII_PR_Mikrobio_Virulenzfaktor</td><td align="right">3</td><td align="right">69</td><td align="right">50</td><td align="right">72.5 %</td></tr>
+<tr><td>MII_PR_Mikrobio_Voraussichtliche_Empfindlichkeit</td><td align="right">3</td><td align="right">69</td><td align="right">50</td><td align="right">72.5 %</td></tr>
 </table></details>
-<details><summary><b>molgen</b> — 16 Profile, 177/248 MS-Elemente befüllt (71.4 %)</summary>
+<details><summary><b>molgen</b> — 16 Profile, 180/248 MS-Elemente befüllt (72.6 %)</summary>
 <table><tr><th>Profil</th><th>Instanzen</th><th>MS-Elemente</th><th>befüllt</th><th>Coverage</th></tr>
 <tr><td>MII_PR_MolGen_AnforderungGenetischerTest</td><td align="right">3</td><td align="right">10</td><td align="right">9</td><td align="right">90.0 %</td></tr>
 <tr><td>MII_PR_MolGen_DiagnostischeImplikation</td><td align="right">2</td><td align="right">14</td><td align="right">9</td><td align="right">64.3 %</td></tr>
 <tr><td>MII_PR_MolGen_EmpfohleneFolgemassnahme</td><td align="right">1</td><td align="right">7</td><td align="right">7</td><td align="right">100.0 %</td></tr>
-<tr><td>MII_PR_MolGen_Familienanamnese</td><td align="right">2</td><td align="right">40</td><td align="right">25</td><td align="right">62.5 %</td></tr>
+<tr><td>MII_PR_MolGen_Familienanamnese</td><td align="right">2</td><td align="right">40</td><td align="right">28</td><td align="right">70.0 %</td></tr>
 <tr><td>MII_PR_MolGen_GenomicStudy</td><td align="right">2</td><td align="right">7</td><td align="right">7</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_MolGen_GenomicStudyAnalysis</td><td align="right">2</td><td align="right">9</td><td align="right">9</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_MolGen_Genotyp</td><td align="right">1</td><td align="right">14</td><td align="right">10</td><td align="right">71.4 %</td></tr>
@@ -337,244 +347,244 @@ deshalb keine Module miteinander.
 <tr><td>MII_PR_MolGen_TherapeutischeImplikation</td><td align="right">3</td><td align="right">16</td><td align="right">10</td><td align="right">62.5 %</td></tr>
 <tr><td>MII_PR_MolGen_Variante</td><td align="right">4</td><td align="right">37</td><td align="right">10</td><td align="right">27.0 %</td></tr>
 </table></details>
-<details><summary><b>mtb</b> — 50 Profile, 607/1525 MS-Elemente befüllt (39.8 %)</summary>
+<details><summary><b>mtb</b> — 50 Profile, 1186/1522 MS-Elemente befüllt (77.9 %)</summary>
 <table><tr><th>Profil</th><th>Instanzen</th><th>MS-Elemente</th><th>befüllt</th><th>Coverage</th></tr>
-<tr><td>MII_PR_MTB_Antrag_Kostenuebernahme</td><td align="right">1</td><td align="right">24</td><td align="right">23</td><td align="right">95.8 %</td></tr>
-<tr><td>MII_PR_MTB_Antwort_Kostenuebernahme</td><td align="right">1</td><td align="right">12</td><td align="right">10</td><td align="right">83.3 %</td></tr>
-<tr><td>MII_PR_MTB_BIOMARKER_HER2_STATUS</td><td align="right">1</td><td align="right">13</td><td align="right">5</td><td align="right">38.5 %</td></tr>
-<tr><td>MII_PR_MTB_BRCAness</td><td align="right">1</td><td align="right">19</td><td align="right">7</td><td align="right">36.8 %</td></tr>
-<tr><td>MII_PR_MTB_Behandlungsepisode</td><td align="right">1</td><td align="right">16</td><td align="right">13</td><td align="right">81.2 %</td></tr>
-<tr><td>MII_PR_MTB_Biomarker_InSituHybridization</td><td align="right">1</td><td align="right">22</td><td align="right">13</td><td align="right">59.1 %</td></tr>
+<tr><td>MII_PR_MTB_Antrag_Kostenuebernahme</td><td align="right">2</td><td align="right">24</td><td align="right">24</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_MTB_Antwort_Kostenuebernahme</td><td align="right">1</td><td align="right">12</td><td align="right">12</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_MTB_BIOMARKER_HER2_STATUS</td><td align="right">1</td><td align="right">13</td><td align="right">11</td><td align="right">84.6 %</td></tr>
+<tr><td>MII_PR_MTB_BRCAness</td><td align="right">1</td><td align="right">19</td><td align="right">15</td><td align="right">78.9 %</td></tr>
+<tr><td>MII_PR_MTB_Behandlungsepisode</td><td align="right">1</td><td align="right">16</td><td align="right">15</td><td align="right">93.8 %</td></tr>
+<tr><td>MII_PR_MTB_Biomarker_InSituHybridization</td><td align="right">1</td><td align="right">22</td><td align="right">20</td><td align="right">90.9 %</td></tr>
 <tr><td>MII_PR_MTB_Biopsie_Auftrag</td><td align="right">1</td><td align="right">6</td><td align="right">6</td><td align="right">100.0 %</td></tr>
-<tr><td>MII_PR_MTB_Consent_Given</td><td align="right">1</td><td align="right">12</td><td align="right">11</td><td align="right">91.7 %</td></tr>
-<tr><td>MII_PR_MTB_Copy_Number_Variant</td><td align="right">1</td><td align="right">64</td><td align="right">9</td><td align="right">14.1 %</td></tr>
-<tr><td>MII_PR_MTB_DNA_Fusion</td><td align="right">1</td><td align="right">58</td><td align="right">9</td><td align="right">15.5 %</td></tr>
-<tr><td>MII_PR_MTB_Diagnose_Primaertumor</td><td align="right">1</td><td align="right">115</td><td align="right">43</td><td align="right">37.4 %</td></tr>
-<tr><td>MII_PR_MTB_Diagnostische_Implikation</td><td align="right">1</td><td align="right">17</td><td align="right">7</td><td align="right">41.2 %</td></tr>
-<tr><td>MII_PR_MTB_Einfache_Variante</td><td align="right">1</td><td align="right">43</td><td align="right">9</td><td align="right">20.9 %</td></tr>
-<tr><td>MII_PR_MTB_Follow_Up_ClinicalImpression</td><td align="right">1</td><td align="right">13</td><td align="right">11</td><td align="right">84.6 %</td></tr>
-<tr><td>MII_PR_MTB_Genomic_Study</td><td align="right">1</td><td align="right">9</td><td align="right">4</td><td align="right">44.4 %</td></tr>
-<tr><td>MII_PR_MTB_Genomic_Study_Analysis</td><td align="right">1</td><td align="right">17</td><td align="right">15</td><td align="right">88.2 %</td></tr>
-<tr><td>MII_PR_MTB_Genomic_Study_Device</td><td align="right">0</td><td align="right">6</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_MTB_HRD_Score</td><td align="right">1</td><td align="right">23</td><td align="right">8</td><td align="right">34.8 %</td></tr>
+<tr><td>MII_PR_MTB_Consent_Given</td><td align="right">1</td><td align="right">12</td><td align="right">12</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_MTB_Copy_Number_Variant</td><td align="right">1</td><td align="right">64</td><td align="right">14</td><td align="right">21.9 %</td></tr>
+<tr><td>MII_PR_MTB_DNA_Fusion</td><td align="right">1</td><td align="right">58</td><td align="right">14</td><td align="right">24.1 %</td></tr>
+<tr><td>MII_PR_MTB_Diagnose_Primaertumor</td><td align="right">3</td><td align="right">115</td><td align="right">94</td><td align="right">81.7 %</td></tr>
+<tr><td>MII_PR_MTB_Diagnostische_Implikation</td><td align="right">1</td><td align="right">17</td><td align="right">12</td><td align="right">70.6 %</td></tr>
+<tr><td>MII_PR_MTB_Einfache_Variante</td><td align="right">1</td><td align="right">43</td><td align="right">14</td><td align="right">32.6 %</td></tr>
+<tr><td>MII_PR_MTB_Follow_Up_ClinicalImpression</td><td align="right">1</td><td align="right">13</td><td align="right">13</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_MTB_Genomic_Study</td><td align="right">1</td><td align="right">9</td><td align="right">9</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_MTB_Genomic_Study_Analysis</td><td align="right">1</td><td align="right">17</td><td align="right">17</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_MTB_Genomic_Study_Device</td><td align="right">1</td><td align="right">6</td><td align="right">6</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_MTB_HRD_Score</td><td align="right">1</td><td align="right">23</td><td align="right">15</td><td align="right">65.2 %</td></tr>
 <tr><td>MII_PR_MTB_Histologie_Evaluation_Auftrag</td><td align="right">1</td><td align="right">6</td><td align="right">6</td><td align="right">100.0 %</td></tr>
-<tr><td>MII_PR_MTB_Humangenetische_Beratung_Auftrag</td><td align="right">1</td><td align="right">5</td><td align="right">4</td><td align="right">80.0 %</td></tr>
-<tr><td>MII_PR_MTB_IMMUNOHISTOCHEMISTRY_HER2</td><td align="right">1</td><td align="right">21</td><td align="right">12</td><td align="right">57.1 %</td></tr>
-<tr><td>MII_PR_MTB_INSITUHYBRIDIZATION_HER2</td><td align="right">1</td><td align="right">26</td><td align="right">15</td><td align="right">57.7 %</td></tr>
-<tr><td>MII_PR_MTB_Immunohistochemistry</td><td align="right">1</td><td align="right">20</td><td align="right">11</td><td align="right">55.0 %</td></tr>
-<tr><td>MII_PR_MTB_Immunohistochemistry_MMR</td><td align="right">1</td><td align="right">23</td><td align="right">8</td><td align="right">34.8 %</td></tr>
-<tr><td>MII_PR_MTB_Immunohistochemistry_MSI</td><td align="right">1</td><td align="right">17</td><td align="right">9</td><td align="right">52.9 %</td></tr>
-<tr><td>MII_PR_MTB_Immunohistochemistry_PDL1</td><td align="right">1</td><td align="right">36</td><td align="right">11</td><td align="right">30.6 %</td></tr>
-<tr><td>MII_PR_MTB_Immunohistochemistry_Phosphorylation</td><td align="right">1</td><td align="right">24</td><td align="right">15</td><td align="right">62.5 %</td></tr>
-<tr><td>MII_PR_MTB_Mikrosatelliteninstabilitaet</td><td align="right">1</td><td align="right">18</td><td align="right">7</td><td align="right">38.9 %</td></tr>
-<tr><td>MII_PR_MTB_Molecular_Pathology_Report</td><td align="right">1</td><td align="right">9</td><td align="right">7</td><td align="right">77.8 %</td></tr>
-<tr><td>MII_PR_MTB_Molekularer_Biomarker</td><td align="right">1</td><td align="right">13</td><td align="right">5</td><td align="right">38.5 %</td></tr>
-<tr><td>MII_PR_MTB_Mutationslast</td><td align="right">1</td><td align="right">18</td><td align="right">9</td><td align="right">50.0 %</td></tr>
+<tr><td>MII_PR_MTB_Humangenetische_Beratung_Auftrag</td><td align="right">1</td><td align="right">5</td><td align="right">5</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_MTB_IMMUNOHISTOCHEMISTRY_HER2</td><td align="right">1</td><td align="right">21</td><td align="right">19</td><td align="right">90.5 %</td></tr>
+<tr><td>MII_PR_MTB_INSITUHYBRIDIZATION_HER2</td><td align="right">1</td><td align="right">26</td><td align="right">21</td><td align="right">80.8 %</td></tr>
+<tr><td>MII_PR_MTB_Immunohistochemistry</td><td align="right">1</td><td align="right">20</td><td align="right">18</td><td align="right">90.0 %</td></tr>
+<tr><td>MII_PR_MTB_Immunohistochemistry_MMR</td><td align="right">1</td><td align="right">23</td><td align="right">21</td><td align="right">91.3 %</td></tr>
+<tr><td>MII_PR_MTB_Immunohistochemistry_MSI</td><td align="right">1</td><td align="right">17</td><td align="right">15</td><td align="right">88.2 %</td></tr>
+<tr><td>MII_PR_MTB_Immunohistochemistry_PDL1</td><td align="right">1</td><td align="right">36</td><td align="right">18</td><td align="right">50.0 %</td></tr>
+<tr><td>MII_PR_MTB_Immunohistochemistry_Phosphorylation</td><td align="right">1</td><td align="right">24</td><td align="right">22</td><td align="right">91.7 %</td></tr>
+<tr><td>MII_PR_MTB_Mikrosatelliteninstabilitaet</td><td align="right">1</td><td align="right">18</td><td align="right">16</td><td align="right">88.9 %</td></tr>
+<tr><td>MII_PR_MTB_Molecular_Pathology_Report</td><td align="right">1</td><td align="right">9</td><td align="right">9</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_MTB_Molekularer_Biomarker</td><td align="right">1</td><td align="right">13</td><td align="right">11</td><td align="right">84.6 %</td></tr>
+<tr><td>MII_PR_MTB_Mutationslast</td><td align="right">1</td><td align="right">18</td><td align="right">16</td><td align="right">88.9 %</td></tr>
 <tr><td>MII_PR_MTB_NGS_Bericht</td><td align="right">1</td><td align="right">18</td><td align="right">18</td><td align="right">100.0 %</td></tr>
-<tr><td>MII_PR_MTB_Oncotree</td><td align="right">1</td><td align="right">9</td><td align="right">8</td><td align="right">88.9 %</td></tr>
-<tr><td>MII_PR_MTB_Panel_DeviceDefinition</td><td align="right">0</td><td align="right">13</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_MTB_Ploidie</td><td align="right">1</td><td align="right">17</td><td align="right">8</td><td align="right">47.1 %</td></tr>
-<tr><td>MII_PR_MTB_RNA_Fusion</td><td align="right">1</td><td align="right">63</td><td align="right">9</td><td align="right">14.3 %</td></tr>
-<tr><td>MII_PR_MTB_RNA_Seq</td><td align="right">1</td><td align="right">46</td><td align="right">13</td><td align="right">28.3 %</td></tr>
-<tr><td>MII_PR_MTB_Response_Befund</td><td align="right">1</td><td align="right">33</td><td align="right">21</td><td align="right">63.6 %</td></tr>
-<tr><td>MII_PR_MTB_Studie</td><td align="right">1</td><td align="right">33</td><td align="right">7</td><td align="right">21.2 %</td></tr>
-<tr><td>MII_PR_MTB_Studieneinschluss_Anfrage</td><td align="right">1</td><td align="right">11</td><td align="right">10</td><td align="right">90.9 %</td></tr>
-<tr><td>MII_PR_MTB_Systemische_Therapie</td><td align="right">1</td><td align="right">67</td><td align="right">30</td><td align="right">44.8 %</td></tr>
-<tr><td>MII_PR_MTB_Systemische_Therapie_Medication_Statement</td><td align="right">1</td><td align="right">160</td><td align="right">36</td><td align="right">22.5 %</td></tr>
-<tr><td>MII_PR_MTB_Systemische_Vortherapie</td><td align="right">1</td><td align="right">71</td><td align="right">27</td><td align="right">38.0 %</td></tr>
-<tr><td>MII_PR_MTB_Therapeutische_Implikation</td><td align="right">1</td><td align="right">20</td><td align="right">10</td><td align="right">50.0 %</td></tr>
-<tr><td>MII_PR_MTB_Therapieempfehlung</td><td align="right">3</td><td align="right">157</td><td align="right">24</td><td align="right">15.3 %</td></tr>
-<tr><td>MII_PR_MTB_Therapieempfehlung_Kombination</td><td align="right">1</td><td align="right">18</td><td align="right">12</td><td align="right">66.7 %</td></tr>
-<tr><td>MII_PR_MTB_Therapieplan</td><td align="right">1</td><td align="right">36</td><td align="right">26</td><td align="right">72.2 %</td></tr>
+<tr><td>MII_PR_MTB_Oncotree</td><td align="right">1</td><td align="right">9</td><td align="right">9</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_MTB_Panel_DeviceDefinition</td><td align="right">1</td><td align="right">13</td><td align="right">13</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_MTB_Ploidie</td><td align="right">1</td><td align="right">17</td><td align="right">15</td><td align="right">88.2 %</td></tr>
+<tr><td>MII_PR_MTB_RNA_Fusion</td><td align="right">1</td><td align="right">63</td><td align="right">14</td><td align="right">22.2 %</td></tr>
+<tr><td>MII_PR_MTB_RNA_Seq</td><td align="right">1</td><td align="right">46</td><td align="right">18</td><td align="right">39.1 %</td></tr>
+<tr><td>MII_PR_MTB_Response_Befund</td><td align="right">1</td><td align="right">33</td><td align="right">23</td><td align="right">69.7 %</td></tr>
+<tr><td>MII_PR_MTB_Studie</td><td align="right">1</td><td align="right">33</td><td align="right">24</td><td align="right">72.7 %</td></tr>
+<tr><td>MII_PR_MTB_Studieneinschluss_Anfrage</td><td align="right">2</td><td align="right">11</td><td align="right">11</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_MTB_Systemische_Therapie</td><td align="right">1</td><td align="right">66</td><td align="right">63</td><td align="right">95.5 %</td></tr>
+<tr><td>MII_PR_MTB_Systemische_Therapie_Medication_Statement</td><td align="right">3</td><td align="right">160</td><td align="right">151</td><td align="right">94.4 %</td></tr>
+<tr><td>MII_PR_MTB_Systemische_Vortherapie</td><td align="right">1</td><td align="right">70</td><td align="right">67</td><td align="right">95.7 %</td></tr>
+<tr><td>MII_PR_MTB_Therapeutische_Implikation</td><td align="right">1</td><td align="right">20</td><td align="right">14</td><td align="right">70.0 %</td></tr>
+<tr><td>MII_PR_MTB_Therapieempfehlung</td><td align="right">3</td><td align="right">156</td><td align="right">147</td><td align="right">94.2 %</td></tr>
+<tr><td>MII_PR_MTB_Therapieempfehlung_Kombination</td><td align="right">1</td><td align="right">18</td><td align="right">16</td><td align="right">88.9 %</td></tr>
+<tr><td>MII_PR_MTB_Therapieplan</td><td align="right">1</td><td align="right">36</td><td align="right">36</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_MTB_Tumorausbreitung</td><td align="right">1</td><td align="right">14</td><td align="right">13</td><td align="right">92.9 %</td></tr>
 <tr><td>MII_PR_MTB_Tumorzellgehalt</td><td align="right">1</td><td align="right">5</td><td align="right">5</td><td align="right">100.0 %</td></tr>
-<tr><td>MII_PR_MTB_WHO_Grad_Tumor_ZNS</td><td align="right">1</td><td align="right">9</td><td align="right">8</td><td align="right">88.9 %</td></tr>
+<tr><td>MII_PR_MTB_WHO_Grad_Tumor_ZNS</td><td align="right">1</td><td align="right">9</td><td align="right">9</td><td align="right">100.0 %</td></tr>
 </table></details>
-<details><summary><b>onkologie</b> — 76 Profile, 1146/2050 MS-Elemente befüllt (55.9 %)</summary>
+<details><summary><b>onkologie</b> — 76 Profile, 1883/2038 MS-Elemente befüllt (92.4 %)</summary>
 <table><tr><th>Profil</th><th>Instanzen</th><th>MS-Elemente</th><th>befüllt</th><th>Coverage</th></tr>
 <tr><td>MII_PR_Onko_ASA_Klassifikation</td><td align="right">1</td><td align="right">7</td><td align="right">7</td><td align="right">100.0 %</td></tr>
-<tr><td>MII_PR_Onko_Allgemeiner_Leistungszustand_ECOG</td><td align="right">1</td><td align="right">16</td><td align="right">15</td><td align="right">93.8 %</td></tr>
-<tr><td>MII_PR_Onko_Allgemeiner_Leistungszustand_Karnofsky</td><td align="right">1</td><td align="right">15</td><td align="right">14</td><td align="right">93.3 %</td></tr>
+<tr><td>MII_PR_Onko_Allgemeiner_Leistungszustand_ECOG</td><td align="right">1</td><td align="right">16</td><td align="right">16</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Onko_Allgemeiner_Leistungszustand_Karnofsky</td><td align="right">1</td><td align="right">15</td><td align="right">15</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_Onko_Anzahl_Befallene_Lymphknoten</td><td align="right">1</td><td align="right">17</td><td align="right">16</td><td align="right">94.1 %</td></tr>
 <tr><td>MII_PR_Onko_Anzahl_Befallene_Sentinel_Lymphknoten</td><td align="right">1</td><td align="right">17</td><td align="right">16</td><td align="right">94.1 %</td></tr>
 <tr><td>MII_PR_Onko_Anzahl_Untersuchte_Lymphknoten</td><td align="right">1</td><td align="right">17</td><td align="right">16</td><td align="right">94.1 %</td></tr>
 <tr><td>MII_PR_Onko_Anzahl_Untersuchte_Sentinel_Lymphknoten</td><td align="right">1</td><td align="right">17</td><td align="right">16</td><td align="right">94.1 %</td></tr>
 <tr><td>MII_PR_Onko_Befund</td><td align="right">1</td><td align="right">12</td><td align="right">12</td><td align="right">100.0 %</td></tr>
-<tr><td>MII_PR_Onko_Diagnose_Primaertumor</td><td align="right">1</td><td align="right">102</td><td align="right">42</td><td align="right">41.2 %</td></tr>
-<tr><td>MII_PR_Onko_Fernmetastasen</td><td align="right">1</td><td align="right">13</td><td align="right">10</td><td align="right">76.9 %</td></tr>
+<tr><td>MII_PR_Onko_Diagnose_Primaertumor</td><td align="right">5</td><td align="right">102</td><td align="right">93</td><td align="right">91.2 %</td></tr>
+<tr><td>MII_PR_Onko_Fernmetastasen</td><td align="right">1</td><td align="right">13</td><td align="right">12</td><td align="right">92.3 %</td></tr>
 <tr><td>MII_PR_Onko_Fruehere_Tumorerkrankung</td><td align="right">1</td><td align="right">23</td><td align="right">21</td><td align="right">91.3 %</td></tr>
-<tr><td>MII_PR_Onko_Genetische_Variante</td><td align="right">2</td><td align="right">48</td><td align="right">16</td><td align="right">33.3 %</td></tr>
+<tr><td>MII_PR_Onko_Genetische_Variante</td><td align="right">2</td><td align="right">48</td><td align="right">21</td><td align="right">43.8 %</td></tr>
 <tr><td>MII_PR_Onko_Grading</td><td align="right">1</td><td align="right">15</td><td align="right">14</td><td align="right">93.3 %</td></tr>
 <tr><td>MII_PR_Onko_Histologie_ICDO3</td><td align="right">1</td><td align="right">18</td><td align="right">18</td><td align="right">100.0 %</td></tr>
-<tr><td>MII_PR_Onko_KRK_Abstand_Aboral</td><td align="right">1</td><td align="right">11</td><td align="right">10</td><td align="right">90.9 %</td></tr>
-<tr><td>MII_PR_Onko_KRK_Abstand_Anokutan</td><td align="right">1</td><td align="right">11</td><td align="right">10</td><td align="right">90.9 %</td></tr>
-<tr><td>MII_PR_Onko_KRK_Abstand_Circumferelle_Resektionsebene</td><td align="right">1</td><td align="right">11</td><td align="right">10</td><td align="right">90.9 %</td></tr>
-<tr><td>MII_PR_Onko_KRK_Anastomoseninsuffizienz</td><td align="right">1</td><td align="right">7</td><td align="right">6</td><td align="right">85.7 %</td></tr>
-<tr><td>MII_PR_Onko_KRK_MRT_Mesorektale_Faszie</td><td align="right">1</td><td align="right">13</td><td align="right">12</td><td align="right">92.3 %</td></tr>
-<tr><td>MII_PR_Onko_KRK_Operation</td><td align="right">1</td><td align="right">64</td><td align="right">25</td><td align="right">39.1 %</td></tr>
-<tr><td>MII_PR_Onko_KRK_Specimen</td><td align="right">1</td><td align="right">7</td><td align="right">5</td><td align="right">71.4 %</td></tr>
-<tr><td>MII_PR_Onko_KRK_Stoma_Markierung</td><td align="right">1</td><td align="right">49</td><td align="right">21</td><td align="right">42.9 %</td></tr>
-<tr><td>MII_PR_Onko_Liste_Evidenz_Erstdiagnose</td><td align="right">1</td><td align="right">9</td><td align="right">9</td><td align="right">100.0 %</td></tr>
-<tr><td>MII_PR_Onko_Mamma_Her2neu_Status</td><td align="right">2</td><td align="right">16</td><td align="right">11</td><td align="right">68.8 %</td></tr>
-<tr><td>MII_PR_Onko_Mamma_Menopausenstatus</td><td align="right">1</td><td align="right">7</td><td align="right">6</td><td align="right">85.7 %</td></tr>
-<tr><td>MII_PR_Onko_Mamma_Operation</td><td align="right">1</td><td align="right">65</td><td align="right">29</td><td align="right">44.6 %</td></tr>
-<tr><td>MII_PR_Onko_Mamma_Praeoperative_Markierung</td><td align="right">1</td><td align="right">7</td><td align="right">6</td><td align="right">85.7 %</td></tr>
-<tr><td>MII_PR_Onko_Mamma_Rezeptorstatus_Estrogen</td><td align="right">1</td><td align="right">18</td><td align="right">13</td><td align="right">72.2 %</td></tr>
-<tr><td>MII_PR_Onko_Mamma_Rezeptorstatus_Progesteron</td><td align="right">1</td><td align="right">14</td><td align="right">10</td><td align="right">71.4 %</td></tr>
-<tr><td>MII_PR_Onko_Mamma_Sozialdienst</td><td align="right">1</td><td align="right">62</td><td align="right">22</td><td align="right">35.5 %</td></tr>
+<tr><td>MII_PR_Onko_KRK_Abstand_Aboral</td><td align="right">1</td><td align="right">11</td><td align="right">11</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Onko_KRK_Abstand_Anokutan</td><td align="right">1</td><td align="right">11</td><td align="right">11</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Onko_KRK_Abstand_Circumferelle_Resektionsebene</td><td align="right">1</td><td align="right">11</td><td align="right">11</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Onko_KRK_Anastomoseninsuffizienz</td><td align="right">1</td><td align="right">7</td><td align="right">7</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Onko_KRK_MRT_Mesorektale_Faszie</td><td align="right">1</td><td align="right">13</td><td align="right">13</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Onko_KRK_Operation</td><td align="right">1</td><td align="right">63</td><td align="right">60</td><td align="right">95.2 %</td></tr>
+<tr><td>MII_PR_Onko_KRK_Specimen</td><td align="right">1</td><td align="right">7</td><td align="right">7</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Onko_KRK_Stoma_Markierung</td><td align="right">1</td><td align="right">48</td><td align="right">48</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Onko_Liste_Evidenz_Erstdiagnose</td><td align="right">2</td><td align="right">9</td><td align="right">9</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Onko_Mamma_Her2neu_Status</td><td align="right">2</td><td align="right">16</td><td align="right">12</td><td align="right">75.0 %</td></tr>
+<tr><td>MII_PR_Onko_Mamma_Menopausenstatus</td><td align="right">1</td><td align="right">7</td><td align="right">7</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Onko_Mamma_Operation</td><td align="right">1</td><td align="right">64</td><td align="right">64</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Onko_Mamma_Praeoperative_Markierung</td><td align="right">1</td><td align="right">7</td><td align="right">7</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Onko_Mamma_Rezeptorstatus_Estrogen</td><td align="right">1</td><td align="right">18</td><td align="right">14</td><td align="right">77.8 %</td></tr>
+<tr><td>MII_PR_Onko_Mamma_Rezeptorstatus_Progesteron</td><td align="right">1</td><td align="right">14</td><td align="right">11</td><td align="right">78.6 %</td></tr>
+<tr><td>MII_PR_Onko_Mamma_Sozialdienst</td><td align="right">1</td><td align="right">61</td><td align="right">58</td><td align="right">95.1 %</td></tr>
 <tr><td>MII_PR_Onko_Melanom_Breslow_Tiefe</td><td align="right">2</td><td align="right">14</td><td align="right">14</td><td align="right">100.0 %</td></tr>
-<tr><td>MII_PR_Onko_Melanom_Exzision</td><td align="right">1</td><td align="right">62</td><td align="right">22</td><td align="right">35.5 %</td></tr>
-<tr><td>MII_PR_Onko_Melanom_LDH</td><td align="right">2</td><td align="right">16</td><td align="right">15</td><td align="right">93.8 %</td></tr>
+<tr><td>MII_PR_Onko_Melanom_Exzision</td><td align="right">1</td><td align="right">61</td><td align="right">61</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Onko_Melanom_LDH</td><td align="right">2</td><td align="right">16</td><td align="right">16</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_Onko_Melanom_Sicherheitsabstand</td><td align="right">2</td><td align="right">12</td><td align="right">12</td><td align="right">100.0 %</td></tr>
-<tr><td>MII_PR_Onko_Melanom_Ulzeration</td><td align="right">2</td><td align="right">10</td><td align="right">7</td><td align="right">70.0 %</td></tr>
-<tr><td>MII_PR_Onko_Nebenwirkung_Adverse_Event</td><td align="right">2</td><td align="right">25</td><td align="right">20</td><td align="right">80.0 %</td></tr>
-<tr><td>MII_PR_Onko_Operation</td><td align="right">1</td><td align="right">62</td><td align="right">39</td><td align="right">62.9 %</td></tr>
-<tr><td>MII_PR_Onko_Prostata_Anzahl_Positive_Stanzen</td><td align="right">1</td><td align="right">7</td><td align="right">6</td><td align="right">85.7 %</td></tr>
-<tr><td>MII_PR_Onko_Prostata_Anzahl_Stanzen</td><td align="right">1</td><td align="right">7</td><td align="right">6</td><td align="right">85.7 %</td></tr>
-<tr><td>MII_PR_Onko_Prostata_CA_Befall_Stanze</td><td align="right">1</td><td align="right">7</td><td align="right">5</td><td align="right">71.4 %</td></tr>
-<tr><td>MII_PR_Onko_Prostata_Clavien_Dindo</td><td align="right">1</td><td align="right">11</td><td align="right">10</td><td align="right">90.9 %</td></tr>
-<tr><td>MII_PR_Onko_Prostata_Gleason_Grade_Group</td><td align="right">1</td><td align="right">14</td><td align="right">10</td><td align="right">71.4 %</td></tr>
-<tr><td>MII_PR_Onko_Prostata_Gleason_Pattern</td><td align="right">2</td><td align="right">15</td><td align="right">11</td><td align="right">73.3 %</td></tr>
-<tr><td>MII_PR_Onko_Prostata_Gleason_Score_Gesamt</td><td align="right">0</td><td align="right">15</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Onko_Prostata_Operation</td><td align="right">1</td><td align="right">62</td><td align="right">26</td><td align="right">41.9 %</td></tr>
-<tr><td>MII_PR_Onko_Prostata_PSA</td><td align="right">1</td><td align="right">6</td><td align="right">5</td><td align="right">83.3 %</td></tr>
+<tr><td>MII_PR_Onko_Melanom_Ulzeration</td><td align="right">2</td><td align="right">10</td><td align="right">9</td><td align="right">90.0 %</td></tr>
+<tr><td>MII_PR_Onko_Nebenwirkung_Adverse_Event</td><td align="right">2</td><td align="right">25</td><td align="right">21</td><td align="right">84.0 %</td></tr>
+<tr><td>MII_PR_Onko_Operation</td><td align="right">1</td><td align="right">61</td><td align="right">61</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Onko_Prostata_Anzahl_Positive_Stanzen</td><td align="right">1</td><td align="right">7</td><td align="right">7</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Onko_Prostata_Anzahl_Stanzen</td><td align="right">1</td><td align="right">7</td><td align="right">7</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Onko_Prostata_CA_Befall_Stanze</td><td align="right">1</td><td align="right">7</td><td align="right">7</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Onko_Prostata_Clavien_Dindo</td><td align="right">1</td><td align="right">11</td><td align="right">11</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Onko_Prostata_Gleason_Grade_Group</td><td align="right">1</td><td align="right">14</td><td align="right">11</td><td align="right">78.6 %</td></tr>
+<tr><td>MII_PR_Onko_Prostata_Gleason_Pattern</td><td align="right">2</td><td align="right">15</td><td align="right">12</td><td align="right">80.0 %</td></tr>
+<tr><td>MII_PR_Onko_Prostata_Gleason_Score_Gesamt</td><td align="right">1</td><td align="right">15</td><td align="right">15</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Onko_Prostata_Operation</td><td align="right">1</td><td align="right">61</td><td align="right">61</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Onko_Prostata_PSA</td><td align="right">2</td><td align="right">6</td><td align="right">6</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_Onko_Residualstatus</td><td align="right">1</td><td align="right">13</td><td align="right">13</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_Onko_Specimen</td><td align="right">1</td><td align="right">6</td><td align="right">6</td><td align="right">100.0 %</td></tr>
-<tr><td>MII_PR_Onko_Strahlentherapie</td><td align="right">1</td><td align="right">61</td><td align="right">37</td><td align="right">60.7 %</td></tr>
-<tr><td>MII_PR_Onko_Strahlentherapie_Bestrahlung_Nuklearmedizin</td><td align="right">1</td><td align="right">63</td><td align="right">39</td><td align="right">61.9 %</td></tr>
-<tr><td>MII_PR_Onko_Strahlentherapie_Bestrahlung_Strahlentherapie</td><td align="right">1</td><td align="right">63</td><td align="right">39</td><td align="right">61.9 %</td></tr>
-<tr><td>MII_PR_Onko_Studienteilnahme</td><td align="right">2</td><td align="right">10</td><td align="right">9</td><td align="right">90.0 %</td></tr>
-<tr><td>MII_PR_Onko_Systemische_Therapie</td><td align="right">1</td><td align="right">63</td><td align="right">36</td><td align="right">57.1 %</td></tr>
-<tr><td>MII_PR_Onko_Systemische_Therapie_Medikation</td><td align="right">3</td><td align="right">159</td><td align="right">21</td><td align="right">13.2 %</td></tr>
-<tr><td>MII_PR_Onko_TNM_Klassifikation</td><td align="right">1</td><td align="right">13</td><td align="right">13</td><td align="right">100.0 %</td></tr>
-<tr><td>MII_PR_Onko_TNM_Klassifikation_Synthetisiert</td><td align="right">0</td><td align="right">16</td><td align="right">0</td><td align="right">0.0 %</td></tr>
+<tr><td>MII_PR_Onko_Strahlentherapie</td><td align="right">1</td><td align="right">60</td><td align="right">60</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Onko_Strahlentherapie_Bestrahlung_Nuklearmedizin</td><td align="right">1</td><td align="right">62</td><td align="right">59</td><td align="right">95.2 %</td></tr>
+<tr><td>MII_PR_Onko_Strahlentherapie_Bestrahlung_Strahlentherapie</td><td align="right">1</td><td align="right">62</td><td align="right">59</td><td align="right">95.2 %</td></tr>
+<tr><td>MII_PR_Onko_Studienteilnahme</td><td align="right">2</td><td align="right">10</td><td align="right">10</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Onko_Systemische_Therapie</td><td align="right">1</td><td align="right">62</td><td align="right">59</td><td align="right">95.2 %</td></tr>
+<tr><td>MII_PR_Onko_Systemische_Therapie_Medikation</td><td align="right">3</td><td align="right">159</td><td align="right">147</td><td align="right">92.5 %</td></tr>
+<tr><td>MII_PR_Onko_TNM_Klassifikation</td><td align="right">2</td><td align="right">13</td><td align="right">13</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Onko_TNM_Klassifikation_Synthetisiert</td><td align="right">1</td><td align="right">16</td><td align="right">15</td><td align="right">93.8 %</td></tr>
 <tr><td>MII_PR_Onko_TNM_L_Kategorie</td><td align="right">1</td><td align="right">13</td><td align="right">13</td><td align="right">100.0 %</td></tr>
-<tr><td>MII_PR_Onko_TNM_M_Kategorie</td><td align="right">1</td><td align="right">33</td><td align="right">21</td><td align="right">63.6 %</td></tr>
-<tr><td>MII_PR_Onko_TNM_N_Kategorie</td><td align="right">2</td><td align="right">33</td><td align="right">21</td><td align="right">63.6 %</td></tr>
+<tr><td>MII_PR_Onko_TNM_M_Kategorie</td><td align="right">3</td><td align="right">33</td><td align="right">21</td><td align="right">63.6 %</td></tr>
+<tr><td>MII_PR_Onko_TNM_N_Kategorie</td><td align="right">4</td><td align="right">33</td><td align="right">21</td><td align="right">63.6 %</td></tr>
 <tr><td>MII_PR_Onko_TNM_Pn_Kategorie</td><td align="right">1</td><td align="right">14</td><td align="right">14</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_Onko_TNM_S_Kategorie</td><td align="right">1</td><td align="right">13</td><td align="right">13</td><td align="right">100.0 %</td></tr>
-<tr><td>MII_PR_Onko_TNM_T_Kategorie</td><td align="right">1</td><td align="right">31</td><td align="right">18</td><td align="right">58.1 %</td></tr>
+<tr><td>MII_PR_Onko_TNM_T_Kategorie</td><td align="right">4</td><td align="right">31</td><td align="right">18</td><td align="right">58.1 %</td></tr>
 <tr><td>MII_PR_Onko_TNM_V_Kategorie</td><td align="right">1</td><td align="right">13</td><td align="right">13</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_Onko_TNM_a_Symbol</td><td align="right">1</td><td align="right">12</td><td align="right">12</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_Onko_TNM_m_Symbol</td><td align="right">1</td><td align="right">12</td><td align="right">12</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_Onko_TNM_r_Symbol</td><td align="right">1</td><td align="right">12</td><td align="right">12</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_Onko_TNM_y_Symbol</td><td align="right">1</td><td align="right">12</td><td align="right">12</td><td align="right">100.0 %</td></tr>
-<tr><td>MII_PR_Onko_Therapieempfehlung_Kombinationstherapie</td><td align="right">2</td><td align="right">13</td><td align="right">12</td><td align="right">92.3 %</td></tr>
-<tr><td>MII_PR_Onko_Therapieempfehlung_Medikation</td><td align="right">3</td><td align="right">153</td><td align="right">18</td><td align="right">11.8 %</td></tr>
-<tr><td>MII_PR_Onko_Therapieempfehlung_Operation</td><td align="right">1</td><td align="right">10</td><td align="right">9</td><td align="right">90.0 %</td></tr>
+<tr><td>MII_PR_Onko_Therapieempfehlung_Kombinationstherapie</td><td align="right">2</td><td align="right">13</td><td align="right">13</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Onko_Therapieempfehlung_Medikation</td><td align="right">3</td><td align="right">152</td><td align="right">140</td><td align="right">92.1 %</td></tr>
+<tr><td>MII_PR_Onko_Therapieempfehlung_Operation</td><td align="right">1</td><td align="right">10</td><td align="right">10</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_Onko_Tod</td><td align="right">2</td><td align="right">13</td><td align="right">13</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_Onko_Tumorgroesse</td><td align="right">1</td><td align="right">18</td><td align="right">18</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_Onko_Tumorkonferenz</td><td align="right">3</td><td align="right">23</td><td align="right">23</td><td align="right">100.0 %</td></tr>
-<tr><td>MII_PR_Onko_Tumormarker</td><td align="right">0</td><td align="right">69</td><td align="right">0</td><td align="right">0.0 %</td></tr>
+<tr><td>MII_PR_Onko_Tumormarker</td><td align="right">5</td><td align="right">69</td><td align="right">57</td><td align="right">82.6 %</td></tr>
 <tr><td>MII_PR_Onko_Verlauf</td><td align="right">2</td><td align="right">22</td><td align="right">22</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_Onko_Weitere_Klassifikationen</td><td align="right">1</td><td align="right">11</td><td align="right">11</td><td align="right">100.0 %</td></tr>
 </table></details>
-<details><summary><b>patho</b> — 15 Profile, 24/479 MS-Elemente befüllt (5.0 %)</summary>
+<details><summary><b>patho</b> — 15 Profile, 398/479 MS-Elemente befüllt (83.1 %)</summary>
 <table><tr><th>Profil</th><th>Instanzen</th><th>MS-Elemente</th><th>befüllt</th><th>Coverage</th></tr>
 <tr><td>MII_PR_Patho_Active_Problems_List</td><td align="right">1</td><td align="right">7</td><td align="right">7</td><td align="right">100.0 %</td></tr>
-<tr><td>MII_PR_Patho_Additional_Specified_Grouper</td><td align="right">0</td><td align="right">30</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Patho_Attached_Image</td><td align="right">0</td><td align="right">10</td><td align="right">0</td><td align="right">0.0 %</td></tr>
+<tr><td>MII_PR_Patho_Additional_Specified_Grouper</td><td align="right">1</td><td align="right">30</td><td align="right">27</td><td align="right">90.0 %</td></tr>
+<tr><td>MII_PR_Patho_Attached_Image</td><td align="right">2</td><td align="right">10</td><td align="right">10</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_Patho_Bundle</td><td align="right">0</td><td align="right">25</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Patho_Composition</td><td align="right">0</td><td align="right">75</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Patho_Diagnostic_Conclusion_Grouper</td><td align="right">0</td><td align="right">33</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Patho_Finding</td><td align="right">0</td><td align="right">33</td><td align="right">0</td><td align="right">0.0 %</td></tr>
+<tr><td>MII_PR_Patho_Composition</td><td align="right">2</td><td align="right">75</td><td align="right">72</td><td align="right">96.0 %</td></tr>
+<tr><td>MII_PR_Patho_Diagnostic_Conclusion_Grouper</td><td align="right">1</td><td align="right">33</td><td align="right">30</td><td align="right">90.9 %</td></tr>
+<tr><td>MII_PR_Patho_Finding</td><td align="right">38</td><td align="right">33</td><td align="right">32</td><td align="right">97.0 %</td></tr>
 <tr><td>MII_PR_Patho_History_Of_Present_Illness</td><td align="right">1</td><td align="right">7</td><td align="right">7</td><td align="right">100.0 %</td></tr>
-<tr><td>MII_PR_Patho_Intraoperative_Grouper</td><td align="right">0</td><td align="right">30</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Patho_Macroscopic_Grouper</td><td align="right">0</td><td align="right">30</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Patho_Microscopic_Grouper</td><td align="right">0</td><td align="right">30</td><td align="right">0</td><td align="right">0.0 %</td></tr>
+<tr><td>MII_PR_Patho_Intraoperative_Grouper</td><td align="right">1</td><td align="right">30</td><td align="right">27</td><td align="right">90.0 %</td></tr>
+<tr><td>MII_PR_Patho_Macroscopic_Grouper</td><td align="right">1</td><td align="right">30</td><td align="right">27</td><td align="right">90.0 %</td></tr>
+<tr><td>MII_PR_Patho_Microscopic_Grouper</td><td align="right">1</td><td align="right">30</td><td align="right">27</td><td align="right">90.0 %</td></tr>
 <tr><td>MII_PR_Patho_Problem_List_Item</td><td align="right">1</td><td align="right">11</td><td align="right">10</td><td align="right">90.9 %</td></tr>
-<tr><td>MII_PR_Patho_Report</td><td align="right">0</td><td align="right">39</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Patho_Service_Request</td><td align="right">0</td><td align="right">37</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Patho_Specimen</td><td align="right">0</td><td align="right">82</td><td align="right">0</td><td align="right">0.0 %</td></tr>
+<tr><td>MII_PR_Patho_Report</td><td align="right">1</td><td align="right">39</td><td align="right">35</td><td align="right">89.7 %</td></tr>
+<tr><td>MII_PR_Patho_Service_Request</td><td align="right">1</td><td align="right">37</td><td align="right">23</td><td align="right">62.2 %</td></tr>
+<tr><td>MII_PR_Patho_Specimen</td><td align="right">6</td><td align="right">82</td><td align="right">64</td><td align="right">78.0 %</td></tr>
 </table></details>
-<details><summary><b>pros</b> — 23 Profile, 199/346 MS-Elemente befüllt (57.5 %)</summary>
+<details><summary><b>pros</b> — 23 Profile, 287/346 MS-Elemente befüllt (82.9 %)</summary>
 <table><tr><th>Profil</th><th>Instanzen</th><th>MS-Elemente</th><th>befüllt</th><th>Coverage</th></tr>
 <tr><td>MII_PR_PRO_Depression_T_Score</td><td align="right">1</td><td align="right">10</td><td align="right">10</td><td align="right">100.0 %</td></tr>
-<tr><td>MII_PR_PRO_Observation_BDI_II</td><td align="right">1</td><td align="right">14</td><td align="right">13</td><td align="right">92.9 %</td></tr>
-<tr><td>MII_PR_PRO_Observation_EQ5D5L_Index</td><td align="right">1</td><td align="right">15</td><td align="right">13</td><td align="right">86.7 %</td></tr>
-<tr><td>MII_PR_PRO_Observation_EQ5D5L_Profile</td><td align="right">1</td><td align="right">13</td><td align="right">12</td><td align="right">92.3 %</td></tr>
-<tr><td>MII_PR_PRO_Observation_EQ5D5L_VAS</td><td align="right">1</td><td align="right">14</td><td align="right">13</td><td align="right">92.9 %</td></tr>
-<tr><td>MII_PR_PRO_Observation_PHQ_15</td><td align="right">0</td><td align="right">14</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_PRO_Observation_PHQ_9</td><td align="right">0</td><td align="right">14</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_PRO_Observation_WHODAS_12</td><td align="right">0</td><td align="right">15</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_PRO_PROMIS_29_Anxiety_TScore</td><td align="right">1</td><td align="right">14</td><td align="right">13</td><td align="right">92.9 %</td></tr>
-<tr><td>MII_PR_PRO_PROMIS_29_Depression_TScore</td><td align="right">1</td><td align="right">14</td><td align="right">9</td><td align="right">64.3 %</td></tr>
-<tr><td>MII_PR_PRO_PROMIS_29_Fatigue_TScore</td><td align="right">1</td><td align="right">14</td><td align="right">9</td><td align="right">64.3 %</td></tr>
-<tr><td>MII_PR_PRO_PROMIS_29_Pain_Intensity</td><td align="right">1</td><td align="right">14</td><td align="right">10</td><td align="right">71.4 %</td></tr>
-<tr><td>MII_PR_PRO_PROMIS_29_Pain_Interference_TScore</td><td align="right">1</td><td align="right">14</td><td align="right">9</td><td align="right">64.3 %</td></tr>
-<tr><td>MII_PR_PRO_PROMIS_29_Physical_Function_TScore</td><td align="right">1</td><td align="right">14</td><td align="right">9</td><td align="right">64.3 %</td></tr>
-<tr><td>MII_PR_PRO_PROMIS_29_Sleep_Disturbance_TScore</td><td align="right">1</td><td align="right">14</td><td align="right">9</td><td align="right">64.3 %</td></tr>
-<tr><td>MII_PR_PRO_PROMIS_29_Social_Function_TScore</td><td align="right">1</td><td align="right">14</td><td align="right">9</td><td align="right">64.3 %</td></tr>
-<tr><td>MII_PR_PRO_PROMIS_Cognitive_Function_SF4a_Raw_Score</td><td align="right">1</td><td align="right">15</td><td align="right">14</td><td align="right">93.3 %</td></tr>
-<tr><td>MII_PR_PRO_PROMIS_Cognitive_Function_SF4a_TScore</td><td align="right">1</td><td align="right">14</td><td align="right">13</td><td align="right">92.9 %</td></tr>
+<tr><td>MII_PR_PRO_Observation_BDI_II</td><td align="right">1</td><td align="right">14</td><td align="right">14</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_PRO_Observation_EQ5D5L_Index</td><td align="right">1</td><td align="right">15</td><td align="right">14</td><td align="right">93.3 %</td></tr>
+<tr><td>MII_PR_PRO_Observation_EQ5D5L_Profile</td><td align="right">1</td><td align="right">13</td><td align="right">13</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_PRO_Observation_EQ5D5L_VAS</td><td align="right">1</td><td align="right">14</td><td align="right">14</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_PRO_Observation_PHQ_15</td><td align="right">1</td><td align="right">14</td><td align="right">14</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_PRO_Observation_PHQ_9</td><td align="right">1</td><td align="right">14</td><td align="right">14</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_PRO_Observation_WHODAS_12</td><td align="right">1</td><td align="right">15</td><td align="right">15</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_PRO_PROMIS_29_Anxiety_TScore</td><td align="right">1</td><td align="right">14</td><td align="right">14</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_PRO_PROMIS_29_Depression_TScore</td><td align="right">1</td><td align="right">14</td><td align="right">14</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_PRO_PROMIS_29_Fatigue_TScore</td><td align="right">1</td><td align="right">14</td><td align="right">14</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_PRO_PROMIS_29_Pain_Intensity</td><td align="right">1</td><td align="right">14</td><td align="right">14</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_PRO_PROMIS_29_Pain_Interference_TScore</td><td align="right">1</td><td align="right">14</td><td align="right">14</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_PRO_PROMIS_29_Physical_Function_TScore</td><td align="right">1</td><td align="right">14</td><td align="right">14</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_PRO_PROMIS_29_Sleep_Disturbance_TScore</td><td align="right">1</td><td align="right">14</td><td align="right">14</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_PRO_PROMIS_29_Social_Function_TScore</td><td align="right">1</td><td align="right">14</td><td align="right">14</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_PRO_PROMIS_Cognitive_Function_SF4a_Raw_Score</td><td align="right">1</td><td align="right">15</td><td align="right">15</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_PRO_PROMIS_Cognitive_Function_SF4a_TScore</td><td align="right">1</td><td align="right">14</td><td align="right">14</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_PRO_PROMIS_Depression_SF4a_Raw_Score</td><td align="right">1</td><td align="right">10</td><td align="right">10</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_PRO_Questionnaire</td><td align="right">0</td><td align="right">31</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_PRO_QuestionnaireResponse</td><td align="right">2</td><td align="right">19</td><td align="right">11</td><td align="right">57.9 %</td></tr>
+<tr><td>MII_PR_PRO_QuestionnaireResponse</td><td align="right">5</td><td align="right">19</td><td align="right">15</td><td align="right">78.9 %</td></tr>
 <tr><td>MII_PR_PRO_Score_Blueprint</td><td align="right">0</td><td align="right">23</td><td align="right">0</td><td align="right">0.0 %</td></tr>
 <tr><td>MII_PR_PRO_Score_Instance</td><td align="right">1</td><td align="right">13</td><td align="right">13</td><td align="right">100.0 %</td></tr>
 </table></details>
-<details><summary><b>seltene</b> — 23 Profile, 299/618 MS-Elemente befüllt (48.4 %)</summary>
+<details><summary><b>seltene</b> — 23 Profile, 568/618 MS-Elemente befüllt (91.9 %)</summary>
 <table><tr><th>Profil</th><th>Instanzen</th><th>MS-Elemente</th><th>befüllt</th><th>Coverage</th></tr>
 <tr><td>MII_PR_Seltene_Blutgruppe</td><td align="right">1</td><td align="right">19</td><td align="right">18</td><td align="right">94.7 %</td></tr>
 <tr><td>MII_PR_Seltene_Bodymassindex</td><td align="right">1</td><td align="right">5</td><td align="right">5</td><td align="right">100.0 %</td></tr>
-<tr><td>MII_PR_Seltene_ClinicalDiagnosis</td><td align="right">1</td><td align="right">92</td><td align="right">53</td><td align="right">57.6 %</td></tr>
+<tr><td>MII_PR_Seltene_ClinicalDiagnosis</td><td align="right">2</td><td align="right">92</td><td align="right">87</td><td align="right">94.6 %</td></tr>
 <tr><td>MII_PR_Seltene_ClinicalImpression</td><td align="right">1</td><td align="right">17</td><td align="right">17</td><td align="right">100.0 %</td></tr>
-<tr><td>MII_PR_Seltene_Consanguinity</td><td align="right">0</td><td align="right">13</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Seltene_Familienanamnese</td><td align="right">2</td><td align="right">49</td><td align="right">25</td><td align="right">51.0 %</td></tr>
-<tr><td>MII_PR_Seltene_Geburtsgewicht</td><td align="right">0</td><td align="right">11</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Seltene_Geburtslaenge</td><td align="right">0</td><td align="right">11</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Seltene_GeneticDiagnosis</td><td align="right">1</td><td align="right">92</td><td align="right">43</td><td align="right">46.7 %</td></tr>
-<tr><td>MII_PR_Seltene_Gestationsalter</td><td align="right">0</td><td align="right">10</td><td align="right">0</td><td align="right">0.0 %</td></tr>
+<tr><td>MII_PR_Seltene_Consanguinity</td><td align="right">1</td><td align="right">13</td><td align="right">12</td><td align="right">92.3 %</td></tr>
+<tr><td>MII_PR_Seltene_Familienanamnese</td><td align="right">3</td><td align="right">49</td><td align="right">40</td><td align="right">81.6 %</td></tr>
+<tr><td>MII_PR_Seltene_Geburtsgewicht</td><td align="right">1</td><td align="right">11</td><td align="right">10</td><td align="right">90.9 %</td></tr>
+<tr><td>MII_PR_Seltene_Geburtslaenge</td><td align="right">1</td><td align="right">11</td><td align="right">10</td><td align="right">90.9 %</td></tr>
+<tr><td>MII_PR_Seltene_GeneticDiagnosis</td><td align="right">2</td><td align="right">92</td><td align="right">88</td><td align="right">95.7 %</td></tr>
+<tr><td>MII_PR_Seltene_Gestationsalter</td><td align="right">1</td><td align="right">10</td><td align="right">10</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_Seltene_HPO_Assessment</td><td align="right">4</td><td align="right">17</td><td align="right">10</td><td align="right">58.8 %</td></tr>
 <tr><td>MII_PR_Seltene_Hueftumfang</td><td align="right">1</td><td align="right">6</td><td align="right">6</td><td align="right">100.0 %</td></tr>
-<tr><td>MII_PR_Seltene_ICFAssessment</td><td align="right">0</td><td align="right">21</td><td align="right">0</td><td align="right">0.0 %</td></tr>
+<tr><td>MII_PR_Seltene_ICFAssessment</td><td align="right">1</td><td align="right">21</td><td align="right">12</td><td align="right">57.1 %</td></tr>
 <tr><td>MII_PR_Seltene_Kopfumfang</td><td align="right">1</td><td align="right">0</td><td align="right">0</td><td align="right">–</td></tr>
-<tr><td>MII_PR_Seltene_Registerteilnahme</td><td align="right">0</td><td align="right">8</td><td align="right">0</td><td align="right">0.0 %</td></tr>
+<tr><td>MII_PR_Seltene_Registerteilnahme</td><td align="right">1</td><td align="right">8</td><td align="right">8</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_Seltene_Studieneinschluss_Anfrage</td><td align="right">1</td><td align="right">10</td><td align="right">10</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_Seltene_Symptom_Condition</td><td align="right">2</td><td align="right">26</td><td align="right">26</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_Seltene_Taillenumfang</td><td align="right">1</td><td align="right">6</td><td align="right">6</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_Seltene_TherapieDurchgefuehrt</td><td align="right">2</td><td align="right">8</td><td align="right">8</td><td align="right">100.0 %</td></tr>
-<tr><td>MII_PR_Seltene_Therapieempfehlung</td><td align="right">1</td><td align="right">156</td><td align="right">31</td><td align="right">19.9 %</td></tr>
+<tr><td>MII_PR_Seltene_Therapieempfehlung</td><td align="right">1</td><td align="right">156</td><td align="right">144</td><td align="right">92.3 %</td></tr>
 <tr><td>MII_PR_Seltene_TherapieempfehlungNichtMedikamentoes</td><td align="right">1</td><td align="right">22</td><td align="right">22</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_Seltene_Therapieempfehlung_Kombination</td><td align="right">1</td><td align="right">7</td><td align="right">7</td><td align="right">100.0 %</td></tr>
 <tr><td>MII_PR_Seltene_Therapieplan</td><td align="right">1</td><td align="right">12</td><td align="right">12</td><td align="right">100.0 %</td></tr>
 </table></details>
-<details><summary><b>soziodemographie</b> — 15 Profile, 0/153 MS-Elemente befüllt (0.0 %)</summary>
+<details><summary><b>soziodemographie</b> — 15 Profile, 144/153 MS-Elemente befüllt (94.1 %)</summary>
 <table><tr><th>Profil</th><th>Instanzen</th><th>MS-Elemente</th><th>befüllt</th><th>Coverage</th></tr>
-<tr><td>MII_PR_SDD_Ausbildung</td><td align="right">0</td><td align="right">8</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_SDD_Berufliche_Stellung</td><td align="right">0</td><td align="right">13</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_SDD_Beschaeftigungsstatus</td><td align="right">0</td><td align="right">14</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_SDD_Betreuungssituation</td><td align="right">0</td><td align="right">10</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_SDD_Datenerhebung</td><td align="right">0</td><td align="right">26</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_SDD_Einkommen</td><td align="right">0</td><td align="right">7</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_SDD_Geburtsland_Mutter</td><td align="right">0</td><td align="right">7</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_SDD_Geburtsland_Vater</td><td align="right">0</td><td align="right">7</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_SDD_Haushaltsgroesse</td><td align="right">0</td><td align="right">9</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_SDD_Partnerschaft</td><td align="right">0</td><td align="right">9</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_SDD_Schulabschluss</td><td align="right">0</td><td align="right">8</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_SDD_Schuljahre</td><td align="right">0</td><td align="right">8</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_SDD_Schwerbehindertenausweis</td><td align="right">0</td><td align="right">13</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_SDD_SoziooekonomischeFaktoren</td><td align="right">0</td><td align="right">5</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_SDD_Vertrauensperson</td><td align="right">0</td><td align="right">9</td><td align="right">0</td><td align="right">0.0 %</td></tr>
+<tr><td>MII_PR_SDD_Ausbildung</td><td align="right">1</td><td align="right">8</td><td align="right">8</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_SDD_Berufliche_Stellung</td><td align="right">2</td><td align="right">13</td><td align="right">13</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_SDD_Beschaeftigungsstatus</td><td align="right">2</td><td align="right">14</td><td align="right">14</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_SDD_Betreuungssituation</td><td align="right">1</td><td align="right">10</td><td align="right">9</td><td align="right">90.0 %</td></tr>
+<tr><td>MII_PR_SDD_Datenerhebung</td><td align="right">1</td><td align="right">26</td><td align="right">26</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_SDD_Einkommen</td><td align="right">1</td><td align="right">7</td><td align="right">7</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_SDD_Geburtsland_Mutter</td><td align="right">1</td><td align="right">7</td><td align="right">7</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_SDD_Geburtsland_Vater</td><td align="right">1</td><td align="right">7</td><td align="right">7</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_SDD_Haushaltsgroesse</td><td align="right">1</td><td align="right">9</td><td align="right">8</td><td align="right">88.9 %</td></tr>
+<tr><td>MII_PR_SDD_Partnerschaft</td><td align="right">1</td><td align="right">9</td><td align="right">8</td><td align="right">88.9 %</td></tr>
+<tr><td>MII_PR_SDD_Schulabschluss</td><td align="right">1</td><td align="right">8</td><td align="right">8</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_SDD_Schuljahre</td><td align="right">1</td><td align="right">8</td><td align="right">8</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_SDD_Schwerbehindertenausweis</td><td align="right">3</td><td align="right">13</td><td align="right">8</td><td align="right">61.5 %</td></tr>
+<tr><td>MII_PR_SDD_SoziooekonomischeFaktoren</td><td align="right">1</td><td align="right">5</td><td align="right">5</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_SDD_Vertrauensperson</td><td align="right">1</td><td align="right">9</td><td align="right">8</td><td align="right">88.9 %</td></tr>
 </table></details>
-<details><summary><b>studie</b> — 7 Profile, 8/79 MS-Elemente befüllt (10.1 %)</summary>
+<details><summary><b>studie</b> — 7 Profile, 75/79 MS-Elemente befüllt (94.9 %)</summary>
 <table><tr><th>Profil</th><th>Instanzen</th><th>MS-Elemente</th><th>befüllt</th><th>Coverage</th></tr>
-<tr><td>MII_PR_Studie_Beteiligte_Person</td><td align="right">1</td><td align="right">4</td><td align="right">3</td><td align="right">75.0 %</td></tr>
-<tr><td>MII_PR_Studie_Dokument</td><td align="right">0</td><td align="right">11</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Studie_EinAuschlussKriterium</td><td align="right">0</td><td align="right">11</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Studie_Proband</td><td align="right">0</td><td align="right">15</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Studie_Register</td><td align="right">0</td><td align="right">8</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Studie_Studie</td><td align="right">0</td><td align="right">22</td><td align="right">0</td><td align="right">0.0 %</td></tr>
-<tr><td>MII_PR_Studie_Studieneinschluss_Anfrage</td><td align="right">1</td><td align="right">8</td><td align="right">5</td><td align="right">62.5 %</td></tr>
+<tr><td>MII_PR_Studie_Beteiligte_Person</td><td align="right">1</td><td align="right">4</td><td align="right">4</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Studie_Dokument</td><td align="right">1</td><td align="right">11</td><td align="right">11</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Studie_EinAuschlussKriterium</td><td align="right">1</td><td align="right">11</td><td align="right">11</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Studie_Proband</td><td align="right">1</td><td align="right">15</td><td align="right">11</td><td align="right">73.3 %</td></tr>
+<tr><td>MII_PR_Studie_Register</td><td align="right">1</td><td align="right">8</td><td align="right">8</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Studie_Studie</td><td align="right">1</td><td align="right">22</td><td align="right">22</td><td align="right">100.0 %</td></tr>
+<tr><td>MII_PR_Studie_Studieneinschluss_Anfrage</td><td align="right">1</td><td align="right">8</td><td align="right">8</td><td align="right">100.0 %</td></tr>
 </table></details>
 <details><summary><b>symptom</b> — 0 Profile, 0/0 MS-Elemente befüllt (–)</summary>
 <table><tr><th>Profil</th><th>Instanzen</th><th>MS-Elemente</th><th>befüllt</th><th>Coverage</th></tr>
 </table></details>
 
-<small>Stand: 2026-09-22 · Testdaten: [mii-testdata v2026.0.0-rc.1](https://github.com/medizininformatik-initiative/mii-testdata/releases/tag/v2026.0.0-rc.1) (640 Instanzen) · gemessen gegen die BOM-Pins · generiert mit <code>scripts/testdata-coverage.py</code></small>
+<small>Stand: 2026-09-23 · Testdaten: [mii-testdata](https://github.com/medizininformatik-initiative/mii-testdata), Branch `main` (1072 Instanzen) — das jüngste publizierte Release ist noch die 2026er Linie · gemessen gegen die BOM-Pins · generiert mit <code>scripts/testdata-coverage.py</code></small>
 <!-- TESTDATA-COVERAGE:END -->
 
 Die Detail-Auswertung (unbedeckte Element-IDs je Profil) liefert
-[`ms-coverage.py`](https://github.com/medizininformatik-initiative/mii-testdata/pull/46)
+[`scripts/ms-coverage.py`](https://github.com/medizininformatik-initiative/mii-testdata/blob/main/scripts/ms-coverage.py)
 im mii-testdata-Repo; die Schichten-Definition steht in
 [PR #45](https://github.com/medizininformatik-initiative/mii-testdata/pull/45).
