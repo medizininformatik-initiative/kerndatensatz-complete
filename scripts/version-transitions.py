@@ -23,6 +23,9 @@ MII_PREFIX = "de.medizininformatikinitiative.kerndatensatz."
 PAGE = os.path.join(ROOT, "input", "pagecontent", "versionierung.md")
 MARK_START = "<!-- VERSION-TRANSITIONS:START -->"
 MARK_END = "<!-- VERSION-TRANSITIONS:END -->"
+PAGE_MIG = os.path.join(ROOT, "input", "pagecontent", "migration.md")
+MARK2_START = "<!-- BREAKING-LIST:START -->"
+MARK2_END = "<!-- BREAKING-LIST:END -->"
 EXPLORER = "https://medizininformatik-initiative.github.io/mii-kerndatensatz-versionhistory/"
 
 
@@ -97,6 +100,41 @@ def main():
             sys.exit(f"Marker {MARK_START} fehlt in {PAGE}.")
         open(PAGE, "w", encoding="utf-8").write(pattern.sub(lambda _: block, text))
         print(f"\n{PAGE} aktualisiert.")
+
+        # Breaking-Liste auf der Migrationsseite
+        brk = [r for r in rows if r["has_breaking"] in ("True", "true", "1")
+               and r["to_version"] == pins.get(r["package_short"], "")]
+        by_mod = {}
+        for r in brk:
+            by_mod.setdefault(r["package_short"], []).append(r)
+        md2 = []
+        for mod in sorted(by_mod):
+            items = by_mod[mod]
+            md2.append(f'<details><summary><b>{mod}</b> — {len(items)} Profile mit '
+                       f'Breaking-Änderungen</summary>')
+            md2.append('<table><tr><th>Profil</th><th>Übergang</th>'
+                       '<th>entfernte Elemente</th></tr>')
+            for r in sorted(items, key=lambda x: x["profile_name"]):
+                rem = [e for e in (r.get("elements_removed") or "").split("|") if e]
+                shown = ", ".join(f"<code>{e}</code>" for e in rem[:8])
+                if len(rem) > 8:
+                    shown += f" … +{len(rem) - 8} weitere"
+                if not rem:
+                    shown = ("<i>inkompatible Änderung ohne entfernte Elemente "
+                             "(Kardinalität/Typ/Binding — siehe Explorer)</i>")
+                md2.append(f'<tr><td>{r["profile_name"]}</td>'
+                           f'<td><code>{r["from_version"]}</code> → <code>{r["to_version"]}</code></td>'
+                           f'<td>{shown}</td></tr>')
+            md2.append("</table></details>")
+        block2 = "\n".join([MARK2_START, "", *md2, "",
+                            f"<small>{len(brk)} Breaking-Übergänge · Stand: {stamp} · "
+                            "generiert mit <code>scripts/version-transitions.py</code></small>",
+                            MARK2_END])
+        text2 = open(PAGE_MIG, encoding="utf-8").read()
+        pat2 = re.compile(re.escape(MARK2_START) + ".*?" + re.escape(MARK2_END), re.S)
+        if pat2.search(text2):
+            open(PAGE_MIG, "w", encoding="utf-8").write(pat2.sub(lambda _: block2, text2))
+            print(f"{PAGE_MIG} aktualisiert ({len(brk)} Breaking-Übergänge).")
     return 0
 
 
