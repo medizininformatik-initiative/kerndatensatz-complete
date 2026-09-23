@@ -12,8 +12,9 @@ Die Module dieser BOM durchlaufen die Ballotierung über das
 - **Kommentierungszeitraum**: wird von HL7 Deutschland über das Portal und den
   [Newsletter](https://hl7.de/category/news/) angekündigt.
   <!-- TODO: exakten Zeitraum der KDS-2027-Runde eintragen, sobald bekannt -->
- Die Ballot-Tickets werden dort im
-Jira-Projekt [HDB — HL7 Deutschland Ballotierung](https://hl7germany.atlassian.net/browse/HDB)
+
+Die Ballot-Tickets werden im Jira-Projekt
+[HDB — HL7 Deutschland Ballotierung](https://hl7germany.atlassian.net/browse/HDB)
 geführt. **Alle Links auf dieser Seite benötigen einen im Portal angemeldeten Account mit
 Zugriff auf das Projekt HDB** — die Ballotprojekte sind nicht anonym lesbar, und ohne
 Projektzugriff meldet Jira irreführend „Der Wert 'HDB' existiert nicht für das Feld
