@@ -3,7 +3,7 @@ MIIKerndatensatzComplete : Validation Results
 
 err = 23, warn = 424, info = 11
 IG Publisher Version: 2.3.4
-Generated Wed Sep 23 10:06:49 UTC 2026. FHIR version 4.0.1 for de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19 (canonical = https://www.medizininformatik-initiative.de/fhir/core/complete)
+Generated Wed Sep 23 14:49:39 UTC 2026. FHIR version 4.0.1 for de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19 (canonical = https://www.medizininformatik-initiative.de/fhir/core/complete)
  Build Errors : 1 / 12 / 0
  /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/fsh-generated/resources/ImplementationGuide-de.medizininformatikinitiative.kerndatensatz.complete : 3 / 17 / 3
  /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/input/resources/CapabilityStatement-mii-cps-kerndatensatz-complete : 19 / 383 / 4
@@ -21,7 +21,7 @@ WARNING: /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/output/
 WARNING: /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/output/de/migration.html: Illegal HTML: illegal html element: small (Generiert mit scripts/migration-viz.py. Grau = kein
 Handlungsbedarf, Blau = nur Erweiterungen, Orange = breaking, Rot =
 Canonical-Abriss. Sortiert nach Handlungsbedarf.)
-WARNING: /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/output/de/testabdeckung.html: Illegal HTML: illegal html element: small (Stand: 2026-09-22 · Testdaten: mii-testdata v2026.0.0-rc.1 (640 Instanzen) · gemessen gegen die BOM-Pins · generiert mit scripts/testdata-coverage.py)
+WARNING: /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/output/de/testabdeckung.html: Illegal HTML: illegal html element: small (Stand: 2026-09-23 · Testdaten: mii-testdata, Branch main (1072 Instanzen) — das jüngste publizierte Release ist noch die 2026er Linie · gemessen gegen die BOM-Pins · generiert mit scripts/testdata-coverage.py)
 WARNING: /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/output/de/versionierung.html: Illegal HTML: illegal html element: small (*identisch = strukturgleich oder nur Canonical-Metadaten geändert. Übergänge = Profile mit durchgehender Canonical von der letzten Vorversion zur gepinnten Version; Canonical-Abrisse (beendete URLs, meist Umbenennungen) erscheinen nicht als Übergang — siehe Abschnitt Canonical-Kontinuität. Stand: 2026-09-23 · generiert mit scripts/version-transitions.py aus dem Version-History-Explorer-Datensatz)
 WARNING: 1: The HTML fragment 'ip-statements.xhtml' is not included anywhere in the produced implementation guide
 WARNING: 2: An HTML fragment from the set [cross-version-analysis.xhtml, cross-version-analysis-inline.xhtml] is not included anywhere in the produced implementation guide

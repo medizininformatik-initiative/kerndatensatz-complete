@@ -10,7 +10,7 @@ Generic: line 0, col 0, Warning - Illegal HTML: illegal html element: small (Aut
 Generic: line 0, col 0, Warning - Illegal HTML: illegal html element: small (Generiert mit scripts/migration-viz.py. Grau = kein
 Handlungsbedarf, Blau = nur Erweiterungen, Orange = breaking, Rot =
 Canonical-Abriss. Sortiert nach Handlungsbedarf.) (INVALID)
-Generic: line 0, col 0, Warning - Illegal HTML: illegal html element: small (Stand: 2026-09-22 · Testdaten: mii-testdata v2026.0.0-rc.1 (640 Instanzen) · gemessen gegen die BOM-Pins · generiert mit scripts/testdata-coverage.py) (INVALID)
+Generic: line 0, col 0, Warning - Illegal HTML: illegal html element: small (Stand: 2026-09-23 · Testdaten: mii-testdata, Branch main (1072 Instanzen) — das jüngste publizierte Release ist noch die 2026er Linie · gemessen gegen die BOM-Pins · generiert mit scripts/testdata-coverage.py) (INVALID)
 Generic: line 0, col 0, Warning - Illegal HTML: illegal html element: small (*identisch = strukturgleich oder nur Canonical-Metadaten geändert. Übergänge = Profile mit durchgehender Canonical von der letzten Vorversion zur gepinnten Version; Canonical-Abrisse (beendete URLs, meist Umbenennungen) erscheinen nicht als Übergang — siehe Abschnitt Canonical-Kontinuität. Stand: 2026-09-23 · generiert mit scripts/version-transitions.py aus dem Version-History-Explorer-Datensatz) (INVALID)
 Generic: line 0, col 0, Warning - The HTML fragment 'ip-statements.xhtml' is not included anywhere in the produced implementation guide (NOTFOUND)
 Generic: line 0, col 0, Warning - An HTML fragment from the set [cross-version-analysis.xhtml, cross-version-analysis-inline.xhtml] is not included anywhere in the produced implementation guide (NOTFOUND)

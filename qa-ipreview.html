@@ -113,7 +113,7 @@ MII Kerndatensatz Complete - Local Development build (v2027.0.0-ballot.19) built
 .  
           Package de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19 basiert auf           <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>
 .
-          Erstellt           <span title="Wed, Sep 23, 2026 10:03+0000">2026-09-23</span>
+          Erstellt           <span title="Wed, Sep 23, 2026 14:46+0000">2026-09-23</span>
 
                     <br/>
 
@@ -2179,15 +2179,15 @@ befüllt werden.
           <a href="de/testabdeckung.html">web</a>
         </td>
         <td>
-          <a href="https://github.com/medizininformatik-initiative/mii-testdata/releases">github.com</a>
+          <a href="https://medizininformatik-initiative.github.io/mii-testdata/testabdeckung.html">medizininformatik-initiative.github.io</a>
         </td>
         <td>
-Gemessen werden die Instanzen des jüngsten
-          <a href="https://github.com/medizininformatik-initiative/mii-testdata/releases">mii-testdata-Releases</a>
+Was in den verbleibenden Lücken steckt, ist auf der
+          <a href="https://medizininformatik-initiative.github.io/mii-testdata/testabdeckung.html">Testabdeckung-Seite der Testdaten</a>
 
-gegen die           <strong>in dieser BOM gepinnten Profilversionen</strong>
-. Eine niedrige Zahl hat dabei
-drei mögliche Ursachen, die die Tabelle nicht unterscheidet:
+nach vier Kategorien aufgeschlüsselt: Upstream-Widersprüche (Profile, bei denen ein
+MS-Element strukturell unerfüllbar ist), fachlich bewusst ausgelassene Elemente,
+nicht verifizierbare Terminologie und Messgrenzen der Heuristik.
         </td>
       </tr>
       <tr>
@@ -2195,11 +2195,17 @@ drei mögliche Ursachen, die die Tabelle nicht unterscheidet:
           <a href="de/testabdeckung.html">web</a>
         </td>
         <td>
-          <a href="https://github.com/medizininformatik-initiative/mii-testdata/releases/tag/v2026.0.0-rc.1">github.com</a>
+          <a href="https://github.com/medizininformatik-initiative/mii-testdata/blob/main/docs/ballot-findings-2027.md">github.com</a>
         </td>
         <td>
-Stand: 2026-09-22 · Testdaten:           <a href="https://github.com/medizininformatik-initiative/mii-testdata/releases/tag/v2026.0.0-rc.1">mii-testdata v2026.0.0-rc.1</a>
- (640 Instanzen) · gemessen gegen die BOM-Pins · generiert mit           <code>scripts/testdata-coverage.py</code>
+Nicht in den Nenner gehen           <strong>unerreichbare Must-Support-Slices</strong>
+: Schränkt ein Profil
+eine           <code class="language-plaintext highlighter-rouge">[x]</code>
+-Choice auf einen Typ ein, bleiben die geerbten Slices der anderen Typen samt
+MS-Flag im Snapshot stehen, obwohl keine konforme Instanz sie befüllen kann (betrifft
+vor allem die Mikrobiologie). Details in den
+          <a href="https://github.com/medizininformatik-initiative/mii-testdata/blob/main/docs/ballot-findings-2027.md">Ballot-Findings</a>
+.
         </td>
       </tr>
       <tr>
@@ -2207,12 +2213,25 @@ Stand: 2026-09-22 · Testdaten:           <a href="https://github.com/medizininf
           <a href="de/testabdeckung.html">web</a>
         </td>
         <td>
-          <a href="https://github.com/medizininformatik-initiative/mii-testdata/pull/46">github.com</a>
+          <a href="https://github.com/medizininformatik-initiative/mii-testdata">github.com</a>
+        </td>
+        <td>
+Stand: 2026-09-23 · Testdaten:           <a href="https://github.com/medizininformatik-initiative/mii-testdata">mii-testdata</a>
+, Branch           <code class="language-plaintext highlighter-rouge">main</code>
+ (1072 Instanzen) — das jüngste publizierte Release ist noch die 2026er Linie · gemessen gegen die BOM-Pins · generiert mit           <code>scripts/testdata-coverage.py</code>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="de/testabdeckung.html">web</a>
+        </td>
+        <td>
+          <a href="https://github.com/medizininformatik-initiative/mii-testdata/blob/main/scripts/ms-coverage.py">github.com</a>
         </td>
         <td>
 Die Detail-Auswertung (unbedeckte Element-IDs je Profil) liefert
-          <a href="https://github.com/medizininformatik-initiative/mii-testdata/pull/46">
-<code class="language-plaintext highlighter-rouge">ms-coverage.py</code>          </a>
+          <a href="https://github.com/medizininformatik-initiative/mii-testdata/blob/main/scripts/ms-coverage.py">
+<code class="language-plaintext highlighter-rouge">scripts/ms-coverage.py</code>          </a>
 
 im mii-testdata-Repo; die Schichten-Definition steht in
           <a href="https://github.com/medizininformatik-initiative/mii-testdata/pull/45">PR #45</a>
@@ -2228,8 +2247,8 @@ im mii-testdata-Repo; die Schichten-Definition steht in
         </td>
         <td>
 Die Detail-Auswertung (unbedeckte Element-IDs je Profil) liefert
-          <a href="https://github.com/medizininformatik-initiative/mii-testdata/pull/46">
-<code class="language-plaintext highlighter-rouge">ms-coverage.py</code>          </a>
+          <a href="https://github.com/medizininformatik-initiative/mii-testdata/blob/main/scripts/ms-coverage.py">
+<code class="language-plaintext highlighter-rouge">scripts/ms-coverage.py</code>          </a>
 
 im mii-testdata-Repo; die Schichten-Definition steht in
           <a href="https://github.com/medizininformatik-initiative/mii-testdata/pull/45">PR #45</a>
