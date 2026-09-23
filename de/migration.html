@@ -353,11 +353,35 @@ restrukturiert, ein reines URL-Mapping genügt nicht.</li>
 (Composition-Vergleich; inhaltliche VS-Änderungen bei gleichbleibender URL
 sind hier ausdrücklich <em>nicht</em> erfasst — siehe <a href="versionierung.html">Versionierung → Abgrenzung</a>).</p>
 
-<p><strong>Maschinell nutzbar</strong> sind beide Mappings als ConceptMaps im URI-System
+<p><strong>Sonderfall ICU ↔ ISiK 6 (Governance-Übergang):</strong> Ein großer Teil der
+ICU-Profillandschaft wird in <strong>ISiK 6</strong> unter gematik-Canonical weitergeführt —
+das ISiK-6-Package bettet 83 MII-benannte Profile physisch ein
+(<code class="language-plaintext highlighter-rouge">https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-…</code>). Die Aufteilung:</p>
+
+<ul>
+  <li><strong>29 Profile in Doppel-Governance</strong> (existieren in MII ICU <code class="language-plaintext highlighter-rouge">ballot.3</code> <em>und</em> ISiK 6),</li>
+  <li><strong>49 nach ISiK übergegangen</strong> (waren in einer MII-ICU-Version, fehlen in <code class="language-plaintext highlighter-rouge">ballot.3</code>),</li>
+  <li><strong>4 direkt in ISiK ausspezifiziert</strong>, ohne je in MII ICU publiziert zu sein —
+diese sind im Ballot <strong>mitzukommentieren</strong>: <code class="language-plaintext highlighter-rouge">SD_MII_ICU_Koerpergroesse_Percentil_Altersabhaengig</code>,
+<code class="language-plaintext highlighter-rouge">SD_MII_ICU_Koerperkerntemperatur_Stirn</code>, <code class="language-plaintext highlighter-rouge">SD_MII_ICU_Koerpertemperatur_Oral</code>,
+<code class="language-plaintext highlighter-rouge">SD_MII_ICU_Sonstige_Pulsatile_Druecke_Generisch</code>
+(dazu bettet ISiK 6 das Basismodul-Profil <code class="language-plaintext highlighter-rouge">MII_PR_Prozedur_Procedure</code> ein).</li>
+</ul>
+
+<p><strong>Wichtig:</strong> Die Zuordnung betrifft <strong>nur die URLs</strong> — sie ist keine
+Konformitätsaussage. Nur 4 der übernommenen Profile sind strukturell identisch
+mit ihrem letzten MII-Stand; die ISiK-Fassungen sind überwiegend
+ausspezifiziert (Struktur-Ähnlichkeit je Profil in der
+<a href="https://github.com/medizininformatik-initiative/mii-kerndatensatz-versionhistory/blob/main/data/icu-isik-governance.csv">Governance-Tabelle</a>).
+Eine Instanz, die gegen das MII-Profil valide ist, ist es gegen das
+ISiK-Pendant nicht automatisch.</p>
+
+<p><strong>Maschinell nutzbar</strong> sind alle drei Mappings als ConceptMaps im URI-System
 <code class="language-plaintext highlighter-rouge">urn:ietf:rfc:3986</code> — damit beantwortet <code class="language-plaintext highlighter-rouge">$translate</code> (z.B. auf dem
 Validation-Server) zur Laufzeit, wohin eine alte Canonical zeigt:
 <a href="ConceptMap-mii-cm-kds-profile-canonicals-2026-2027.html">Profil-Canonicals</a> ·
-<a href="ConceptMap-mii-cm-kds-vs-canonicals-2026-2027.html">ValueSet-Canonicals</a>.
+<a href="ConceptMap-mii-cm-kds-vs-canonicals-2026-2027.html">ValueSet-Canonicals</a> ·
+<a href="ConceptMap-mii-cm-kds-icu-isik6-canonicals.html">ICU → ISiK 6</a>.
 Beide sind als <code class="language-plaintext highlighter-rouge">draft</code>/<code class="language-plaintext highlighter-rouge">experimental</code> markiert, solange die Kuratierung läuft
 (<code class="language-plaintext highlighter-rouge">equivalent</code> = inhaltsgleich belegt, <code class="language-plaintext highlighter-rouge">relatedto</code> = Kandidat mit Score,
 <code class="language-plaintext highlighter-rouge">unmatched</code> = entfällt ersatzlos).</p>
@@ -545,7 +569,7 @@ dient der Aufwandsabschätzung und der Ballot-Prüfung.</p>
 
           IG © 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.medizininformatik-initiative.de">Medizininformatik Initiative</a>.  
           Package de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19 basiert auf <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>.
-          Erstellt <span title="Wed, Sep 23, 2026 09:27+0000">2026-09-23</span>
+          Erstellt <span title="Wed, Sep 23, 2026 10:03+0000">2026-09-23</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
             <!-- Branding override for the fhir2.base.template footer fragment.

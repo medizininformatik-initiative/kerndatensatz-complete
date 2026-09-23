@@ -6,6 +6,13 @@
   "name" : "MII_CPS_Kerndatensatz_Complete"
 },
 {
+  "id" : "mii-cm-kds-icu-isik6-canonicals",
+  "type" : "ConceptMap",
+  "url" : "https://www.medizininformatik-initiative.de/fhir/core/complete/ConceptMap/mii-cm-kds-icu-isik6-canonicals",
+  "version" : "2027.0.0-ballot.19",
+  "name" : "mii_cm_kds_icu_isik6_canonicals"
+},
+{
   "id" : "mii-cm-kds-profile-canonicals-2026-2027",
   "type" : "ConceptMap",
   "url" : "https://www.medizininformatik-initiative.de/fhir/core/complete/ConceptMap/mii-cm-kds-profile-canonicals-2026-2027",

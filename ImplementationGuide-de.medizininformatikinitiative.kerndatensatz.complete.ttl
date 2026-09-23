@@ -18,7 +18,7 @@
   fhir:ImplementationGuide.name [ fhir:value "MIIKerndatensatzComplete"] ;
   fhir:ImplementationGuide.title [ fhir:value "MII Kerndatensatz Complete"] ;
   fhir:ImplementationGuide.status [ fhir:value "active"] ;
-  fhir:ImplementationGuide.date [ fhir:value "2026-09-23T09:27:22+00:00"^^xsd:dateTime] ;
+  fhir:ImplementationGuide.date [ fhir:value "2026-09-23T10:03:14+00:00"^^xsd:dateTime] ;
   fhir:ImplementationGuide.publisher [ fhir:value "Medizininformatik Initiative"] ;
   fhir:ImplementationGuide.contact [
      fhir:index 0 ;
@@ -968,6 +968,20 @@
          fhir:Extension.valueString [ fhir:value "ConceptMap" ]
        ] ;
        fhir:ImplementationGuide.definition.resource.reference [
+         fhir:link <https://www.medizininformatik-initiative.de/fhir/core/complete/ConceptMap/mii-cm-kds-icu-isik6-canonicals> ;
+         fhir:Reference.reference [ fhir:value "ConceptMap/mii-cm-kds-icu-isik6-canonicals" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "MII ICU Canonicals auf ISiK 6 (Governance-Uebergang)" ] ;
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Migration der ICU-Profil-Canonicals, deren fachlicher Gegenstand in ISiK 6 unter gematik-Canonical weitergefuehrt wird — reine URL-Zuordnung, keine Konformitaetsaussage von der 2026er KDS-Linie auf die in dieser BOM gepinnte 2027er Ballot-Linie. Automatisch erzeugt aus dem Aehnlichkeits-Matching des MII KDS Version-Differs (Element- bzw. Composition-Fingerprints, Jaccard-Index). Qualitaetsstatus nach MapQual/ISO TS 21564: D12 = automatisiert ohne abgeschlossene menschliche Validierung — Entwurf zur Kuratierung, nicht fuer den produktiven Einsatz. Zeilen mit equivalence=equivalent sind inhaltsgleiche Umbenennungen (Jaccard 1.0); relatedto-Zeilen tragen den Aehnlichkeits-Score im Kommentar." ] ;
+       fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
+     ], [
+       fhir:index 2 ;
+       fhir:Element.extension [
+         fhir:index 0 ;
+         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ] ;
+         fhir:Extension.valueString [ fhir:value "ConceptMap" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.reference [
          fhir:link <https://www.medizininformatik-initiative.de/fhir/core/complete/ConceptMap/mii-cm-kds-profile-canonicals-2026-2027> ;
          fhir:Reference.reference [ fhir:value "ConceptMap/mii-cm-kds-profile-canonicals-2026-2027" ]
        ] ;
@@ -975,7 +989,7 @@
        fhir:ImplementationGuide.definition.resource.description [ fhir:value "Migration der Profil-Canonicals (StructureDefinition.url) von der 2026er KDS-Linie auf die in dieser BOM gepinnte 2027er Ballot-Linie. Automatisch erzeugt aus dem Aehnlichkeits-Matching des MII KDS Version-Differs (Element- bzw. Composition-Fingerprints, Jaccard-Index). Qualitaetsstatus nach MapQual/ISO TS 21564: D12 = automatisiert ohne abgeschlossene menschliche Validierung — Entwurf zur Kuratierung, nicht fuer den produktiven Einsatz. Zeilen mit equivalence=equivalent sind inhaltsgleiche Umbenennungen (Jaccard 1.0); relatedto-Zeilen tragen den Aehnlichkeits-Score im Kommentar." ] ;
        fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
      ], [
-       fhir:index 2 ;
+       fhir:index 3 ;
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ] ;

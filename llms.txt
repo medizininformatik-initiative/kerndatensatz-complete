@@ -17,6 +17,7 @@
 
 ### ConceptMaps
 
+* [MII ICU Canonicals auf ISiK 6 (Governance-Uebergang)](de/ConceptMap-mii-cm-kds-icu-isik6-canonicals.md)
 * [MII KDS Profil-Canonicals 2026 auf 2027](de/ConceptMap-mii-cm-kds-profile-canonicals-2026-2027.md)
 * [MII KDS ValueSet-Canonicals 2026 auf 2027](de/ConceptMap-mii-cm-kds-vs-canonicals-2026-2027.md)
 

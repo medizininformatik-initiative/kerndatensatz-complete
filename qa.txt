@@ -1,12 +1,13 @@
 MIIKerndatensatzComplete : Validation Results
 =========================================
 
-err = 23, warn = 420, info = 9
+err = 23, warn = 424, info = 11
 IG Publisher Version: 2.3.4
-Generated Wed Sep 23 09:30:45 UTC 2026. FHIR version 4.0.1 for de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19 (canonical = https://www.medizininformatik-initiative.de/fhir/core/complete)
+Generated Wed Sep 23 10:06:49 UTC 2026. FHIR version 4.0.1 for de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19 (canonical = https://www.medizininformatik-initiative.de/fhir/core/complete)
  Build Errors : 1 / 12 / 0
  /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/fsh-generated/resources/ImplementationGuide-de.medizininformatikinitiative.kerndatensatz.complete : 3 / 17 / 3
  /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/input/resources/CapabilityStatement-mii-cps-kerndatensatz-complete : 19 / 383 / 4
+ /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/input/resources/ConceptMap-mii-cm-kds-icu-isik6-canonicals : 0 / 4 / 3
  /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/input/resources/ConceptMap-mii-cm-kds-profile-canonicals-2026-2027 : 0 / 4 / 3
  /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/input/resources/ConceptMap-mii-cm-kds-vs-canonicals-2026-2027 : 0 / 4 / 3
 </table>
@@ -455,6 +456,13 @@ ERROR: CapabilityStatement/mii-cps-kerndatensatz-complete: CapabilityStatement.r
 ERROR: CapabilityStatement/mii-cps-kerndatensatz-complete: CapabilityStatement.rest[0].resource[40].searchParam[8].definition: Canonical URL 'http://hl7.org/fhir/SearchParameter/ValueSet-url' kann nicht aufgelöst werden
 ERROR: CapabilityStatement/mii-cps-kerndatensatz-complete: CapabilityStatement.rest[0].resource[40].searchParam[9].definition: Canonical URL 'http://hl7.org/fhir/SearchParameter/ValueSet-version' kann nicht aufgelöst werden
 INFORMATION: Resource: The resource CapabilityStatement/mii-cps-kerndatensatz-complete could usefully have an OID assigned (OIDs are easy to assign - see https://build.fhir.org/ig/FHIR/fhir-tools-ig/CodeSystem-ig-parameters.html#ig-parameters-auto-oid-root)
+== input/resources/ConceptMap-mii-cm-kds-icu-isik6-canonicals.json ==
+INFORMATION: ConceptMap/mii-cm-kds-icu-isik6-canonicals: ConceptMap.jurisdiction[0]: Reference to experimental CodeSystem urn:iso:std:iso:3166|2027.0.0-ballot.2
+WARNING: ConceptMap/mii-cm-kds-icu-isik6-canonicals: ConceptMap.purpose: Der Markdown enthält einen Inhalt, der wie ein eingebetteter HTML-Tag aussieht und mit '<a' beginnt. Dies wird (oder SOLLTE) von der Präsentationsschicht escaped werden. Der Inhalt sollte überprüft werden, um zu bestätigen, dass dies das gewünschte Verhalten ist
+WARNING: ConceptMap/mii-cm-kds-icu-isik6-canonicals: ConceptMap: Regel cmd-0 fehlgeschlagen
+WARNING: ConceptMap/mii-cm-kds-icu-isik6-canonicals: ConceptMap.group[0].source: Unbekanntes Quellcode-System urn:ietf:rfc:3986, daher können die Quellcodes nicht überprüft werden
+WARNING: ConceptMap/mii-cm-kds-icu-isik6-canonicals: ConceptMap.group[0].target: Unbekanntes Zielcodesystem urn:ietf:rfc:3986, daher können die Zielcodes nicht überprüft werden
+INFORMATION: Resource: The resource ConceptMap/mii-cm-kds-icu-isik6-canonicals could usefully have an OID assigned (OIDs are easy to assign - see https://build.fhir.org/ig/FHIR/fhir-tools-ig/CodeSystem-ig-parameters.html#ig-parameters-auto-oid-root)
 == input/resources/ConceptMap-mii-cm-kds-profile-canonicals-2026-2027.json ==
 INFORMATION: ConceptMap/mii-cm-kds-profile-canonicals-2026-2027: ConceptMap.jurisdiction[0]: Reference to experimental CodeSystem urn:iso:std:iso:3166|2027.0.0-ballot.2
 WARNING: ConceptMap/mii-cm-kds-profile-canonicals-2026-2027: ConceptMap.purpose: Der Markdown enthält einen Inhalt, der wie ein eingebetteter HTML-Tag aussieht und mit '<a' beginnt. Dies wird (oder SOLLTE) von der Präsentationsschicht escaped werden. Der Inhalt sollte überprüft werden, um zu bestätigen, dass dies das gewünschte Verhalten ist

@@ -1,0 +1,679 @@
+# MII ICU Canonicals auf ISiK 6 (Governance-Uebergang) - MII Kerndatensatz Complete v2027.0.0-ballot.19
+
+* [**Table of Contents**](toc.md)
+* [**Artefaktübersicht**](artifacts.md)
+* **MII ICU Canonicals auf ISiK 6 (Governance-Uebergang)**
+
+## ConceptMap: MII ICU Canonicals auf ISiK 6 (Governance-Uebergang) (Experimentell) 
+
+| | |
+| :--- | :--- |
+| *Offizielle URL*:https://www.medizininformatik-initiative.de/fhir/core/complete/ConceptMap/mii-cm-kds-icu-isik6-canonicals | *Version*:2027.0.0-ballot.19 |
+| Draft Stand: 2026-09-23 | *Maschinenlesbarer Name*:mii_cm_kds_icu_isik6_canonicals |
+
+ 
+Migration der ICU-Profil-Canonicals, deren fachlicher Gegenstand in ISiK 6 unter gematik-Canonical weitergefuehrt wird — reine URL-Zuordnung, keine Konformitaetsaussage von der 2026er KDS-Linie auf die in dieser BOM gepinnte 2027er Ballot-Linie. Automatisch erzeugt aus dem Aehnlichkeits-Matching des MII KDS Version-Differs (Element- bzw. Composition-Fingerprints, Jaccard-Index). Qualitaetsstatus nach MapQual/ISO TS 21564: D12 = automatisiert ohne abgeschlossene menschliche Validierung — Entwurf zur Kuratierung, nicht fuer den produktiven Einsatz. Zeilen mit equivalence=equivalent sind inhaltsgleiche Umbenennungen (Jaccard 1.0); relatedto-Zeilen tragen den Aehnlichkeits-Score im Kommentar. 
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "ConceptMap",
+  "id" : "mii-cm-kds-icu-isik6-canonicals",
+  "url" : "https://www.medizininformatik-initiative.de/fhir/core/complete/ConceptMap/mii-cm-kds-icu-isik6-canonicals",
+  "version" : "2027.0.0-ballot.19",
+  "name" : "mii_cm_kds_icu_isik6_canonicals",
+  "title" : "MII ICU Canonicals auf ISiK 6 (Governance-Uebergang)",
+  "status" : "draft",
+  "experimental" : true,
+  "date" : "2026-09-23T10:03:14+00:00",
+  "publisher" : "Medizininformatik Initiative",
+  "contact" : [{
+    "name" : "Medizininformatik Initiative",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.medizininformatik-initiative.de"
+    }]
+  }],
+  "description" : "Migration der ICU-Profil-Canonicals, deren fachlicher Gegenstand in ISiK 6 unter gematik-Canonical weitergefuehrt wird — reine URL-Zuordnung, keine Konformitaetsaussage von der 2026er KDS-Linie auf die in dieser BOM gepinnte 2027er Ballot-Linie. Automatisch erzeugt aus dem Aehnlichkeits-Matching des MII KDS Version-Differs (Element- bzw. Composition-Fingerprints, Jaccard-Index). Qualitaetsstatus nach MapQual/ISO TS 21564: D12 = automatisiert ohne abgeschlossene menschliche Validierung — Entwurf zur Kuratierung, nicht fuer den produktiven Einsatz. Zeilen mit equivalence=equivalent sind inhaltsgleiche Umbenennungen (Jaccard 1.0); relatedto-Zeilen tragen den Aehnlichkeits-Score im Kommentar.",
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "urn:iso:std:iso:3166",
+      "code" : "DE",
+      "display" : "Germany"
+    }]
+  }],
+  "purpose" : "Maschinelle Aufloesung alter Canonicals via $translate (system=urn:ietf:rfc:3986, code=<alte URL>).",
+  "group" : [{
+    "source" : "urn:ietf:rfc:3986",
+    "target" : "urn:ietf:rfc:3986",
+    "element" : [{
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/herzzeitvolumen",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-herzzeitvolumen",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.5 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/ideales-koerpergewicht",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-ideales-koerpergewicht",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.286 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/intrakranieller-druck-icp",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-intrakranieller-druck-icp",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.375 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/koerpergewicht-percentil-altersabhaengig",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-koerpergewicht-percentil-altersabhaengig",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.636 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/koerpertemperatur-achsel",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-koerpertemperatur-achsel",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.111 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/koerpertemperatur-atemwege",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-koerpertemperatur-atemwege",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.143 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/koerpertemperatur-blut",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-koerpertemperatur-blut",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.0 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/koerpertemperatur-brust",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-koerpertemperatur-brust",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.333 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/koerpertemperatur-brustwirbelsaeule",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-koerpertemperatur-brustwirbelsaeule",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.333 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/koerpertemperatur-gelenk",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-koerpertemperatur-gelenk",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.333 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/koerpertemperatur-generisch",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-koerpertemperatur-generisch",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.0 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/koerpertemperatur-halswirbelsaeule",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-koerpertemperatur-halswirbelsaeule",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.333 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/koerpertemperatur-harnblase",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-koerpertemperatur-harnblase",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.125 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/koerpertemperatur-kern",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-koerpertemperatur-kern",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.083 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/koerpertemperatur-leiste",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-koerpertemperatur-leiste",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.143 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/koerpertemperatur-lendenwirbelsaeule",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-koerpertemperatur-lendenwirbelsaeule",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.333 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/koerpertemperatur-myokard",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-koerpertemperatur-myokard",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.286 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/koerpertemperatur-nasal",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-koerpertemperatur-nasal",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.286 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/koerpertemperatur-nasen-rachen-raum",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-koerpertemperatur-nasen-rachen-raum",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.333 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/koerpertemperatur-rektal",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-koerpertemperatur-rektal",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.111 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/koerpertemperatur-speiseroehre",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-koerpertemperatur-speiseroehre",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.125 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/koerpertemperatur-stirn",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-koerpertemperatur-stirn",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.333 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/koerpertemperatur-trommelfell",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-koerpertemperatur-trommelfell",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.125 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/koerpertemperatur-vaginal",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-koerpertemperatur-vaginal",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.143 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/linksatrialer-druck",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-linksatrialer-druck",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.667 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/linksventrikulaerer-druck",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-linksventrikulaerer-druck",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.643 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/linksventrikulaerer-herzindex",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-linksventrikulaerer-herzindex",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.444 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/linksventrikulaerer-herzindex-durch-indikatorverduennung",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-linksventri-herzindex-durch-indikatorverduennung",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.286 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/linksventrikulaerer-schlagvolumenindex-durch-indikatorverduennung",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-linksventri-schlagvolumenindex-durch-indikatorverd",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.286 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/linksventrikulaeres-herzzeitvolumen-durch-indikatorverduennung",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-linksventri-herzzeitvolumen-durch-indikatorverd",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.286 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/linksventrikulaeres-schlagvolumen",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-linksventrikulaeres-schlagvolumen",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.375 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/linksventrikulaeres-schlagvolumen-durch-indikatorverduennung",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-linksventri-schlagvolumen-durch-indikatorverduennung",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.333 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/linksventrikulaeres-schlagvolumenindex",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-linksventrikulaeres-schlagvolumenindex",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.333 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-bilanz",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-bilanz",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.872 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-bilanz-ausfuhr-blutverlust",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-bilanz-ausfuhr-blutverlust",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.889 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-bilanz-ausfuhr-drainage-generisch",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-bilanz-ausfuhr-drainage-generisch",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.889 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-bilanz-ausfuhr-fluessigkeit-gesamt",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-bilanz-ausfuhr-fluessigkeit-gesamt",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.889 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-bilanz-ausfuhr-gallenfluessigkeit",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-bilanz-ausfuhr-gallenfluessigkeit",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.889 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-bilanz-ausfuhr-haemofiltration-einzelmesswerte",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-bilanz-ausfuhr-haemofiltration-einzelmesswerte",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.889 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-bilanz-ausfuhr-magensonde",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-bilanz-ausfuhr-magensonde",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.889 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-bilanz-ausfuhr-op-drainage",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-bilanz-ausfuhr-op-drainage",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.889 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-bilanz-ausfuhr-pankreasdrainage",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-bilanz-ausfuhr-pankreasdrainage",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.889 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-bilanz-ausfuhr-stuhlgang",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-bilanz-ausfuhr-stuhlgang",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.889 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-bilanz-ausfuhr-urin",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-bilanz-ausfuhr-urin",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.889 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-bilanz-ausfuhr-wunddrainage",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-bilanz-ausfuhr-wunddrainage",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.889 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-bilanz-einfuhr-abgepumpte-muttermilch",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-bilanz-einfuhr-abgepumpte-muttermilch",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.889 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-bilanz-einfuhr-enterale-fluessigkeit",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-bilanz-einfuhr-enterale-fluessigkeit",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.889 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-bilanz-einfuhr-fluessigkeit-gesamt",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-bilanz-einfuhr-fluessigkeit-gesamt",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.889 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-bilanz-einfuhr-muttermilch",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-bilanz-einfuhr-muttermilch",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.889 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-bilanz-einfuhr-orale-fluessigkeit",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-bilanz-einfuhr-orale-fluessigkeit",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.889 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-bilanz-einfuhr-saeuglingsnahrung",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-bilanz-einfuhr-saeuglingsnahrung",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.889 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-bilanz-einfuhr-spendermilch",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-bilanz-einfuhr-spendermilch",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.889 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-bilanz-tagesbilanz-fluessigkeit",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-bilanz-tagesbilanz-fluessigkeit",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.889 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-dm-eingestellte-gemessene-parameter-beatmung",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-vent-dm-eingestellte-gemessene-parameter-beatmung",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.857 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-muv-zerebraler-perfusionsdruck",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-muv-zerebraler-perfusionsdruck",
+        "equivalence" : "equivalent",
+        "comment" : "Modul icu, Jaccard 1.0 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-parameter-von-beatmung",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-vent-icu-parameter-von-beatmung",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.971 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-score-rass",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-score-rass",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.815 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-spontane-atemfrequenz-beatmet",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-vent-spontane-atemfrequenz-beatmet",
+        "equivalence" : "equivalent",
+        "comment" : "Modul icu, Jaccard 1.0 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-spontanes-atemzugvolumen",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-vent-spontanes-atemzugvolumen",
+        "equivalence" : "equivalent",
+        "comment" : "Modul icu, Jaccard 1.0 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-unterstuetzungsdruck-beatmung",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-vent-unterstuezungsdruck-beatmung",
+        "equivalence" : "equivalent",
+        "comment" : "Modul icu, Jaccard 1.0 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-untersuchung-pupillenbefund",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-untersuchung-pupillenbefund",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.867 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-untersuchung-pupillenform",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-untersuchung-pupillenform",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.818 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-untersuchung-pupillengroesse",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-untersuchung-pupillengroesse",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.852 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-untersuchung-pupillenlichtreaktion-direkt",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-untersuchung-pupillenlichtreaktion-direkt",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.818 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-untersuchung-pupillenlichtreaktion-indirekt",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-untersuchung-pupillenlichtreaktion-indirekt",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.818 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/mii-pr-icu-untersuchung-pupillensymmetrie",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-untersuchung-pupillensymmetrie",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.846 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/monitoring-und-vitaldaten",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-monitoring-und-vitaldaten",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.784 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/pulmonalarterieller-blutdruck",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-pulmonalarterieller-blutdruck",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.474 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/pulmonalarterieller-wedge-druck",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-pulmonalarterieller-wedge-druck",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.5 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/pulmonalvaskulaerer-widerstandsindex",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-pulmonalvaskulaerer-widerstandsindex",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.5 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/puls",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-puls",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.636 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/rechtsatrialer-druck",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-rechtsatrialer-druck",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.625 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/rechtsventrikulaerer-druck",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-rechtsventrikulaerer-druck",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.562 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/sauerstoffsaettigung-im-arteriellen-blut-durch-pulsoxymetrie",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-o2saettigung-im-arteriellen-blut-durch-pulsoxymetrie",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.786 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/sauerstoffsaettigung-im-blut-postduktal-durch-pulsoxymetrie",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-o2saettigung-im-blut-postduktal-durch-pulsoxymetrie",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.3 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/sauerstoffsaettigung-im-blut-preduktal-durch-pulsoxymetrie",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-o2saettigung-im-blut-preduktal-durch-pulsoxymetrie",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.3 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/systemischer-vaskulaerer-widerstandsindex",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-systemischer-vaskulaerer-widerstandsindex",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.364 — Kuratierung ausstehend"
+      }]
+    },
+    {
+      "code" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/zentralvenoeser-blutdruck",
+      "target" : [{
+        "code" : "https://gematik.de/fhir/isik/StructureDefinition/sd-mii-icu-zentralvenoeser-blutdruck",
+        "equivalence" : "relatedto",
+        "comment" : "Modul icu, Jaccard 0.375 — Kuratierung ausstehend"
+      }]
+    }]
+  }]
+}
+
+```
