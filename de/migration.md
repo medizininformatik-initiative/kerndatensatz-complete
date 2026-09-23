@@ -9,6 +9,10 @@
 
 Leitfaden für Standorte und Projekte, die von der 2026er KDS-Linie auf die **2027er Ballot-Linie** dieser BOM wechseln. Die zugrunde liegenden Zahlen und der Profil-für-Profil-Vergleich stehen auf der Seite [Versionierung](versionierung.md); hier steht, **was zu tun ist**.
 
+![](migration-2026-2027.svg)
+
+Generiert mit `scripts/migration-viz.py`. Grau = kein Handlungsbedarf, Blau = nur Erweiterungen, Orange = breaking, Rot = Canonical-Abriss. Sortiert nach Handlungsbedarf.
+
 ### 1. Dependency umstellen
 
 Eine Abhängigkeit statt 21: die BOM pinnt alle Module und die externen Pakete in geprüft kompatiblen Versionen (siehe [Installation](index.md#installation)). Beim Wechsel von einzeln deklarierten 2026er-Modulen die Einzeldeklarationen **entfernen** — sonst entstehen doppelte Canonicals beim Auflösen.
@@ -30,6 +34,10 @@ Die kuratierte Zuordnung alt → neu entsteht in der [Rename-Kandidatenliste](ht
 41 Profil-Übergänge sind strukturell breaking (Elemente entfernt oder inkompatibel geändert) — Schwerpunkte **Onkologie (12)**, Mikrobiologie (7), Seltene Erkrankungen (7), Bildgebung (3), ICU (3). Welche Elemente konkret, zeigt der [Version-History-Explorer](https://medizininformatik-initiative.github.io/mii-kerndatensatz-versionhistory/) je Profil (bzw. `profile-pairwise-changes.csv` im selben Repo, Spalten `elements_removed`/`elements_added`).
 
 Die Mehrheit der Übergänge ist unkritisch: 79 Profile identisch, 200 nur erweitert — bestehende Instanzen bleiben dort gültig.
+
+#### Breaking-Änderungen im Detail
+
+41 Breaking-Übergänge · Stand: 2026-09-23 · generiert mit `scripts/version-transitions.py` 
 
 ### 4. Externe Abhängigkeiten anheben
 

@@ -3,11 +3,11 @@
 ## Pages
 
 * [Home](de/index.md)
+* [Versionierung](de/versionierung.md)
 * [Testabdeckung](de/testabdeckung.md)
+* [Migration](de/migration.md)
 * [Artefaktübersicht](de/artifacts.md)
 * [Ballot](de/ballot.md)
-* [Versionierung](de/versionierung.md)
-* [Migration](de/migration.md)
 
 ## Resources
 

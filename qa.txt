@@ -1,10 +1,10 @@
 MIIKerndatensatzComplete : Validation Results
 =========================================
 
-err = 23, warn = 411, info = 5
+err = 23, warn = 412, info = 5
 IG Publisher Version: 2.3.4
-Generated Tue Sep 22 14:41:42 UTC 2026. FHIR version 4.0.1 for de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19 (canonical = https://www.medizininformatik-initiative.de/fhir/core/complete)
- Build Errors : 1 / 11 / 0
+Generated Wed Sep 23 07:08:31 UTC 2026. FHIR version 4.0.1 for de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19 (canonical = https://www.medizininformatik-initiative.de/fhir/core/complete)
+ Build Errors : 1 / 12 / 0
  /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/fsh-generated/resources/ImplementationGuide-de.medizininformatikinitiative.kerndatensatz.complete : 3 / 17 / 3
  /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/input/resources/CapabilityStatement-mii-cps-kerndatensatz-complete : 19 / 383 / 4
 </table>
@@ -15,6 +15,9 @@ WARNING: ImplementationGuide.dependency[17].url: The canonical URL for an Implem
 WARNING: ImplementationGuide.dependency[28].url: The canonical URL for an Implementation Guide must point directly to the implementation guide resource, not to the Implementation Guide as a whole
 WARNING: /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/output/de/ballot.html: Illegal HTML: illegal html element: small (Stand: 2026-09-22 09:25 UTC · Zählung über Projekt HDB · automatisch aktualisiert)
 WARNING: /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/output/de/index.html: Illegal HTML: illegal html element: small (Automatisch generiert aus dep-graph-2027.dot via Graphviz. Knoten: grün = finale Version, gelb = Ballot/RC/Alpha, grau = in Entwicklung. Kanten: rot gestrichelt = das Modul deklariert noch die 2026er Version des Ziels, während diese BOM auf die 2027er Ballot-Linie pinnt.)
+WARNING: /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/output/de/migration.html: Illegal HTML: illegal html element: small (Generiert mit scripts/migration-viz.py. Grau = kein
+Handlungsbedarf, Blau = nur Erweiterungen, Orange = breaking, Rot =
+Canonical-Abriss. Sortiert nach Handlungsbedarf.)
 WARNING: /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/output/de/testabdeckung.html: Illegal HTML: illegal html element: small (Stand: 2026-09-22 · Testdaten: mii-testdata v2026.0.0-rc.1 (640 Instanzen) · gemessen gegen die BOM-Pins · generiert mit scripts/testdata-coverage.py)
 WARNING: /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/output/de/versionierung.html: Illegal HTML: illegal html element: small (*identisch = strukturgleich oder nur Canonical-Metadaten geändert. Übergänge = Profile mit durchgehender Canonical von der letzten Vorversion zur gepinnten Version; Canonical-Abrisse (beendete URLs, meist Umbenennungen) erscheinen nicht als Übergang — siehe Abschnitt Canonical-Kontinuität. Stand: 2026-09-22 · generiert mit scripts/version-transitions.py aus dem Version-History-Explorer-Datensatz)
 WARNING: 1: The HTML fragment 'ip-statements.xhtml' is not included anywhere in the produced implementation guide

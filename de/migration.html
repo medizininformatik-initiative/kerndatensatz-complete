@@ -265,6 +265,12 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 der Profil-für-Profil-Vergleich stehen auf der Seite
 <a href="versionierung.html">Versionierung</a>; hier steht, <strong>was zu tun ist</strong>.</p>
 
+<p><img src="migration-2026-2027.svg" alt="Migrationsaufwand je Modul: Zusammensetzung der Profil-Übergänge von v2026 in die gepinnte Ballot-Version" style="max-width:100%" /></p>
+
+<p><small>Generiert mit <code>scripts/migration-viz.py</code>. Grau = kein
+Handlungsbedarf, Blau = nur Erweiterungen, Orange = breaking, Rot =
+Canonical-Abriss. Sortiert nach Handlungsbedarf.</small></p>
+
 <h3 id="1-dependency-umstellen">1. Dependency umstellen</h3>
 
 <p>Eine Abhängigkeit statt 21: die BOM pinnt alle Module und die externen Pakete
@@ -307,6 +313,88 @@ je Profil (bzw. <code class="language-plaintext highlighter-rouge">profile-pairw
 
 <p>Die Mehrheit der Übergänge ist unkritisch: 79 Profile identisch, 200 nur
 erweitert — bestehende Instanzen bleiben dort gültig.</p>
+
+<h4 id="breaking-änderungen-im-detail">Breaking-Änderungen im Detail</h4>
+
+<!-- BREAKING-LIST:START -->
+
+<details><summary><b>base</b> — 1 Profile mit Breaking-Änderungen</summary>
+<table><tr><th>Profil</th><th>Übergang</th><th>entfernte Elemente</th></tr>
+<tr><td>MII_PR_Diagnose_Condition</td><td><code>2026.0.1</code> → <code>2027.0.0-ballot</code></td><td><code>Condition.onset[x]:onsetPeriod</code>, <code>Condition.onset[x]:onsetPeriod.end</code>, <code>Condition.onset[x]:onsetPeriod.end.extension</code>, <code>Condition.onset[x]:onsetPeriod.end.extension:lebensphase-bis</code>, <code>Condition.onset[x]:onsetPeriod.end.extension:lebensphase-bis.url</code>, <code>Condition.onset[x]:onsetPeriod.end.extension:lebensphase-bis.value[x]</code>, <code>Condition.onset[x]:onsetPeriod.end.extension:lebensphase-bis.value[x].coding</code>, <code>Condition.onset[x]:onsetPeriod.end.extension:lebensphase-bis.value[x].coding.code</code> … +9 weitere</td></tr>
+</table></details>
+<details><summary><b>bildgebung</b> — 3 Profile mit Breaking-Änderungen</summary>
+<table><tr><th>Profil</th><th>Übergang</th><th>entfernte Elemente</th></tr>
+<tr><td>MII_PR_Bildgebung_Bildgebungsprozedur</td><td><code>2026.0.0</code> → <code>2027.0.0-ballot.1</code></td><td><code>Procedure.category.coding:sct.display</code></td></tr>
+<tr><td>MII_PR_Bildgebung_Radiologische_Befundungsprozedur</td><td><code>2026.0.0</code> → <code>2027.0.0-ballot.1</code></td><td><code>Procedure.category.coding:sct.display</code>, <code>Procedure.code.coding:sct.display</code></td></tr>
+<tr><td>MII_PR_Bildgebung_Radiologischer_Befund</td><td><code>2026.0.0</code> → <code>2027.0.0-ballot.1</code></td><td><code>DiagnosticReport.category.coding:diagnostic-service-sections.code</code>, <code>DiagnosticReport.category.coding:diagnostic-service-sections.display</code>, <code>DiagnosticReport.category.coding:diagnostic-service-sections.system</code>, <code>DiagnosticReport.category.coding:loinc.code</code>, <code>DiagnosticReport.category.coding:loinc.display</code>, <code>DiagnosticReport.category.coding:loinc.system</code>, <code>DiagnosticReport.category.coding:sct.code</code>, <code>DiagnosticReport.category.coding:sct.display</code> … +1 weitere</td></tr>
+</table></details>
+<details><summary><b>biobank</b> — 1 Profile mit Breaking-Änderungen</summary>
+<table><tr><th>Profil</th><th>Übergang</th><th>entfernte Elemente</th></tr>
+<tr><td>ProfileSpecimenBioprobeCore</td><td><code>2026.0.1</code> → <code>2027.0.0-ballot</code></td><td><i>inkompatible Änderung ohne entfernte Elemente (Kardinalität/Typ/Binding — siehe Explorer)</i></td></tr>
+</table></details>
+<details><summary><b>consent</b> — 1 Profile mit Breaking-Änderungen</summary>
+<table><tr><th>Profil</th><th>Übergang</th><th>entfernte Elemente</th></tr>
+<tr><td>MII_PR_Consent_Einwilligung</td><td><code>2026.0.0</code> → <code>2027.0.0-ballot</code></td><td><code>Consent.category:loinc</code>, <code>Consent.category:loinc.coding</code>, <code>Consent.category:loinc.coding.code</code>, <code>Consent.category:loinc.coding.system</code>, <code>Consent.extension</code>, <code>Consent.extension:domainReference</code>, <code>Consent.extension:domainReference.extension</code>, <code>Consent.extension:domainReference.extension:domain</code> … +8 weitere</td></tr>
+</table></details>
+<details><summary><b>icu</b> — 3 Profile mit Breaking-Änderungen</summary>
+<table><tr><th>Profil</th><th>Übergang</th><th>entfernte Elemente</th></tr>
+<tr><td>MII_PR_ICU_Score</td><td><code>2026.0.0</code> → <code>2027.0.0-ballot.3</code></td><td><code>Observation.bodySite</code>, <code>Observation.category:assessment-scale.coding.code</code>, <code>Observation.category:assessment-scale.coding.system</code>, <code>Observation.category:survey.coding.code</code>, <code>Observation.category:survey.coding.system</code>, <code>Observation.component.interpretation</code>, <code>Observation.note</code>, <code>Observation.referenceRange</code></td></tr>
+<tr><td>MII_PR_ICU_Score_RASS</td><td><code>2026.0.0</code> → <code>2027.0.0-ballot.3</code></td><td><code>Observation.value[x]:valueCodeableConcept</code>, <code>Observation.value[x]:valueCodeableConcept.coding</code>, <code>Observation.value[x]:valueCodeableConcept.coding:loinc</code>, <code>Observation.value[x]:valueCodeableConcept.extension</code>, <code>Observation.value[x]:valueCodeableConcept.extension:ordinalValue</code></td></tr>
+<tr><td>MII_PR_ICU_VENT_Mittlerer_Beatmungsdruck</td><td><code>2026.0.1</code> → <code>2027.0.0-ballot.3</code></td><td><code>Observation.effective[x]</code>, <code>Observation.value[x]:valueQuantity</code></td></tr>
+</table></details>
+<details><summary><b>laborbefund</b> — 2 Profile mit Breaking-Änderungen</summary>
+<table><tr><th>Profil</th><th>Übergang</th><th>entfernte Elemente</th></tr>
+<tr><td>DiagnosticReportLab</td><td><code>2026.0.3</code> → <code>2027.0.0-ballot</code></td><td><code>DiagnosticReport.category:lab-category</code>, <code>DiagnosticReport.category:lab-category.coding</code>, <code>DiagnosticReport.category:lab-category.coding.code</code>, <code>DiagnosticReport.category:lab-category.coding.display</code>, <code>DiagnosticReport.category:lab-category.coding.system</code></td></tr>
+<tr><td>ObservationLab</td><td><code>2026.0.3</code> → <code>2027.0.0-ballot</code></td><td><code>Observation.category.coding:loinc-observation</code>, <code>Observation.category.coding:observation-category</code></td></tr>
+</table></details>
+<details><summary><b>mikrobiologie</b> — 7 Profile mit Breaking-Änderungen</summary>
+<table><tr><th>Profil</th><th>Übergang</th><th>entfernte Elemente</th></tr>
+<tr><td>MII_PR_Mikrobio_Diagnostic_Report</td><td><code>2025.0.2</code> → <code>2027.0.0-ballot2</code></td><td><code>DiagnosticReport.category.coding</code>, <code>DiagnosticReport.category.coding:loinc-microbiology-specialization</code>, <code>DiagnosticReport.category.coding:snomed-microbiology-studies</code></td></tr>
+<tr><td>MII_PR_Mikrobio_Empfindlichkeit</td><td><code>2025.0.2</code> → <code>2027.0.0-ballot2</code></td><td><code>Observation.bodySite</code>, <code>Observation.category.coding</code>, <code>Observation.category.coding:loinc-microbiology-studies</code>, <code>Observation.category.coding:loinc-observation</code>, <code>Observation.category.coding:observation-category</code>, <code>Observation.component.value[x]</code>, <code>Observation.device</code>, <code>Observation.effective[x]</code> … +29 weitere</td></tr>
+<tr><td>MII_PR_Mikrobio_Keimzahl</td><td><code>2025.0.2</code> → <code>2027.0.0-ballot2</code></td><td><code>Observation</code>, <code>Observation.bodySite</code>, <code>Observation.category.coding</code>, <code>Observation.category.coding:loinc-microbiology-studies</code>, <code>Observation.category.coding:loinc-observation</code>, <code>Observation.category.coding:observation-category</code>, <code>Observation.component.value[x]</code>, <code>Observation.device</code> … +29 weitere</td></tr>
+<tr><td>MII_PR_Mikrobio_MRGN_Klasse</td><td><code>2025.0.2</code> → <code>2027.0.0-ballot2</code></td><td><code>Observation</code>, <code>Observation.bodySite</code>, <code>Observation.category.coding</code>, <code>Observation.category.coding:loinc-microbiology-studies</code>, <code>Observation.category.coding:loinc-observation</code>, <code>Observation.category.coding:observation-category</code>, <code>Observation.device</code>, <code>Observation.effective[x]</code> … +26 weitere</td></tr>
+<tr><td>MII_PR_Mikrobio_Mikroskopie</td><td><code>2025.0.2</code> → <code>2027.0.0-ballot2</code></td><td><code>Observation</code>, <code>Observation.bodySite</code>, <code>Observation.category.coding</code>, <code>Observation.category.coding:loinc-microbiology-studies</code>, <code>Observation.category.coding:loinc-observation</code>, <code>Observation.category.coding:observation-category</code>, <code>Observation.component:BarlettScore</code>, <code>Observation.component:BarlettScore.code</code> … +38 weitere</td></tr>
+<tr><td>MII_PR_Mikrobio_Virulenzfaktor</td><td><code>2025.0.2</code> → <code>2027.0.0-ballot2</code></td><td><code>Observation</code>, <code>Observation.bodySite</code>, <code>Observation.category.coding</code>, <code>Observation.category.coding:loinc-microbiology-studies</code>, <code>Observation.category.coding:loinc-observation</code>, <code>Observation.category.coding:observation-category</code>, <code>Observation.device</code>, <code>Observation.effective[x]</code> … +26 weitere</td></tr>
+<tr><td>MII_PR_Mikrobio_voraussichtliche_Empfindlichkeit</td><td><code>2025.0.2</code> → <code>2027.0.0-ballot2</code></td><td><code>Observation</code>, <code>Observation.bodySite</code>, <code>Observation.category.coding</code>, <code>Observation.category.coding:loinc-microbiology-studies</code>, <code>Observation.category.coding:loinc-observation</code>, <code>Observation.category.coding:observation-category</code>, <code>Observation.device</code>, <code>Observation.effective[x]</code> … +26 weitere</td></tr>
+</table></details>
+<details><summary><b>mtb</b> — 2 Profile mit Breaking-Änderungen</summary>
+<table><tr><th>Profil</th><th>Übergang</th><th>entfernte Elemente</th></tr>
+<tr><td>MII_PR_MTB_Systemische_Therapie</td><td><code>2026.0.1</code> → <code>2027.0.0-ballot.1</code></td><td><i>inkompatible Änderung ohne entfernte Elemente (Kardinalität/Typ/Binding — siehe Explorer)</i></td></tr>
+<tr><td>MII_PR_MTB_Systemische_Vortherapie</td><td><code>2026.0.1</code> → <code>2027.0.0-ballot.1</code></td><td><code>Procedure.basedOn</code>, <code>Procedure.basedOn:Therapieplan</code></td></tr>
+</table></details>
+<details><summary><b>onkologie</b> — 12 Profile mit Breaking-Änderungen</summary>
+<table><tr><th>Profil</th><th>Übergang</th><th>entfernte Elemente</th></tr>
+<tr><td>MII_PR_Onko_Allgemeiner_Leistungszustand_ECOG</td><td><code>2026.0.3</code> → <code>2027.0.0-ballot.1</code></td><td><i>inkompatible Änderung ohne entfernte Elemente (Kardinalität/Typ/Binding — siehe Explorer)</i></td></tr>
+<tr><td>MII_PR_Onko_Allgemeiner_Leistungszustand_Karnofsky</td><td><code>2026.0.3</code> → <code>2027.0.0-ballot.1</code></td><td><i>inkompatible Änderung ohne entfernte Elemente (Kardinalität/Typ/Binding — siehe Explorer)</i></td></tr>
+<tr><td>MII_PR_Onko_Diagnose_Primaertumor</td><td><code>2026.0.3</code> → <code>2027.0.0-ballot.1</code></td><td><i>inkompatible Änderung ohne entfernte Elemente (Kardinalität/Typ/Binding — siehe Explorer)</i></td></tr>
+<tr><td>MII_PR_Onko_Fruehere_Tumorerkrankung</td><td><code>2026.0.3</code> → <code>2027.0.0-ballot.1</code></td><td><i>inkompatible Änderung ohne entfernte Elemente (Kardinalität/Typ/Binding — siehe Explorer)</i></td></tr>
+<tr><td>MII_PR_Onko_Histologie_ICDO3</td><td><code>2026.0.3</code> → <code>2027.0.0-ballot.1</code></td><td><i>inkompatible Änderung ohne entfernte Elemente (Kardinalität/Typ/Binding — siehe Explorer)</i></td></tr>
+<tr><td>MII_PR_Onko_Mamma_Operation</td><td><code>2026.0.3</code> → <code>2027.0.0-ballot.1</code></td><td><code>Procedure.performed[x]:performedDateTime</code></td></tr>
+<tr><td>MII_PR_Onko_Nebenwirkung_Adverse_Event</td><td><code>2026.0.3</code> → <code>2027.0.0-ballot.1</code></td><td><i>inkompatible Änderung ohne entfernte Elemente (Kardinalität/Typ/Binding — siehe Explorer)</i></td></tr>
+<tr><td>MII_PR_Onko_Prostata_Gleason_Grade_Group</td><td><code>2026.0.3</code> → <code>2027.0.0-ballot.1</code></td><td><i>inkompatible Änderung ohne entfernte Elemente (Kardinalität/Typ/Binding — siehe Explorer)</i></td></tr>
+<tr><td>MII_PR_Onko_Prostata_Gleason_Pattern</td><td><code>2026.0.3</code> → <code>2027.0.0-ballot.1</code></td><td><i>inkompatible Änderung ohne entfernte Elemente (Kardinalität/Typ/Binding — siehe Explorer)</i></td></tr>
+<tr><td>MII_PR_Onko_TNM_M_Kategorie</td><td><code>2026.0.3</code> → <code>2027.0.0-ballot.1</code></td><td><code>Observation.value[x].coding.system</code></td></tr>
+<tr><td>MII_PR_Onko_TNM_N_Kategorie</td><td><code>2026.0.3</code> → <code>2027.0.0-ballot.1</code></td><td><code>Observation.value[x].coding.system</code></td></tr>
+<tr><td>MII_PR_Onko_TNM_T_Kategorie</td><td><code>2026.0.3</code> → <code>2027.0.0-ballot.1</code></td><td><code>Observation.value[x].coding.system</code></td></tr>
+</table></details>
+<details><summary><b>patho</b> — 2 Profile mit Breaking-Änderungen</summary>
+<table><tr><th>Profil</th><th>Übergang</th><th>entfernte Elemente</th></tr>
+<tr><td>MII_PR_Patho_Report</td><td><code>2026.0.2</code> → <code>2027.0.0-ballot</code></td><td><i>inkompatible Änderung ohne entfernte Elemente (Kardinalität/Typ/Binding — siehe Explorer)</i></td></tr>
+<tr><td>MII_PR_Patho_Specimen</td><td><code>2026.0.2</code> → <code>2027.0.0-ballot</code></td><td><code>Specimen.collection.bodySite.extension:lateralityQualifier</code>, <code>Specimen.collection.bodySite.extension:locationQualifier</code></td></tr>
+</table></details>
+<details><summary><b>seltene</b> — 7 Profile mit Breaking-Änderungen</summary>
+<table><tr><th>Profil</th><th>Übergang</th><th>entfernte Elemente</th></tr>
+<tr><td>MII_PR_Seltene_Blutgruppe</td><td><code>2026.0.1</code> → <code>2027.0.0-ballot</code></td><td><i>inkompatible Änderung ohne entfernte Elemente (Kardinalität/Typ/Binding — siehe Explorer)</i></td></tr>
+<tr><td>MII_PR_Seltene_ClinicalDiagnosis</td><td><code>2026.0.1</code> → <code>2027.0.0-ballot</code></td><td><code>Condition.abatement[x]</code></td></tr>
+<tr><td>MII_PR_Seltene_GeneticDiagnosis</td><td><code>2026.0.1</code> → <code>2027.0.0-ballot</code></td><td><code>Condition.abatement[x]</code></td></tr>
+<tr><td>MII_PR_Seltene_Kopfumfang</td><td><code>2026.0.1</code> → <code>2027.0.0-ballot</code></td><td><i>inkompatible Änderung ohne entfernte Elemente (Kardinalität/Typ/Binding — siehe Explorer)</i></td></tr>
+<tr><td>MII_PR_Seltene_Therapieempfehlung</td><td><code>2026.0.1</code> → <code>2027.0.0-ballot</code></td><td><code>MedicationRequest.extension:Evidenzgraduierung</code></td></tr>
+<tr><td>MII_PR_Seltene_TherapieempfehlungNichtMedikamentoes</td><td><code>2026.0.1</code> → <code>2027.0.0-ballot</code></td><td><code>ServiceRequest.extension:Evidenzgraduierung</code></td></tr>
+<tr><td>MII_PR_Seltene_Therapieempfehlung_Kombination</td><td><code>2026.0.1</code> → <code>2027.0.0-ballot</code></td><td><code>RequestGroup.extension:Evidenzgraduierung</code></td></tr>
+</table></details>
+
+<p><small>41 Breaking-Übergänge · Stand: 2026-09-23 · generiert mit <code>scripts/version-transitions.py</code></small>
+<!-- BREAKING-LIST:END --></p>
 
 <h3 id="4-externe-abhängigkeiten-anheben">4. Externe Abhängigkeiten anheben</h3>
 
@@ -397,7 +485,7 @@ dient der Aufwandsabschätzung und der Ballot-Prüfung.</p>
 
           IG © 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.medizininformatik-initiative.de">Medizininformatik Initiative</a>.  
           Package de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19 basiert auf <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>.
-          Erstellt <span title="Tue, Sep 22, 2026 14:38+0000">2026-09-22</span>
+          Erstellt <span title="Wed, Sep 23, 2026 07:05+0000">2026-09-23</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
             <!-- Branding override for the fhir2.base.template footer fragment.
