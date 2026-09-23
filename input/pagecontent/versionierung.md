@@ -50,7 +50,7 @@ der alle publizierten Profilversionen seit 2019 strukturell vergleicht
 | symptom | `2027.0.0-ballot` | _neu_ | 0 | 0 | 0 | 0 |
 | **Summe** | | **327** | **79** | **200** | **41** | **6** |
 
-<small>*identisch = strukturgleich oder nur Canonical-Metadaten geändert. Übergänge = Profile mit durchgehender Canonical von der letzten Vorversion zur gepinnten Version; Canonical-Abrisse (beendete URLs, meist Umbenennungen) erscheinen nicht als Übergang — siehe Abschnitt Canonical-Kontinuität. Stand: 2026-09-22 · generiert mit <code>scripts/version-transitions.py</code> aus dem <a href="https://medizininformatik-initiative.github.io/mii-kerndatensatz-versionhistory/">Version-History-Explorer</a>-Datensatz</small>
+<small>*identisch = strukturgleich oder nur Canonical-Metadaten geändert. Übergänge = Profile mit durchgehender Canonical von der letzten Vorversion zur gepinnten Version; Canonical-Abrisse (beendete URLs, meist Umbenennungen) erscheinen nicht als Übergang — siehe Abschnitt Canonical-Kontinuität. Stand: 2026-09-23 · generiert mit <code>scripts/version-transitions.py</code> aus dem <a href="https://medizininformatik-initiative.github.io/mii-kerndatensatz-versionhistory/">Version-History-Explorer</a>-Datensatz</small>
 <!-- VERSION-TRANSITIONS:END -->
 
 ### Canonical-Kontinuität

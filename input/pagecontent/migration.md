@@ -89,6 +89,15 @@ Details in der [VS-Rename-Kandidatenliste](https://github.com/medizininformatik-
 (Composition-Vergleich; inhaltliche VS-Änderungen bei gleichbleibender URL
 sind hier ausdrücklich *nicht* erfasst — siehe [Versionierung → Abgrenzung](versionierung.html)).
 
+**Maschinell nutzbar** sind beide Mappings als ConceptMaps im URI-System
+`urn:ietf:rfc:3986` — damit beantwortet `$translate` (z.B. auf dem
+Validation-Server) zur Laufzeit, wohin eine alte Canonical zeigt:
+[Profil-Canonicals](ConceptMap-mii-cm-kds-profile-canonicals-2026-2027.html) ·
+[ValueSet-Canonicals](ConceptMap-mii-cm-kds-vs-canonicals-2026-2027.html).
+Beide sind als `draft`/`experimental` markiert, solange die Kuratierung läuft
+(`equivalent` = inhaltsgleich belegt, `relatedto` = Kandidat mit Score,
+`unmatched` = entfällt ersatzlos).
+
 ### 3. Breaking-Änderungen prüfen
 
 41 Profil-Übergänge sind strukturell breaking (Elemente entfernt oder
