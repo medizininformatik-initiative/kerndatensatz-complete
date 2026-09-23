@@ -40,6 +40,55 @@ Die kuratierte Zuordnung alt → neu entsteht in der
 Kuratierungsstand). Für ETL-Strecken heißt das: `meta.profile`-Werte per
 Mapping-Tabelle ersetzen, Profil-basierte Routing-/Validierungsregeln anpassen.
 
+**Auch ValueSet-Canonicals sind betroffen** (relevant für eigene Profile mit
+Bindings auf MII-ValueSets, Questionnaires, Terminologieserver-Konfigurationen
+und CQL):
+
+- **Onkologie**: 7 ValueSets umbenannt — reines `onko-`-Namenspräfix bei
+  identischem Inhalt (`mii-vs-strahlentherapie-*` → `mii-vs-onko-strahlentherapie-*`).
+- **Seltene Erkrankungen**: 1 inhaltsgleiche Umbenennung.
+- **Mikrobiologie**: 22 ValueSets enden, nur eines davon inhaltsgleich
+  weitergeführt — hier wurde das Terminologie-Inventar tatsächlich
+  restrukturiert, ein reines URL-Mapping genügt nicht.
+
+<details><summary><b>Alle betroffenen ValueSet-Canonicals</b> (30)</summary>
+<table><tr><th>Modul</th><th>alte Canonical</th><th>neue Canonical</th><th>Inhalt</th></tr>
+<tr><td>mikrobiologie</td><td><code>…/modul-mikrobio/ValueSet/mii-vs-empfindlichkeit-einheiten-ucum</code></td><td><code>…/modul-mikrobio/ValueSet/mii-vs-mikrobio-empfindlichkeit-einheiten-ucum</code></td><td>ähnlich (0.667)</td></tr>
+<tr><td>mikrobiologie</td><td><code>…/modul-mikrobio/ValueSet/mii-vs-keimzahl-einheiten-ucum</code></td><td><code>…/modul-mikrobio/ValueSet/mii-vs-mikrobio-keimzahl-einheiten-ucum</code></td><td>ähnlich (0.5)</td></tr>
+<tr><td>mikrobiologie</td><td><code>…/modul-mikrobio/ValueSet/mii-vs-mikrobio-antigen-assay-einheiten-ucum</code></td><td><code>…/modul-mikrobio/ValueSet/mii-vs-mikrobio-antigen-antikoerper-quantitativ-einheiten-ucum</code></td><td>ähnlich (0.286)</td></tr>
+<tr><td>mikrobiologie</td><td><code>…/modul-mikrobio/ValueSet/mii-vs-mikrobio-aviditaet-snomedct</code></td><td><i>entfällt ersatzlos bzw. kein Kandidat</i></td><td>ähnlich (0.0)</td></tr>
+<tr><td>mikrobiologie</td><td><code>…/modul-mikrobio/ValueSet/mii-vs-mikrobio-barlett-score-loinc</code></td><td><code>…/modul-mikrobio/ValueSet/mii-vs-mikrobio-bartlett-score-loinc</code></td><td>identisch</td></tr>
+<tr><td>mikrobiologie</td><td><code>…/modul-mikrobio/ValueSet/mii-vs-mikrobio-clsi-hl7</code></td><td><code>…/modul-mikrobio/ValueSet/mii-vs-mikrobio-susceptibility</code></td><td>ähnlich (0.833)</td></tr>
+<tr><td>mikrobiologie</td><td><code>…/modul-mikrobio/ValueSet/mii-vs-mikrobio-eucast-snomedct</code></td><td><i>entfällt ersatzlos bzw. kein Kandidat</i></td><td>ähnlich (0.125)</td></tr>
+<tr><td>mikrobiologie</td><td><code>…/modul-mikrobio/ValueSet/mii-vs-mikrobio-kultur-methode-snomedct</code></td><td><i>entfällt ersatzlos bzw. kein Kandidat</i></td><td>ähnlich (0.0)</td></tr>
+<tr><td>mikrobiologie</td><td><code>…/modul-mikrobio/ValueSet/mii-vs-mikrobio-mikroskopiemethoden-snomedct</code></td><td><i>entfällt ersatzlos bzw. kein Kandidat</i></td><td>ähnlich (0.111)</td></tr>
+<tr><td>mikrobiologie</td><td><code>…/modul-mikrobio/ValueSet/mii-vs-mikrobio-morphologie-snomedct</code></td><td><code>…/modul-mikrobio/ValueSet/mii-vs-mikrobio-morphologie-ergebnis-snomed</code></td><td>ähnlich (0.276)</td></tr>
+<tr><td>mikrobiologie</td><td><code>…/modul-mikrobio/ValueSet/mii-vs-mikrobio-mre-klasse-snomedct</code></td><td><i>entfällt ersatzlos bzw. kein Kandidat</i></td><td>ähnlich (0.0)</td></tr>
+<tr><td>mikrobiologie</td><td><code>…/modul-mikrobio/ValueSet/mii-vs-mikrobio-positiv-negativ-snomedct</code></td><td><code>…/modul-mikrobio/ValueSet/mii-vs-mikrobio-resistenzkategorie-status-ergebnis</code></td><td>ähnlich (0.5)</td></tr>
+<tr><td>mikrobiologie</td><td><code>…/modul-mikrobio/ValueSet/mii-vs-mikrobio-qualitative-labor-ergebnisse-snomedct</code></td><td><code>…/modul-mikrobio/ValueSet/mii-vs-mikrobio-detected-not-detected-snomed</code></td><td>ähnlich (0.667)</td></tr>
+<tr><td>mikrobiologie</td><td><code>…/modul-mikrobio/ValueSet/mii-vs-mikrobio-resistenzgene-loinc</code></td><td><i>entfällt ersatzlos bzw. kein Kandidat</i></td><td>ähnlich (0.0)</td></tr>
+<tr><td>mikrobiologie</td><td><code>…/modul-mikrobio/ValueSet/mii-vs-mikrobio-resistenzmutation-loinc</code></td><td><i>entfällt ersatzlos bzw. kein Kandidat</i></td><td>ähnlich (0.0)</td></tr>
+<tr><td>mikrobiologie</td><td><code>…/modul-mikrobio/ValueSet/mii-vs-mikrobio-serologie-immunologie-loinc</code></td><td><i>entfällt ersatzlos bzw. kein Kandidat</i></td><td>ähnlich (0.0)</td></tr>
+<tr><td>mikrobiologie</td><td><code>…/modul-mikrobio/ValueSet/mii-vs-mikrobio-serologischer-test-einheiten-ucum</code></td><td><code>…/modul-mikrobio/ValueSet/mii-vs-mikrobio-empfindlichkeit-einheiten-ucum</code></td><td>ähnlich (0.273)</td></tr>
+<tr><td>mikrobiologie</td><td><code>…/modul-mikrobio/ValueSet/mii-vs-mikrobio-voraussichtliche-empfindlichkeit-snomedct</code></td><td><i>entfällt ersatzlos bzw. kein Kandidat</i></td><td>ähnlich (0.0)</td></tr>
+<tr><td>mikrobiologie</td><td><code>…/modul-mikrobio/ValueSet/mii-vs-molekulare-diagnostik-einheiten-ucum</code></td><td><code>…/modul-mikrobio/ValueSet/mii-vs-mikrobio-molekulare-diagnostik-einheiten-ucum</code></td><td>ähnlich (0.714)</td></tr>
+<tr><td>mikrobiologie</td><td><code>…/modul-mikrobiologie/ValueSet/mii-vs-mikrobio-kulturtests-loinc</code></td><td><i>entfällt ersatzlos bzw. kein Kandidat</i></td><td>ähnlich (0.0)</td></tr>
+<tr><td>mikrobiologie</td><td><code>…/modul-mikrobiologie/ValueSet/mii-vs-mikrobio-mikroskopie-tests-loinc</code></td><td><i>entfällt ersatzlos bzw. kein Kandidat</i></td><td>ähnlich (0.009)</td></tr>
+<tr><td>mikrobiologie</td><td><code>…/modul-mikrobiologie/ValueSet/mii-vs-mikrobio-molekulare-diagnostik-loinc</code></td><td><i>entfällt ersatzlos bzw. kein Kandidat</i></td><td>ähnlich (0.0)</td></tr>
+<tr><td>onkologie</td><td><code>…/ext/modul-onko/ValueSet/mii-vs-strahlentherapie-ende-grund</code></td><td><code>…/ext/modul-onko/ValueSet/mii-vs-onko-strahlentherapie-ende-grund</code></td><td>identisch</td></tr>
+<tr><td>onkologie</td><td><code>…/ext/modul-onko/ValueSet/mii-vs-strahlentherapie-stellungzurop</code></td><td><code>…/ext/modul-onko/ValueSet/mii-vs-onko-strahlentherapie-stellungzurop</code></td><td>identisch</td></tr>
+<tr><td>onkologie</td><td><code>…/ext/modul-onko/ValueSet/mii-vs-strahlentherapie-strahlenart</code></td><td><code>…/ext/modul-onko/ValueSet/mii-vs-onko-strahlentherapie-strahlenart</code></td><td>identisch</td></tr>
+<tr><td>onkologie</td><td><code>…/ext/modul-onko/ValueSet/mii-vs-strahlentherapie-strahlungseinheit</code></td><td><code>…/ext/modul-onko/ValueSet/mii-vs-onko-strahlentherapie-strahlungseinheit</code></td><td>identisch</td></tr>
+<tr><td>onkologie</td><td><code>…/ext/modul-onko/ValueSet/mii-vs-strahlentherapie-zielgebiet</code></td><td><code>…/ext/modul-onko/ValueSet/mii-vs-onko-strahlentherapie-zielgebiet</code></td><td>identisch</td></tr>
+<tr><td>onkologie</td><td><code>…/ext/modul-onko/ValueSet/mii-vs-systemische-therapie-ende-grund</code></td><td><code>…/ext/modul-onko/ValueSet/mii-vs-onko-systemische-therapie-ende-grund</code></td><td>identisch</td></tr>
+<tr><td>onkologie</td><td><code>…/ext/modul-onko/ValueSet/mii-vs-systemische-therapie-stellungzurop</code></td><td><code>…/ext/modul-onko/ValueSet/mii-vs-onko-systemische-therapie-stellungzurop</code></td><td>identisch</td></tr>
+<tr><td>seltene</td><td><code>…/ext/modul-seltene/ValueSet/von-seltene-betroffen-vs</code></td><td><code>…/ext/modul-seltene/ValueSet/mii-vs-seltene-von-se-betroffen</code></td><td>identisch</td></tr>
+</table></details>
+
+Details in der [VS-Rename-Kandidatenliste](https://github.com/medizininformatik-initiative/mii-kerndatensatz-versionhistory/blob/main/data/vs-rename-candidates-2027.csv)
+(Composition-Vergleich; inhaltliche VS-Änderungen bei gleichbleibender URL
+sind hier ausdrücklich *nicht* erfasst — siehe [Versionierung → Abgrenzung](versionierung.html)).
+
 ### 3. Breaking-Änderungen prüfen
 
 41 Profil-Übergänge sind strukturell breaking (Elemente entfernt oder
