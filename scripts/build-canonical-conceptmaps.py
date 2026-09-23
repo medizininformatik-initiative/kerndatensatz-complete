@@ -90,9 +90,28 @@ def main():
         ("vs-rename-candidates-2027.csv", "mii-cm-kds-vs-canonicals-2026-2027",
          "MII KDS ValueSet-Canonicals 2026 auf 2027", "ValueSet-Canonicals"),
     ]
+    # ICU -> ISiK 6 Governance-Uebergang: eigene Quelle, eigene Semantik.
+    # WICHTIG: Die Map ordnet nur URLs zu (gleicher fachlicher Gegenstand unter
+    # neuer Governance); sie ist KEINE Konformitaetsaussage — die ISiK-Fassungen
+    # sind ueberwiegend ausspezifiziert (Struktur-Jaccard im Kommentar).
+    gov = os.path.join(a.history_repo, "data", "icu-isik-governance.csv")
+    if os.path.exists(gov):
+        rows = [r for r in csv.DictReader(open(gov, encoding="utf-8")) if r["mii_url"]]
+        conv = [{"module": "icu", "old_url": r["mii_url"], "new_url": r["isik_url"],
+                 "jaccard": r["struktur_jaccard"], "confirmed": "",
+                 "old_version": r["mii_letzte_version"] or "icu",
+                 "new_version": "de.gematik.isik 6.0.0"} for r in rows]
+        jobs.append((conv, "mii-cm-kds-icu-isik6-canonicals",
+                     "MII ICU Canonicals auf ISiK 6 (Governance-Uebergang)",
+                     "ICU-Profil-Canonicals, deren fachlicher Gegenstand in ISiK 6 "
+                     "unter gematik-Canonical weitergefuehrt wird — reine "
+                     "URL-Zuordnung, keine Konformitaetsaussage"))
     for src, cm_id, title, what in jobs:
-        path = os.path.join(a.history_repo, "data", src)
-        rows = list(csv.DictReader(open(path, encoding="utf-8")))
+        if isinstance(src, list):
+            rows = src
+        else:
+            path = os.path.join(a.history_repo, "data", src)
+            rows = list(csv.DictReader(open(path, encoding="utf-8")))
         cm = build(rows, cm_id, title, what)
         out = os.path.join(ROOT, "input", "resources", f"ConceptMap-{cm_id}.json")
         json.dump(cm, open(out, "w", encoding="utf-8"), indent=2, ensure_ascii=False)

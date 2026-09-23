@@ -89,11 +89,33 @@ Details in der [VS-Rename-Kandidatenliste](https://github.com/medizininformatik-
 (Composition-Vergleich; inhaltliche VS-Änderungen bei gleichbleibender URL
 sind hier ausdrücklich *nicht* erfasst — siehe [Versionierung → Abgrenzung](versionierung.html)).
 
-**Maschinell nutzbar** sind beide Mappings als ConceptMaps im URI-System
+**Sonderfall ICU ↔ ISiK 6 (Governance-Übergang):** Ein großer Teil der
+ICU-Profillandschaft wird in **ISiK 6** unter gematik-Canonical weitergeführt —
+das ISiK-6-Package bettet 83 MII-benannte Profile physisch ein
+(`https://gematik.de/fhir/isik/StructureDefinition/mii-pr-icu-…`). Die Aufteilung:
+
+- **29 Profile in Doppel-Governance** (existieren in MII ICU `ballot.3` *und* ISiK 6),
+- **49 nach ISiK übergegangen** (waren in einer MII-ICU-Version, fehlen in `ballot.3`),
+- **4 direkt in ISiK ausspezifiziert**, ohne je in MII ICU publiziert zu sein —
+  diese sind im Ballot **mitzukommentieren**: `SD_MII_ICU_Koerpergroesse_Percentil_Altersabhaengig`,
+  `SD_MII_ICU_Koerperkerntemperatur_Stirn`, `SD_MII_ICU_Koerpertemperatur_Oral`,
+  `SD_MII_ICU_Sonstige_Pulsatile_Druecke_Generisch`
+  (dazu bettet ISiK 6 das Basismodul-Profil `MII_PR_Prozedur_Procedure` ein).
+
+**Wichtig:** Die Zuordnung betrifft **nur die URLs** — sie ist keine
+Konformitätsaussage. Nur 4 der übernommenen Profile sind strukturell identisch
+mit ihrem letzten MII-Stand; die ISiK-Fassungen sind überwiegend
+ausspezifiziert (Struktur-Ähnlichkeit je Profil in der
+[Governance-Tabelle](https://github.com/medizininformatik-initiative/mii-kerndatensatz-versionhistory/blob/main/data/icu-isik-governance.csv)).
+Eine Instanz, die gegen das MII-Profil valide ist, ist es gegen das
+ISiK-Pendant nicht automatisch.
+
+**Maschinell nutzbar** sind alle drei Mappings als ConceptMaps im URI-System
 `urn:ietf:rfc:3986` — damit beantwortet `$translate` (z.B. auf dem
 Validation-Server) zur Laufzeit, wohin eine alte Canonical zeigt:
 [Profil-Canonicals](ConceptMap-mii-cm-kds-profile-canonicals-2026-2027.html) ·
-[ValueSet-Canonicals](ConceptMap-mii-cm-kds-vs-canonicals-2026-2027.html).
+[ValueSet-Canonicals](ConceptMap-mii-cm-kds-vs-canonicals-2026-2027.html) ·
+[ICU → ISiK 6](ConceptMap-mii-cm-kds-icu-isik6-canonicals.html).
 Beide sind als `draft`/`experimental` markiert, solange die Kuratierung läuft
 (`equivalent` = inhaltsgleich belegt, `relatedto` = Kandidat mit Score,
 `unmatched` = entfällt ersatzlos).
