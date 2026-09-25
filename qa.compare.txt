@@ -1,11 +1,11 @@
 MIIKerndatensatzComplete : Validation Results
 =========================================
 
-err = 23, warn = 424, info = 11
+err = 23, warn = 425, info = 11
 $--
 Generated $--. FHIR version $-- for de.medizininformatikinitiative.kerndatensatz.complete#$-- (canonical = https://www.medizininformatik-initiative.de/fhir/core/complete)
  Build Errors : 1 / 12 / 0
- /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/fsh-generated/resources/ImplementationGuide-de.medizininformatikinitiative.kerndatensatz.complete : 3 / 17 / 3
+ /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/fsh-generated/resources/ImplementationGuide-de.medizininformatikinitiative.kerndatensatz.complete : 3 / 18 / 3
  /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/input/resources/CapabilityStatement-mii-cps-kerndatensatz-complete : 19 / 383 / 4
  /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/input/resources/ConceptMap-mii-cm-kds-icu-isik6-canonicals : 0 / 4 / 3
  /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/input/resources/ConceptMap-mii-cm-kds-profile-canonicals-2026-2027 : 0 / 4 / 3
@@ -16,7 +16,7 @@ ERROR: ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.complete
 WARNING: ImplementationGuide.dependency[9].url: The canonical URL for an Implementation Guide must point directly to the implementation guide resource, not to the Implementation Guide as a whole
 WARNING: ImplementationGuide.dependency[17].url: The canonical URL for an Implementation Guide must point directly to the implementation guide resource, not to the Implementation Guide as a whole
 WARNING: ImplementationGuide.dependency[28].url: The canonical URL for an Implementation Guide must point directly to the implementation guide resource, not to the Implementation Guide as a whole
-WARNING: /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/output/de/ballot.html: Illegal HTML: illegal html element: small (Stand: 2026-09-24 09:26 UTC · Zählung über Projekt HDB · automatisch aktualisiert)
+WARNING: /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/output/de/ballot.html: Illegal HTML: illegal html element: small (Stand: 2026-09-25 09:44 UTC · Zählung über Projekt HDB · automatisch aktualisiert)
 WARNING: /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/output/de/index.html: Illegal HTML: illegal html element: small (Automatisch generiert aus dep-graph-2027.dot via Graphviz. Knoten: grün = finale Version, gelb = Ballot/RC/Alpha, grau = in Entwicklung. Kanten: rot gestrichelt = das Modul deklariert noch die 2026er Version des Ziels, während diese BOM auf die 2027er Ballot-Linie pinnt.)
 WARNING: /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/output/de/migration.html: Illegal HTML: illegal html element: small (Generiert mit scripts/migration-viz.py. Grau = kein
 Handlungsbedarf, Blau = nur Erweiterungen, Orange = breaking, Rot =
@@ -46,6 +46,7 @@ WARNING: ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.comple
 ERROR: ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.complete: ImplementationGuide.dependsOn[17]: The URL should refer directly to the ImplementationGuide resource (e.g. include '/ImplementationGuide/')
 WARNING: ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.complete: ImplementationGuide.dependsOn[17]: The canonical URL https://www.medizininformatik-initiative.de/fhir/ext/modul-kardio/ doesn't point to an actual ImplementationGuide resource
 WARNING: ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.complete: ImplementationGuide.dependsOn[18]: The canonical URL http://fhir.org/packages/de.medizininformatikinitiative.kerndatensatz.lungenfunktion/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.lungenfunktion doesn't point to an actual ImplementationGuide resource
+WARNING: ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.complete: ImplementationGuide.dependsOn[25]: The ImplementationGuide uses package hl7.fhir.eu.base#2.0.0 released on 2026-04-27, but the most recent appropriate version is 2.0.1. This reference is getting old and the more recent version should be considered
 WARNING: ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.complete: ImplementationGuide.dependsOn[27]: The ImplementationGuide uses package hl7.fhir.eu.extensions.r4#1.3.0 released on 2026-03-27, but the most recent appropriate version is 1.3.1. This reference is getting old and the more recent version should be considered
 ERROR: ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.complete: ImplementationGuide.dependsOn[28]: The URL should refer directly to the ImplementationGuide resource (e.g. include '/ImplementationGuide/')
 WARNING: ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.complete: ImplementationGuide.dependsOn[29]: The canonical URL http://fhir.org/packages/de.gematik.isik/ImplementationGuide/de.gematik.isik doesn't point to an actual ImplementationGuide resource

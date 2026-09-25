@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Offizielle URL*:https://www.medizininformatik-initiative.de/fhir/core/complete/ConceptMap/mii-cm-kds-profile-canonicals-2026-2027 | *Version*:2027.0.0-ballot.19 |
-| Draft Stand: 2026-09-24 | *Maschinenlesbarer Name*:mii_cm_kds_profile_canonicals_2026_2027 |
+| Draft Stand: 2026-09-25 | *Maschinenlesbarer Name*:mii_cm_kds_profile_canonicals_2026_2027 |
 
  
 Migration der Profil-Canonicals (StructureDefinition.url) von der 2026er KDS-Linie auf die in dieser BOM gepinnte 2027er Ballot-Linie. Automatisch erzeugt aus dem Aehnlichkeits-Matching des MII KDS Version-Differs (Element- bzw. Composition-Fingerprints, Jaccard-Index). Qualitaetsstatus nach MapQual/ISO TS 21564: D12 = automatisiert ohne abgeschlossene menschliche Validierung — Entwurf zur Kuratierung, nicht fuer den produktiven Einsatz. Zeilen mit equivalence=equivalent sind inhaltsgleiche Umbenennungen (Jaccard 1.0); relatedto-Zeilen tragen den Aehnlichkeits-Score im Kommentar. 
@@ -28,7 +28,7 @@ Migration der Profil-Canonicals (StructureDefinition.url) von der 2026er KDS-Lin
   "title" : "MII KDS Profil-Canonicals 2026 auf 2027",
   "status" : "draft",
   "experimental" : true,
-  "date" : "2026-09-24T09:27:45+00:00",
+  "date" : "2026-09-25T09:45:00+00:00",
   "publisher" : "Medizininformatik Initiative",
   "contact" : [{
     "name" : "Medizininformatik Initiative",
