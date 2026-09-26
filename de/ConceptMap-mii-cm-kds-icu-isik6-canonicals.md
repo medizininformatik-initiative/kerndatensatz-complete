@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Offizielle URL*:https://www.medizininformatik-initiative.de/fhir/core/complete/ConceptMap/mii-cm-kds-icu-isik6-canonicals | *Version*:2027.0.0-ballot.19 |
-| Draft Stand: 2026-09-25 | *Maschinenlesbarer Name*:mii_cm_kds_icu_isik6_canonicals |
+| Draft Stand: 2026-09-26 | *Maschinenlesbarer Name*:mii_cm_kds_icu_isik6_canonicals |
 
  
 Migration der ICU-Profil-Canonicals, deren fachlicher Gegenstand in ISiK 6 unter gematik-Canonical weitergefuehrt wird — reine URL-Zuordnung, keine Konformitaetsaussage von der 2026er KDS-Linie auf die in dieser BOM gepinnte 2027er Ballot-Linie. Automatisch erzeugt aus dem Aehnlichkeits-Matching des MII KDS Version-Differs (Element- bzw. Composition-Fingerprints, Jaccard-Index). Qualitaetsstatus nach MapQual/ISO TS 21564: D12 = automatisiert ohne abgeschlossene menschliche Validierung — Entwurf zur Kuratierung, nicht fuer den produktiven Einsatz. Zeilen mit equivalence=equivalent sind inhaltsgleiche Umbenennungen (Jaccard 1.0); relatedto-Zeilen tragen den Aehnlichkeits-Score im Kommentar. 
@@ -28,7 +28,7 @@ Migration der ICU-Profil-Canonicals, deren fachlicher Gegenstand in ISiK 6 unter
   "title" : "MII ICU Canonicals auf ISiK 6 (Governance-Uebergang)",
   "status" : "draft",
   "experimental" : true,
-  "date" : "2026-09-25T09:45:00+00:00",
+  "date" : "2026-09-26T09:29:37+00:00",
   "publisher" : "Medizininformatik Initiative",
   "contact" : [{
     "name" : "Medizininformatik Initiative",
