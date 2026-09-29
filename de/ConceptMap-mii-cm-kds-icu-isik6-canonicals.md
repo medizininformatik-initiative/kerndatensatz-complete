@@ -28,7 +28,7 @@ Migration der ICU-Profil-Canonicals, deren fachlicher Gegenstand in ISiK 6 unter
   "title" : "MII ICU Canonicals auf ISiK 6 (Governance-Uebergang)",
   "status" : "draft",
   "experimental" : true,
-  "date" : "2026-09-29T10:52:00+00:00",
+  "date" : "2026-09-29T13:43:38+00:00",
   "publisher" : "Medizininformatik Initiative",
   "contact" : [{
     "name" : "Medizininformatik Initiative",

@@ -28,7 +28,7 @@ Migration der ValueSet-Canonicals von der 2026er KDS-Linie auf die in dieser BOM
   "title" : "MII KDS ValueSet-Canonicals 2026 auf 2027",
   "status" : "draft",
   "experimental" : true,
-  "date" : "2026-09-29T10:52:00+00:00",
+  "date" : "2026-09-29T13:43:38+00:00",
   "publisher" : "Medizininformatik Initiative",
   "contact" : [{
     "name" : "Medizininformatik Initiative",
