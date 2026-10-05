@@ -18,7 +18,7 @@
   fhir:ImplementationGuide.name [ fhir:value "MIIKerndatensatzComplete"] ;
   fhir:ImplementationGuide.title [ fhir:value "MII Kerndatensatz Complete"] ;
   fhir:ImplementationGuide.status [ fhir:value "active"] ;
-  fhir:ImplementationGuide.date [ fhir:value "2026-10-04T10:43:31+00:00"^^xsd:dateTime] ;
+  fhir:ImplementationGuide.date [ fhir:value "2026-10-05T07:30:04+00:00"^^xsd:dateTime] ;
   fhir:ImplementationGuide.publisher [ fhir:value "Medizininformatik Initiative"] ;
   fhir:ImplementationGuide.contact [
      fhir:index -1 ;
@@ -1031,6 +1031,16 @@
          ] ;
          fhir:ImplementationGuide.definition.page.nameUrl [ fhir:value "ballot.html" ] ;
          fhir:ImplementationGuide.definition.page.title [ fhir:value "Ballot" ] ;
+         fhir:ImplementationGuide.definition.page.generation [ fhir:value "markdown" ]
+       ], [
+         fhir:index -1 ;
+         fhir:Element.extension [
+           fhir:index -1 ;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name" ] ;
+           fhir:Extension.valueUrl [ fhir:value "entwicklungsstack.html" ]
+         ] ;
+         fhir:ImplementationGuide.definition.page.nameUrl [ fhir:value "entwicklungsstack.html" ] ;
+         fhir:ImplementationGuide.definition.page.title [ fhir:value "Entwicklungsstack" ] ;
          fhir:ImplementationGuide.definition.page.generation [ fhir:value "markdown" ]
        ], [
          fhir:index -1 ;

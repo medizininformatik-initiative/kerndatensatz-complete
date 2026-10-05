@@ -6,6 +6,10 @@ Generic: line 0, col 0, Warning - The canonical URL for an Implementation Guide 
 Generic: line 0, col 0, Warning - The canonical URL for an Implementation Guide must point directly to the implementation guide resource, not to the Implementation Guide as a whole (INVALID)
 Generic: line 0, col 0, Warning - The canonical URL for an Implementation Guide must point directly to the implementation guide resource, not to the Implementation Guide as a whole (INVALID)
 Generic: line 0, col 0, Warning - Illegal HTML: illegal html element: small (Stand: 2026-10-04 10:42 UTC · Zählung über Projekt HDB · automatisch aktualisiert) (INVALID)
+Generic: line 0, col 0, Warning - Illegal HTML: illegal html element: small (Generiert aus dev-stack.dot via Graphviz. Grün = stabile
+Grundlage bzw. Soll-Weg (Registry), gelb = Ballot-Linie 2027, grau = Interimslösung. Graue
+gestrichelte Kanten = Interims-Pfade über den Package-Store, rote Kanten = Rückfluss
+der Auswertungen in diese BOM.) (INVALID)
 Generic: line 0, col 0, Warning - Illegal HTML: illegal html element: small (Automatisch generiert aus dep-graph-2027.dot via Graphviz. Knoten: grün = finale Version, gelb = Ballot/RC/Alpha, grau = in Entwicklung. Kanten: rot gestrichelt = das Modul deklariert noch die 2026er Version des Ziels, während diese BOM auf die 2027er Ballot-Linie pinnt.) (INVALID)
 Generic: line 0, col 0, Warning - Illegal HTML: illegal html element: small (Generiert mit scripts/migration-viz.py. Grau = kein
 Handlungsbedarf, Blau = nur Erweiterungen, Orange = breaking, Rot =
@@ -463,5 +467,5 @@ Generic: line 0, col 0, Warning - The HTML fragment 'globals-table.xhtml' is not
 /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/input/resources/ConceptMap-mii-cm-kds-vs-canonicals-2026-2027.json: line 1, col 24704, Warning - Unbekanntes Zielcodesystem urn:ietf:rfc:3986, daher können die Zielcodes nicht überprüft werden (NOTFOUND)
 /home/runner/work/kerndatensatz-complete/kerndatensatz-complete/input/resources/ConceptMap-mii-cm-kds-vs-canonicals-2026-2027.json: line 0, col 0, Info - The resource ConceptMap/mii-cm-kds-vs-canonicals-2026-2027 could usefully have an OID assigned (OIDs are easy to assign - see https://build.fhir.org/ig/FHIR/fhir-tools-ig/CodeSystem-ig-parameters.html#ig-parameters-auto-oid-root) (BUSINESSRULE)
 
-err = 23, warn = 425, info = 11
+err = 23, warn = 426, info = 11
 IG Publisher Version: 2.3.4

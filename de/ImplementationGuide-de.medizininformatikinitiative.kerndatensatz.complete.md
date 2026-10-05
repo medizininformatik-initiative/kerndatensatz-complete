@@ -14,7 +14,7 @@
   "name" : "MIIKerndatensatzComplete",
   "title" : "MII Kerndatensatz Complete",
   "status" : "active",
-  "date" : "2026-10-04T10:43:31+00:00",
+  "date" : "2026-10-05T07:30:04+00:00",
   "publisher" : "Medizininformatik Initiative",
   "contact" : [{
     "name" : "Medizininformatik Initiative",
@@ -879,6 +879,15 @@
         }],
         "nameUrl" : "ballot.html",
         "title" : "Ballot",
+        "generation" : "markdown"
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+          "valueUrl" : "entwicklungsstack.html"
+        }],
+        "nameUrl" : "entwicklungsstack.html",
+        "title" : "Entwicklungsstack",
         "generation" : "markdown"
       },
       {

@@ -4,6 +4,7 @@
 
 * [Home](index.md)
 * [Testabdeckung](testabdeckung.md)
+* [Entwicklungsstack](entwicklungsstack.md)
 * [Artefaktübersicht](artifacts.md)
 * [Ballot](ballot.md)
 * [Versionierung](versionierung.md)

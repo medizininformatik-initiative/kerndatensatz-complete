@@ -1,0 +1,605 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML>
+
+
+<html xml:lang="de" xmlns="http://www.w3.org/1999/xhtml" lang="de" dir="ltr">
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
+    <title>Entwicklungsstack - MII Kerndatensatz Complete v2027.0.0-ballot.19</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content="http://hl7.org/fhir"/>
+
+    <link href="fhir.css" rel="stylesheet"/>
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap-fhir.css" rel="stylesheet"/>
+
+    <!-- Project extras -->
+    <link href="assets/css/pygments-manni.css" rel="stylesheet"/>
+    <link href="assets/css/jquery-ui.css" rel="stylesheet"/>
+  	<link href="assets/css/prism.css" rel="stylesheet" />
+    <link href="assets/css/project.css" rel="stylesheet"/>
+  	<link href="assets/css/cqf.css" rel="stylesheet" />
+    <!-- Branding override for the fhir2.base.template CSS placeholder
+     (base ships includes/fragment-css.html as a single comment; it is included
+     in <head> AFTER all base stylesheets, so the linked files win the
+     cascade).
+     Load model (docs/styleguide.md §1/§10): bootstrap-accessibility.css
+     (PayPal Bootstrap Accessibility Plugin v1.0.7, vendored + pinned - §8)
+     patches Bootstrap-3 component styling for accessibility (focus outlines,
+     alert contrast) and loads FIRST so the template's own rules can override;
+     then template-base.css carries the
+     brand-INDEPENDENT rule blocks and always loads; then EXACTLY ONE palette
+     file follows - num-diz.css, the DEFAULT design, unless the consuming IG
+     ships input/data/brand.json with { "design": "mii" } (read as
+     site.data.brand.design via the base's input/data -> _data pre-process),
+     which selects mii.css instead. Only the exact value 'mii' selects the
+     MII design; anything else - including no brand.json at all and unknown
+     values - renders NUM-DIZ. Both palettes declare the same variable set
+     (scripts/brand-switch.test.mjs). -->
+<link href="assets/css/bootstrap-accessibility.css" rel="stylesheet"/>
+<link href="assets/css/template-base.css" rel="stylesheet"/>
+
+<link href="assets/css/num-diz.css" rel="stylesheet"/>
+
+
+
+    <script type="text/javascript" src="fhir-table-scripts.js"> </script>
+    <script type="text/javascript" src="assets/js/direction-management.js"> </script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="assets/js/html5shiv.js"></script>
+    <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Favicons -->
+    <link rel="fhir-logo" sizes="144x144" href="assets/ico/icon-fhir-144.png"/>
+    <link rel="fhir-logo" sizes="114x114" href="assets/ico/icon-fhir-114.png"/>
+    <link rel="fhir-logo" sizes="72x72" href="assets/ico/icon-fhir-72.png"/>
+    <link rel="fhir-logo" href="assets/ico/icon-fhir-57.png"/>
+    <link rel="shortcut icon" href="assets/ico/favicon.png"/>
+  </head>
+  <body onload="document.body.style.opacity='1'">
+
+	  <script src="assets/js/prism.js"></script>
+    <script type="text/javascript" src="assets/js/mermaid.js"></script>
+    <script type="text/javascript" src="assets/js/mermaid-init.js"></script>
+    <style type="text/css">h2{--heading-prefix:"3"}
+    h3,h4,h5,h6{--heading-prefix:"3"}</style>
+    <div id="segment-header" class="segment">  <!-- segment-header -->
+      <div class="container">  <!-- container -->
+
+        <!-- Branding override for the fhir2.base.template header placeholder
+     (base ships includes/fragment-header.html as a single comment; it is included
+     inside "#segment-header > .container", before the #ig-status block).
+     Language handling: only the asset and its descriptive alt text switch on
+     include.lang (the pattern kerndatensatz-basis uses); no translatable UI
+     strings are hard-coded.
+     Brand handling: the project logo additionally switches on
+     site.data.brand.design (input/data/brand.json in the consuming IG, see
+     docs/styleguide.md §10). Only the exact value 'mii' selects the MII
+     logos - anything else, including no brand.json at all, falls through to
+     the NUM-DIZ default.
+     Two logos, mirroring kerndatensatz-basis: the HL7 FHIR logo (links to the
+     FHIR spec) in #family-nav, and the project logo in #project-nav.
+     fhir-logo-www.png is shipped by fhir2.base.template
+     (content/assets/images/), so it resolves from the inherited assets without
+     shipping it here. -->
+<div id="family-nav">
+  <a id="family-logo" no-external="true" href="https://hl7.org/fhir">
+    <img height="50" alt="HL7 FHIR" src="assets/images/fhir-logo-www.png"/>
+  </a>
+</div>
+<div id="project-nav">
+
+  <a id="project-logo" no-external="true" href="https://www.netzwerk-universitaetsmedizin.de/forschung/num-diz">
+
+    <img height="50" alt="NUM-DIZ (Netzwerk Universitätsmedizin — Datenintegrationszentrum)" src="assets/images/logo-num-diz-de.svg"/>
+
+  </a>
+
+</div>
+<!-- Font-size control (A / A+ / A++): three reader-selectable levels; level A
+     is the untouched default. Logic in assets/js/font-size-control.js, the
+     zoom mapping + button styling in template-base.css ("font-size control"
+     block). All three buttons read "A" — the button's own font size shows the level; labels are language-neutral; only the aria texts switch
+     on include.lang. REMOVAL: delete this block, the js file and the CSS
+     block - one commit, styleguide §5a. -->
+
+<div class="ig-fontsize" role="group" aria-label="Schriftgröße">
+  <button type="button" data-level="0" aria-pressed="true" aria-label="Schriftgröße: Standard">A</button>
+  <button type="button" data-level="1" aria-pressed="false" aria-label="Schriftgröße: größer">A</button>
+  <button type="button" data-level="2" aria-pressed="false" aria-label="Schriftgröße: am größten">A</button>
+</div>
+
+<script src="assets/js/font-size-control.js" defer></script>
+<!-- PayPal Bootstrap Accessibility Plugin v1.0.7 (vendored + pinned, §8):
+     patches the Bootstrap-3 components the publisher renders - navbar
+     dropdowns gain ARIA menu semantics + arrow-key navigation, tab panels
+     (structure-tabs) the full ARIA tabs pattern, alerts live-region
+     announcements. `defer` guarantees it executes AFTER the parser-inserted
+     bootstrap.min.js at the end of the body. Vendored from
+     paypal/bootstrap-accessibility-plugin @ v1.0.7 (the admin-ch fork was
+     evaluated and rejected: 151 commits behind upstream, its 6 deltas are
+     site-specific tab tweaks). REMOVAL: delete this tag, both vendored
+     assets and the fragment-css link - guard test pins the hashes. -->
+<script src="assets/js/bootstrap-accessibility.min.js" defer></script>
+<!-- Back-to-top button: appears after one viewport of scrolling (logic in
+     assets/js/back-to-top.js, styling in template-base.css "back-to-top"
+     block). Rendered here inside #segment-header, which is OUTSIDE the
+     data-fontsize zoom regions, so the fixed button never scales. REMOVAL:
+     this block, the js file and the CSS block - one commit, styleguide §8. -->
+
+<button type="button" class="ig-back-to-top" aria-label="Zurück zum Seitenanfang">↑</button>
+
+<script src="assets/js/back-to-top.js" defer></script>
+
+
+        <div id="ig-status">
+          <p><span style="font-size:12pt;font-weight:bold">MII Kerndatensatz Complete</span>
+            <br/>
+            <span style="display:inline-block;">2027.0.0-ballot.19 - 
+
+
+
+  <img alt="Germany Flagge" src="assets/images/deu.svg" height="16" title="Germany"/>
+
+
+            </span>
+          </p>
+        </div>
+      </div> <!-- /container -->
+    </div>  <!-- /segment-header -->
+
+    <div id="segment-navbar" class="segment">  <!-- segment-navbar -->
+      <div id="stripe"> </div>
+      <div class="container">  <!-- container -->
+        <!-- HEADER CONTENT -->
+
+        <nav class="navbar navbar-inverse">
+          <!--status-bar-->
+          <div class="container">
+
+            <button data-target=".navbar-inverse-collapse" class="navbar-toggle" data-toggle="collapse" type="button">
+              <span class="icon-bar"> </span>
+              <span class="icon-bar"> </span>
+              <span class="icon-bar"> </span>
+            </button>
+            <a class="navbar-brand hidden" href="http://hl7.org/fhir/R4/index.html">FHIR</a>
+            <div class="nav-collapse collapse navbar-inverse-collapse">
+              <!-- menu.xml  -->
+
+<ul xmlns="http://www.w3.org/1999/xhtml" class="nav navbar-nav">
+  <li>
+    <a href="index.html">Home</a>
+  </li>
+  <li>
+    <a href="ballot.html">Ballot 2027</a>
+  </li>
+  <li>
+    <a href="testabdeckung.html">Testabdeckung</a>
+  </li>
+  <li>
+    <a href="versionierung.html">Versionierung</a>
+  </li>
+  <li>
+    <a href="migration.html">Migration von v2026</a>
+  </li>
+  <li>
+    <a href="entwicklungsstack.html">Entwicklungsstack</a>
+  </li>
+  <li>
+    <a href="artifacts.html">Artefakte</a>
+  </li>
+</ul>
+            </div>  <!-- /.nav-collapse -->
+
+              
+
+
+
+          </div>  <!-- /.container -->
+        </nav>  <!-- /.navbar -->
+      <!-- /HEADER CONTENT -->
+      </div>  <!-- /container -->
+    </div>  <!-- /segment-navbar -->
+    <!--status-bar-->
+
+    <div id="segment-breadcrumb" class="segment">  <!-- segment-breadcrumb -->
+      <div class="container">  <!-- container -->
+        <ul class="breadcrumb">
+          <li><a href='toc.html'><b>Table of Contents</b></a></li><li><b>Entwicklungsstack</b></li>
+
+        </ul>
+      </div>  <!-- /container -->
+    </div>  <!-- /segment-breadcrumb -->
+
+    <a name="top"> </a>
+    <div id="segment-content" class="segment">  <!-- segment-content -->
+      <div class="container">  <!-- container -->
+        <div class="row">
+          <div class="inner-wrapper">
+
+<style type="text/css">
+h2:before{color:silver;counter-increment:section;content:var(--heading-prefix) " ";}
+h3:before{color:silver;counter-increment:sub-section;content:var(--heading-prefix) "." counter(sub-section) " ";}
+h4:before{color:silver;counter-increment:composite;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) " ";}
+h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) " ";}
+h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
+</style>
+<div class="col-12">
+  <!--ReleaseHeader--><p id="publish-box">MII Kerndatensatz Complete - Local Development build (v2027.0.0-ballot.19) built by the FHIR (HL7® FHIR® Standard) Build Tools. See the <a href='https://www.medizininformatik-initiative.de/fhir/core/complete/history.html'>Directory of published versions</a></p><!--EndReleaseHeader-->
+  <h2>Entwicklungsstack</h2>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+    <p><!-- white space is critical inside of capture --></p>
+<div class="markdown-toc">
+<ul id="markdown-toc">
+  <li><a href="#entwicklungsstack" id="markdown-toc-entwicklungsstack">Entwicklungsstack</a>    <ul>
+      <li><a href="#1-grundlagen-meta-und-ig-template" id="markdown-toc-1-grundlagen-meta-und-ig-template">1. Grundlagen: Meta und IG-Template</a></li>
+      <li><a href="#2-module-ein-repository-je-kds-modul" id="markdown-toc-2-module-ein-repository-je-kds-modul">2. Module: ein Repository je KDS-Modul</a></li>
+      <li><a href="#3-verteilung-registry-und-fhir-package-store" id="markdown-toc-3-verteilung-registry-und-fhir-package-store">3. Verteilung: Registry und fhir-package-store</a></li>
+      <li><a href="#4-aggregat-kerndatensatz-complete" id="markdown-toc-4-aggregat-kerndatensatz-complete">4. Aggregat: kerndatensatz-complete</a></li>
+      <li><a href="#5-auswertung-testdaten-und-version-history" id="markdown-toc-5-auswertung-testdaten-und-version-history">5. Auswertung: Testdaten und Version-History</a></li>
+      <li><a href="#menschen--und-maschinenlesbar" id="markdown-toc-menschen--und-maschinenlesbar">Menschen- und maschinenlesbar</a></li>
+      <li><a href="#was-sich-noch-ändert" id="markdown-toc-was-sich-noch-ändert">Was sich noch ändert</a></li>
+    </ul>
+  </li>
+</ul>
+
+</div>
+<h1 id="entwicklungsstack">Entwicklungsstack</h1>
+
+<p>Der Kerndatensatz entsteht nicht in einem Repository, sondern in einem Verbund aus
+Repositories mit klar verteilten Rollen. Diese Seite zeigt den <strong>gesamten Stack</strong> von
+den modulübergreifenden Grundlagen über die Modul-Repositories und die Verteilung der
+Packages bis zur BOM und ihren Auswertungen — wer was liefert, wer von wem erbt und
+wo die Ergebnisse menschen- und maschinenlesbar ankommen.</p>
+
+<p><img src="dev-stack.png" alt="Entwicklungsstack des MII Kerndatensatzes: Meta und IG-Template, Modul-Repositories, Verteilung über Registry und fhir-package-store, die Complete-BOM und die Auswertungen Testdaten und Version-History" style="max-width:100%" /></p>
+
+<p><small>Generiert aus <code>dev-stack.dot</code> via Graphviz. Grün = stabile
+Grundlage bzw. Soll-Weg (Registry), gelb = Ballot-Linie 2027, grau = Interimslösung. Graue
+gestrichelte Kanten = Interims-Pfade über den Package-Store, rote Kanten = Rückfluss
+der Auswertungen in diese BOM.</small></p>
+
+<h3 id="1-grundlagen-meta-und-ig-template">1. Grundlagen: Meta und IG-Template</h3>
+
+<p>Zwei Repositories liefern das, was <strong>alle</strong> Module gemeinsam haben — die Module
+schreiben es nicht ab, sondern referenzieren es.</p>
+
+<p><strong><a href="https://github.com/medizininformatik-initiative/kerndatensatz-meta">kerndatensatz-meta</a></strong>
+(Package <code class="language-plaintext highlighter-rouge">de.medizininformatikinitiative.kerndatensatz.meta</code>,
+<a href="https://medizininformatik-initiative.github.io/kerndatensatz-meta/">IG</a>) ist die
+fachlich-technische Grundlage. Es enthält</p>
+
+<ul>
+  <li>die <strong>RuleSets</strong>, die jedes Modul in seine Conformance-Ressourcen einbindet:
+Publisher und Kontakt, Lizenz (CC-BY-4.0 als Extension), Versionsschema,
+Extension-Kontext;</li>
+  <li>die <strong>SearchParameter</strong> des gesamten Kerndatensatzes an einer Stelle, samt
+eigenem Profil <code class="language-plaintext highlighter-rouge">mii-pr-meta-searchparameter</code> und einer Invariante für die
+Code-Konvention — Module definieren keine eigenen SearchParameter, sie werden
+hier gepflegt und getestet;</li>
+  <li>modulübergreifende <strong>Extensions und CodeSystems</strong> (z.B. die DIZ-Standorte);</li>
+  <li>die <strong>wiederverwendbaren CI-Workflows</strong> <code class="language-plaintext highlighter-rouge">ci_dotnet_validation.yml</code>,
+<code class="language-plaintext highlighter-rouge">ci_java_validation.yml</code> und die SearchParameter-Tests gegen einen Blaze-Server.
+Ein Modul-Repo ruft sie per <code class="language-plaintext highlighter-rouge">uses: medizininformatik-initiative/kerndatensatz-meta/.github/workflows/…</code>
+auf; eine Korrektur am Validierungs-Workflow erreicht damit alle Module ohne
+Änderung in den Modul-Repos.</li>
+</ul>
+
+<p><strong><a href="https://github.com/medizininformatik-initiative/ig-template-mii-kds">ig-template-mii-kds</a></strong>
+(<a href="https://medizininformatik-initiative.github.io/ig-template-mii-kds/">Demo</a>) ist das
+Darstellungs-Template für den HL7 IG Publisher, aufgesetzt auf <code class="language-plaintext highlighter-rouge">fhir2.base.template</code>:
+Header, Footer, Farben und Logo mit zwei umschaltbaren Corporate Designs (NUM-DIZ
+als Default für die Zeit nach dem MII-Förderende, MII), deutsche UI-Strings für das
+Basistemplate, Styleguide und Schritt-für-Schritt-Rezepte. Ein Modul nennt es in
+<code class="language-plaintext highlighter-rouge">ig.ini</code> — der IG Publisher wendet es beim Build an. Solange das Template-Package
+nicht auf einer Registry liegt, geschieht das <strong>per GitHub-URL</strong> (Interimsform,
+Beschluss 2026-08-28) mit einer vendored Kopie als Offline-Fallback. Neue Module
+starten mit dem Starter-Repo
+<a href="https://github.com/medizininformatik-initiative/mii-kds-module-template">mii-kds-module-template</a>,
+das Template und Meta-Workflows bereits referenziert.</p>
+
+<h3 id="2-module-ein-repository-je-kds-modul">2. Module: ein Repository je KDS-Modul</h3>
+
+<p>Jedes der 21 Module lebt in einem eigenen Repository der
+<a href="https://github.com/orgs/medizininformatik-initiative/repositories?q=kerndatensatz">MII-GitHub-Organisation</a>
+(<code class="language-plaintext highlighter-rouge">kerndatensatz-basis</code>, <code class="language-plaintext highlighter-rouge">kerndatensatzmodul-*</code>, <code class="language-plaintext highlighter-rouge">kerndatensatz-*</code>). Der Ablauf ist
+überall gleich:</p>
+
+<ol>
+  <li><strong>Profilierung in FSH</strong>, Build mit SUSHI; <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code> deklariert die
+Abhängigkeiten (<code class="language-plaintext highlighter-rouge">base</code>, <code class="language-plaintext highlighter-rouge">meta</code>, <code class="language-plaintext highlighter-rouge">de.basisprofil.r4</code>, externe Pakete) in exakten
+Versionen.</li>
+  <li><strong>Validierung in CI</strong> über die Meta-Workflows (.NET- und Java-Validator,
+Status-Check der Ressourcen).</li>
+  <li><strong>IG-Build</strong> mit dem IG Publisher und dem MII-Template; <code class="language-plaintext highlighter-rouge">main</code> landet auf der
+Wurzel der GitHub Pages, jeder andere Branch unter <code class="language-plaintext highlighter-rouge">branches/&lt;name&gt;/</code> — während
+Ballotierung und Template-Migration tragen diese Branch-Builds den aktuellen Stand.</li>
+  <li><strong>Release</strong> als Git-Tag nach <a href="versionierung.html">CalVer</a> (<code class="language-plaintext highlighter-rouge">2027.0.0-ballot.N</code>),
+GitHub-Release mit dem Tarball als Asset. Die <strong>formale Publikation</strong> läuft über
+den IG Publisher: <code class="language-plaintext highlighter-rouge">publication-request.json</code> beschreibt die Version, der
+<code class="language-plaintext highlighter-rouge">go-publish</code>-Workflow baut sie reproduzierbar, validiert, legt die
+Publikationsstruktur mit <code class="language-plaintext highlighter-rouge">package-list.json</code> und <code class="language-plaintext highlighter-rouge">package-feed.xml</code> auf
+GitHub Pages ab und erzeugt den Patch für die FHIR-IG-Registry — jeder dieser
+Schritte ist bewusst manuell freizugeben.</li>
+  <li><strong>Package-Publikation</strong>: heute noch auf <strong>Simplifier</strong> — der Workflow
+<code class="language-plaintext highlighter-rouge">publish-simplifier</code> lädt exakt das Package des go-publish-Laufs hoch, damit
+Registry und Publikation identisch sind. Demnächst entfällt dieser Schritt:
+<code class="language-plaintext highlighter-rouge">packages.fhir.org</code> liest das Package direkt aus dem Feed der
+IG-Publisher-Publikation.</li>
+</ol>
+
+<p>Welche Version je Modul gerade gilt, zeigt die <a href="index.html#gesamtübersicht">Gesamtübersicht</a>;
+wie weit die Module untereinander konsistent sind, der
+<a href="index.html#abhängigkeitsgraph">Abhängigkeitsgraph</a>.</p>
+
+<h3 id="3-verteilung-registry-und-fhir-package-store">3. Verteilung: Registry und fhir-package-store</h3>
+
+<p>Der <strong>Soll-Weg</strong> ist die FHIR-Package-Registry <code class="language-plaintext highlighter-rouge">packages.fhir.org</code>: Jeder
+Konsument — Module, diese BOM, Standorte — löst die Packages mit SUSHI oder Firely
+Terminal von dort auf. Wie ein Package dorthin kommt, ist gerade im Übergang:</p>
+
+<ul>
+  <li><strong>Heute</strong> publiziert ein Modul sein Package im Simplifier-Projekt
+<a href="https://simplifier.net/organization/koordinationsstellemii/~packages">MedizininformatikInitiative-Kerndatensatz</a>;
+von dort wird es nach <code class="language-plaintext highlighter-rouge">packages.fhir.org</code> gespiegelt.</li>
+  <li><strong>Demnächst</strong> läuft die Publikation komplett über den IG Publisher: Die
+go-publish-Publikation auf GitHub Pages führt <code class="language-plaintext highlighter-rouge">package-feed.xml</code>, die
+FHIR-IG-Registry kennt den Feed, und <code class="language-plaintext highlighter-rouge">packages.fhir.org</code> übernimmt das Package
+daraus. Simplifier ist dann kein Publikationsschritt mehr.</li>
+</ul>
+
+<p>Daneben gibt es, <strong>ausdrücklich als Interimslösung</strong>, den
+<a href="https://github.com/medizininformatik-initiative/fhir-package-store">fhir-package-store</a>.
+Er ist ein per Commit gepflegter Ablageort: Tarballs werden in <code class="language-plaintext highlighter-rouge">package-tarballs/</code>
+eingecheckt, eine GitHub Action entpackt sie in das <code class="language-plaintext highlighter-rouge">.fhir</code>-Layout und schreibt das
+Ergebnis in den Branch <code class="language-plaintext highlighter-rouge">cache-store</code>. Ein CI-Workflow checkt diesen Branch als
+<code class="language-plaintext highlighter-rouge">~/.fhir</code> aus und hat damit alle Packages, ohne die Registry anzufragen. Das löst
+drei Probleme der Entwicklungsphase:</p>
+
+<ul>
+  <li><strong>Entwicklungsstände</strong> lassen sich ablegen und gegen sie bauen, bevor ein Package
+registriert ist (Ballot-RCs, Branch-Builds, Snapshots);</li>
+  <li>das <strong>Fat-Package dieser BOM</strong> ist noch auf keiner Registry — die Testdaten
+beziehen es ausschließlich von dort;</li>
+  <li>die Registry-<strong>Rate-Limits</strong> treffen die CI-Läufe nicht.</li>
+</ul>
+
+<p>Der Store ist kein Ersatz für die Registry und soll mit der Publikation der
+Packages auf <code class="language-plaintext highlighter-rouge">packages.fhir.org</code> entfallen. Bekannte Einschränkung: Der Cache-Workflow
+zerlegt Name und Version am letzten Bindestrich und kommt mit Prerelease-Versionen
+wie <code class="language-plaintext highlighter-rouge">2027.0.0-ballot.19</code> nicht zurecht
+(<a href="https://github.com/medizininformatik-initiative/fhir-package-store/pull/15">PR #15</a>);
+die Testdaten-CI zieht das BOM-Tarball deshalb direkt aus <code class="language-plaintext highlighter-rouge">main</code> und entpackt es selbst.</p>
+
+<h3 id="4-aggregat-kerndatensatz-complete">4. Aggregat: kerndatensatz-complete</h3>
+
+<p>Dieses Repository zieht alles zusammen. Es enthält keine eigenen Profile, sondern
+<strong>einen Pin je Modul und je externem Paket</strong> — in sechs Quellen, die übereinstimmen
+müssen (<code class="language-plaintext highlighter-rouge">package.json</code>, <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code>, HAPI- und Blaze-Konfiguration,
+Dockerfile des Validation-Servers, Modultabelle). Skripte sichern das ab:
+<code class="language-plaintext highlighter-rouge">check-module-versions.py</code> prüft Konsistenz und Registry, <code class="language-plaintext highlighter-rouge">release-gate.sh</code> bündelt
+Konsistenz, QA-Reports der Module, Build und Dateinamen-Kollisionen zu einem
+Release-Urteil, <code class="language-plaintext highlighter-rouge">build-bom-package.sh</code> baut das Fat-Package, das die
+Conformance-Ressourcen und Beispiele aller Module physisch einbettet.</p>
+
+<p>Der IG dieser BOM ist die <strong>menschenlesbare Sicht</strong> auf den Stand des gesamten
+Kerndatensatzes: Modultabellen mit Package, IG-Build und QA-Stand, der
+Abhängigkeitsgraph, der <a href="ballot.html">Ballot-Ticketstand</a>, die
+<a href="versionierung.html">Versionierung</a> mit den Profil-Übergängen und der
+<a href="migration.html">Migrationsleitfaden</a>. Daneben liefert das Package maschinenlesbare
+Ressourcen, die es nur auf dieser Ebene geben kann: die
+<strong>ConceptMaps</strong> für die Canonical-Migration 2026→2027 (Profile, ValueSets,
+ICU↔ISiK-Governance), per <code class="language-plaintext highlighter-rouge">$translate</code> auf jedem Terminologie-Server abfragbar, und
+ein aggregiertes <strong>CapabilityStatement</strong>, das die CapabilityStatements der Module mit
+den SearchParametern aus Meta zu einer Anforderung an einen KDS-Server zusammenführt.
+Die Konfiguration des <a href="https://github.com/medizininformatik-initiative/kerndatensatz-complete/tree/main/validation-server">Validation-Servers</a>
+(HAPI und Blaze) trägt dieselbe Paketliste.</p>
+
+<h3 id="5-auswertung-testdaten-und-version-history">5. Auswertung: Testdaten und Version-History</h3>
+
+<p>Zwei Repositories konsumieren die BOM und spielen ihre Ergebnisse hierher zurück.</p>
+
+<p><strong><a href="https://github.com/medizininformatik-initiative/mii-testdata">mii-testdata</a></strong>
+(<a href="https://medizininformatik-initiative.github.io/mii-testdata/">IG</a>) baut die
+technischen Modul-Instanzen und die klinisch plausiblen Patienten-Bundles gegen
+<strong>genau eine Dependency</strong> — das Complete-Package in der gepinnten Version. Damit
+ist jeder Testdaten-Stand eindeutig einem BOM-Stand zugeordnet. Die CI validiert mit
+dem Java-Validator und gegen Terminologie-Server, lädt die Daten in Blaze und misst
+die <strong>Must-Support-Coverage</strong> je Profil. Ergebnisse: die Testdaten selbst als
+ndjson und Bundles in den
+<a href="https://github.com/medizininformatik-initiative/mii-testdata/releases">Release-Assets</a>,
+die Coverage- und Ballot-Findings-Seiten im Testdaten-IG und — als Rückfluss — die
+Seite <a href="testabdeckung.html">Testabdeckung</a> dieser BOM, die strenger rechnet, weil
+alle Profile der BOM in den Nenner eingehen.</p>
+
+<p><strong><a href="https://github.com/medizininformatik-initiative/mii-kerndatensatz-versionhistory">mii-kerndatensatz-versionhistory</a></strong>
+(<a href="https://medizininformatik-initiative.github.io/mii-kerndatensatz-versionhistory/">Explorer</a>)
+vergleicht alle publizierten Profilversionen seit 2019 strukturell. Die 2027er
+Ballot-Linie ist darin über die Pins dieser BOM definiert, der Release-Diff nimmt das
+letzte stabile BOM-Tarball als Baseline. Ergebnisse: der Explorer mit Subway-Map je
+Modul und feldgenauen Diffs, die JSON-Daten dahinter und die kuratierten CSV-Listen
+(Rename-Kandidaten, modulübergreifende Zusammenführungen, ICU↔ISiK-Governance). Der
+Rückfluss in die BOM ist zweifach: Die Tabelle der Profil-Übergänge auf der Seite
+<a href="versionierung.html">Versionierung</a> wird daraus generiert, und bestätigte
+Umbenennungen werden zu <code class="language-plaintext highlighter-rouge">equivalent</code>-Einträgen in den Migrations-ConceptMaps.</p>
+
+<h3 id="menschen--und-maschinenlesbar">Menschen- und maschinenlesbar</h3>
+
+<p>Jede Ebene des Stacks hat beide Ausgaben. Die Tabelle zeigt, wo was ankommt:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Gegenstand</th>
+      <th>Für Menschen</th>
+      <th>Für Maschinen</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Modulübergreifende Vorgaben</td>
+      <td><a href="https://medizininformatik-initiative.github.io/kerndatensatz-meta/">Meta-IG</a>, <a href="https://github.com/medizininformatik-initiative/kerndatensatz-meta/wiki">Meta-Wiki</a></td>
+      <td>Package <code class="language-plaintext highlighter-rouge">…kerndatensatz.meta</code>: RuleSets, SearchParameter, Extensions</td>
+    </tr>
+    <tr>
+      <td>Darstellung der Guides</td>
+      <td><a href="https://medizininformatik-initiative.github.io/ig-template-mii-kds/">Template-Demo</a>, Styleguide</td>
+      <td>Template-Package <code class="language-plaintext highlighter-rouge">de.medizininformatikinitiative.template</code></td>
+    </tr>
+    <tr>
+      <td>Ein Modul</td>
+      <td>Modul-IG auf GitHub Pages (go-publish-Publikation)</td>
+      <td>Modul-Package auf <code class="language-plaintext highlighter-rouge">packages.fhir.org</code> (heute über Simplifier, demnächst aus dem Package-Feed der IG-Publikation)</td>
+    </tr>
+    <tr>
+      <td>Der gesamte Kerndatensatz</td>
+      <td>dieser IG: <a href="index.html#gesamtübersicht">Gesamtübersicht</a>, Abhängigkeitsgraph, <a href="ballot.html">Ballot</a></td>
+      <td><code class="language-plaintext highlighter-rouge">package.json</code> der BOM, Fat-Package, ImplementationGuide-Ressource</td>
+    </tr>
+    <tr>
+      <td>Umstieg 2026 → 2027</td>
+      <td><a href="migration.html">Migration</a>, <a href="versionierung.html">Versionierung</a></td>
+      <td>ConceptMaps (<code class="language-plaintext highlighter-rouge">$translate</code>), Rename-CSVs der Version-History</td>
+    </tr>
+    <tr>
+      <td>Suchanforderungen an Server</td>
+      <td>Meta-IG, <a href="artifacts.html">Artefakte</a></td>
+      <td>aggregiertes CapabilityStatement + SearchParameter</td>
+    </tr>
+    <tr>
+      <td>Testdaten</td>
+      <td><a href="testabdeckung.html">Testabdeckung</a>, Testdaten-IG</td>
+      <td>ndjson/Bundles in den Release-Assets</td>
+    </tr>
+    <tr>
+      <td>Versionsgeschichte</td>
+      <td><a href="https://medizininformatik-initiative.github.io/mii-kerndatensatz-versionhistory/">Version-History-Explorer</a></td>
+      <td>JSON-Daten und CSVs im Repository</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="was-sich-noch-ändert">Was sich noch ändert</h3>
+
+<ul>
+  <li>Der <strong>fhir-package-store</strong> ist eine Übergangslösung und entfällt, sobald alle
+Packages — auch das Complete-Package — auf <code class="language-plaintext highlighter-rouge">packages.fhir.org</code> liegen.</li>
+  <li>Die <strong>Package-Publikation</strong> wechselt von Simplifier auf die IG-Publisher-Publikation
+(<code class="language-plaintext highlighter-rouge">go-publish</code>, Package-Feed, FHIR-IG-Registry); bis dahin wird das go-publish-Package
+zusätzlich nach Simplifier hochgeladen.</li>
+  <li>Das <strong>IG-Template</strong> wird per URL referenziert, bis das Template-Package
+registriert ist; dann steht in <code class="language-plaintext highlighter-rouge">ig.ini</code> ein Package-Name mit Version.</li>
+  <li>Die <strong>Version-History</strong> ist in Kuratierung; Rename- und Cross-Module-Kandidaten
+brauchen Fachurteile, bevor sie verbindlich in die ConceptMaps einfließen.</li>
+  <li>Noch nicht alle Module sind auf das MII-Template umgezogen; den Migrationsstand
+je Modul führt die Taskforce Kerndatensatz.</li>
+</ul>
+
+
+
+
+</div>
+        </div>  <!-- /inner-wrapper -->
+      </div>  <!-- /row -->
+    </div>  <!-- /container -->
+  </div>  <!-- /segment-content -->
+
+  <script type="text/javascript" src="assets/js/jquery.js"> </script>     <!-- note keep space here, otherwise it will be transformed to empty tag -> fails -->
+  <script type="text/javascript" src="assets/js/jquery-ui.min.js"> </script>
+  <script type="text/javascript" src="assets/js/flags.js"> </script>
+
+  <script type="text/javascript" src="assets/js/window-hash.js"> </script>
+  <a name="bottom"> </a>
+  <div id="segment-footer" igtool="footer" class="segment">  <!-- segment-footer -->
+    <div class="container">  <!-- container -->
+
+      <div class="inner-wrapper">
+        <p>
+
+
+
+          IG © 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.medizininformatik-initiative.de">Medizininformatik Initiative</a>.  
+          Package de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19 basiert auf <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>.
+          Erstellt <span title="Mon, Oct 5, 2026 07:30+0000">2026-10-05</span>
+          <br/>
+          <span style="color: var(--footer-highlight-text-color)">
+            <!-- Branding override for the fhir2.base.template footer fragment.
+     Unlike header/css, the base footer fragment is NOT an empty placeholder: it
+     renders "Links: Table of Contents | QA Report [| feedback dashboards]".
+     The base uses site.data.stringsBase[include.lang][...] for the labels. The
+     reason this override supplies its own is the Imprint label: the base ships no
+     stringsBase key for it and a child template cannot add one (docs/styleguide.md
+     section 6), and the same include.lang branch then has to carry the other
+     labels too. (The blank-label problem that first motivated this is separately
+     mitigated: this repo vendors the base's own German catalogs into
+     translations/ — see translations/README.md.) The override preserves the base
+     links (TOC, QA, feedback dashboards) and appends the project information links.
+     NUM-DIZ takes over IG development and maintenance when MII funding ends
+     (end-2026), so the NUM-DIZ website link renders BEFORE the MII website link —
+     in BOTH brand designs and both languages; the MII links stay because the
+     modules remain MII content. Both anchors are the SITE ROOTS with the bare
+     domain as anchor text (TF-KDS feedback 2026-08-14: aligned anchor style;
+     domains are language-neutral, styleguide §6).
+     Imprint: points at the NUM-DIZ website's legal pages since 2026-08-14
+     (TF-KDS: NUM-DIZ takes over from MII in 2027, so legal-aspect links use
+     the NUM-DIZ counterpart where one exists) - German /impressum and English
+     /en/legal-notice (both verified HTTP 200 on 2026-08-14). -->
+
+          Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Inhaltsverzeichnis</a> |
+                 <a style="color: var(--footer-hyperlink-text-color)" href="../qa.html">QA-Bericht</a>
+                 
+                 | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://www.netzwerk-universitaetsmedizin.de/">netzwerk-universitaetsmedizin.de</a>
+                 | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://www.medizininformatik-initiative.de/">medizininformatik-initiative.de</a>
+                 | <a style="color: var(--footer-hyperlink-text-color)" target="_blank" href="https://www.netzwerk-universitaetsmedizin.de/impressum">Impressum</a>
+                 <br/>
+                 <!-- HL7 trademark attribution (required wherever the FHIR flame
+                      renders - the header shows it on every page; see HL7's
+                      trademark guidelines; permission request tracked in issue #109). The sentence is
+                      HL7's prescribed formula and stays in English on every
+                      language's pages (legal wording, styleguide §6). -->
+                 <span>HL7®, FHIR® and the FHIR flame design are registered trademarks of Health Level Seven International. Their use does not constitute endorsement by HL7.</span>
+
+          </span>
+        </p>
+      </div>  <!-- /inner-wrapper -->
+    </div>  <!-- /container -->
+  </div>  <!-- /segment-footer -->
+  
+  <div id="segment-post-footer" class="segment hidden">  <!-- segment-post-footer -->
+    <div class="container">  <!-- container -->
+    </div>  <!-- /container -->
+  </div>  <!-- /segment-post-footer -->
+
+  <!-- JS and analytics only. -->
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script type="text/javascript" src="assets/js/bootstrap.min.js"> </script>
+  <script type="text/javascript" src="assets/js/respond.min.js"> </script>
+  <script type="text/javascript" src="assets/js/anchor.min.js"> </script>
+  <script type="text/javascript" src="assets/js/clipboard.min.js"> </script>
+  <script type="text/javascript" src="assets/js/clipboard-btn.js"> </script>
+  <script type="text/javascript" src="assets/js/anchor-hover.js"> </script>
+  <!-- Analytics Below
+  ================================================== -->
+  </body>
+</html>
+
