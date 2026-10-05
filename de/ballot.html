@@ -284,11 +284,11 @@ Projektzugriff meldet Jira irreführend „Der Wert 'HDB' existiert nicht für d
 Ballot zeigt und nicht die Historie früherer Kommentierungsrunden. Die Zuordnung der
 Tickets zu den Modulen folgt dem Auswahlfeld <strong>„Project"</strong> des
 Ballotportals, mit dem die Melder ihr Ticket einer ballotierten Spezifikation zuordnen
-(Base fasst dabei die Portaleinträge Person, Fall, Diagnose und Prozedur zusammen).
-Module, für die das Portal noch keine Auswahloption hat (Meta, Consent, Kardiologie,
-Lungenfunktion, Soziodemographie), werden ersatzweise per Volltext gesucht — dort ist
-Beifang möglich. Und generell gilt: Ein Ticket bezieht sich nicht zwingend auf die
-Version, die diese BOM pinnt — im Zweifel das Ticket selbst prüfen.</p>
+— inzwischen gibt es dort für jedes Modul dieser BOM einen eigenen Eintrag. Ein Ticket,
+das ein anderes Modul nur im Text erwähnt, zählt deshalb nicht mit; ein Ticket, das der
+Melder dem falschen Eintrag zugeordnet hat, dagegen schon. Und generell gilt: Ein Ticket
+bezieht sich nicht zwingend auf die Version, die diese BOM pinnt — im Zweifel das Ticket
+selbst prüfen.</p>
 
 <!-- BALLOT-TICKETS:START -->
 
@@ -306,11 +306,11 @@ Version, die diese BOM pinnt — im Zweifel das Ticket selbst prüfen.</p>
   <tbody>
     <tr>
       <td>Basismodul</td>
+      <td style="text-align: right">3</td>
       <td style="text-align: right">0</td>
       <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-      <td style="text-align: right">0</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Person%22%2C%20%22MII%20-%20Modul%20Fall%22%2C%20%22MII%20-%20Modul%20Diagnose%22%2C%20%22MII%20-%20Modul%20Prozedur%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Person%22%2C%20%22MII%20-%20Modul%20Fall%22%2C%20%22MII%20-%20Modul%20Diagnose%22%2C%20%22MII%20-%20Modul%20Prozedur%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td style="text-align: right">3</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20%E2%80%93%20Modul%20Basis%20%28Person%2C%20Fall%2C%20Diagnose%20%26%20Prozedur%29%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20%E2%80%93%20Modul%20Basis%20%28Person%2C%20Fall%2C%20Diagnose%20%26%20Prozedur%29%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Bildgebung</td>
@@ -318,7 +318,7 @@ Version, die diese BOM pinnt — im Zweifel das Ticket selbst prüfen.</p>
       <td style="text-align: right">2</td>
       <td style="text-align: right">0</td>
       <td style="text-align: right">3</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Bildgebene%20Verfahren%22%2C%20%22MII%20-%20Modul%20Bildgebung%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Bildgebene%20Verfahren%22%2C%20%22MII%20-%20Modul%20Bildgebung%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Bildgebung%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Bildgebung%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Biobank</td>
@@ -334,7 +334,7 @@ Version, die diese BOM pinnt — im Zweifel das Ticket selbst prüfen.</p>
       <td style="text-align: right">0</td>
       <td style="text-align: right">0</td>
       <td style="text-align: right">1</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.consent%22%20OR%20text%20~%20%22Consent%22%20OR%20text%20~%20%22Einwilligung%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.consent%22%20OR%20text%20~%20%22Consent%22%20OR%20text%20~%20%22Einwilligung%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Consent%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Consent%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Dokument</td>
@@ -354,11 +354,11 @@ Version, die diese BOM pinnt — im Zweifel das Ticket selbst prüfen.</p>
     </tr>
     <tr>
       <td>Kardiologie</td>
-      <td style="text-align: right">1</td>
       <td style="text-align: right">0</td>
       <td style="text-align: right">0</td>
-      <td style="text-align: right">1</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.kardiologie%22%20OR%20text%20~%20%22Kardiologie%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.kardiologie%22%20OR%20text%20~%20%22Kardiologie%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Kardiologie%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Kardiologie%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Laborbefund</td>
@@ -370,11 +370,11 @@ Version, die diese BOM pinnt — im Zweifel das Ticket selbst prüfen.</p>
     </tr>
     <tr>
       <td>Lungenfunktion</td>
-      <td style="text-align: right">2</td>
-      <td style="text-align: right">5</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">4</td>
       <td style="text-align: right">0</td>
-      <td style="text-align: right">7</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.lungenfunktion%22%20OR%20text%20~%20%22Lungenfunktion%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.lungenfunktion%22%20OR%20text%20~%20%22Lungenfunktion%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td style="text-align: right">5</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Lungenfunktion%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Lungenfunktion%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Medikation</td>
@@ -386,11 +386,11 @@ Version, die diese BOM pinnt — im Zweifel das Ticket selbst prüfen.</p>
     </tr>
     <tr>
       <td>Metadaten</td>
-      <td style="text-align: right">1</td>
       <td style="text-align: right">0</td>
       <td style="text-align: right">0</td>
-      <td style="text-align: right">1</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.meta%22%20OR%20text%20~%20%22Metadaten%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.meta%22%20OR%20text%20~%20%22Metadaten%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Meta%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Meta%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Mikrobiologie</td>
@@ -414,7 +414,7 @@ Version, die diese BOM pinnt — im Zweifel das Ticket selbst prüfen.</p>
       <td style="text-align: right">0</td>
       <td style="text-align: right">0</td>
       <td style="text-align: right">3</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Tumorboard%22%2C%20%22MII%20-%20Modul%20Molekulares%20Tumorboard%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Tumorboard%22%2C%20%22MII%20-%20Modul%20Molekulares%20Tumorboard%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Molekulares%20Tumorboard%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Molekulares%20Tumorboard%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Onkologie</td>
@@ -450,11 +450,11 @@ Version, die diese BOM pinnt — im Zweifel das Ticket selbst prüfen.</p>
     </tr>
     <tr>
       <td>Soziodemographie</td>
-      <td style="text-align: right">3</td>
+      <td style="text-align: right">1</td>
       <td style="text-align: right">0</td>
       <td style="text-align: right">0</td>
-      <td style="text-align: right">3</td>
-      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.soziodemographie%22%20OR%20text%20~%20%22Soziodemographie%22%20OR%20text%20~%20%22Soziodemographisch%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%28text%20~%20%22de.medizininformatikinitiative.kerndatensatz.soziodemographie%22%20OR%20text%20~%20%22Soziodemographie%22%20OR%20text%20~%20%22Soziodemographisch%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
+      <td style="text-align: right">1</td>
+      <td><a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20statusCategory%20%21%3D%20Done%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Soziodemographische%20Daten%22%29%20ORDER%20BY%20created%20DESC">offen</a> · <a href="https://hl7germany.atlassian.net/issues/?jql=project%20%3D%20HDB%20AND%20created%20%3E%3D%20-200d%20AND%20%22Project%5BDropdown%5D%22%20in%20%28%22MII%20-%20Modul%20Soziodemographische%20Daten%22%29%20ORDER%20BY%20created%20DESC">alle</a></td>
     </tr>
     <tr>
       <td>Studie</td>
@@ -474,16 +474,16 @@ Version, die diese BOM pinnt — im Zweifel das Ticket selbst prüfen.</p>
     </tr>
     <tr>
       <td><strong>Summe</strong></td>
-      <td style="text-align: right"><strong>32</strong></td>
-      <td style="text-align: right"><strong>7</strong></td>
+      <td style="text-align: right"><strong>30</strong></td>
+      <td style="text-align: right"><strong>6</strong></td>
       <td style="text-align: right"><strong>0</strong></td>
-      <td style="text-align: right"><strong>39</strong></td>
+      <td style="text-align: right"><strong>36</strong></td>
       <td> </td>
     </tr>
   </tbody>
 </table>
 
-<p><small>Stand: 2026-10-05 11:45 UTC · Zählung über Projekt <a href="https://hl7germany.atlassian.net/browse/HDB">HDB</a> · automatisch aktualisiert</small>
+<p><small>Stand: 2026-10-05 12:25 UTC · Zählung über Projekt <a href="https://hl7germany.atlassian.net/browse/HDB">HDB</a> · automatisch aktualisiert</small>
 <!-- BALLOT-TICKETS:END --></p>
 
 <p>Die Tabelle wird täglich automatisch aktualisiert
@@ -526,7 +526,7 @@ Version, die diese BOM pinnt — im Zweifel das Ticket selbst prüfen.</p>
 
           IG © 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.medizininformatik-initiative.de">Medizininformatik Initiative</a>.  
           Package de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19 basiert auf <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>.
-          Erstellt <span title="Mon, Oct 5, 2026 11:46+0000">2026-10-05</span>
+          Erstellt <span title="Mon, Oct 5, 2026 12:26+0000">2026-10-05</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
             <!-- Branding override for the fhir2.base.template footer fragment.
