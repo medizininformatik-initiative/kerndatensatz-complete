@@ -11,6 +11,7 @@ und ihre Vorgaenge sind es nicht -- dafuer braucht es einen Atlassian-API-Token.
     ./scripts/ballot-tickets.py --module icu     # nur eins
     ./scripts/ballot-tickets.py --all-projects   # ohne Projekteinschraenkung suchen
     ./scripts/ballot-tickets.py --projects       # nur zeigen, welche Projekte sichtbar sind
+    ./scripts/ballot-tickets.py --options        # Portal-Optionen gegen CF_OPTIONS pruefen
     ./scripts/ballot-tickets.py --json > tickets.json
     ./scripts/ballot-tickets.py --markdown       # input/pagecontent/ballot.md aktualisieren
     ./scripts/ballot-tickets.py --create-filters # gespeicherte Jira-Filter je Modul anlegen
@@ -42,28 +43,35 @@ FILTER_PREFIX = "MII KDS Ballot 2027 – "
 WINDOW_DAYS = 200  # nur Tickets aus diesem Zeitfenster zaehlen/filtern
 
 # Werte des Auswahlfelds "Project" (customfield_10066) im Ballotportal — die Melder
-# ordnen ihr Ticket damit einer ballotierten Spezifikation zu. Module ohne Eintrag
-# haben (noch) keine Option im Portal und werden per Volltext gesucht (NAMES unten).
+# ordnen ihr Ticket damit einer ballotierten Spezifikation zu. Die Optionsnamen
+# stehen in der Createmeta des Projekts HDB (--options zeigt sie an); Achtung,
+# "Basis" schreibt sich mit Gedankenstrich (–), die anderen mit Bindestrich (-).
+# Ein Modul ohne Eintrag hier wird ersatzweise per Volltext gesucht (NAMES unten),
+# das liefert aber Beifang -- ein Ticket, das ein anderes Modul nur erwaehnt.
 # Die Namens-Syntax statt cf[10066], damit die Jira-UI die Klausel lesbar anzeigt.
 CF_PROJECT = '"Project[Dropdown]"'
 CF_OPTIONS = {
-    "base": ["MII - Modul Person", "MII - Modul Fall",
-             "MII - Modul Diagnose", "MII - Modul Prozedur"],
+    "base": ["MII – Modul Basis (Person, Fall, Diagnose & Prozedur)"],
+    "meta": ["MII - Meta"],
     "laborbefund": ["MII - Modul Laborbefund"],
     "medikation": ["MII - Modul Medikation"],
     "biobank": ["MII - Modul Bioprobendaten"],
     "studie": ["MII - Modul Medizinisches Forschungsvorhaben"],
     "pros": ["MII - Modul Patient Reported Outcomes"],
+    "consent": ["MII - Modul Consent"],
     "symptom": ["MII - Modul Symptom / klinischer Phänotyp"],
     "molgen": ["MII - Modul Molekulargenetischer Befundbericht"],
     "icu": ["MII - Modul Intensivmedizin"],
-    "bildgebung": ["MII - Modul Bildgebene Verfahren", "MII - Modul Bildgebung"],
+    "bildgebung": ["MII - Modul Bildgebung"],
     "dokument": ["MII - Modul Dokument"],
     "mikrobiologie": ["MII - Modul Mikrobiologie"],
     "onkologie": ["MII - Modul Onkologie"],
     "patho": ["MII - Modul Pathologiebefund"],
     "seltene": ["MII - Modul Seltene Erkrankungen"],
-    "mtb": ["MII - Modul Tumorboard", "MII - Modul Molekulares Tumorboard"],
+    "mtb": ["MII - Modul Molekulares Tumorboard"],
+    "kardiologie": ["MII - Modul Kardiologie"],
+    "lungenfunktion": ["MII - Modul Lungenfunktion"],
+    "soziodemographie": ["MII - Modul Soziodemographische Daten"],
 }
 
 # Anzeigenamen, unter denen ein Modul in einem Ticket auftauchen kann.
@@ -230,6 +238,39 @@ def write_markdown(mods, result):
     print(f"{BALLOT_PAGE} aktualisiert ({sum(totals)} Tickets).")
 
 
+def portal_options(auth):
+    """Aktuell waehlbare Werte des Auswahlfelds "Project" im Projekt HDB."""
+    meta = call(f"/rest/api/3/issue/createmeta/{BALLOT_PROJECT}/issuetypes", auth=auth)
+    for it in meta.get("issueTypes", meta.get("values", [])):
+        fields = call(f"/rest/api/3/issue/createmeta/{BALLOT_PROJECT}/issuetypes/{it['id']}",
+                      {"maxResults": 200}, auth)
+        for fl in fields.get("fields", fields.get("values", [])):
+            if fl.get("fieldId") == "customfield_10066":
+                return sorted(o["value"] for o in fl.get("allowedValues", []))
+    return []
+
+
+def check_options(auth):
+    """Zeigt die MII-Optionen des Portals und meldet Abweichungen zu CF_OPTIONS."""
+    opts = portal_options(auth)
+    mii = [o for o in opts if o.startswith("MII")]
+    used = {o: mod for mod, os_ in CF_OPTIONS.items() for o in os_}
+    print(f"{len(mii)} MII-Optionen im Portal:\n")
+    for o in mii:
+        print(f"  {o:<60} -> {used.get(o, '(keinem Modul zugeordnet)')}")
+    rc = 0
+    stale = [o for o in used if o not in opts]
+    if stale:
+        rc = 1
+        print("\nIn CF_OPTIONS, aber nicht (mehr) im Portal:")
+        for o in stale:
+            print(f"  {o}  ({used[o]})")
+    missing = [m for m in modules() if m not in CF_OPTIONS]
+    if missing:
+        print(f"\nModule ohne Portaloption (Volltextsuche): {', '.join(missing)}")
+    return rc
+
+
 def create_filters(auth, mods):
     """Legt je Modul einen gespeicherten Filter an bzw. aktualisiert ihn."""
     existing, start = {}, 0
@@ -264,6 +305,8 @@ def main():
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--module", action="append", help="nur diese Module (mehrfach moeglich)")
     ap.add_argument("--projects", action="store_true", help="sichtbare Projekte zeigen und beenden")
+    ap.add_argument("--options", action="store_true",
+                    help="MII-Optionen des Portal-Auswahlfelds zeigen und mit CF_OPTIONS abgleichen")
     ap.add_argument("--limit", type=int, default=50, help="Treffer je Modul (Vorgabe 50)")
     ap.add_argument("--json", action="store_true", help="JSON statt Tabelle")
     ap.add_argument("--all-projects", action="store_true",
@@ -275,6 +318,9 @@ def main():
     a = ap.parse_args()
 
     auth = auth_header()
+
+    if a.options:
+        return check_options(auth)
 
     if a.projects:
         ps = call("/rest/api/3/project", auth=auth)

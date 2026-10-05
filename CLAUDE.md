@@ -130,7 +130,9 @@ export JIRA_EMAIL=... JIRA_TOKEN=...          # Atlassian-API-Token
 ```
 
 Die Modulzuordnung läuft über das Portal-Auswahlfeld `cf[10066]` („Project",
-Mapping in `CF_OPTIONS` im Script); Module ohne Portaloption werden per Volltext gesucht.
+Mapping in `CF_OPTIONS` im Script). Jedes Modul der BOM hat dort eine Option; die
+Volltextsuche ist nur noch Rückfallebene für ein Modul ohne Eintrag und liefert Beifang.
+Wenn HL7 DE eine Option umbenennt oder neu anlegt, zeigt `--options` die Abweichung.
 Der Workflow `.github/workflows/ballot-tickets.yml` aktualisiert die Seite täglich per Cron
 (Secrets `JIRA_EMAIL`/`JIRA_TOKEN`) und stößt danach den IG-Build an.
 
