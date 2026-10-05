@@ -9,7 +9,7 @@ wo die Ergebnisse menschen- und maschinenlesbar ankommen.
 <img src="dev-stack.png" alt="Entwicklungsstack des MII Kerndatensatzes: Meta und IG-Template, Modul-Repositories, Verteilung über Registry und fhir-package-store, die Complete-BOM und die Auswertungen Testdaten und Version-History" style="max-width:100%"/>
 
 <small>Generiert aus <code>dev-stack.dot</code> via Graphviz. Grün = stabile
-Grundlage bzw. Soll-Weg, gelb = Ballot-Linie 2027, grau = Interimslösung. Graue
+Grundlage bzw. Soll-Weg (Registry), gelb = Ballot-Linie 2027, grau = Interimslösung. Graue
 gestrichelte Kanten = Interims-Pfade über den Package-Store, rote Kanten = Rückfluss
 der Auswertungen in diese BOM.</small>
 
@@ -66,7 +66,17 @@ Jedes der 21 Module lebt in einem eigenen Repository der
    Wurzel der GitHub Pages, jeder andere Branch unter `branches/<name>/` — während
    Ballotierung und Template-Migration tragen diese Branch-Builds den aktuellen Stand.
 4. **Release** als Git-Tag nach [CalVer](versionierung.html) (`2027.0.0-ballot.N`),
-   Package-Publikation auf Simplifier, GitHub-Release mit dem Tarball als Asset.
+   GitHub-Release mit dem Tarball als Asset. Die **formale Publikation** läuft über
+   den IG Publisher: `publication-request.json` beschreibt die Version, der
+   `go-publish`-Workflow baut sie reproduzierbar, validiert, legt die
+   Publikationsstruktur mit `package-list.json` und `package-feed.xml` auf
+   GitHub Pages ab und erzeugt den Patch für die FHIR-IG-Registry — jeder dieser
+   Schritte ist bewusst manuell freizugeben.
+5. **Package-Publikation**: heute noch auf **Simplifier** — der Workflow
+   `publish-simplifier` lädt exakt das Package des go-publish-Laufs hoch, damit
+   Registry und Publikation identisch sind. Demnächst entfällt dieser Schritt:
+   `packages.fhir.org` liest das Package direkt aus dem Feed der
+   IG-Publisher-Publikation.
 
 Welche Version je Modul gerade gilt, zeigt die [Gesamtübersicht](index.html#gesamtübersicht);
 wie weit die Module untereinander konsistent sind, der
@@ -74,11 +84,17 @@ wie weit die Module untereinander konsistent sind, der
 
 ### 3. Verteilung: Registry und fhir-package-store
 
-Der **Soll-Weg** ist die FHIR-Package-Registry: Ein Modul publiziert sein Package
-im Simplifier-Projekt
-[MedizininformatikInitiative-Kerndatensatz](https://simplifier.net/organization/koordinationsstellemii/~packages),
-von dort wird es nach `packages.fhir.org` gespiegelt, und jeder Konsument — Module,
-diese BOM, Standorte — löst es mit SUSHI oder Firely Terminal auf.
+Der **Soll-Weg** ist die FHIR-Package-Registry `packages.fhir.org`: Jeder
+Konsument — Module, diese BOM, Standorte — löst die Packages mit SUSHI oder Firely
+Terminal von dort auf. Wie ein Package dorthin kommt, ist gerade im Übergang:
+
+- **Heute** publiziert ein Modul sein Package im Simplifier-Projekt
+  [MedizininformatikInitiative-Kerndatensatz](https://simplifier.net/organization/koordinationsstellemii/~packages);
+  von dort wird es nach `packages.fhir.org` gespiegelt.
+- **Demnächst** läuft die Publikation komplett über den IG Publisher: Die
+  go-publish-Publikation auf GitHub Pages führt `package-feed.xml`, die
+  FHIR-IG-Registry kennt den Feed, und `packages.fhir.org` übernimmt das Package
+  daraus. Simplifier ist dann kein Publikationsschritt mehr.
 
 Daneben gibt es, **ausdrücklich als Interimslösung**, den
 [fhir-package-store](https://github.com/medizininformatik-initiative/fhir-package-store).
@@ -161,7 +177,7 @@ Jede Ebene des Stacks hat beide Ausgaben. Die Tabelle zeigt, wo was ankommt:
 |------------|--------------|---------------|
 | Modulübergreifende Vorgaben | [Meta-IG](https://medizininformatik-initiative.github.io/kerndatensatz-meta/), [Meta-Wiki](https://github.com/medizininformatik-initiative/kerndatensatz-meta/wiki) | Package `…kerndatensatz.meta`: RuleSets, SearchParameter, Extensions |
 | Darstellung der Guides | [Template-Demo](https://medizininformatik-initiative.github.io/ig-template-mii-kds/), Styleguide | Template-Package `de.medizininformatikinitiative.template` |
-| Ein Modul | Modul-IG auf GitHub Pages | Modul-Package auf Simplifier / `packages.fhir.org` |
+| Ein Modul | Modul-IG auf GitHub Pages (go-publish-Publikation) | Modul-Package auf `packages.fhir.org` (heute über Simplifier, demnächst aus dem Package-Feed der IG-Publikation) |
 | Der gesamte Kerndatensatz | dieser IG: [Gesamtübersicht](index.html#gesamtübersicht), Abhängigkeitsgraph, [Ballot](ballot.html) | `package.json` der BOM, Fat-Package, ImplementationGuide-Ressource |
 | Umstieg 2026 → 2027 | [Migration](migration.html), [Versionierung](versionierung.html) | ConceptMaps (`$translate`), Rename-CSVs der Version-History |
 | Suchanforderungen an Server | Meta-IG, [Artefakte](artifacts.html) | aggregiertes CapabilityStatement + SearchParameter |
@@ -172,6 +188,9 @@ Jede Ebene des Stacks hat beide Ausgaben. Die Tabelle zeigt, wo was ankommt:
 
 - Der **fhir-package-store** ist eine Übergangslösung und entfällt, sobald alle
   Packages — auch das Complete-Package — auf `packages.fhir.org` liegen.
+- Die **Package-Publikation** wechselt von Simplifier auf die IG-Publisher-Publikation
+  (`go-publish`, Package-Feed, FHIR-IG-Registry); bis dahin wird das go-publish-Package
+  zusätzlich nach Simplifier hochgeladen.
 - Das **IG-Template** wird per URL referenziert, bis das Template-Package
   registriert ist; dann steht in `ig.ini` ein Package-Name mit Version.
 - Die **Version-History** ist in Kuratierung; Rename- und Cross-Module-Kandidaten

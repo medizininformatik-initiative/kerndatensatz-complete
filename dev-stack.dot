@@ -54,6 +54,7 @@ digraph DevStack {
         <tr><td align="left"><font point-size="8.5">• sushi-config: dependsOn base, meta, de.basisprofil.r4, …</font></td></tr>
         <tr><td align="left"><font point-size="8.5">• CI:  uses: kerndatensatz-meta/.github/workflows/ci_*_validation.yml</font></td></tr>
         <tr><td align="left"><font point-size="8.5">• IG-Build → gh-pages (main → Wurzel, Branches → branches/&lt;name&gt;/)</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• formale Publikation: IG Publisher go-publish (publication-request.json)</font></td></tr>
       </table>>];
   }
 
@@ -64,9 +65,10 @@ digraph DevStack {
 
     registry [fillcolor="#d4edda", color="#28a745", label=<
       <table border="0" cellborder="0" cellspacing="0" cellpadding="3">
-        <tr><td align="left"><b>Simplifier · packages.fhir.org</b></td></tr>
-        <tr><td align="left"><font point-size="8.5">publizierte Modul-Packages (Soll-Weg)</font></td></tr>
-        <tr><td align="left"><font point-size="8.5">Simplifier-Projekt MedizininformatikInitiative-Kerndatensatz</font></td></tr>
+        <tr><td align="left"><b>packages.fhir.org</b>  <font point-size="8.5">— FHIR-Package-Registry (Soll-Weg)</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• heute: Publikation auf Simplifier, Spiegelung nach packages.fhir.org</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• demnächst: komplett über den IG Publisher —</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">  go-publish → package-feed.xml → FHIR-IG-Registry → packages.fhir.org</font></td></tr>
       </table>>];
 
     store [fillcolor="#e2e3e5", color="#6c757d", label=<
@@ -125,7 +127,7 @@ digraph DevStack {
   template -> module   [label="  ig.ini: template =\n  (per URL, Fallback: vendored Kopie)", color="#28a745"];
   template -> bom      [label="  ig.ini", color="#28a745", constraint=false];
 
-  module   -> registry [label="  publiziert Package\n  (Simplifier → packages.fhir.org)"];
+  module   -> registry [label="  publiziert Package\n  (heute Simplifier, demnächst go-publish)"];
   module   -> store    [label="  Entwicklungsstand als tgz\n  (vor der Registrierung)", style=dashed, color="#6c757d"];
   registry -> store    [label="  Tarball spiegeln", style=dashed, color="#6c757d"];
 
