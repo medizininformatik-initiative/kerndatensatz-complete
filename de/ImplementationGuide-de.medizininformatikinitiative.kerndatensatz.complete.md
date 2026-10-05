@@ -14,7 +14,7 @@
   "name" : "MIIKerndatensatzComplete",
   "title" : "MII Kerndatensatz Complete",
   "status" : "active",
-  "date" : "2026-10-05T07:30:04+00:00",
+  "date" : "2026-10-05T07:43:03+00:00",
   "publisher" : "Medizininformatik Initiative",
   "contact" : [{
     "name" : "Medizininformatik Initiative",
@@ -869,7 +869,7 @@
           "valueUrl" : "index.html"
         }],
         "nameUrl" : "index.html",
-        "title" : "Home",
+        "title" : "MII Kerndatensatz Complete",
         "generation" : "markdown"
       },
       {
@@ -878,25 +878,7 @@
           "valueUrl" : "ballot.html"
         }],
         "nameUrl" : "ballot.html",
-        "title" : "Ballot",
-        "generation" : "markdown"
-      },
-      {
-        "extension" : [{
-          "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
-          "valueUrl" : "entwicklungsstack.html"
-        }],
-        "nameUrl" : "entwicklungsstack.html",
-        "title" : "Entwicklungsstack",
-        "generation" : "markdown"
-      },
-      {
-        "extension" : [{
-          "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
-          "valueUrl" : "migration.html"
-        }],
-        "nameUrl" : "migration.html",
-        "title" : "Migration",
+        "title" : "Ballotierung 2027.0.0",
         "generation" : "markdown"
       },
       {
@@ -915,6 +897,24 @@
         }],
         "nameUrl" : "versionierung.html",
         "title" : "Versionierung",
+        "generation" : "markdown"
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+          "valueUrl" : "migration.html"
+        }],
+        "nameUrl" : "migration.html",
+        "title" : "Migration von v2026",
+        "generation" : "markdown"
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+          "valueUrl" : "entwicklungsstack.html"
+        }],
+        "nameUrl" : "entwicklungsstack.html",
+        "title" : "Entwicklungsstack",
         "generation" : "markdown"
       }]
     },

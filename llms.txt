@@ -2,13 +2,13 @@
 
 ## Pages
 
-* [Home](de/index.md)
+* [](de/index.md)
 * [Testabdeckung](de/testabdeckung.md)
 * [Entwicklungsstack](de/entwicklungsstack.md)
 * [Artefaktübersicht](de/artifacts.md)
-* [Ballot](de/ballot.md)
+* [Ballotierung 2027.0.0](de/ballot.md)
 * [Versionierung](de/versionierung.md)
-* [Migration](de/migration.md)
+* [Migration von v2026](de/migration.md)
 
 ## Resources
 

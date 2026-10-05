@@ -5,8 +5,6 @@
 
 ## Entwicklungsstack
 
-# Entwicklungsstack
-
 Der Kerndatensatz entsteht nicht in einem Repository, sondern in einem Verbund aus Repositories mit klar verteilten Rollen. Diese Seite zeigt den **gesamten Stack** von den modulübergreifenden Grundlagen über die Modul-Repositories und die Verteilung der Packages bis zur BOM und ihren Auswertungen — wer was liefert, wer von wem erbt und wo die Ergebnisse menschen- und maschinenlesbar ankommen.
 
 ![](dev-stack.png)

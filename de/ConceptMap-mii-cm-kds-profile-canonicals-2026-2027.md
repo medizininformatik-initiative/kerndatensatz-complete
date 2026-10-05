@@ -28,7 +28,7 @@ Migration der Profil-Canonicals (StructureDefinition.url) von der 2026er KDS-Lin
   "title" : "MII KDS Profil-Canonicals 2026 auf 2027",
   "status" : "draft",
   "experimental" : true,
-  "date" : "2026-10-05T07:30:04+00:00",
+  "date" : "2026-10-05T07:43:03+00:00",
   "publisher" : "Medizininformatik Initiative",
   "contact" : [{
     "name" : "Medizininformatik Initiative",

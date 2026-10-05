@@ -12,7 +12,7 @@
   <name value="MIIKerndatensatzComplete"/>
   <title value="MII Kerndatensatz Complete"/>
   <status value="active"/>
-  <date value="2026-10-05T07:30:04+00:00"/>
+  <date value="2026-10-05T07:43:03+00:00"/>
   <publisher value="Medizininformatik Initiative"/>
   <contact>
     <name value="Medizininformatik Initiative"/>
@@ -658,7 +658,7 @@
           <valueUrl value="index.html"/>
         </extension>
         <nameUrl value="index.html"/>
-        <title value="Home"/>
+        <title value="MII Kerndatensatz Complete"/>
         <generation value="markdown"/>
       </page>
       <page>
@@ -666,23 +666,7 @@
           <valueUrl value="ballot.html"/>
         </extension>
         <nameUrl value="ballot.html"/>
-        <title value="Ballot"/>
-        <generation value="markdown"/>
-      </page>
-      <page>
-        <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-page-name">
-          <valueUrl value="entwicklungsstack.html"/>
-        </extension>
-        <nameUrl value="entwicklungsstack.html"/>
-        <title value="Entwicklungsstack"/>
-        <generation value="markdown"/>
-      </page>
-      <page>
-        <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-page-name">
-          <valueUrl value="migration.html"/>
-        </extension>
-        <nameUrl value="migration.html"/>
-        <title value="Migration"/>
+        <title value="Ballotierung 2027.0.0"/>
         <generation value="markdown"/>
       </page>
       <page>
@@ -699,6 +683,22 @@
         </extension>
         <nameUrl value="versionierung.html"/>
         <title value="Versionierung"/>
+        <generation value="markdown"/>
+      </page>
+      <page>
+        <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-page-name">
+          <valueUrl value="migration.html"/>
+        </extension>
+        <nameUrl value="migration.html"/>
+        <title value="Migration von v2026"/>
+        <generation value="markdown"/>
+      </page>
+      <page>
+        <extension url="http://hl7.org/fhir/tools/StructureDefinition/ig-page-name">
+          <valueUrl value="entwicklungsstack.html"/>
+        </extension>
+        <nameUrl value="entwicklungsstack.html"/>
+        <title value="Entwicklungsstack"/>
         <generation value="markdown"/>
       </page>
     </page>

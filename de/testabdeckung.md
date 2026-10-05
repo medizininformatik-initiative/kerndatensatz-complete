@@ -5,8 +5,6 @@
 
 ## Testabdeckung
 
-# Testabdeckung
-
 Die MII-Testdaten bestehen aus zwei Schichten mit unterschiedlichen Zielen (siehe [mii-testdata](https://github.com/medizininformatik-initiative/mii-testdata)): **klinisch plausible Patienten-Bundles**, die das Zusammenspiel der Module testen, und **technische Modul-Instanzen**, deren Zweck die messbare Abdeckung der Profile ist. Die Vollständigkeitsmetrik der technischen Schicht ist die **Must-Support-Coverage**: der Anteil der MS-Elemente eines Moduls, die von mindestens einer Testdaten-Instanz befüllt werden.
 
 ### MS-Coverage gegen die Profile dieser BOM

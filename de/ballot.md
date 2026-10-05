@@ -1,11 +1,9 @@
-# Ballot - MII Kerndatensatz Complete v2027.0.0-ballot.19
+# Ballotierung 2027.0.0 - MII Kerndatensatz Complete v2027.0.0-ballot.19
 
 * [**Table of Contents**](toc.md)
-* **Ballot**
+* **Ballotierung 2027.0.0**
 
-## Ballot
-
-# Ballotierung 2027.0.0
+## Ballotierung 2027.0.0
 
 Die Module dieser BOM durchlaufen die Ballotierung über das [HL7-Deutschland-Ballotportal](https://ballots.hl7.de).
 

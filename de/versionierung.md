@@ -5,8 +5,6 @@
 
 ## Versionierung
 
-# Versionierung
-
 ### Versionsschema
 
 Die KDS-Module und diese BOM versionieren nach **CalVer**: `JJJJ.minor.patch` bezeichnet die Generation (z.B. `2026.0.1`, `2027.0.0`), Vorabstände tragen Suffixe (`-ballot`, `-ballot.1`, `-rc…`, `-alpha…`). Wichtig für Werkzeuge: Eine finale CalVer sortiert **über** jedem gleichnamigen Vorabstand — deshalb pinnt die BOM Versionen exakt und pflegt in [`ignored-versions.json`](https://github.com/medizininformatik-initiative/kerndatensatz-complete/blob/main/ignored-versions.json) bekannte Fehlpublikationen (aktuell `icu 2027.0.0`: versehentlich publiziert, unvollständig, niemals auflösen).
