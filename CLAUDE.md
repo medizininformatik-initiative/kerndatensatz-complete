@@ -8,6 +8,7 @@ Bill of Materials (BOM) aller MII KDS-Module mit kompatiblen Versionen. Enthält
 - `validation-server/` — HAPI + Blaze Konfiguration für lokale Validierung
 - `scripts/` — Build- und Hilfsskripte
 - `input/pagecontent/index.md` — IG-Dokumentation mit Modultabellen
+- `input/pagecontent/entwicklungsstack.md` — Überblick über den gesamten Entwicklungsstack (Meta, Template, Module, Package-Store, BOM, Testdaten, Version-History)
 - `docs/` — Zusätzliche Doku (Mermaid-Graphen, historisch)
 
 ## Abhängigkeitsgraph
@@ -31,6 +32,13 @@ dot -Tsvg dep-graph-2027-extern.dot -o input/images/dep-graph-2027-extern.svg
 ```
 
 `dep-graph-2026.dot` bleibt als Historie des 2026er Stands liegen.
+
+`dev-stack.dot` ist der Entwicklungsstack für die Seite `entwicklungsstack.md`:
+
+```bash
+dot -Tpng dev-stack.dot -o input/images/dev-stack.png
+dot -Tsvg dev-stack.dot -o input/images/dev-stack.svg
+```
 
 ### Farbschema
 

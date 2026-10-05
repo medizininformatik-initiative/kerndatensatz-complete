@@ -1,0 +1,147 @@
+// Entwicklungsstack des MII Kerndatensatzes: von Meta und IG-Template ueber die
+// Modul-Repos und die Registries bis zur Complete-BOM und ihren Auswertungen.
+// Rendern:
+//   dot -Tpng dev-stack.dot -o input/images/dev-stack.png
+//   dot -Tsvg dev-stack.dot -o input/images/dev-stack.svg
+digraph DevStack {
+  rankdir=TB;
+  newrank=true;
+  compound=true;
+  splines=spline;
+  nodesep=0.45;
+  ranksep=0.7;
+  fontname="Helvetica";
+  fontsize=11;
+  node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=10, margin="0.22,0.12"];
+  edge [fontname="Helvetica", fontsize=8.5, color="#555555", arrowsize=0.8];
+
+  // ---------- Ebene 1: Grundlagen ----------
+  subgraph cluster_grundlagen {
+    label="1 · Grundlagen — gelten für alle Module";
+    style="rounded,filled"; fillcolor="#f4f6f8"; color="#b0b8c0"; fontsize=11;
+
+    meta [fillcolor="#d4edda", color="#28a745", label=<
+      <table border="0" cellborder="0" cellspacing="0" cellpadding="3">
+        <tr><td align="left"><b>kerndatensatz-meta</b></td></tr>
+        <tr><td align="left"><font point-size="8.5">Package de.medizininformatikinitiative.kerndatensatz.meta</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• RuleSets: Publisher, Version, Lizenz, Extension-Kontext</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• SearchParameter aller Module + Profil + Invariante</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• Extensions, CodeSystems (z.B. DIZ-Standorte)</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• wiederverwendbare CI-Workflows: .NET-/Java-Validierung,</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">  SearchParameter-Tests gegen Blaze</font></td></tr>
+      </table>>];
+
+    template [fillcolor="#d4edda", color="#28a745", label=<
+      <table border="0" cellborder="0" cellspacing="0" cellpadding="3">
+        <tr><td align="left"><b>ig-template-mii-kds</b></td></tr>
+        <tr><td align="left"><font point-size="8.5">IG-Publisher-Template de.medizininformatikinitiative.template</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• Header, Footer, Farben, Logo (NUM-DIZ / MII umschaltbar)</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• deutsche UI-Strings, Styleguide, Rezepte</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• Starter: mii-kds-module-template</font></td></tr>
+      </table>>];
+  }
+
+  // ---------- Ebene 2: Module ----------
+  subgraph cluster_module {
+    label="2 · Module — ein Repo je KDS-Modul (21 Module)";
+    style="rounded,filled"; fillcolor="#f4f6f8"; color="#b0b8c0"; fontsize=11;
+
+    module [fillcolor="#fff3cd", color="#e0a800", label=<
+      <table border="0" cellborder="0" cellspacing="0" cellpadding="3">
+        <tr><td align="left"><b>kerndatensatz-basis · kerndatensatzmodul-* · kerndatensatz-*</b></td></tr>
+        <tr><td align="left"><font point-size="8.5">FSH → SUSHI → Package (CalVer, z.B. 2027.0.0-ballot.N)</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• ig.ini:  template = ig-template-mii-kds</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• sushi-config: dependsOn base, meta, de.basisprofil.r4, …</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• CI:  uses: kerndatensatz-meta/.github/workflows/ci_*_validation.yml</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• IG-Build → gh-pages (main → Wurzel, Branches → branches/&lt;name&gt;/)</font></td></tr>
+      </table>>];
+  }
+
+  // ---------- Ebene 3: Verteilung ----------
+  subgraph cluster_verteilung {
+    label="3 · Verteilung der Packages";
+    style="rounded,filled"; fillcolor="#f4f6f8"; color="#b0b8c0"; fontsize=11;
+
+    registry [fillcolor="#d4edda", color="#28a745", label=<
+      <table border="0" cellborder="0" cellspacing="0" cellpadding="3">
+        <tr><td align="left"><b>Simplifier · packages.fhir.org</b></td></tr>
+        <tr><td align="left"><font point-size="8.5">publizierte Modul-Packages (Soll-Weg)</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">Simplifier-Projekt MedizininformatikInitiative-Kerndatensatz</font></td></tr>
+      </table>>];
+
+    store [fillcolor="#e2e3e5", color="#6c757d", label=<
+      <table border="0" cellborder="0" cellspacing="0" cellpadding="3">
+        <tr><td align="left"><b>fhir-package-store</b>  <font point-size="8.5"><i>(Interimslösung)</i></font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• package-tarballs/*.tgz — per Commit hinterlegt</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• GitHub Action entpackt → Branch cache-store (.fhir-Layout)</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• für Entwicklungsstände, noch nicht registrierte Packages</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">  und als Registry-Cache ohne Rate-Limit</font></td></tr>
+      </table>>];
+  }
+
+  // ---------- Ebene 4: Aggregat ----------
+  subgraph cluster_bom {
+    label="4 · Aggregat";
+    style="rounded,filled"; fillcolor="#f4f6f8"; color="#b0b8c0"; fontsize=11;
+
+    bom [fillcolor="#fff3cd", color="#e0a800", penwidth=1.6, label=<
+      <table border="0" cellborder="0" cellspacing="0" cellpadding="3">
+        <tr><td align="left"><b>kerndatensatz-complete</b>  <font point-size="8.5">— Bill of Materials</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">Package de.medizininformatikinitiative.kerndatensatz.complete</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• package.json / sushi-config.yaml: ein Pin je Modul + externe Pakete</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• check-module-versions · release-gate · build-bom-package (Fat-Tarball)</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• IG: Modultabellen, Abhängigkeitsgraph, Ballot-Tickets, Migration</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• Ressourcen: ConceptMaps 2026→2027, CapabilityStatement (Meta-SearchParameter)</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• Validation-Server (HAPI + Blaze) mit der gepinnten Paketliste</font></td></tr>
+      </table>>];
+  }
+
+  // ---------- Ebene 5: Auswertung ----------
+  subgraph cluster_auswertung {
+    label="5 · Auswertung — menschen- und maschinenlesbar";
+    style="rounded,filled"; fillcolor="#f4f6f8"; color="#b0b8c0"; fontsize=11;
+
+    testdata [fillcolor="#fff3cd", color="#e0a800", label=<
+      <table border="0" cellborder="0" cellspacing="0" cellpadding="3">
+        <tr><td align="left"><b>mii-testdata</b></td></tr>
+        <tr><td align="left"><font point-size="8.5">• kds-testdata: FSH-Instanzen gegen genau EINE Dependency — die BOM</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• Validierung (Java-Validator, Terminologie), Ladetest in Blaze</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• Must-Support-Coverage je Profil, Ballot-Findings</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• Ausgabe: IG-Seiten + ndjson/Bundles als Release-Assets</font></td></tr>
+      </table>>];
+
+    history [fillcolor="#fff3cd", color="#e0a800", label=<
+      <table border="0" cellborder="0" cellspacing="0" cellpadding="3">
+        <tr><td align="left"><b>mii-kerndatensatz-versionhistory</b></td></tr>
+        <tr><td align="left"><font point-size="8.5">• alle publizierten Profilversionen 2019–2027 strukturell verglichen</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• Explorer: Subway-Map je Modul, feldgenaue Diffs, Release-Diff</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• kuratierte CSVs: Rename-Kandidaten, Cross-Module, ICU↔ISiK</font></td></tr>
+        <tr><td align="left"><font point-size="8.5">• Ausgabe: HTML-Explorer + JSON-Daten</font></td></tr>
+      </table>>];
+  }
+
+  // ---------- Kanten ----------
+  meta     -> module   [label="  erben: RuleSets, SearchParameter,\n  CI-Workflows (uses: …@master)", color="#28a745"];
+  template -> module   [label="  ig.ini: template =\n  (per URL, Fallback: vendored Kopie)", color="#28a745"];
+  template -> bom      [label="  ig.ini", color="#28a745", constraint=false];
+
+  module   -> registry [label="  publiziert Package\n  (Simplifier → packages.fhir.org)"];
+  module   -> store    [label="  Entwicklungsstand als tgz\n  (vor der Registrierung)", style=dashed, color="#6c757d"];
+  registry -> store    [label="  Tarball spiegeln", style=dashed, color="#6c757d"];
+
+  registry -> bom      [label="  Pins auflösen, QA-Reports\n  und Deklarationen abgleichen", penwidth=1.4];
+  store    -> bom      [label="  CI-Cache (.fhir)", style=dashed, color="#6c757d"];
+  bom      -> store    [label="  Fat-Tarball der BOM\n  (noch nicht auf der Registry)", style=dashed, color="#6c757d", constraint=false];
+
+  bom      -> testdata [label="  eine Dependency:\n  kerndatensatz.complete", penwidth=1.4];
+  store    -> testdata [label="  cache-store\n  als ~/.fhir", style=dashed, color="#6c757d"];
+  bom      -> history  [label="  gepinnte Versionen\n  + Baseline-Tarball", penwidth=1.4];
+
+  testdata -> bom      [label="  MS-Coverage →\n  Seite Testabdeckung", color="#c0392b", constraint=false];
+  history  -> bom      [label="  Rename-Kandidaten →\n  ConceptMaps, Seite Versionierung", color="#c0392b", constraint=false];
+
+  // Ebenen ausrichten
+  { rank=same; meta; template; }
+  { rank=same; registry; store; }
+  { rank=same; testdata; history; }
+}
