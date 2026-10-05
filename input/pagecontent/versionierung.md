@@ -1,5 +1,3 @@
-# Versionierung
-
 ### Versionsschema
 
 Die KDS-Module und diese BOM versionieren nach **CalVer**: `JJJJ.minor.patch`

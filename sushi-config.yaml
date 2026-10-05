@@ -162,6 +162,22 @@ dependencies:
 # │ input/includes. To use a provided input/includes/menu.xml file, delete the "menu"              │
 # │ property below.                                                                                │
 # ╰────────────────────────────────────────────────────────────────────────────────────────────────╯
+# Seitentitel: Die Markdown-Seiten tragen keine eigene H1 mehr — das Template
+# rendert den Titel aus dieser Liste, sonst stand er doppelt auf der Seite.
+pages:
+  index.md:
+    title: MII Kerndatensatz Complete
+  ballot.md:
+    title: Ballotierung 2027.0.0
+  testabdeckung.md:
+    title: Testabdeckung
+  versionierung.md:
+    title: Versionierung
+  migration.md:
+    title: Migration von v2026
+  entwicklungsstack.md:
+    title: Entwicklungsstack
+
 menu:
   Home: index.html
   Ballot 2027: ballot.html

@@ -1,5 +1,3 @@
-# Migration von v2026
-
 Leitfaden für Standorte und Projekte, die von der 2026er KDS-Linie auf die
 **2027er Ballot-Linie** dieser BOM wechseln. Die zugrunde liegenden Zahlen und
 der Profil-für-Profil-Vergleich stehen auf der Seite

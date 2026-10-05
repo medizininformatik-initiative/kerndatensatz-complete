@@ -1,5 +1,3 @@
-# Testabdeckung
-
 Die MII-Testdaten bestehen aus zwei Schichten mit unterschiedlichen Zielen
 (siehe [mii-testdata](https://github.com/medizininformatik-initiative/mii-testdata)):
 **klinisch plausible Patienten-Bundles**, die das Zusammenspiel der Module testen, und
