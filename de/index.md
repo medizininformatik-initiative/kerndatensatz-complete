@@ -8,7 +8,7 @@
 | | |
 | :--- | :--- |
 | *Offizielle URL*:https://www.medizininformatik-initiative.de/fhir/core/complete/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.complete | *Version*:2027.0.0-ballot.19 |
-| Active Stand: 2026-10-07 | *Maschinenlesbarer Name*:MIIKerndatensatzComplete |
+| Active Stand: 2026-10-08 | *Maschinenlesbarer Name*:MIIKerndatensatzComplete |
 
 Dieses Paket ist die **Bill of Materials (BOM)** des MII Kerndatensatzes — eine kuratierte Zusammenstellung aller KDS-Module mit ihren kompatiblen Versionen. Es enthält keine eigenen Profile, sondern definiert, welche Modulversionen zusammen getestet und freigegeben wurden.
 

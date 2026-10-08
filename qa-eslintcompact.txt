@@ -5,7 +5,7 @@ Generic: line 0, col 0, Error - This IG is for FHIR version 4.0.1, while the pac
 Generic: line 0, col 0, Warning - The canonical URL for an Implementation Guide must point directly to the implementation guide resource, not to the Implementation Guide as a whole (INVALID)
 Generic: line 0, col 0, Warning - The canonical URL for an Implementation Guide must point directly to the implementation guide resource, not to the Implementation Guide as a whole (INVALID)
 Generic: line 0, col 0, Warning - The canonical URL for an Implementation Guide must point directly to the implementation guide resource, not to the Implementation Guide as a whole (INVALID)
-Generic: line 0, col 0, Warning - Illegal HTML: illegal html element: small (Stand: 2026-10-07 11:16 UTC · Zählung über Projekt HDB · automatisch aktualisiert) (INVALID)
+Generic: line 0, col 0, Warning - Illegal HTML: illegal html element: small (Stand: 2026-10-08 11:32 UTC · Zählung über Projekt HDB · automatisch aktualisiert) (INVALID)
 Generic: line 0, col 0, Warning - Illegal HTML: illegal html element: small (Generiert aus dev-stack.dot via Graphviz. Grün = stabile
 Grundlage bzw. Soll-Weg (Registry), gelb = Ballot-Linie 2027, grau = Interimslösung. Graue
 gestrichelte Kanten = Interims-Pfade über den Package-Store, rote Kanten = Rückfluss
