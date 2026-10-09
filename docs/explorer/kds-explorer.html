@@ -1,0 +1,878 @@
+<meta charset="utf-8">
+<title>Kerndatensatz Explorer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one-screen kiosk stage. Top bar with modes, full-bleed map stage, a detail panel that
+   slides in from the right, a caption card bottom-left for the patient journey, a dock at the
+   bottom for transport, time slider and questions. Dark-first: the stage is a night shift. */
+:root {
+  color-scheme: dark;
+  --bg: #0f1626;        /* night ward */
+  --bg-2: #141c2f;
+  --panel: #1a2338;
+  --panel-2: #212c45;
+  --ink: #eef1f8;
+  --ink-2: #b1bace;
+  --ink-3: #76819c;
+  --line: #2a3553;
+  --line-2: #3a4669;
+  --accent: #f2b84b;    /* amber: search, focus, highlights */
+  --accent-ink: #1a1405;
+  --thread: #ff6e5a;    /* the red thread between medication and resistance finding */
+  --good: #3ec28f; --warn: #e4a53a; --bad: #e0607a;
+  --g1: #4a86de; --g2: #1fa386; --g3: #d9742f; --g4: #b38f1f; --g5: #8f7ce0; /* module groups, validated */
+  --shadow: 0 18px 50px rgba(0,0,0,.45);
+  --display: "Bricolage Grotesque", "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono: "IBM Plex Mono", "SF Mono", Menlo, Consolas, monospace;
+  --radius: 10px;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+    --bg: #f6f5f1; --bg-2: #eeede7; --panel: #ffffff; --panel-2: #f3f2ec;
+    --ink: #141a2a; --ink-2: #48506a; --ink-3: #7b8398; --line: #dcdad1; --line-2: #c7c5bb;
+    --accent: #b8761a; --accent-ink: #fff8ea; --thread: #d5452f;
+    --good: #1f9a6a; --warn: #b8761a; --bad: #c43d5a;
+    --g1: #2a6fd0; --g2: #138a6c; --g3: #d2661f; --g4: #a67c00; --g5: #6b5bd0;
+    --shadow: 0 18px 50px rgba(20,26,42,.14);
+  }
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f6f5f1; --bg-2: #eeede7; --panel: #ffffff; --panel-2: #f3f2ec;
+  --ink: #141a2a; --ink-2: #48506a; --ink-3: #7b8398; --line: #dcdad1; --line-2: #c7c5bb;
+  --accent: #b8761a; --accent-ink: #fff8ea; --thread: #d5452f;
+  --good: #1f9a6a; --warn: #b8761a; --bad: #c43d5a;
+  --g1: #2a6fd0; --g2: #138a6c; --g3: #d2661f; --g4: #a67c00; --g5: #6b5bd0;
+  --shadow: 0 18px 50px rgba(20,26,42,.14);
+}
+
+html, body { height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.45 var(--body); overflow: hidden; }
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.eyebrow { font: 500 11px/1 var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+
+#app { position: relative; height: 100%; display: grid; grid-template-rows: 56px 1fr; }
+#app.kiosk { cursor: default; }
+
+/* ---------- top bar ---------- */
+#top { display: flex; align-items: center; gap: 18px; padding: 0 18px; border-bottom: 1px solid var(--line); background: var(--bg-2); position: relative; z-index: 5; }
+#brand { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+#brand h1 { font-size: 20px; font-weight: 600; white-space: nowrap; }
+#brand .bom { color: var(--ink-3); font-size: 12px; }
+nav#modes { display: flex; gap: 4px; margin-left: 8px; }
+nav#modes button { background: transparent; border: 1px solid transparent; border-radius: 999px; padding: 7px 14px; color: var(--ink-2); font-weight: 500; }
+nav#modes button:hover { color: var(--ink); background: var(--panel); }
+nav#modes button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+nav#modes button kbd { font: 500 10px var(--mono); color: inherit; opacity: .55; margin-left: 6px; }
+#searchwrap { margin-left: auto; position: relative; display: flex; align-items: center; }
+#search { width: min(360px, 32vw); padding: 8px 12px 8px 36px; border-radius: 999px; border: 1px solid var(--line-2); background: var(--panel); color: var(--ink); }
+#search::placeholder { color: var(--ink-3); }
+#searchwrap svg { position: absolute; left: 12px; width: 16px; height: 16px; stroke: var(--ink-3); fill: none; stroke-width: 2; pointer-events: none; }
+#langs { display: flex; border: 1px solid var(--line-2); border-radius: 999px; overflow: hidden; }
+#langs button { background: transparent; border: 0; padding: 6px 10px; color: var(--ink-3); font-weight: 500; font-size: 13px; }
+#langs button[aria-pressed="true"] { background: var(--panel-2); color: var(--ink); }
+.iconbtn { background: transparent; border: 1px solid var(--line-2); border-radius: 999px; width: 34px; height: 34px; display: grid; place-items: center; color: var(--ink-2); }
+.iconbtn:hover { color: var(--ink); background: var(--panel); }
+.iconbtn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.iconbtn[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+
+/* ---------- stage ---------- */
+#stage { position: relative; overflow: hidden; }
+#svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+#svg text { font-family: var(--body); pointer-events: none; user-select: none; }
+.dep { fill: none; stroke: var(--line-2); stroke-width: 1.2; opacity: .9; }
+.dep.hi { stroke: var(--ink-2); stroke-width: 2; }
+.module { cursor: pointer; }
+.module .bubble { stroke-width: 1.5; transition: fill-opacity .25s, stroke-opacity .25s; }
+.module .bubble { fill-opacity: .14; stroke-opacity: .8; }
+.module:hover .bubble, .module.hover .bubble { fill-opacity: .24; stroke-opacity: 1; }
+.module.dim .bubble { fill-opacity: .05; stroke-opacity: .25; }
+.module.dim text { opacity: .25; }
+.module .name { font-family: var(--display); font-weight: 600; fill: var(--ink); text-anchor: middle; paint-order: stroke; stroke: var(--bg); stroke-width: 4px; stroke-linejoin: round; }
+.module .count { fill: var(--ink-3); text-anchor: middle; font-size: 11px; paint-order: stroke; stroke: var(--bg); stroke-width: 3px; }
+.module .badge-bg { fill: var(--accent); }
+.module .badge { fill: var(--accent-ink); font: 600 11px var(--mono); text-anchor: middle; }
+.profile { cursor: pointer; }
+.profile circle { stroke-width: .6; stroke-opacity: .7; fill-opacity: .35; transition: fill-opacity .2s; }
+.profile:hover circle { fill-opacity: .7; }
+.profile.abstract circle { stroke-dasharray: 2 2; fill-opacity: .12; }
+.profile.match circle { stroke: var(--accent); stroke-width: 1.4; stroke-opacity: 1; fill-opacity: .7; }
+.profile.sel circle { stroke: var(--ink); stroke-width: 1.6; stroke-opacity: 1; fill-opacity: .8; }
+.profile text { fill: var(--ink); text-anchor: middle; font-size: 3.2px; }
+.dot { stroke: var(--bg); stroke-width: .8; }
+.thread { fill: none; stroke: var(--thread); stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 6 5; animation: march 1.4s linear infinite; filter: drop-shadow(0 0 6px var(--thread)); }
+@keyframes march { to { stroke-dashoffset: -22; } }
+.qlink { fill: none; stroke: var(--accent); stroke-width: 1.4; opacity: .85; }
+.ghost .bubble { fill-opacity: .02 !important; stroke-opacity: .15 !important; stroke-dasharray: 3 4; }
+.ghost text { opacity: .18 !important; }
+
+/* ---------- legend ---------- */
+#legend { position: absolute; left: 18px; top: 16px; display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--ink-2); pointer-events: none; }
+#legend .row { display: flex; align-items: center; gap: 8px; }
+#legend .sw { width: 10px; height: 10px; border-radius: 50%; }
+#legend .hint { color: var(--ink-3); margin-top: 6px; max-width: 260px; }
+
+/* ---------- caption (journey) ---------- */
+#caption { position: absolute; left: 18px; bottom: 90px; width: min(520px, 42vw); background: color-mix(in srgb, var(--panel) 88%, transparent); backdrop-filter: blur(10px); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px 16px; box-shadow: var(--shadow); transition: opacity .4s, transform .4s; }
+#caption.off { opacity: 0; transform: translateY(12px); pointer-events: none; }
+#caption .when { font: 500 12px var(--mono); color: var(--accent); letter-spacing: .04em; }
+#caption h2 { font-size: clamp(18px, 1.6vw, 24px); font-weight: 500; line-height: 1.3; margin-top: 6px; }
+#caption .note { margin-top: 10px; color: var(--ink-2); font-size: 14px; }
+#caption .note b { color: var(--thread); font-weight: 600; }
+#caption .mods { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px; border-radius: 999px; font-size: 12px; background: var(--panel-2); color: var(--ink-2); border: 1px solid var(--line); }
+.chip .sw { width: 8px; height: 8px; border-radius: 50%; }
+#caption .progress { display: flex; gap: 4px; margin-top: 14px; }
+#caption .progress i { flex: 1; height: 3px; border-radius: 2px; background: var(--line-2); }
+#caption .progress i.done { background: var(--accent); }
+
+/* ---------- finale overlay ---------- */
+#finale { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; transition: opacity .6s; }
+#finale.off { opacity: 0; }
+#finale .card { pointer-events: auto; text-align: center; max-width: 720px; padding: 34px 40px; background: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: blur(12px); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); }
+#finale h2 { font-size: clamp(26px, 3vw, 40px); font-weight: 500; line-height: 1.15; }
+#finale .nums { display: flex; justify-content: center; gap: 36px; margin: 20px 0 8px; }
+#finale .num { font: 500 clamp(30px, 3.4vw, 46px)/1 var(--display); color: var(--ink); }
+#finale .lbl { color: var(--ink-3); font-size: 13px; margin-top: 4px; }
+#finale p { color: var(--ink-2); max-width: 56ch; margin: 10px auto 0; }
+.cta { margin-top: 22px; background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 999px; padding: 12px 22px; font-weight: 600; font-size: 15px; }
+.cta:hover { filter: brightness(1.06); }
+
+/* ---------- panel ---------- */
+#panel { position: absolute; top: 16px; right: 16px; bottom: 90px; width: min(400px, 36vw); background: var(--panel); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); display: flex; flex-direction: column; transition: transform .35s, opacity .35s; overflow: hidden; }
+#panel.off { transform: translateX(30px); opacity: 0; pointer-events: none; }
+#panel header { display: flex; align-items: flex-start; gap: 10px; padding: 16px 16px 12px; border-bottom: 1px solid var(--line); }
+#panel header .titles { flex: 1; min-width: 0; }
+#panel h2 { font-size: 19px; font-weight: 600; line-height: 1.25; }
+#panel .sub { color: var(--ink-3); font-size: 12px; margin-top: 4px; }
+#panel .body { overflow: auto; padding: 14px 16px 18px; flex: 1; }
+#panel .body p { margin: 0 0 10px; color: var(--ink-2); max-width: 62ch; }
+.close { background: transparent; border: 0; color: var(--ink-3); width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; }
+.close:hover { background: var(--panel-2); color: var(--ink); }
+.kv { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-size: 13px; margin: 10px 0 14px; }
+.kv dt { color: var(--ink-3); } .kv dd { margin: 0; }
+.bar { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; margin-top: 6px; }
+.bar i { display: block; height: 100%; background: var(--good); }
+.section { margin-top: 18px; }
+.section h3 { font-size: 13px; font-weight: 600; color: var(--ink-2); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: baseline; }
+.section h3 small { color: var(--ink-3); font-weight: 400; }
+.list { display: flex; flex-direction: column; gap: 4px; }
+.item { display: flex; gap: 10px; align-items: center; padding: 8px 10px; border-radius: 8px; background: var(--panel-2); border: 1px solid transparent; text-align: left; width: 100%; }
+button.item:hover { border-color: var(--line-2); }
+.item .sw { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.item .t { flex: 1; min-width: 0; font-size: 13.5px; }
+.item .t small { display: block; color: var(--ink-3); font-size: 11.5px; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.item .n { color: var(--ink-3); font: 500 12px var(--mono); }
+.el { padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+.el:last-child { border-bottom: 0; }
+.el .p { display: flex; align-items: baseline; gap: 8px; }
+.el .path { font-family: var(--mono); font-size: 12px; color: var(--ink); }
+.el .slice { font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
+.el .ms { margin-left: auto; font: 600 9.5px/1 var(--body); letter-spacing: .08em; color: var(--accent); border: 1px solid var(--accent); border-radius: 4px; padding: 2px 4px; }
+.el .s { color: var(--ink-2); margin-top: 2px; }
+.el .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
+.tag { font-size: 11px; padding: 2px 7px; border-radius: 4px; background: var(--bg-2); color: var(--ink-2); border: 1px solid var(--line); }
+.tag.code { font-family: var(--mono); }
+.tag.vs { color: var(--ink); }
+.empty { color: var(--ink-3); font-size: 13px; padding: 10px 0; }
+
+/* ---------- dock ---------- */
+#dock { position: absolute; left: 18px; right: 16px; bottom: 16px; height: 60px; display: flex; align-items: center; gap: 14px; }
+.transport { display: flex; align-items: center; gap: 8px; background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 6px 8px; box-shadow: var(--shadow); }
+.transport select { background: var(--panel-2); border: 1px solid var(--line-2); border-radius: 999px; padding: 6px 12px; color: var(--ink); max-width: 260px; }
+.transport .label { color: var(--ink-3); font-size: 12px; padding: 0 4px; }
+#timebox { flex: 1; display: flex; align-items: center; gap: 14px; background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 8px 18px; box-shadow: var(--shadow); }
+#timebox input[type=range] { flex: 1; accent-color: var(--accent); }
+#timebox .date { font: 500 14px var(--mono); color: var(--ink); min-width: 92px; }
+#timebox .ev { color: var(--ink-2); font-size: 13px; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 36vw; }
+#qbox { flex: 1; display: flex; gap: 8px; align-items: center; background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 6px 8px 6px 16px; box-shadow: var(--shadow); }
+#qbox input { flex: 1; background: transparent; border: 0; color: var(--ink); min-width: 0; }
+#qbox input::placeholder { color: var(--ink-3); }
+#qbox .status { color: var(--ink-3); font-size: 12px; white-space: nowrap; }
+.pill { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 999px; padding: 8px 14px; font-weight: 600; }
+.pill:disabled { opacity: .5; cursor: default; }
+.pill.ghost { background: var(--panel-2); color: var(--ink-2); border: 1px solid var(--line-2); font-weight: 500; }
+
+/* ---------- questions rail ---------- */
+#qrail { position: absolute; left: 18px; top: 16px; bottom: 90px; width: min(380px, 34vw); overflow: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 4px; }
+#qrail .q { text-align: left; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; color: var(--ink); display: flex; flex-direction: column; gap: 6px; }
+#qrail .q:hover { border-color: var(--line-2); }
+#qrail .q[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
+#qrail .q .qt { font-family: var(--display); font-size: 16px; font-weight: 500; line-height: 1.3; }
+#qrail .q .qm { display: flex; gap: 4px; flex-wrap: wrap; }
+#qrail .q .qm .sw { width: 8px; height: 8px; border-radius: 50%; }
+#qrail .q .qn { color: var(--ink-3); font-size: 12px; }
+#qrail .own { border-color: var(--accent); }
+
+/* ---------- toast / loading ---------- */
+#loading { position: absolute; inset: 0; display: grid; place-items: center; background: var(--bg); z-index: 20; transition: opacity .5s; }
+#loading.off { opacity: 0; pointer-events: none; }
+#loading .l { text-align: center; color: var(--ink-2); }
+#loading h2 { font-size: 34px; font-weight: 500; }
+#toast { position: absolute; left: 50%; bottom: 90px; transform: translateX(-50%); background: var(--panel); border: 1px solid var(--line-2); color: var(--ink); padding: 10px 16px; border-radius: 999px; box-shadow: var(--shadow); font-size: 13px; opacity: 0; transition: opacity .3s; pointer-events: none; }
+#toast.on { opacity: 1; }
+
+@media (max-width: 900px) {
+  #app { grid-template-rows: auto 1fr; }
+  #top { flex-wrap: wrap; padding: 8px 16px; gap: 8px; }
+  #searchwrap { margin-left: 0; width: 100%; } #search { width: 100%; }
+  #panel { width: min(92vw, 400px); left: 16px; right: auto; top: auto; bottom: 90px; max-height: 55%; }
+  #caption { width: calc(100vw - 32px); bottom: 90px; }
+  #qrail { width: calc(100vw - 36px); bottom: auto; max-height: 40%; }
+  #timebox .ev { display: none; }
+  #legend { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .thread { animation: none; } * { transition-duration: 0s !important; } }
+</style>
+
+<div id="app">
+  <header id="top">
+    <div id="brand"><h1 data-i18n="brand">Kerndatensatz</h1><span class="bom mono" id="bom"></span></div>
+    <nav id="modes" aria-label="Modus">
+      <button data-mode="reise" aria-pressed="true"><span data-i18n="m_reise">Reise</span><kbd>1</kbd></button>
+      <button data-mode="karte" aria-pressed="false"><span data-i18n="m_karte">Karte</span><kbd>2</kbd></button>
+      <button data-mode="zeit" aria-pressed="false"><span data-i18n="m_zeit">Zeit</span><kbd>3</kbd></button>
+      <button data-mode="fragen" aria-pressed="false"><span data-i18n="m_fragen">Fragen</span><kbd>4</kbd></button>
+    </nav>
+    <div id="searchwrap">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="search" type="search" autocomplete="off" placeholder="Suche: Laktat, Beatmung, Tumor …" aria-label="Suche">
+    </div>
+    <div id="langs" role="group" aria-label="Sprache"><button data-lang="de" aria-pressed="true">DE</button><button data-lang="en" aria-pressed="false">EN</button></div>
+    <button class="iconbtn" id="kioskbtn" aria-pressed="false" title="Kiosk (K)"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></button>
+    <button class="iconbtn" id="fsbtn" title="Vollbild (F)"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+  </header>
+
+  <main id="stage">
+    <svg id="svg" role="img" aria-label="Karte der Kerndatensatz-Module"></svg>
+    <div id="legend"></div>
+    <div id="caption" class="off"></div>
+    <div id="finale" class="off"></div>
+    <div id="qrail" hidden></div>
+    <aside id="panel" class="off" aria-live="polite">
+      <header><div class="titles"><div class="eyebrow" id="p-eyebrow"></div><h2 id="p-title"></h2><div class="sub" id="p-sub"></div></div>
+        <button class="close" id="p-close" aria-label="Schließen">✕</button></header>
+      <div class="body" id="p-body"></div>
+    </aside>
+    <div id="dock">
+      <div class="transport" id="transport">
+        <button class="iconbtn" id="play" title="Abspielen (Leertaste)"><svg viewBox="0 0 24 24"><path d="M7 5v14l11-7z"/></svg></button>
+        <button class="iconbtn" id="prev" title="Zurück (←)"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <button class="iconbtn" id="next" title="Weiter (→)"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+        <span class="label" data-i18n="journey">Reise</span>
+        <select id="journeysel" aria-label="Reise wählen"></select>
+      </div>
+      <div id="timebox" hidden>
+        <button class="iconbtn" id="tplay" title="Abspielen"><svg viewBox="0 0 24 24"><path d="M7 5v14l11-7z"/></svg></button>
+        <span class="date" id="tdate"></span>
+        <input type="range" id="tslider" min="0" max="1000" value="1000" aria-label="Zeit">
+        <span class="ev" id="tev"></span>
+      </div>
+      <div id="qbox" hidden>
+        <input id="qinput" type="text" autocomplete="off" placeholder="Eigene Forschungsfrage eingeben …" aria-label="Eigene Frage">
+        <span class="status" id="qstatus"></span>
+        <button class="pill ghost" id="qstop" hidden data-i18n="stop">Stopp</button>
+        <button class="pill" id="qask" data-i18n="ask">Fragen</button>
+      </div>
+    </div>
+    <div id="toast"></div>
+    <div id="loading"><div class="l"><h2 data-i18n="brand">Kerndatensatz</h2><div id="loadmsg">Lade Module …</div></div></div>
+  </main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>
+(() => {
+'use strict';
+const $ = s => document.querySelector(s);
+const GROUPS = {
+  kern:      { c: 'var(--g1)', de: 'Kern', en: 'Core', mods: ['base', 'meta'] },
+  diag:      { c: 'var(--g2)', de: 'Diagnostik & Proben', en: 'Diagnostics & specimens', mods: ['laborbefund', 'mikrobiologie', 'patho', 'molgen', 'bildgebung', 'biobank'] },
+  therapie:  { c: 'var(--g3)', de: 'Therapie & Verlauf', en: 'Therapy & course', mods: ['medikation', 'icu', 'kardiologie', 'lungenfunktion'] },
+  fach:      { c: 'var(--g4)', de: 'Fachmodule', en: 'Specialty modules', mods: ['onkologie', 'mtb', 'seltene'] },
+  kontext:   { c: 'var(--g5)', de: 'Person & Kontext', en: 'Person & context', mods: ['consent', 'studie', 'pros', 'soziodemographie', 'symptom', 'dokument'] },
+};
+const GROUP_OF = {}; Object.entries(GROUPS).forEach(([g, v]) => v.mods.forEach(m => GROUP_OF[m] = g));
+
+const T = {
+  de: { brand: 'Kerndatensatz', m_reise: 'Reise', m_karte: 'Karte', m_zeit: 'Zeit', m_fragen: 'Fragen', journey: 'Reise', stop: 'Stopp', ask: 'Fragen',
+        profiles: 'Profile', profile: 'Profil', elements: 'Elemente', ms: 'Must-Support-Elemente', coverage: 'Testdaten-Abdeckung', deps: 'Baut auf', valuesets: 'Wertelisten',
+        module: 'Modul', version: 'Version', stage_final: 'finaler Ballot', stage_rc: 'Release-Kandidat', examples: 'Beispiele aus den Testdaten', resources: 'Datensätze',
+        legend_hint: 'Klicken zoomt in ein Modul. Kreise darin sind Profile, ihre Größe die Zahl der Must-Support-Elemente. Pfeile zeigen, wer auf wem aufbaut.',
+        search_results: 'Treffer', search_none: 'Nichts gefunden. Versuchen Sie einen klinischen Begriff wie „Laktat“, „Beatmung“ oder „Tumor“.',
+        in_module: 'in', binding: 'Werteliste', fixed: 'Fester Code', abstract: 'abstrakt', instances: 'Instanzen', filled: 'befüllt',
+        released: 'Veröffentlichungen bis hier', no_events: 'Noch kein Paket veröffentlicht.', first_release: 'Erste Veröffentlichung', versions: 'Versionen',
+        patients: 'Testpatienten', patients_have: 'von 14 Testpatienten haben Daten in allen beteiligten Modulen', parts: 'Zerlegung in Datenelemente',
+        thinking: 'Claude zerlegt die Frage …', q_own: 'Ihre Frage', q_err: 'Das hat nicht geklappt. Bitte anders formulieren.', q_na: 'Live-Fragen sind nur in der veröffentlichten Fassung verfügbar.',
+        q_rate: 'Zu viele Anfragen. Bitte gleich noch einmal.', q_deny: 'Claude ist für diese Seite nicht freigegeben.',
+        explore: 'Kerndatensatz erkunden', one_patient: 'Eine Patientin, ein Patient, eine Episode.', finale_p: 'Jeder dieser Datensätze folgt einem Profil des Kerndatensatzes. Deshalb lässt er sich an jedem Standort der Medizininformatik-Initiative auf dieselbe Weise lesen und zusammenführen.',
+        n_res: 'Datensätze', n_mod: 'Module', n_days: 'Tage', kiosk_on: 'Kiosk-Modus an: nach 2 Minuten ohne Eingabe startet die Reise neu.', kiosk_off: 'Kiosk-Modus aus.',
+        resources_per_day: 'Datensätze', zoom_out: 'Übersicht', why: 'Warum diese Frage?', own_q: 'Eigene Frage', loading: 'Lade Module …', back: 'Zurück zur Karte',
+        type: 'Ressourcentyp', base: 'Basiert auf', time_from: 'Stand der Pakete am', t_hint: 'Der Schieber zeigt, wann welches Modul ein Paket veröffentlicht hat. Quelle: Git-Tags der Modul-Repositories ab 2020.' },
+  en: { brand: 'Core Dataset', m_reise: 'Journey', m_karte: 'Map', m_zeit: 'Time', m_fragen: 'Questions', journey: 'Journey', stop: 'Stop', ask: 'Ask',
+        profiles: 'profiles', profile: 'Profile', elements: 'elements', ms: 'must-support elements', coverage: 'Test data coverage', deps: 'Builds on', valuesets: 'Value sets',
+        module: 'Module', version: 'Version', stage_final: 'final ballot', stage_rc: 'release candidate', examples: 'Examples from the test data', resources: 'resources',
+        legend_hint: 'Click to zoom into a module. The circles inside are profiles, sized by their must-support elements. Arrows show who builds on whom.',
+        search_results: 'matches', search_none: 'Nothing found. Try a clinical term such as “lactate”, “ventilation” or “tumor”.',
+        in_module: 'in', binding: 'Value set', fixed: 'Fixed code', abstract: 'abstract', instances: 'instances', filled: 'filled',
+        released: 'Releases up to here', no_events: 'No package released yet.', first_release: 'First release', versions: 'versions',
+        patients: 'test patients', patients_have: 'of 14 test patients have data in all modules involved', parts: 'Decomposition into data elements',
+        thinking: 'Claude is decomposing the question …', q_own: 'Your question', q_err: 'That did not work. Please rephrase.', q_na: 'Live questions are only available in the published version.',
+        q_rate: 'Too many requests. Please try again shortly.', q_deny: 'Claude is not enabled for this page.',
+        explore: 'Explore the core dataset', one_patient: 'One patient, one episode.', finale_p: 'Every one of these records follows a profile of the core dataset. That is why it can be read and combined the same way at every site of the Medical Informatics Initiative.',
+        n_res: 'records', n_mod: 'modules', n_days: 'days', kiosk_on: 'Kiosk mode on: after 2 minutes without input the journey restarts.', kiosk_off: 'Kiosk mode off.',
+        resources_per_day: 'records', zoom_out: 'Overview', why: 'Why this question?', own_q: 'Your own question', loading: 'Loading modules …', back: 'Back to the map',
+        type: 'Resource type', base: 'Based on', time_from: 'Packages as of', t_hint: 'The slider shows when each module released a package. Source: git tags of the module repositories from 2020 on.' },
+};
+let L = 'de';
+const t = k => (T[L][k] ?? T.de[k] ?? k);
+const tx = o => (o && typeof o === 'object') ? (o[L] ?? o.de ?? '') : (o ?? '');
+const fmtDate = s => { if (!s) return ''; const d = new Date(s); if (isNaN(d)) return s; return d.toLocaleDateString(L === 'de' ? 'de-DE' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' }); };
+const fmtDT = s => { if (!s) return ''; const d = new Date(s); if (isNaN(d)) return s; const hasTime = s.length > 10; return d.toLocaleDateString(L === 'de' ? 'de-DE' : 'en-GB', { day: 'numeric', month: 'short' }) + (hasTime ? ', ' + d.toLocaleTimeString(L === 'de' ? 'de-DE' : 'en-GB', { hour: '2-digit', minute: '2-digit' }) : ''); };
+const sw = m => `<span class="sw" style="background:${GROUPS[GROUP_OF[m] || 'kontext'].c}"></span>`;
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+// ---------------------------------------------------------------- the sepsis script
+const SEPSIS = [
+  { when: { de: '8. März 2025, 14:20', en: '8 March 2025, 14:20' }, ids: ['patient-12', 'encounter-1', 'diagnose-2'],
+    de: 'Gerhard W., 71, kommt mit einer Lungenentzündung und septischem Schock in die Notaufnahme.', en: 'Gerhard W., 71, arrives in the emergency department with pneumonia and septic shock.' },
+  { when: { de: '14:45', en: '14:45' }, ids: ['labrequest-1', 'labreport-1', 'labobs-1', 'labobs-2', 'labobs-3', 'labobs-4'],
+    de: 'Das Sepsis-Labor: Laktat 4,8 mmol/l, Procalcitonin 28,4 ng/ml, CRP 312 mg/l, Leukozyten 23,4/nl. Alles kritisch erhöht.', en: 'The sepsis panel: lactate 4.8 mmol/l, procalcitonin 28.4 ng/ml, CRP 312 mg/l, leukocytes 23.4/nl. All critically high.' },
+  { when: { de: '17:52 bis 18:10', en: '17:52 to 18:10' }, ids: ['prozedur-1', 'encounter-2', 'icu-beatmung-1', 'icu-device-vent', 'icu-dm-vent', 'medadmin-2', 'medication-noradrenalin'],
+    de: 'Intubation und Verlegung auf die Intensivstation. Die kontrollierte Beatmung beginnt, Noradrenalin stützt den Kreislauf.', en: 'Intubation and transfer to the ICU. Controlled ventilation begins, noradrenaline supports the circulation.' },
+  { when: { de: '18:25 bis 18:35', en: '18:25 to 18:35' }, ids: ['mibi-anforderung-1', 'mibi-specimen-bk', 'mibi-specimen-ts', 'mibi-report-1', 'mibi-kultur-1'],
+    de: 'Blutkultur und Trachealsekret gehen ins mikrobiologische Labor. Noch weiß niemand, welcher Erreger es ist.', en: 'Blood culture and tracheal secretion go to the microbiology lab. Nobody knows the pathogen yet.' },
+  { when: { de: '18:55', en: '18:55' }, ids: ['medrequest-1', 'medication-piperacillin-tazobactam'],
+    de: 'Empirische Therapie: Piperacillin/Tazobactam, ein Breitbandantibiotikum auf Verdacht.', en: 'Empirical therapy: piperacillin/tazobactam, a broad-spectrum antibiotic on suspicion.' },
+  { when: { de: '9. März, 06:00 bis 09:00', en: '9 March, 06:00 to 09:00' }, ids: ['icu-vent-peep-1', 'icu-vent-fio2-1', 'icu-vent-vt-1', 'icu-bilanz-urin-1', 'icu-bilanz-tages-1', 'icu-gcs-1', 'icu-sofa-t1'],
+    de: 'Die Intensivstation misst alles: PEEP 12 cmH₂O, FiO₂ 60 %, Tidalvolumen 430 ml, Bilanz +3,25 l, GCS 10. Der SOFA-Score steht bei 12.', en: 'The ICU measures everything: PEEP 12 cmH₂O, FiO₂ 60 %, tidal volume 430 ml, fluid balance +3.25 l, GCS 10. The SOFA score is 12.' },
+  { when: { de: '10. März', en: '10 March' }, ids: ['mibi-mikroskopie-1', 'mibi-erreger-1', 'diagnose-1'],
+    de: 'Die Kultur wird positiv: gramnegative Stäbchen. Am Nachmittag der Name: Klebsiella pneumoniae.', en: 'The culture turns positive: gram-negative bacilli. In the afternoon, the name: Klebsiella pneumoniae.' },
+  { when: { de: '11. März, 09:00', en: '11 March, 09:00' }, ids: ['mibi-ast-piptazo', 'mibi-ast-ceftazidim', 'mibi-ast-cipro', 'mibi-ast-meropenem', 'mibi-esbl-1', 'mibi-mrgn-1'],
+    de: 'Das Antibiogramm: Piperacillin/Tazobactam resistent. Ceftazidim resistent. Ciprofloxacin resistent. Meropenem empfindlich. ESBL nachgewiesen, Einstufung 3MRGN.', en: 'The antibiogram: piperacillin/tazobactam resistant. Ceftazidime resistant. Ciprofloxacin resistant. Meropenem susceptible. ESBL detected, classified 3MRGN.' },
+  { when: { de: '11. März, 10:45', en: '11 March, 10:45' }, ids: ['medrequest-2', 'medadmin-1', 'medication-meropenem', 'medstatement-1'], thread: ['medrequest-2', 'mibi-mrgn-1', 'mibi-ast-meropenem'],
+    de: 'Deshalb die Umstellung auf Meropenem. Die Verordnung verweist direkt auf den Resistenzbefund.', en: 'Hence the switch to meropenem. The order references the resistance finding directly.',
+    note: { de: '<b>Diese eine Kante</b> beantwortet die Kernfrage des Antibiotic Stewardship: Welche Umstellung folgte auf welchen Befund? Kein einzelnes Modul kann sie ausdrücken.', en: '<b>This one edge</b> answers the core question of antibiotic stewardship: which switch followed which finding? No single module can express it.' } },
+  { when: { de: '13. bis 16. März', en: '13 to 16 March' }, ids: ['icu-sofa-t5', 'icu-rass-1', 'icu-sofa-t8'],
+    de: 'Der SOFA-Score fällt: 9, dann 4. Die Sedierung wird flach, der Patient wird extubiert.', en: 'The SOFA score falls: 9, then 4. Sedation is lightened, the patient is extubated.' },
+  { when: { de: '18. bis 25. März', en: '18 to 25 March' }, ids: ['list-stat-aufenthalt', 'consent-1'],
+    de: 'Verlegung auf die Normalstation. Medikationsliste, Einwilligung in die Forschungsnutzung, Entlassung.', en: 'Transfer to the general ward. Medication list, consent to research use, discharge.' },
+];
+
+// ---------------------------------------------------------------- state
+const S = { data: null, mode: 'reise', nodes: [], links: [], byId: {}, profileIndex: [], W: 0, H: 0, zoomed: null, selProfile: null,
+            journey: null, beats: [], beat: -1, playing: false, timer: null, dots: new Map(),
+            time: { min: 0, max: 0, t: 0, playing: false, timer: null }, sample: null, qctl: null, kiosk: false, idle: null, lastInput: Date.now() };
+
+const svg = d3.select('#svg');
+const gRoot = svg.append('g');
+const gLinks = gRoot.append('g');
+const gNodes = gRoot.append('g');
+const gJourney = gRoot.append('g');
+const gThread = gRoot.append('g');
+const gQ = svg.append('g');
+svg.append('defs').html(`<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="context-stroke"/></marker>`);
+const zoom = d3.zoom().scaleExtent([0.5, 14]).on('zoom', ev => { gRoot.attr('transform', ev.transform); updateLabelsForScale(ev.transform.k); });
+svg.call(zoom).on('dblclick.zoom', null);
+svg.on('click', ev => { if (ev.target === svg.node()) zoomOut(); });
+
+// ---------------------------------------------------------------- boot
+fetch('data.json').then(r => r.json()).then(init).catch(e => { $('#loadmsg').textContent = 'data.json fehlt. Bitte die Seite über einen Webserver öffnen (python3 -m http.server).'; console.error(e); });
+
+function init(data) {
+  S.data = data;
+  $('#bom').textContent = data.bom;
+  data.modules.forEach(m => { S.byId[m.id] = m; m.group = GROUP_OF[m.id] || 'kontext'; });
+  buildProfileIndex();
+  buildTimeline();
+  buildJourneySelect();
+  layout();
+  render();
+  wireUI();
+  applyLang();
+  setMode('reise');
+  $('#loading').classList.add('off');
+  setTimeout(() => startJourney(S.data.journeys[0].id, true), 900);
+  (window.claude?.use ? window.claude.use('sample') : Promise.resolve(null)).then(s => { S.sample = s; updateQBox(); }).catch(() => {});
+}
+
+// ---------------------------------------------------------------- layout
+function layout() {
+  const stage = $('#stage'); S.W = stage.clientWidth; S.H = stage.clientHeight;
+  const W = S.W, H = S.H;
+  const rScale = d3.scaleSqrt().domain([0, d3.max(S.data.modules, m => m.n_ms)]).range([Math.min(W, H) * 0.038, Math.min(W, H) * 0.115]);
+  const centers = { kern: [W * 0.5, H * 0.47], diag: [W * 0.22, H * 0.34], therapie: [W * 0.78, H * 0.34], fach: [W * 0.76, H * 0.74], kontext: [W * 0.24, H * 0.74] };
+  S.nodes = S.data.modules.map(m => ({ id: m.id, m, r: rScale(Math.max(m.n_ms, 40)), group: m.group }));
+  const nodeById = Object.fromEntries(S.nodes.map(n => [n.id, n]));
+  S.links = [];
+  S.data.modules.forEach(m => m.deps.forEach(d => { if (nodeById[d]) S.links.push({ source: m.id, target: d }); }));
+  const sim = d3.forceSimulation(S.nodes)
+    .force('x', d3.forceX(n => centers[n.group][0]).strength(0.12))
+    .force('y', d3.forceY(n => centers[n.group][1]).strength(0.12))
+    .force('collide', d3.forceCollide(n => n.r + 30).iterations(4))
+    .force('link', d3.forceLink(S.links).id(n => n.id).distance(l => l.source.r + l.target.r + 70).strength(0.05))
+    .force('charge', d3.forceManyBody().strength(-40))
+    .stop();
+  for (let i = 0; i < 320; i++) sim.tick();
+  // keep inside stage
+  S.nodes.forEach(n => { n.x = Math.max(n.r + 24, Math.min(W - n.r - 24, n.x)); n.y = Math.max(n.r + 24, Math.min(H - n.r - 44, n.y)); });
+  // pack profiles inside each bubble
+  S.nodes.forEach(n => {
+    const root = d3.hierarchy({ children: n.m.profiles }).sum(p => Math.max(6, p.ms) + 8);
+    d3.pack().size([n.r * 1.7, n.r * 1.7]).padding(1.2)(root);
+    n.pack = root.children || [];
+    n.pack.forEach(c => { c.x -= n.r * 0.85; c.y -= n.r * 0.85; c.data._node = n; c.data._pack = c; });
+  });
+  S.nodeById = nodeById;
+}
+
+function shortTitle(p, m) {
+  let s = p.title || p.name || '';
+  s = s.replace(/^MII[ _]?PR[ _]/i, '').replace(/^MII[ _]?LM[ _]/i, '').replace(/_/g, ' ');
+  const words = s.split(' ');
+  if (words.length > 1 && /^[A-Za-zÄÖÜäöü]+$/.test(words[0]) && words[0].length <= 16) s = words.slice(1).join(' ');
+  return s || p.name;
+}
+
+// ---------------------------------------------------------------- render
+function render() {
+  gLinks.selectAll('path.dep').data(S.links, l => l.source.id + '>' + l.target.id).join('path').attr('class', 'dep').attr('marker-end', 'url(#arrow)').attr('d', linkPath);
+  const g = gNodes.selectAll('g.module').data(S.nodes, n => n.id).join(enter => {
+    const e = enter.append('g').attr('class', 'module');
+    e.append('circle').attr('class', 'bubble');
+    e.append('g').attr('class', 'profiles');
+    e.append('text').attr('class', 'name');
+    e.append('text').attr('class', 'count');
+    e.append('g').attr('class', 'badgeg').style('display', 'none').call(b => { b.append('rect').attr('class', 'badge-bg').attr('rx', 9).attr('height', 18); b.append('text').attr('class', 'badge').attr('dy', 13); });
+    return e;
+  });
+  g.attr('transform', n => `translate(${n.x},${n.y})`).style('color', n => GROUPS[n.group].c)
+    .on('click', (ev, n) => { ev.stopPropagation(); if (S.mode === 'fragen') return; zoomTo(n); })
+    .on('mouseenter', (ev, n) => highlightLinks(n)).on('mouseleave', () => highlightLinks(null));
+  g.select('.bubble').attr('r', n => n.r).attr('fill', n => GROUPS[n.group].c).attr('stroke', n => GROUPS[n.group].c);
+  g.select('.name').attr('font-size', n => Math.max(10, Math.min(16, n.r / 3.2))).attr('dy', n => n.r + 18).text(n => tx(n.m.name));
+  g.select('.count').attr('dy', n => n.r + 33).text(n => n.m.n_profiles ? `${n.m.n_profiles} ${t('profiles')}` : (n.m.profiles.length ? `${n.m.profiles.length} ${t('abstract')}` : ''));
+  const pr = g.select('.profiles').selectAll('g.profile').data(n => n.pack, c => c.data.id).join(enter => {
+    const e = enter.append('g').attr('class', 'profile'); e.append('circle'); e.append('text'); return e;
+  });
+  pr.attr('class', c => 'profile' + (c.data.abstract ? ' abstract' : '')).attr('transform', c => `translate(${c.x},${c.y})`)
+    .on('click', (ev, c) => { ev.stopPropagation(); if (S.mode === 'fragen') return; selectProfile(c.data._node, c.data); })
+    .on('mouseenter', (ev, c) => showToast(shortTitle(c.data, c.data._node.m), true)).on('mouseleave', () => hideToast());
+  pr.select('circle').attr('r', c => c.r).attr('fill', c => GROUPS[c.data._node.group].c).attr('stroke', c => GROUPS[c.data._node.group].c);
+  pr.select('text').attr('font-size', c => Math.max(2.2, Math.min(3.6, c.r / 4))).attr('dy', '.35em').text(c => c.r > 9 ? shortTitle(c.data, c.data._node.m) : '').style('display', 'none');
+  renderLegend();
+}
+function linkPath(l) {
+  const sx = l.source.x, sy = l.source.y, tx_ = l.target.x, ty = l.target.y;
+  const dx = tx_ - sx, dy = ty - sy, d = Math.hypot(dx, dy) || 1;
+  const ux = dx / d, uy = dy / d;
+  const x1 = sx + ux * (l.source.r + 4), y1 = sy + uy * (l.source.r + 4), x2 = tx_ - ux * (l.target.r + 6), y2 = ty - uy * (l.target.r + 6);
+  const mx = (x1 + x2) / 2 - uy * d * 0.12, my = (y1 + y2) / 2 + ux * d * 0.12;
+  return `M${x1},${y1} Q${mx},${my} ${x2},${y2}`;
+}
+function highlightLinks(n) { gLinks.selectAll('path.dep').classed('hi', l => n && (l.source === n || l.target === n)); }
+function updateLabelsForScale(k) {
+  gNodes.selectAll('g.profile text').style('display', k > 3.2 ? null : 'none');
+  gNodes.selectAll('.module .name, .module .count').style('opacity', k > 3.2 ? 0 : 1);
+}
+function renderLegend() {
+  $('#legend').innerHTML = Object.entries(GROUPS).map(([g, v]) => `<div class="row"><span class="sw" style="background:${v.c}"></span>${esc(tx(v))}</div>`).join('') + `<div class="hint" id="legendhint">${esc(t('legend_hint'))}</div>`;
+}
+
+// ---------------------------------------------------------------- zoom
+function zoomTo(n, dur = 900) {
+  S.zoomed = n; panel.classList.remove('off');
+  const k = Math.min(12, (Math.min(S.W, S.H) * 0.82) / (2 * n.r));
+  const pw = panel.classList.contains('off') ? 0 : Math.min(400, S.W * 0.36) + 32;
+  const cx = (S.W - pw) / 2 - k * n.x, cy = S.H / 2 - k * n.y;
+  svg.transition().duration(dur).ease(d3.easeCubicInOut).call(zoom.transform, d3.zoomIdentity.translate(cx, cy).scale(k));
+  gNodes.selectAll('g.module').classed('dim', d => d !== n);
+  showModulePanel(n);
+}
+function baseTransform() {
+  if (S.mode === 'reise') { const k = 0.8; return d3.zoomIdentity.translate(S.W * (1 - k) * 0.95, S.H * (1 - k) * 0.08).scale(k); }
+  if (S.mode === 'fragen') { const k = 0.72; const cx = (Math.min(380, S.W * 0.34) + 40 + (S.W - Math.min(400, S.W * 0.36) - 32 - 254)) / 2; return d3.zoomIdentity.translate(cx - k * S.W / 2, S.H * (1 - k) * 0.5).scale(k); }
+  return d3.zoomIdentity;
+}
+function zoomOut(dur = 800) {
+  S.zoomed = null; S.selProfile = null;
+  gNodes.selectAll('g.module').classed('dim', false);
+  gNodes.selectAll('g.profile').classed('sel', false);
+  svg.transition().duration(dur).ease(d3.easeCubicInOut).call(zoom.transform, baseTransform());
+  if (S.mode === 'karte' && !$('#search').value) hidePanel();
+}
+function zoomToProfile(n, p) {
+  const c = p._pack; const k = 12;
+  const x = n.x + c.x, y = n.y + c.y;
+  svg.transition().duration(900).ease(d3.easeCubicInOut).call(zoom.transform, d3.zoomIdentity.translate(S.W / 2 - k * x, S.H / 2 - k * y).scale(k));
+  S.zoomed = n; gNodes.selectAll('g.module').classed('dim', d => d !== n);
+}
+
+// ---------------------------------------------------------------- panel
+const panel = $('#panel');
+function showPanel(eyebrow, title, sub, bodyHtml) { $('#p-eyebrow').textContent = eyebrow; $('#p-title').textContent = title; $('#p-sub').innerHTML = sub; $('#p-body').innerHTML = bodyHtml; panel.classList.remove('off'); $('#p-body').scrollTop = 0; }
+function hidePanel() { panel.classList.add('off'); }
+$('#p-close').addEventListener('click', () => { hidePanel(); if (S.zoomed && S.mode === 'karte') zoomOut(); });
+
+function stageLabel(s) { return s === 'final' ? t('stage_final') : s === 'rc' ? t('stage_rc') : (s || ''); }
+function showModulePanel(n) {
+  const m = n.m; const cov = m.coverage;
+  const j = S.data.journeys.flatMap(j => j.resources.filter(r => r.m === m.id)).slice(0, 5);
+  const body = `
+    <p>${esc(tx(m.tagline))}</p>
+    <dl class="kv">
+      <dt>${t('version')}</dt><dd class="mono">${esc(m.version)} <span style="color:var(--ink-3)">· ${esc(stageLabel(m.stage))}</span></dd>
+      <dt>${t('profiles')}</dt><dd>${m.n_profiles}${m.profiles.length > m.n_profiles ? ` <span style="color:var(--ink-3)">+ ${m.profiles.length - m.n_profiles} ${t('abstract')}</span>` : ''}</dd>
+      <dt>${t('ms')}</dt><dd class="mono">${m.n_ms.toLocaleString(L)}</dd>
+      ${m.deps.length ? `<dt>${t('deps')}</dt><dd>${m.deps.map(d => `<button class="chip" data-goto="${d}">${sw(d)}${esc(tx(S.byId[d]?.name))}</button>`).join(' ')}</dd>` : ''}
+    </dl>
+    ${cov && cov.pct != null ? `<div class="section"><h3>${t('coverage')}<small class="mono">${cov.filled.toLocaleString(L)} / ${cov.ms.toLocaleString(L)} · ${cov.pct.toLocaleString(L)} %</small></h3><div class="bar"><i style="width:${cov.pct}%"></i></div></div>` : ''}
+    <div class="section"><h3>${t('profiles')}<small>${m.profiles.length}</small></h3><div class="list">
+      ${m.profiles.map(p => `<button class="item" data-profile="${esc(p.id)}">${sw(m.id)}<span class="t">${esc(shortTitle(p, m))}<small>${esc(p.type)}${p.abstract ? ' · ' + t('abstract') : ''}</small></span><span class="n">${p.ms}</span></button>`).join('')}
+    </div></div>
+    ${j.length ? `<div class="section"><h3>${t('examples')}</h3><div class="list">${j.map(r => `<div class="item">${sw(m.id)}<span class="t">${esc(r.label || r.rt)}${r.value ? ` <span style="color:var(--ink-3)">· ${esc(r.value)}</span>` : ''}<small>${esc(r.rt)} · ${esc(fmtDT(r.t))}</small></span></div>`).join('')}</div></div>` : ''}
+    ${m.valuesets.length ? `<div class="section"><h3>${t('valuesets')}<small>${m.valuesets.length}</small></h3><div class="list">${m.valuesets.slice(0, 40).map(v => `<div class="item"><span class="t">${esc(v.title)}<small>${v.concepts.slice(0, 4).map(esc).join(' · ')}</small></span>${v.n ? `<span class="n">${v.n}</span>` : ''}</div>`).join('')}</div></div>` : ''}`;
+  showPanel(t('module') + ' · ' + tx(GROUPS[n.group]), tx(m.name), `<a href="${esc(m.repo)}" target="_blank" rel="noopener" style="color:var(--ink-3)">${esc(m.repo.replace('https://github.com/', ''))}</a>`, body);
+  wirePanel(n);
+}
+function wirePanel(n) {
+  $('#p-body').querySelectorAll('[data-profile]').forEach(b => b.addEventListener('click', () => { const p = n.m.profiles.find(p => p.id === b.dataset.profile); if (p) selectProfile(n, p); }));
+  $('#p-body').querySelectorAll('[data-goto]').forEach(b => b.addEventListener('click', () => zoomTo(S.nodeById[b.dataset.goto])));
+}
+function selectProfile(n, p) {
+  S.selProfile = p;
+  gNodes.selectAll('g.profile').classed('sel', c => c.data === p);
+  if (!S.zoomed || S.zoomed !== n) zoomTo(n);
+  const cov = p.cov;
+  const ex = S.data.journeys.flatMap(j => j.resources.filter(r => r.profile === p.name)).slice(0, 4);
+  const body = `
+    ${p.desc ? `<p>${esc(p.desc)}</p>` : ''}
+    <dl class="kv">
+      <dt>${t('type')}</dt><dd class="mono">${esc(p.type)}</dd>
+      <dt>${t('base')}</dt><dd class="mono">${esc(p.base)}</dd>
+      <dt>${t('elements')}</dt><dd class="mono">${p.n} <span style="color:var(--ink-3)">· ${p.ms} Must Support</span></dd>
+    </dl>
+    ${cov ? `<div class="section"><h3>${t('coverage')}<small class="mono">${cov.instances} ${t('instances')} · ${cov.filled}/${cov.ms} ${t('filled')} · ${cov.pct.toLocaleString(L)} %</small></h3><div class="bar"><i style="width:${cov.pct}%;background:${cov.pct >= 80 ? 'var(--good)' : cov.pct >= 50 ? 'var(--warn)' : 'var(--bad)'}"></i></div></div>` : ''}
+    ${ex.length ? `<div class="section"><h3>${t('examples')}</h3><div class="list">${ex.map(r => `<div class="item">${sw(n.id)}<span class="t">${esc(r.label || r.rt)}${r.value ? ` <span style="color:var(--ink-3)">· ${esc(r.value)}</span>` : ''}<small>${esc(fmtDT(r.t))}${r.codes[0] ? ' · ' + esc(r.codes[0].system + ' ' + r.codes[0].code) : ''}</small></span></div>`).join('')}</div></div>` : ''}
+    <div class="section"><h3>${t('elements')}<small>${p.el.length}</small></h3>
+      ${p.el.map(e => `<div class="el"><div class="p"><span class="path">${esc(e.p)}</span>${e.slice ? `<span class="slice">:${esc(e.slice)}</span>` : ''}${e.ms ? `<span class="ms">MS</span>` : ''}</div>${e.s ? `<div class="s">${esc(e.s)}</div>` : ''}
+        ${(e.b || e.c || e.t?.length) ? `<div class="tags">${(e.t || []).map(x => `<span class="tag">${esc(x)}</span>`).join('')}${e.b ? `<span class="tag vs" title="${esc(e.b.url)}">${t('binding')}: ${esc(e.b.vs)} <span style="color:var(--ink-3)">(${esc(e.b.strength)})</span></span>` : ''}${(e.c || []).map(c => `<span class="tag code">${esc(c.system)} ${esc(c.code)}${c.display ? ' · ' + esc(c.display) : ''}</span>`).join('')}</div>` : ''}</div>`).join('')}
+    </div>`;
+  showPanel(`${t('profile')} · ${tx(n.m.name)}`, shortTitle(p, n.m), `<span class="mono">${esc(p.name)}</span>`, body);
+}
+
+// ---------------------------------------------------------------- search
+function buildProfileIndex() {
+  S.profileIndex = [];
+  S.data.modules.forEach(m => {
+    m.profiles.forEach(p => {
+      const hay = [p.title, p.name, p.type, p.desc, ...p.el.flatMap(e => [e.s, e.p, e.slice, e.b?.vs, ...(e.c || []).flatMap(c => [c.code, c.display])])].filter(Boolean).join(' ').toLowerCase();
+      S.profileIndex.push({ m, p, hay });
+    });
+    m.valuesets.forEach(v => S.profileIndex.push({ m, v, hay: [v.title, ...v.concepts].join(' ').toLowerCase() }));
+  });
+  S.data.journeys.forEach(j => j.resources.forEach(r => { if (!r.m) return; S.profileIndex.push({ m: S.byId[r.m], r, hay: [r.label, r.value, r.profile, ...r.codes.flatMap(c => [c.code, c.display])].filter(Boolean).join(' ').toLowerCase() }); }));
+}
+let searchTimer;
+$('#search').addEventListener('input', () => { clearTimeout(searchTimer); searchTimer = setTimeout(runSearch, 140); if (S.mode !== 'karte') setMode('karte'); });
+function runSearch() {
+  const q = $('#search').value.trim().toLowerCase();
+  gNodes.selectAll('g.profile').classed('match', false);
+  gNodes.selectAll('.badgeg').style('display', 'none');
+  if (!q) { gNodes.selectAll('g.module').classed('dim', false); if (!S.zoomed) hidePanel(); return; }
+  const terms = q.split(/\s+/).filter(Boolean);
+  const hits = S.profileIndex.filter(x => terms.every(tm => x.hay.includes(tm)));
+  const profHits = hits.filter(h => h.p); const vsHits = hits.filter(h => h.v); const resHits = hits.filter(h => h.r);
+  const matched = new Set(profHits.map(h => h.p));
+  resHits.forEach(h => { const p = h.m.profiles.find(p => p.name === h.r.profile); if (p) matched.add(p); });
+  gNodes.selectAll('g.profile').classed('match', c => matched.has(c.data));
+  const perModule = d3.rollup([...matched], v => v.length, p => p._node.id);
+  vsHits.forEach(h => perModule.set(h.m.id, (perModule.get(h.m.id) || 0) + 1));
+  gNodes.selectAll('g.module').classed('dim', n => !perModule.has(n.id)).each(function (n) {
+    const k = perModule.get(n.id); const b = d3.select(this).select('.badgeg');
+    if (!k) return; b.style('display', null).attr('transform', `translate(${n.r * 0.6},${-n.r * 0.85})`);
+    b.select('text').text(k).attr('x', 12); b.select('rect').attr('width', 24).attr('x', 0);
+  });
+  if (S.zoomed) { zoomOut(); }
+  const groups = d3.group([...matched], p => p._node.id);
+  let body = '';
+  if (!matched.size && !vsHits.length) body = `<div class="empty">${esc(t('search_none'))}</div>`;
+  for (const [mid, ps] of groups) {
+    const n = S.nodeById[mid];
+    body += `<div class="section"><h3>${esc(tx(n.m.name))}<small>${ps.length}</small></h3><div class="list">${ps.slice(0, 30).map(p => {
+      const r = resHits.find(h => h.r.profile === p.name);
+      return `<button class="item" data-pm="${mid}" data-pid="${esc(p.id)}">${sw(mid)}<span class="t">${esc(shortTitle(p, n.m))}<small>${esc(p.type)}${r ? ' · ' + esc(r.r.label) + (r.r.value ? ' · ' + esc(r.r.value) : '') : ''}</small></span><span class="n">${p.ms}</span></button>`; }).join('')}</div></div>`;
+  }
+  if (vsHits.length) body += `<div class="section"><h3>${t('valuesets')}<small>${vsHits.length}</small></h3><div class="list">${vsHits.slice(0, 20).map(h => `<button class="item" data-goto="${h.m.id}">${sw(h.m.id)}<span class="t">${esc(h.v.title)}<small>${esc(tx(h.m.name))} · ${h.v.concepts.filter(c => terms.some(tm => c.toLowerCase().includes(tm))).slice(0, 3).map(esc).join(' · ')}</small></span></button>`).join('')}</div></div>`;
+  showPanel(t('search_results'), `„${$('#search').value.trim()}“`, `${matched.size} ${t('profiles')} · ${vsHits.length} ${t('valuesets')}`, body);
+  $('#p-body').querySelectorAll('[data-pid]').forEach(b => b.addEventListener('click', () => { const n = S.nodeById[b.dataset.pm]; const p = n.m.profiles.find(p => p.id === b.dataset.pid); zoomToProfile(n, p); selectProfile(n, p); }));
+  $('#p-body').querySelectorAll('[data-goto]').forEach(b => b.addEventListener('click', () => zoomTo(S.nodeById[b.dataset.goto])));
+}
+
+// ---------------------------------------------------------------- modes
+function setMode(mode) {
+  S.mode = mode;
+  document.querySelectorAll('#modes button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === mode)));
+  $('#transport').hidden = mode !== 'reise';
+  $('#timebox').hidden = mode !== 'zeit';
+  $('#qbox').hidden = mode !== 'fragen';
+  $('#qrail').hidden = mode !== 'fragen';
+  $('#legend').style.display = mode === 'fragen' ? 'none' : '';
+  $('#searchwrap').style.visibility = mode === 'karte' ? 'visible' : 'hidden';
+  if (mode !== 'reise') { stopJourney(); clearJourney(); $('#finale').classList.add('off'); }
+  if (mode !== 'zeit') { stopTime(); applyTime(S.time.max, true); }
+  if (mode !== 'fragen') { gQ.selectAll('*').remove(); document.querySelectorAll('#qrail .q').forEach(b => b.setAttribute('aria-pressed', 'false')); }
+  if (mode !== 'karte') { $('#search').value = ''; gNodes.selectAll('g.profile').classed('match', false); gNodes.selectAll('.badgeg').style('display', 'none'); gNodes.selectAll('g.module').classed('dim', false); }
+  hidePanel(); zoomOut(700);
+  if (mode === 'zeit') { applyTime(S.time.t, false); showTimePanel(); }
+  if (mode === 'fragen') renderQuestions();
+  if (mode === 'reise' && !S.playing) { startJourney($('#journeysel').value || S.data.journeys[0].id, true); }
+}
+
+// ---------------------------------------------------------------- journey
+function buildJourneySelect() {
+  const sel = $('#journeysel'); sel.innerHTML = S.data.journeys.map(j => `<option value="${j.id}">${esc(tx(j.title))}</option>`).join('');
+  sel.addEventListener('change', () => startJourney(sel.value, true));
+}
+function rid(j, short) { return j.resources.find(r => r.id.endsWith(short)) || null; }
+function buildBeats(j) {
+  if (j.id === 'sepsis') return SEPSIS.map(b => ({ ...b, res: b.ids.map(s => rid(j, '-' + s) || rid(j, s)).filter(Boolean), thread: (b.thread || []).map(s => rid(j, '-' + s)).filter(Boolean) }));
+  // generic: group by day
+  const byDay = d3.group(j.resources.filter(r => r.t && r.m), r => r.t.slice(0, 10));
+  const days = [...byDay.keys()].sort();
+  const beats = [];
+  const pat = j.resources.find(r => r.rt === 'Patient');
+  days.forEach((d, i) => {
+    const res = byDay.get(d);
+    if (i === 0 && pat) res.unshift(pat);
+    const mods = [...new Set(res.map(r => r.m))].map(m => tx(S.byId[m].name));
+    const labels = res.filter(r => r.label && r.rt !== 'Patient').slice(0, 3).map(r => r.label + (r.value ? ` (${r.value})` : ''));
+    beats.push({ when: { de: fmtDateIn('de', d), en: fmtDateIn('en', d) }, res,
+      de: `${res.length} ${T.de.resources_per_day} in ${mods.join(', ')}: ${labels.join(' · ')}`, en: `${res.length} ${T.en.resources_per_day} in ${mods.join(', ')}: ${labels.join(' · ')}` });
+  });
+  return beats.slice(0, 14);
+}
+function fmtDateIn(lang, s) { const d = new Date(s); return isNaN(d) ? s : d.toLocaleDateString(lang === 'de' ? 'de-DE' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' }); }
+function startJourney(id, autoplay) {
+  stopJourney(); clearJourney(); $('#finale').classList.add('off');
+  S.journey = S.data.journeys.find(j => j.id === id) || S.data.journeys[0];
+  $('#journeysel').value = S.journey.id;
+  S.beats = buildBeats(S.journey); S.beat = -1;
+  if (autoplay) { S.playing = true; setPlayIcon(); nextBeat(); } else { S.playing = false; setPlayIcon(); }
+}
+function stopJourney() { S.playing = false; clearTimeout(S.timer); setPlayIcon(); }
+function clearJourney() { gJourney.selectAll('*').remove(); gThread.selectAll('*').remove(); S.dots.clear(); $('#caption').classList.add('off'); gNodes.selectAll('g.module').classed('hover', false); }
+function setPlayIcon() { $('#play').innerHTML = S.playing ? '<svg viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></svg>' : '<svg viewBox="0 0 24 24"><path d="M7 5v14l11-7z"/></svg>'; }
+function nextBeat() {
+  if (S.beat + 1 >= S.beats.length) { finale(); return; }
+  S.beat++; showBeat(S.beat);
+  if (S.playing) { const b = S.beats[S.beat]; const dur = 5200 + Math.min(4000, (tx(b).length + (b.note ? 160 : 0)) * 28); S.timer = setTimeout(nextBeat, dur); }
+}
+function prevBeat() { if (S.beat <= 0) return; S.beat--; replayTo(S.beat); }
+function replayTo(k) { clearJourney(); for (let i = 0; i < k; i++) placeBeat(S.beats[i], false); showBeat(k); }
+function showBeat(i) {
+  const b = S.beats[i];
+  placeBeat(b, true);
+  const mods = [...new Set(b.res.map(r => r.m).filter(Boolean))];
+  gNodes.selectAll('g.module').classed('hover', n => mods.includes(n.id));
+  $('#caption').innerHTML = `<div class="when">${esc(tx(b.when))}</div><h2>${esc(tx(b))}</h2>${b.note ? `<div class="note">${tx(b.note)}</div>` : ''}
+    <div class="mods">${mods.map(m => `<span class="chip">${sw(m)}${esc(tx(S.byId[m].name))}</span>`).join('')}</div>
+    <div class="progress">${S.beats.map((_, k) => `<i class="${k <= i ? 'done' : ''}"></i>`).join('')}</div>`;
+  $('#caption').classList.remove('off');
+}
+function landing(r) {
+  const n = S.nodeById[r.m]; if (!n) return null;
+  const c = n.pack.find(c => c.data.name === r.profile);
+  if (c) return { x: n.x + c.x + (Math.random() - .5) * c.r * 0.6, y: n.y + c.y + (Math.random() - .5) * c.r * 0.6, n };
+  const a = Math.random() * Math.PI * 2, d = Math.random() * n.r * 0.7;
+  return { x: n.x + Math.cos(a) * d, y: n.y + Math.sin(a) * d, n };
+}
+function placeBeat(b, animate) {
+  const origin = { x: 40, y: S.H - 60 };
+  b.res.forEach((r, i) => {
+    if (S.dots.has(r.id)) return;
+    const to = landing(r); if (!to) return;
+    const dot = gJourney.append('circle').attr('class', 'dot').attr('r', 0).attr('fill', GROUPS[to.n.group].c).attr('cx', animate ? origin.x : to.x).attr('cy', animate ? origin.y : to.y);
+    S.dots.set(r.id, { x: to.x, y: to.y, el: dot });
+    if (animate) dot.transition().delay(i * 160).duration(1100).ease(d3.easeCubicOut).attr('cx', to.x).attr('cy', to.y).attr('r', 4.5).transition().duration(400).attr('r', 3.2);
+    else dot.attr('r', 3.2);
+  });
+  if (b.thread && b.thread.length > 1) {
+    const from = S.dots.get(b.thread[0].id);
+    b.thread.slice(1).forEach((tr, k) => {
+      const to = S.dots.get(tr.id); if (!from || !to) return;
+      const p = gThread.append('path').attr('class', 'thread').attr('d', `M${from.x},${from.y} Q${(from.x + to.x) / 2 + (to.y - from.y) * 0.2},${(from.y + to.y) / 2 - (to.x - from.x) * 0.2} ${to.x},${to.y}`);
+      if (animate) { const len = p.node().getTotalLength(); p.style('stroke-dasharray', `${len} ${len}`).style('stroke-dashoffset', len).style('animation', 'none').transition().delay(1400 + k * 300).duration(1200).ease(d3.easeCubicInOut).style('stroke-dashoffset', 0).on('end', () => p.style('stroke-dasharray', null).style('stroke-dashoffset', null).style('animation', null)); }
+    });
+  }
+}
+function finale() {
+  S.playing = false; setPlayIcon(); $('#caption').classList.add('off');
+  const j = S.journey; const res = j.resources.filter(r => r.m); const mods = Object.keys(j.modules).length;
+  const times = j.resources.map(r => r.t).filter(Boolean).sort(); const days = times.length ? Math.max(1, Math.round((new Date(times[times.length - 1]) - new Date(times[0])) / 864e5)) : 0;
+  svg.transition().duration(1400).ease(d3.easeCubicInOut).call(zoom.transform, d3.zoomIdentity.translate(S.W * 0.1, S.H * 0.06).scale(0.86));
+  $('#finale').innerHTML = `<div class="card"><div class="eyebrow">${esc(tx(j.title))}</div><h2>${esc(t('one_patient'))}</h2>
+    <div class="nums"><div><div class="num">${res.length}</div><div class="lbl">${t('n_res')}</div></div><div><div class="num">${mods}</div><div class="lbl">${t('n_mod')}</div></div>${days ? `<div><div class="num">${days}</div><div class="lbl">${t('n_days')}</div></div>` : ''}</div>
+    <p>${esc(t('finale_p'))}</p><button class="cta" id="explore">${esc(t('explore'))}</button></div>`;
+  $('#finale').classList.remove('off');
+  $('#explore').addEventListener('click', () => { $('#finale').classList.add('off'); setMode('karte'); });
+  if (S.kiosk) S.timer = setTimeout(() => { if (S.mode === 'reise' && !S.playing) startJourney(S.journey.id, true); }, 25000);
+}
+$('#play').addEventListener('click', () => { if (S.beat >= S.beats.length - 1 && !S.playing) { startJourney(S.journey.id, true); return; } S.playing = !S.playing; setPlayIcon(); clearTimeout(S.timer); if (S.playing) nextBeat(); });
+$('#next').addEventListener('click', () => { clearTimeout(S.timer); S.playing = false; setPlayIcon(); $('#finale').classList.add('off'); nextBeat(); });
+$('#prev').addEventListener('click', () => { clearTimeout(S.timer); S.playing = false; setPlayIcon(); $('#finale').classList.add('off'); prevBeat(); });
+
+// ---------------------------------------------------------------- time
+function buildTimeline() {
+  const ev = S.data.timeline; const ds = ev.map(e => +new Date(e.date)).filter(Boolean);
+  S.time.min = d3.min(ds); S.time.max = Math.max(d3.max(ds), +new Date(S.data.generated || Date.now())); S.time.t = S.time.max;
+  S.data.modules.forEach(m => { const mine = ev.filter(e => e.module === m.id); m.firstDate = mine.length ? +new Date(mine[0].date) : null; m.nVersions = mine.length; });
+}
+const tslider = $('#tslider');
+tslider.addEventListener('input', () => { applyTime(S.time.min + (tslider.value / 1000) * (S.time.max - S.time.min), false); showTimePanel(); });
+$('#tplay').addEventListener('click', () => { if (S.time.playing) stopTime(); else playTime(); });
+function playTime() { S.time.playing = true; $('#tplay').innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></svg>'; if (S.time.t >= S.time.max - 1) S.time.t = S.time.min; const step = () => { if (!S.time.playing) return; S.time.t = Math.min(S.time.max, S.time.t + (S.time.max - S.time.min) / 600); applyTime(S.time.t, false); showTimePanel(); if (S.time.t >= S.time.max) { stopTime(); return; } S.time.timer = setTimeout(step, 50); }; step(); }
+function stopTime() { S.time.playing = false; clearTimeout(S.time.timer); $('#tplay').innerHTML = '<svg viewBox="0 0 24 24"><path d="M7 5v14l11-7z"/></svg>'; }
+function applyTime(tms, silent) {
+  S.time.t = tms; tslider.value = Math.round(1000 * (tms - S.time.min) / (S.time.max - S.time.min));
+  const d = new Date(tms); $('#tdate').textContent = d.toLocaleDateString(L === 'de' ? 'de-DE' : 'en-GB', { month: 'short', year: 'numeric' });
+  const past = S.data.timeline.filter(e => +new Date(e.date) <= tms);
+  const last = past[past.length - 1];
+  $('#tev').textContent = last ? `${fmtDate(last.date)}: ${tx(S.byId[last.module].name)} ${last.version}` : t('no_events');
+  const visible = new Set(past.map(e => e.module));
+  const soFar = d3.rollup(past, v => v.length, e => e.module);
+  gNodes.selectAll('g.module').classed('ghost', n => S.mode === 'zeit' && !visible.has(n.id) && n.m.firstDate)
+    .select('.bubble').transition().duration(silent ? 0 : 260).attr('r', n => S.mode !== 'zeit' || !visible.has(n.id) ? n.r : n.r * (0.4 + 0.6 * (soFar.get(n.id) || 0) / Math.max(1, n.m.nVersions)));
+  gLinks.selectAll('path.dep').style('opacity', l => S.mode !== 'zeit' || (visible.has(l.source.id) && visible.has(l.target.id)) ? null : 0.06);
+}
+function showTimePanel() {
+  const past = S.data.timeline.filter(e => +new Date(e.date) <= S.time.t).slice().reverse();
+  const first = d3.rollup(S.data.timeline, v => v[0].date, e => e.module);
+  const body = `<p>${esc(t('t_hint'))}</p>
+    <div class="section"><h3>${t('released')}<small>${past.length}</small></h3><div class="list">${past.slice(0, 40).map(e => `<button class="item" data-goto="${e.module}">${sw(e.module)}<span class="t">${esc(tx(S.byId[e.module].name))} <span class="mono">${esc(e.version)}</span><small>${esc(fmtDate(e.date))}${e.legacy ? ' · ' + esc(e.legacy) : ''}${e.profiles ? ` · ${e.profiles} ${t('profiles')}` : ''}</small></span></button>`).join('') || `<div class="empty">${esc(t('no_events'))}</div>`}</div></div>`;
+  showPanel(t('m_zeit'), `${t('time_from')} ${new Date(S.time.t).toLocaleDateString(L === 'de' ? 'de-DE' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}`, `${[...first].length} ${t('m_fragen') === 'Fragen' ? 'Module mit Veröffentlichungen' : 'modules with releases'}`, body);
+  $('#p-body').querySelectorAll('[data-goto]').forEach(b => b.addEventListener('click', () => { setMode('karte'); zoomTo(S.nodeById[b.dataset.goto]); }));
+}
+
+// ---------------------------------------------------------------- questions
+function renderQuestions() {
+  const rail = $('#qrail');
+  rail.innerHTML = S.data.questions.map(q => `<button class="q" data-q="${q.id}" aria-pressed="false"><div class="qt">${esc(tx(q.q))}</div><div class="qm">${[...new Set(q.parts.map(p => p.m))].map(m => sw(m)).join('')}</div><div class="qn">${q.patients} ${t('patients_have')}</div></button>`).join('');
+  rail.querySelectorAll('.q').forEach(b => b.addEventListener('click', () => showQuestion(S.data.questions.find(q => q.id === b.dataset.q), b)));
+  updateQBox();
+}
+function countPatients(parts) { return S.data.patients.filter(p => parts.every(x => p.have.includes(`${x.m}/${x.rt}`))).length; }
+function showQuestion(q, btn) {
+  document.querySelectorAll('#qrail .q').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+  gQ.selectAll('*').remove();
+  const n = countPatients(q.parts);
+  const mods = [...new Set(q.parts.map(p => p.m))];
+  gNodes.selectAll('g.module').classed('dim', nd => !mods.includes(nd.id)).classed('hover', nd => mods.includes(nd.id));
+  // cards anchored on the right side, linked to modules
+  const cardW = 230, pw = Math.min(400, S.W * 0.36) + 32, x0 = S.W - pw - cardW - 24, y0 = 40, gap = 86;
+  q.parts.forEach((p, i) => {
+    const node = S.nodeById[p.m]; if (!node) return;
+    const cy = y0 + i * gap;
+    const g = gQ.append('g').attr('transform', `translate(${x0},${cy})`).style('opacity', 0);
+    g.append('rect').attr('width', cardW).attr('height', 64).attr('rx', 10).attr('fill', 'var(--panel)').attr('stroke', 'var(--line-2)');
+    g.append('rect').attr('x', 0).attr('y', 0).attr('width', 5).attr('height', 64).attr('rx', 2).attr('fill', GROUPS[node.group].c);
+    g.append('text').attr('x', 16).attr('y', 24).attr('font-size', 14).attr('font-weight', 600).attr('fill', 'var(--ink)').text(tx(p.label));
+    g.append('text').attr('x', 16).attr('y', 46).attr('font-size', 11.5).attr('fill', 'var(--ink-3)').attr('font-family', 'var(--mono)').text(`${tx(S.byId[p.m].name)} · ${p.rt}${p.sys ? ' · ' + p.sys + (p.code ? ' ' + p.code : '') : ''}`);
+    const tr = d3.zoomTransform(svg.node()); const nx = tr.applyX(node.x), ny = tr.applyY(node.y), nr = node.r * tr.k;
+    const path = gQ.insert('path', ':first-child').attr('class', 'qlink').attr('d', `M${x0},${cy + 32} C${x0 - 120},${cy + 32} ${nx + 120},${ny} ${nx + nr * 0.9},${ny}`).style('opacity', 0);
+    const len = path.node().getTotalLength(); path.style('stroke-dasharray', `${len} ${len}`).style('stroke-dashoffset', len);
+    g.transition().delay(i * 260).duration(500).style('opacity', 1);
+    path.transition().delay(i * 260 + 300).duration(900).ease(d3.easeCubicInOut).style('opacity', .85).style('stroke-dashoffset', 0);
+  });
+  const body = `<p>${esc(tx(q.why))}</p>
+    <div class="section"><h3>${t('parts')}</h3><div class="list">${q.parts.map(p => `<button class="item" data-goto="${p.m}">${sw(p.m)}<span class="t">${esc(tx(p.label))}<small>${esc(tx(S.byId[p.m].name))} · ${esc(p.rt)}${p.sys ? ' · ' + esc(p.sys + ' ' + p.code) : ''}</small></span></button>`).join('')}</div></div>
+    <div class="section"><h3>${t('patients')}</h3><div style="font:500 34px/1 var(--display)">${n} <span style="font:400 14px var(--body);color:var(--ink-2)">${t('patients_have')}</span></div><div class="bar"><i style="width:${100 * n / S.data.patients.length}%;background:var(--accent)"></i></div></div>`;
+  showPanel(q.own ? t('own_q') : t('m_fragen'), tx(q.q), '', body);
+  $('#p-body').querySelectorAll('[data-goto]').forEach(b => b.addEventListener('click', () => { setMode('karte'); zoomTo(S.nodeById[b.dataset.goto]); }));
+}
+function updateQBox() {
+  const ok = !!S.sample;
+  $('#qinput').disabled = !ok; $('#qask').disabled = !ok;
+  $('#qstatus').textContent = ok ? '' : t('q_na');
+}
+$('#qask').addEventListener('click', askOwn);
+$('#qinput').addEventListener('keydown', e => { if (e.key === 'Enter') askOwn(); });
+$('#qstop').addEventListener('click', () => S.qctl?.abort());
+async function askOwn() {
+  const q = $('#qinput').value.trim(); if (!q || !S.sample) return;
+  S.qctl?.abort(); S.qctl = new AbortController();
+  $('#qstatus').textContent = t('thinking'); $('#qask').disabled = true; $('#qstop').hidden = false;
+  const mods = S.data.modules.map(m => `${m.id}: ${m.name.de} (${m.tagline.de}) Ressourcentypen: ${m.types.join(', ')}`).join('\n');
+  const prompt = `Du zerlegst eine Forschungsfrage in die Datenelemente des MII Kerndatensatzes (FHIR). Verfügbare Module mit ihren Ressourcentypen:\n${mods}\n\nFrage: "${q}"\n\nAntworte nur mit JSON: {"parts":[{"m":"<modul-id aus der Liste>","rt":"<Ressourcentyp aus der Liste des Moduls>","label":{"de":"<kurz, 1-3 Wörter>","en":"<short>"},"sys":"<Terminologie wie ICD-10-GM, OPS, LOINC, SNOMED CT, ATC, Orphanet oder leer>","code":"<Code oder Codebereich oder leer>"}],"why":{"de":"<ein Satz, warum die Module zusammenspielen müssen>","en":"<one sentence>"}}. 2 bis 4 Teile, jeder in einem anderen oder passenden Modul. Nur Module und Ressourcentypen aus der Liste verwenden.`;
+  try {
+    const res = await S.sample.json(prompt, { modelTier: 'quick', signal: S.qctl.signal });
+    const parts = (res?.parts || []).filter(p => S.byId[p.m] && typeof p.rt === 'string').slice(0, 4).map(p => ({ m: p.m, rt: p.rt, label: p.label || { de: p.rt, en: p.rt }, sys: p.sys || '', code: p.code || '' }));
+    if (!parts.length) throw { code: 'invalid_json' };
+    const qq = { id: 'own', own: true, q: { de: q, en: q }, why: res.why || { de: '', en: '' }, parts, patients: countPatients(parts) };
+    S.lastOwn = qq;
+    let own = $('#qrail .own'); if (!own) { own = document.createElement('button'); own.className = 'q own'; $('#qrail').prepend(own); }
+    own.innerHTML = `<div class="eyebrow">${t('q_own')}</div><div class="qt">${esc(q)}</div><div class="qm">${[...new Set(parts.map(p => p.m))].map(m => sw(m)).join('')}</div><div class="qn">${qq.patients} ${t('patients_have')}</div>`;
+    own.onclick = () => showQuestion(qq, own);
+    showQuestion(qq, own);
+    $('#qstatus').textContent = '';
+  } catch (e) {
+    const code = e?.code;
+    $('#qstatus').textContent = code === 'cancelled' ? '' : code === 'rate_limited' ? t('q_rate') : (code === 'not_granted' || code === 'sampling_disabled') ? t('q_deny') : t('q_err');
+    if (code === 'not_granted' || code === 'sampling_disabled' || code === 'not_declared') { S.sample = null; updateQBox(); }
+  } finally { $('#qask').disabled = !S.sample; $('#qstop').hidden = true; }
+}
+
+// ---------------------------------------------------------------- UI wiring
+function wireUI() {
+  document.querySelectorAll('#modes button').forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
+  document.querySelectorAll('#langs button').forEach(b => b.addEventListener('click', () => { L = b.dataset.lang; applyLang(); }));
+  $('#kioskbtn').addEventListener('click', () => setKiosk(!S.kiosk));
+  $('#fsbtn').addEventListener('click', toggleFS);
+  window.addEventListener('keydown', e => {
+    if (e.target.matches('input:not([type=range]), textarea')) { if (e.key === 'Escape') e.target.blur(); return; }
+    if (e.target.matches('input[type=range], select') && !/^[1-4]$|^Escape$|^[kKfF]$/.test(e.key)) return;
+    if (e.key === '1') setMode('reise'); else if (e.key === '2') setMode('karte'); else if (e.key === '3') setMode('zeit'); else if (e.key === '4') setMode('fragen');
+    else if (e.key === ' ' && S.mode === 'reise') { e.preventDefault(); $('#play').click(); }
+    else if (e.key === 'ArrowRight' && S.mode === 'reise') $('#next').click(); else if (e.key === 'ArrowLeft' && S.mode === 'reise') $('#prev').click();
+    else if (e.key === 'Escape') { if (S.zoomed) zoomOut(); else hidePanel(); }
+    else if (e.key.toLowerCase() === 'k') setKiosk(!S.kiosk); else if (e.key.toLowerCase() === 'f') toggleFS();
+    else if (e.key === '/' && S.mode === 'karte') { e.preventDefault(); $('#search').focus(); }
+  });
+  ['pointerdown', 'keydown', 'wheel', 'pointermove'].forEach(ev => window.addEventListener(ev, () => { S.lastInput = Date.now(); }, { passive: true }));
+  setInterval(() => { if (S.kiosk && Date.now() - S.lastInput > 120000 && !(S.mode === 'reise' && S.playing)) { S.lastInput = Date.now(); setMode('reise'); } }, 5000);
+  let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { layout(); render(); if (S.mode === 'reise') replayTo(Math.max(0, S.beat)); }, 200); });
+}
+function setKiosk(on) { S.kiosk = on; $('#kioskbtn').setAttribute('aria-pressed', String(on)); $('#app').classList.toggle('kiosk', on); showToast(on ? t('kiosk_on') : t('kiosk_off')); if (on && !document.fullscreenElement) document.documentElement.requestFullscreen?.().catch(() => {}); }
+function toggleFS() { if (document.fullscreenElement) document.exitFullscreen?.(); else document.documentElement.requestFullscreen?.().catch(() => {}); }
+let toastT; function showToast(msg, quick) { const el = $('#toast'); el.textContent = msg; el.classList.add('on'); clearTimeout(toastT); if (!quick) toastT = setTimeout(hideToast, 2600); }
+function hideToast() { $('#toast').classList.remove('on'); }
+function applyLang() {
+  document.documentElement.lang = L;
+  document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = t(el.dataset.i18n));
+  document.querySelectorAll('#langs button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === L)));
+  $('#search').placeholder = L === 'de' ? 'Suche: Laktat, Beatmung, Tumor …' : 'Search: lactate, ventilation, tumor …';
+  $('#qinput').placeholder = L === 'de' ? 'Eigene Forschungsfrage eingeben …' : 'Type your own research question …';
+  $('#loadmsg').textContent = t('loading');
+  if (!S.data) return;
+  renderLegend();
+  gNodes.selectAll('.module .name').text(n => tx(n.m.name));
+  gNodes.selectAll('.module .count').text(n => n.m.n_profiles ? `${n.m.n_profiles} ${t('profiles')}` : (n.m.profiles.length ? `${n.m.profiles.length} ${t('abstract')}` : ''));
+  const sel = $('#journeysel'); [...sel.options].forEach(o => o.textContent = tx(S.data.journeys.find(j => j.id === o.value).title));
+  if (S.mode === 'reise' && S.beat >= 0 && S.beat < S.beats.length) { S.beats = buildBeats(S.journey); showBeat(S.beat); }
+  if (S.mode === 'fragen') renderQuestions();
+  if (S.mode === 'zeit') { applyTime(S.time.t, true); showTimePanel(); }
+  if (S.zoomed && S.selProfile) selectProfile(S.zoomed, S.selProfile); else if (S.zoomed) showModulePanel(S.zoomed);
+  updateQBox();
+}
+})();
+</script>

@@ -198,3 +198,20 @@ Modulfehlern — sind Hinweise und blockieren nicht.
 - NEVER say "ready to push when you are" - YOU must push
 - If push fails, resolve and retry until it succeeds
 <!-- END BEADS INTEGRATION -->
+
+## Interaktiver KDS-Explorer (Kiosk)
+
+`docs/explorer/kds-explorer.html` ist eine eigenständige D3-Seite für Messestand, Vortrag und
+Erstkontakt: Patientenreise (Attract-Loop mit der Sepsis-Journey aus mii-testdata), zoombare
+Modulkarte mit Profilen, Suche, Zeitschieber und Forschungsfragen. Die Daten kommen aus
+`docs/explorer/data.json`, erzeugt von:
+
+```bash
+./scripts/build-explorer-data.py      # liest ~/.fhir/packages (gepinnte Versionen), mii-testdata,
+                                       # testabdeckung.md, status/readiness.json, Git-Tags der Modul-Repos
+cd docs/explorer && python3 -m http.server 8766   # lokal ansehen (fetch braucht einen Webserver)
+```
+
+Veröffentlicht wird die Seite als Claude-Artifact mit `files: {"data.json": ...}` und
+`capabilities: {sample: {}}`; nur dort funktionieren die Live-Freitextfragen. Tasten im Kiosk:
+`1`–`4` Modus, Leertaste Play, `K` Kiosk (Idle-Rückkehr zur Reise), `F` Vollbild.
