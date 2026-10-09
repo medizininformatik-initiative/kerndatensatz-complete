@@ -135,6 +135,8 @@ nav#modes button kbd { font: 500 10px var(--mono); color: inherit; opacity: .55;
 #caption .progress { display: flex; gap: 4px; margin-top: 14px; }
 #caption .progress i { flex: 1; height: 3px; border-radius: 2px; background: var(--line-2); }
 #caption .progress i.done { background: var(--accent); }
+#caption .mini { display: block; width: 100%; height: 34px; margin-top: 10px; }
+#caption .mini text { font-family: var(--mono); }
 
 /* ---------- finale overlay ---------- */
 #finale { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; transition: opacity .6s; }
@@ -305,7 +307,7 @@ const GROUPS = {
 const GROUP_OF = {}; Object.entries(GROUPS).forEach(([g, v]) => v.mods.forEach(m => GROUP_OF[m] = g));
 
 const T = {
-  de: { brand: 'Kerndatensatz', m_reise: 'Reise', m_karte: 'Karte', m_zeit: 'Zeit', m_fragen: 'Fragen', journey: 'Reise', stop: 'Stopp', ask: 'Fragen',
+  de: { brand: 'Kerndatensatz', m_reise: 'Reise', m_karte: 'Karte', m_zeit: 'Zeit', m_fragen: 'Fragen', journey: 'Reise', stop: 'Stopp', ask: 'Fragen', g_journeys: 'Journeys', g_tests: 'Testpatienten',
         profiles: 'Profile', profile: 'Profil', elements: 'Elemente', ms: 'Must-Support-Elemente', coverage: 'Testdaten-Abdeckung', deps: 'Baut auf', valuesets: 'Wertelisten',
         module: 'Modul', version: 'Version', stage_final: 'finaler Ballot', stage_rc: 'Release-Kandidat', examples: 'Beispiele aus den Testdaten', resources: 'Datensätze',
         legend_hint: 'Klicken zoomt in ein Modul. Kreise darin sind Profile, ihre Größe die Zahl der Must-Support-Elemente. Pfeile zeigen, wer auf wem aufbaut.',
@@ -319,7 +321,7 @@ const T = {
         n_res: 'Datensätze', n_mod: 'Module', n_days: 'Tage', kiosk_on: 'Kiosk-Modus an: nach 2 Minuten ohne Eingabe startet die Reise neu.', kiosk_off: 'Kiosk-Modus aus.',
         resources_per_day: 'Datensätze', zoom_out: 'Übersicht', why: 'Warum diese Frage?', own_q: 'Eigene Frage', loading: 'Lade Module …', back: 'Zurück zur Karte',
         type: 'Ressourcentyp', base: 'Basiert auf', time_from: 'Stand der Pakete am', t_hint: 'Der Schieber zeigt, wann welches Modul ein Paket veröffentlicht hat. Quelle: Git-Tags der Modul-Repositories ab 2020.' },
-  en: { brand: 'Core Dataset', m_reise: 'Journey', m_karte: 'Map', m_zeit: 'Time', m_fragen: 'Questions', journey: 'Journey', stop: 'Stop', ask: 'Ask',
+  en: { brand: 'Core Dataset', m_reise: 'Journey', m_karte: 'Map', m_zeit: 'Time', m_fragen: 'Questions', journey: 'Journey', stop: 'Stop', ask: 'Ask', g_journeys: 'Journeys', g_tests: 'Test patients',
         profiles: 'profiles', profile: 'Profile', elements: 'elements', ms: 'must-support elements', coverage: 'Test data coverage', deps: 'Builds on', valuesets: 'Value sets',
         module: 'Module', version: 'Version', stage_final: 'final ballot', stage_rc: 'release candidate', examples: 'Examples from the test data', resources: 'resources',
         legend_hint: 'Click to zoom into a module. The circles inside are profiles, sized by their must-support elements. Arrows show who builds on whom.',
@@ -343,7 +345,8 @@ const sw = m => `<span class="sw" style="background:${GROUPS[GROUP_OF[m] || 'kon
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 // ---------------------------------------------------------------- the sepsis script
-const SEPSIS = [
+const SCRIPTS = {
+ sepsis: [
   { when: { de: '8. März 2025, 14:20', en: '8 March 2025, 14:20' }, ids: ['patient-12', 'encounter-1', 'diagnose-2'],
     de: 'Gerhard W., 71, kommt mit einer Lungenentzündung und septischem Schock in die Notaufnahme.', en: 'Gerhard W., 71, arrives in the emergency department with pneumonia and septic shock.' },
   { when: { de: '14:45', en: '14:45' }, ids: ['labrequest-1', 'labreport-1', 'labobs-1', 'labobs-2', 'labobs-3', 'labobs-4'],
@@ -367,7 +370,65 @@ const SEPSIS = [
     de: 'Der SOFA-Score fällt: 9, dann 4. Die Sedierung wird flach, der Patient wird extubiert.', en: 'The SOFA score falls: 9, then 4. Sedation is lightened, the patient is extubated.' },
   { when: { de: '18. bis 25. März', en: '18 to 25 March' }, ids: ['list-stat-aufenthalt', 'consent-1'],
     de: 'Verlegung auf die Normalstation. Medikationsliste, Einwilligung in die Forschungsnutzung, Entlassung.', en: 'Transfer to the general ward. Medication list, consent to research use, discharge.' },
-];
+ ],
+ seltene: [
+  { when: { de: '2011 bis 2019', en: '2011 to 2019' }, ids: ['patient-13', 'symptom-akroparaesthesie', 'symptom-hypohidrose', 'symptom-abdominal', 'symptom-obs-schmerz', 'symptom-obs-hitzeintoleranz'],
+    de: 'Miriam K. hat seit dem Schulalter brennende Schmerzen in Händen und Füßen, schwitzt kaum, verträgt keine Hitze. Später kolikartige Bauchschmerzen. Die Diagnosen lauten Wachstumsschmerz und Reizdarm.', en: 'Since school age Miriam K. has had burning pain in her hands and feet, barely sweats and cannot tolerate heat. Later, colicky abdominal pain. The diagnoses read growing pains and irritable bowel.' },
+  { when: { de: '14. November 2023', en: '14 November 2023' }, ids: ['encounter-1', 'consent-1', 'labrequest-1', 'labreport-1', 'labobs-protein', 'labobs-kreatinin', 'hpo-proteinurie'],
+    de: 'Mit 34 die nephrologische Vorstellung: Eiweiß im Urin, Protein-Kreatinin-Ratio 780 mg/g bei normalem Serumkreatinin.', en: 'At 34, the nephrology visit: protein in the urine, protein-creatinine ratio 780 mg/g with normal serum creatinine.' },
+  { when: { de: '20. November 2023', en: '20 November 2023' }, ids: ['labobs-agalsidase'],
+    de: 'Die Alpha-Galaktosidase-A-Aktivität ist erniedrigt: 12,4 nmol/h/mg. Der erste Hinweis auf eine lysosomale Speicherkrankheit.', en: 'Alpha-galactosidase A activity is low: 12.4 nmol/h/mg. The first hint of a lysosomal storage disease.' },
+  { when: { de: '4. bis 8. Dezember 2023', en: '4 to 8 December 2023' }, ids: ['hpo-cornea', 'encounter-2', 'seltene-diagnose-klinisch', 'seltene-diagnose-genetisch'], thread: ['seltene-diagnose-genetisch', 'symptom-akroparaesthesie'],
+    de: 'Cornea verticillata in der Augenuntersuchung, dann die genetische Bestätigung: Morbus Fabry. Zwölf Jahre nach dem ersten Symptom.', en: 'Cornea verticillata in the eye exam, then genetic confirmation: Fabry disease. Twelve years after the first symptom.',
+    note: { de: '<b>Diese Zeitspanne</b>, zwölf Jahre diagnostische Latenz, ist der Kennwert für seltene Erkrankungen. Sie lässt sich nur messen, wenn Symptome und Diagnose an derselben Person hängen.', en: '<b>This span</b>, twelve years of diagnostic delay, is the key figure for rare diseases. It can only be measured when symptoms and diagnosis belong to the same person.' } },
+  { when: { de: '15. Januar 2024', en: '15 January 2024' }, ids: ['encounter-3', 'hpo-akroparaesthesie', 'hpo-hypohidrose', 'hpo-angiokeratom', 'familienanamnese-mutter', 'familienanamnese-onkel', 'seltene-therapieplan'],
+    de: 'Der Phänotyp wird in HPO-Begriffen dokumentiert, die Familienanamnese erfasst: Mutter und Onkel mütterlicherseits. Der Therapieplan steht.', en: 'The phenotype is documented in HPO terms, the family history recorded: mother and maternal uncle. The care plan is in place.' },
+  { when: { de: '15. Januar 2024, 11:00', en: '15 January 2024, 11:00' }, ids: ['medrequest-1', 'medadmin-1', 'medication-agalsidase-beta'], thread: ['medrequest-1', 'seltene-diagnose-genetisch'],
+    de: 'Start der Enzymersatztherapie mit Agalsidase beta. Die Verordnung begründet sich direkt auf die gesicherte Diagnose.', en: 'Enzyme replacement therapy with agalsidase beta begins. The order references the confirmed diagnosis directly.' },
+  { when: { de: '5. Februar 2024', en: '5 February 2024' }, ids: ['registerteilnahme'],
+    de: 'Einschluss in das Fabry-Register. Aus einer Odyssee wird ein Datensatz, der anderen die Zeit verkürzen kann.', en: 'Enrolment in the Fabry registry. An odyssey becomes a record that can shorten the road for others.' },
+ ],
+ onko: [
+  { when: { de: '4. bis 8. März 2024', en: '4 to 8 March 2024' }, ids: ['patient-14', 'onko-diagnose-1', 'onko-fernmetastasen-1'],
+    de: 'Hartmut B., 58. Die Koloskopie zeigt einen Tumor im Sigma, die Bildgebung Metastasen in der Leber.', en: 'Hartmut B., 58. The colonoscopy shows a tumor in the sigmoid colon, imaging shows liver metastases.' },
+  { when: { de: '11. und 12. März', en: '11 and 12 March' }, ids: ['encounter-1', 'consent-1', 'prozedur-1', 'onko-specimen-1'],
+    de: 'Aufnahme, Einwilligung, Sigmaresektion. Das Operationspräparat geht in die Pathologie.', en: 'Admission, consent, sigmoid resection. The surgical specimen goes to pathology.' },
+  { when: { de: '20. März', en: '20 March' }, ids: ['onko-befund-1', 'onko-histologie-1', 'onko-grading-1', 'onko-tnm-t', 'onko-tnm-n', 'onko-tnm-m', 'onko-lk-untersucht', 'onko-lk-befallen'],
+    de: 'Der Befund: Adenokarzinom, mäßig differenziert. pT3 pN2 M1, 7 von 21 Lymphknoten befallen.', en: 'The report: adenocarcinoma, moderately differentiated. pT3 pN2 M1, 7 of 21 lymph nodes involved.' },
+  { when: { de: '26. März', en: '26 March' }, ids: ['onko-tumorkonferenz-1', 'mtb-episode-1'],
+    de: 'Die Tumorkonferenz überweist ins Molekulare Tumorboard. Eine MTB-Episode beginnt.', en: 'The tumor conference refers the case to the molecular tumor board. An MTB episode begins.' },
+  { when: { de: '9. April', en: '9 April' }, ids: ['mtb-ngs-bericht-1', 'mtb-variante-braf', 'mtb-msi-1', 'mtb-tmb-1'],
+    de: 'Das NGS-Panel: BRAF V600E, Mikrosatelliteninstabilität hoch (MSI-H), Tumormutationslast 41 Mutationen pro Megabase.', en: 'The NGS panel: BRAF V600E, microsatellite instability high (MSI-H), tumor mutational burden 41 mutations per megabase.' },
+  { when: { de: '18. April', en: '18 April' }, ids: ['mtb-implikation-1', 'mtb-therapieplan-1', 'mtb-empfehlung-1'], thread: ['mtb-empfehlung-1', 'mtb-implikation-1', 'onko-diagnose-1'],
+    de: 'Die therapeutische Implikation: MSI-H und hohe Mutationslast sprechen für eine Immuntherapie. Das Board empfiehlt Pembrolizumab statt Chemotherapie.', en: 'The therapeutic implication: MSI-H and high mutational burden favor immunotherapy. The board recommends pembrolizumab instead of chemotherapy.',
+    note: { de: '<b>Die Kette</b> vom molekularen Befund über die Implikation zur Empfehlung steckt in den Referenzen: Welcher Befund führte zu welcher Therapie?', en: '<b>The chain</b> from molecular finding to implication to recommendation lives in the references: which finding led to which therapy?' } },
+  { when: { de: '25. April bis 2. Mai', en: '25 April to 2 May' }, ids: ['onko-ecog-1', 'encounter-2', 'onko-systemtherapie-1', 'medadmin-1', 'medication-pembrolizumab'], thread: ['medadmin-1', 'mtb-implikation-1'],
+    de: 'ECOG 1. Erste Gabe Pembrolizumab, 200 mg alle drei Wochen. Die Systemtherapie im Onkologie-Modul verweist zurück auf das Tumorboard.', en: 'ECOG 1. First dose of pembrolizumab, 200 mg every three weeks. The systemic therapy in the oncology module points back to the tumor board.' },
+  { when: { de: '14. August', en: '14 August' }, ids: ['onko-verlauf-1'],
+    de: 'Verlaufskontrolle nach drei Monaten: Teilremission. Welcher Befund, welche Therapie, welches Ansprechen: über drei Module hinweg beantwortet.', en: 'Follow-up after three months: partial remission. Which finding, which therapy, which response: answered across three modules.' },
+ ],
+ forschung: [
+  { when: { de: '20. Januar 2025', en: '20 January 2025' }, ids: ['patient-11', 'encounter-1', 'diagnose-1', 'diagnose-2'],
+    de: 'Ingrid H., 65, kommt mit kardialer Dekompensation ins Krankenhaus: Herzinsuffizienz NYHA III, dazu ein Typ-2-Diabetes.', en: 'Ingrid H., 65, is admitted with cardiac decompensation: heart failure NYHA III, plus type 2 diabetes.' },
+  { when: { de: '21. Januar', en: '21 January' }, ids: ['labrequest-1', 'labreport-1', 'labobs-1', 'labobs-2', 'labobs-3', 'prozedur-1'],
+    de: 'NT-proBNP 3840 pg/ml, Kreatinin 1,42 mg/dl, Kalium 4,8 mmol/l. Eine transösophageale Echokardiographie sichert den Befund.', en: 'NT-proBNP 3840 pg/ml, creatinine 1.42 mg/dl, potassium 4.8 mmol/l. A transesophageal echocardiogram confirms the finding.' },
+  { when: { de: '22. Januar', en: '22 January' }, ids: ['consent-1'],
+    de: 'Sie unterschreibt den Broad Consent der MII. Ihre Daten dürfen für die Forschung genutzt werden.', en: 'She signs the MII broad consent. Her data may be used for research.' },
+  { when: { de: '28. Januar', en: '28 January' }, ids: ['medstatement-1', 'medstatement-2', 'medstatement-3', 'medrequest-1', 'medrequest-2', 'list-entlassmedikation', 'medication-sacubitril-valsartan', 'medication-empagliflozin'],
+    de: 'Entlassung mit HFrEF-Standardtherapie: Sacubitril/Valsartan und Empagliflozin, dokumentiert als Entlassmedikationsliste.', en: 'Discharge on standard HFrEF therapy: sacubitril/valsartan and empagliflozin, documented as a discharge medication list.' },
+  { when: { de: '3. Februar', en: '3 February' }, ids: ['studien-anfrage-1', 'studie-1', 'studien-kriterium-1', 'studien-register-1'], thread: ['studien-anfrage-1', 'diagnose-1'],
+    de: 'Eine Registerstudie zu kardiovaskulärem Risiko fragt an. Das Einschlusskriterium verweist auf ihre Diagnose.', en: 'A registry study on cardiovascular risk reaches out. The inclusion criterion references her diagnosis.' },
+  { when: { de: '10. Februar, Baseline T0', en: '10 February, baseline T0' }, ids: ['encounter-2', 'proband-1', 'studien-dokument-1', 'practitioner-role-physician-1', 'sdd-erhebung-1', 'sdd-partnerschaft-1', 'sdd-haushaltsgroesse-1', 'sdd-schulabschluss-1', 'sdd-schuljahre-1', 'sdd-ausbildung-1', 'sdd-beschaeftigung-1', 'sdd-stellung-1', 'sdd-einkommen-1'],
+    de: 'Einschluss als Probandin. Die soziodemographische Erhebung: verwitwet, Einpersonenhaushalt, Hauptschulabschluss, gelernte Näherin, Altersrente, Haushaltseinkommen unter 1.500 €.', en: 'Enrolled as a participant. The sociodemographic survey: widowed, one-person household, lower secondary school, trained seamstress, retired, household income below 1,500 €.' },
+  { when: { de: '10. Februar, 09:20', en: '10 February, 09:20' }, ids: ['pro-eq5d5l-qr-t0', 'pro-eq5d5l-index-t0', 'pro-eq5d5l-vas-t0', 'pro-eq5d5l-profil-t0', 'pro-phq9-qr-t0', 'pro-phq9-score-t0'],
+    de: 'Die Patientin berichtet selbst: EQ-5D-5L-Index 0,512, Gesundheitszustand 45 von 100. PHQ-9 bei 14, eine mittelgradige Depression.', en: 'The patient reports herself: EQ-5D-5L index 0.512, health state 45 out of 100. PHQ-9 at 14, moderate depression.' },
+  { when: { de: '12. Mai, Visite T3', en: '12 May, visit T3' }, ids: ['encounter-3', 'pro-eq5d5l-qr-t3', 'pro-eq5d5l-index-t3', 'pro-eq5d5l-vas-t3', 'pro-eq5d5l-profil-t3'], thread: ['pro-eq5d5l-index-t3', 'pro-eq5d5l-index-t0'],
+    de: 'Drei Monate später: Index 0,712, Gesundheitszustand 60. Die Verbesserung überschreitet die klinisch bedeutsame Schwelle.', en: 'Three months later: index 0.712, health state 60. The improvement exceeds the clinically meaningful threshold.' },
+  { when: { de: '11. August, Visite T6', en: '11 August, visit T6' }, ids: ['encounter-4', 'pro-eq5d5l-qr-t6', 'pro-eq5d5l-index-t6', 'pro-eq5d5l-vas-t6', 'pro-eq5d5l-profil-t6', 'pro-phq9-qr-t6', 'pro-phq9-score-t6'], thread: ['pro-eq5d5l-index-t6', 'pro-eq5d5l-index-t3'],
+    de: 'Sechs Monate: Index 0,823, Gesundheitszustand 70, PHQ-9 bei 8. Lebensqualität und Stimmung sind anhaltend besser.', en: 'Six months: index 0.823, health state 70, PHQ-9 at 8. Quality of life and mood are lastingly better.',
+    note: { de: '<b>Der Verlauf</b> über drei Visiten, verknüpft mit Therapie, Soziodemographie und Studienteilnahme, ist das, was eine Registerstudie aus Routinedaten braucht.', en: '<b>The course</b> over three visits, linked to therapy, sociodemographics and study participation, is what a registry study needs from routine data.' } },
+ ],
+};
 
 // ---------------------------------------------------------------- state
 const S = { data: null, mode: 'reise', nodes: [], links: [], byId: {}, profileIndex: [], W: 0, H: 0, zoomed: null, selProfile: null,
@@ -641,12 +702,14 @@ function setMode(mode) {
 
 // ---------------------------------------------------------------- journey
 function buildJourneySelect() {
-  const sel = $('#journeysel'); sel.innerHTML = S.data.journeys.map(j => `<option value="${j.id}">${esc(tx(j.title))}</option>`).join('');
+  const sel = $('#journeysel'); const opt = j => `<option value="${j.id}">${esc(tx(j.title))}</option>`;
+  sel.innerHTML = `<optgroup label="${t('g_journeys')}">${S.data.journeys.filter(j => j.kind !== 'test').map(opt).join('')}</optgroup><optgroup label="${t('g_tests')}">${S.data.journeys.filter(j => j.kind === 'test').map(opt).join('')}</optgroup>`;
   sel.addEventListener('change', () => startJourney(sel.value, true));
 }
 function rid(j, short) { return j.resources.find(r => r.id.endsWith(short)) || null; }
 function buildBeats(j) {
-  if (j.id === 'sepsis') return SEPSIS.map(b => ({ ...b, res: b.ids.map(s => rid(j, '-' + s) || rid(j, s)).filter(Boolean), thread: (b.thread || []).map(s => rid(j, '-' + s)).filter(Boolean) }));
+  const sc = SCRIPTS[j.id];
+  if (sc) return sc.map(b => ({ ...b, res: b.ids.map(s => rid(j, '-' + s)).filter(Boolean), thread: (b.thread || []).map(s => rid(j, '-' + s)).filter(Boolean) }));
   // generic: group by day
   const byDay = d3.group(j.resources.filter(r => r.t && r.m), r => r.t.slice(0, 10));
   const days = [...byDay.keys()].sort();
@@ -656,7 +719,8 @@ function buildBeats(j) {
     const res = byDay.get(d);
     if (i === 0 && pat) res.unshift(pat);
     const mods = [...new Set(res.map(r => r.m))].map(m => tx(S.byId[m].name));
-    const labels = res.filter(r => r.label && r.rt !== 'Patient').slice(0, 3).map(r => r.label + (r.value ? ` (${r.value})` : ''));
+    const cap = x => x.charAt(0).toUpperCase() + x.slice(1);
+    const labels = res.filter(r => r.label && r.rt !== 'Patient').slice(0, 3).map(r => cap(r.label) + (r.value ? ` (${r.value})` : ''));
     beats.push({ when: { de: fmtDateIn('de', d), en: fmtDateIn('en', d) }, res,
       de: `${res.length} ${T.de.resources_per_day} in ${mods.join(', ')}: ${labels.join(' · ')}`, en: `${res.length} ${T.en.resources_per_day} in ${mods.join(', ')}: ${labels.join(' · ')}` });
   });
@@ -687,8 +751,22 @@ function showBeat(i) {
   gNodes.selectAll('g.module').classed('hover', n => mods.includes(n.id));
   $('#caption').innerHTML = `<div class="when">${esc(tx(b.when))}</div><h2>${esc(tx(b))}</h2>${b.note ? `<div class="note">${tx(b.note)}</div>` : ''}
     <div class="mods">${mods.map(m => `<span class="chip">${sw(m)}${esc(tx(S.byId[m].name))}</span>`).join('')}</div>
-    <div class="progress">${S.beats.map((_, k) => `<i class="${k <= i ? 'done' : ''}"></i>`).join('')}</div>`;
+    <div class="progress">${S.beats.map((_, k) => `<i class="${k <= i ? 'done' : ''}"></i>`).join('')}</div>
+    ${minimap(i)}`;
   $('#caption').classList.remove('off');
+}
+function minimap(beatIdx) {
+  const dated = S.journey.resources.filter(r => r.t && r.m).map(r => ({ r, d: +new Date(r.t) })).filter(x => !isNaN(x.d));
+  if (dated.length < 2) return '';
+  const W = 480, H = 34, pad = 6;
+  const x = d3.scaleTime().domain(d3.extent(dated, d => d.d)).range([pad, W - pad]);
+  const placed = new Set(S.beats.slice(0, beatIdx + 1).flatMap(b => b.res.map(r => r.id)));
+  const cur = new Set(S.beats[beatIdx].res.map(r => r.id));
+  const curD = dated.filter(d => cur.has(d.r.id)).map(d => d.d);
+  const hi = curD.length ? `<rect x="${x(d3.min(curD)) - 4}" y="4" width="${Math.max(8, x(d3.max(curD)) - x(d3.min(curD)) + 8)}" height="16" rx="4" fill="var(--accent)" fill-opacity=".18"/>` : '';
+  const fmt = d => new Date(d).toLocaleDateString(L === 'de' ? 'de-DE' : 'en-GB', { day: 'numeric', month: 'short', year: '2-digit' });
+  const dots = dated.map(d => `<circle cx="${x(d.d).toFixed(1)}" cy="12" r="${cur.has(d.r.id) ? 3.4 : 2.2}" fill="${GROUPS[GROUP_OF[d.r.m] || 'kontext'].c}" opacity="${cur.has(d.r.id) ? 1 : placed.has(d.r.id) ? .8 : .22}"/>`).join('');
+  return `<svg class="mini" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><line x1="${pad}" x2="${W - pad}" y1="12" y2="12" stroke="var(--line-2)" stroke-width="1"/>${hi}${dots}<text x="${pad}" y="${H - 3}" font-size="9" fill="var(--ink-3)" font-family="var(--mono)">${fmt(x.domain()[0])}</text><text x="${W - pad}" y="${H - 3}" font-size="9" fill="var(--ink-3)" font-family="var(--mono)" text-anchor="end">${fmt(x.domain()[1])}</text></svg>`;
 }
 function landing(r) {
   const n = S.nodeById[r.m]; if (!n) return null;
@@ -726,7 +804,7 @@ function finale() {
     <p>${esc(t('finale_p'))}</p><button class="cta" id="explore">${esc(t('explore'))}</button></div>`;
   $('#finale').classList.remove('off');
   $('#explore').addEventListener('click', () => { $('#finale').classList.add('off'); setMode('karte'); });
-  if (S.kiosk) S.timer = setTimeout(() => { if (S.mode === 'reise' && !S.playing) startJourney(S.journey.id, true); }, 25000);
+  if (S.kiosk) S.timer = setTimeout(() => { if (S.mode === 'reise' && !S.playing) { const js = S.data.journeys.filter(x => x.kind !== 'test'); const i = js.findIndex(x => x.id === S.journey.id); startJourney(js[(i + 1) % js.length].id, true); } }, 25000);
 }
 $('#play').addEventListener('click', () => { if (S.beat >= S.beats.length - 1 && !S.playing) { startJourney(S.journey.id, true); return; } S.playing = !S.playing; setPlayIcon(); clearTimeout(S.timer); if (S.playing) nextBeat(); });
 $('#next').addEventListener('click', () => { clearTimeout(S.timer); S.playing = false; setPlayIcon(); $('#finale').classList.add('off'); nextBeat(); });
@@ -849,7 +927,7 @@ function wireUI() {
     else if (e.key === '/' && S.mode === 'karte') { e.preventDefault(); $('#search').focus(); }
   });
   ['pointerdown', 'keydown', 'wheel', 'pointermove'].forEach(ev => window.addEventListener(ev, () => { S.lastInput = Date.now(); }, { passive: true }));
-  setInterval(() => { if (S.kiosk && Date.now() - S.lastInput > 120000 && !(S.mode === 'reise' && S.playing)) { S.lastInput = Date.now(); setMode('reise'); } }, 5000);
+  setInterval(() => { if (S.kiosk && Date.now() - S.lastInput > 120000 && !(S.mode === 'reise' && S.playing)) { S.lastInput = Date.now(); $('#journeysel').value = S.data.journeys[0].id; setMode('reise'); } }, 5000);
   let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { layout(); render(); if (S.mode === 'reise') replayTo(Math.max(0, S.beat)); }, 200); });
 }
 function setKiosk(on) { S.kiosk = on; $('#kioskbtn').setAttribute('aria-pressed', String(on)); $('#app').classList.toggle('kiosk', on); showToast(on ? t('kiosk_on') : t('kiosk_off')); if (on && !document.fullscreenElement) document.documentElement.requestFullscreen?.().catch(() => {}); }
@@ -867,7 +945,7 @@ function applyLang() {
   renderLegend();
   gNodes.selectAll('.module .name').text(n => tx(n.m.name));
   gNodes.selectAll('.module .count').text(n => n.m.n_profiles ? `${n.m.n_profiles} ${t('profiles')}` : (n.m.profiles.length ? `${n.m.profiles.length} ${t('abstract')}` : ''));
-  const sel = $('#journeysel'); [...sel.options].forEach(o => o.textContent = tx(S.data.journeys.find(j => j.id === o.value).title));
+  const sel = $('#journeysel'); [...sel.options].forEach(o => o.textContent = tx(S.data.journeys.find(j => j.id === o.value).title)); [...sel.querySelectorAll('optgroup')].forEach((g, i) => g.label = i ? t('g_tests') : t('g_journeys'));
   if (S.mode === 'reise' && S.beat >= 0 && S.beat < S.beats.length) { S.beats = buildBeats(S.journey); showBeat(S.beat); }
   if (S.mode === 'fragen') renderQuestions();
   if (S.mode === 'zeit') { applyTime(S.time.t, true); showTimePanel(); }

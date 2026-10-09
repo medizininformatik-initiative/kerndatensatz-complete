@@ -116,7 +116,7 @@ JOURNEYS = [
  dict(id="seltene", bundle="pat-13", de="Seltene Erkrankung", en="Rare disease"),
  dict(id="onko", bundle="pat-14", de="Onkologie und Tumorboard", en="Oncology and tumor board"),
  dict(id="forschung", bundle="pat-11", de="Forschung und PROs", en="Research and PROs"),
-]
+] + [dict(id=f"pat-{n}", bundle=f"pat-{n}", kind="test", de=f"Testpatient {n}", en=f"Test patient {n}") for n in range(1, 11)]
 
 SYSTEMS = {
  "http://loinc.org": "LOINC", "http://snomed.info/sct": "SNOMED CT",
@@ -441,7 +441,10 @@ def journey(j, url_to_module, name_by_url):
         resources.append(item)
     resources.sort(key=lambda x: (x["t"] == "", x["t"]))
     mods = collections.Counter(x["m"] for x in resources if x["m"])
-    return dict(id=j["id"], title=dict(de=j["de"], en=j["en"]), patient=patient, bundle=j["bundle"],
+    title = dict(de=j["de"], en=j["en"])
+    if j.get("kind") == "test" and patient and patient["name"]:
+        title = dict(de=f'{j["de"]}: {patient["name"]}', en=f'{j["en"]}: {patient["name"]}')
+    return dict(id=j["id"], kind=j.get("kind", "journey"), title=title, patient=patient, bundle=j["bundle"],
                 modules=dict(mods.most_common()), resources=resources)
 
 
