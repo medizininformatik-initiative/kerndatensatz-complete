@@ -1,12 +1,12 @@
 Source File	Size	loadResources	load	generateSnapshots	load-configure	scan	loadDepInfo	loadInfo	checkR4R4B	generateNarratives	validate	loadLists	checkConformanceResources	checkConformanceResources2	checkConformanceResources3	generateLogicalMaps	validateExpressions	scanForUsageStats	checkURLsUnique	processProvenanceDetails	translate	generate1	generate2	generateLogicals	makeDependencies	generateExampleZip	generateValidationPack	scanProfilesForR5	scanExamplesForR5
-/fsh-generated/resources/ImplementationGuide-de.medizininformatikinitiative.kerndatensatz.complete.json	13974	-	0	0	0	0	0	0	12	40	0	0	0	0	0	0	0	0	0	0	0	160	86	0	0	0	4	0	1
-input/resources/CapabilityStatement-mii-cps-kerndatensatz-complete.json	488664	43	0	0	5	0	0	0	25	1512	0	0	0	0	0	0	0	3	0	0	0	494	851	0	6	0	29	0	7
-input/resources/ConceptMap-mii-cm-kds-icu-isik6-canonicals.json	37329	7	0	0	0	0	0	0	1	367	0	0	0	0	0	0	0	0	0	0	0	74	154	0	0	0	3	0	0
-input/resources/ConceptMap-mii-cm-kds-profile-canonicals-2026-2027.json	98330	9	0	0	0	0	0	0	3	410	0	0	0	0	0	0	0	0	0	0	0	141	145	0	0	0	7	0	1
-input/resources/ConceptMap-mii-cm-kds-vs-canonicals-2026-2027.json	14738	3	0	0	0	0	0	0	1	87	0	0	0	0	0	0	0	0	0	0	0	49	82	0	0	0	1	0	0
+/fsh-generated/resources/ImplementationGuide-de.medizininformatikinitiative.kerndatensatz.complete.json	13974	-	0	0	0	0	0	0	11	32	0	0	0	0	0	0	0	1	0	0	0	160	68	0	0	0	3	0	1
+input/resources/CapabilityStatement-mii-cps-kerndatensatz-complete.json	488664	34	0	0	5	0	0	0	24	1029	0	0	0	0	0	0	0	2	0	0	0	726	504	0	6	0	22	0	3
+input/resources/ConceptMap-mii-cm-kds-icu-isik6-canonicals.json	37329	6	0	0	0	0	0	0	2	221	0	0	0	0	0	0	0	0	0	0	0	88	125	0	0	0	2	0	0
+input/resources/ConceptMap-mii-cm-kds-profile-canonicals-2026-2027.json	98330	9	0	0	0	0	0	0	3	212	0	0	0	0	0	0	0	0	0	0	0	186	117	0	0	0	5	0	0
+input/resources/ConceptMap-mii-cm-kds-vs-canonicals-2026-2027.json	14738	4	0	0	0	0	0	0	0	52	0	0	0	0	0	0	0	0	0	0	0	48	36	0	0	0	1	0	0
 /fsh-generated/includes/fsh-link-references.md	360	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
 /fsh-generated/includes/menu.xml	1374	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0
-/input/pagecontent/ballot.md	14663	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+/input/pagecontent/ballot.md	14664	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
 /input/pagecontent/testabdeckung.md	79037	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	3	0	0	0	0	0	0
 /input/pagecontent/migration.md	28846	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	2	0	0	0	0	0	0
 /input/pagecontent/entwicklungsstack.md	13279	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
@@ -17,11 +17,11 @@ input/resources/ConceptMap-mii-cm-kds-vs-canonicals-2026-2027.json	14738	3	0	0	0
 /input/images	0	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
 /input/images/dev-stack.svg	26019	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
 /input/images/dep-graph-2026.png	236361	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
-/input/images/migration-2026-2027.svg	14358	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0
+/input/images/migration-2026-2027.svg	14358	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
 /input/images/dep-graph-2027.svg	34156	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
-/input/images/dep-graph-2027-extern.svg	71170	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
-/input/images/dep-graph-2027-extern.png	631212	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0
+/input/images/dep-graph-2027-extern.svg	71170	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0
+/input/images/dep-graph-2027-extern.png	631212	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
 /input/images/dev-stack.png	253622	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
 /input/images/dep-graph-2026.svg	30329	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
 /input/images/dep-graph-2027.png	276696	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
-/temp/pages/_includes/artifacts.xml	5794	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	1	0	0	0	0	0	0
+/temp/pages/_includes/artifacts.xml	5794	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	0	0	0	0	0	0	0
