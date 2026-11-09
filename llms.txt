@@ -3,12 +3,12 @@
 ## Pages
 
 * [](de/index.md)
+* [Migration von v2026](de/migration.md)
 * [Artefaktübersicht](de/artifacts.md)
 * [Versionierung](de/versionierung.md)
-* [Ballotierung 2027.0.0](de/ballot.md)
 * [Testabdeckung](de/testabdeckung.md)
 * [Entwicklungsstack](de/entwicklungsstack.md)
-* [Migration von v2026](de/migration.md)
+* [Ballotierung 2027.0.0](de/ballot.md)
 
 ## Resources
 
