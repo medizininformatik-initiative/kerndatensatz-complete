@@ -1,16 +1,16 @@
 Source File	Size	loadResources	load	generateSnapshots	load-configure	scan	loadDepInfo	loadInfo	checkR4R4B	generateNarratives	validate	loadLists	checkConformanceResources	checkConformanceResources2	checkConformanceResources3	generateLogicalMaps	validateExpressions	scanForUsageStats	checkURLsUnique	processProvenanceDetails	translate	generate1	generate2	generateLogicals	makeDependencies	generateExampleZip	generateValidationPack	scanProfilesForR5	scanExamplesForR5
-/fsh-generated/resources/ImplementationGuide-de.medizininformatikinitiative.kerndatensatz.complete.json	13974	-	0	0	0	0	0	0	22	63	0	0	0	0	0	0	0	0	0	0	0	196	135	0	0	0	13	0	3
-input/resources/CapabilityStatement-mii-cps-kerndatensatz-complete.json	488664	71	0	0	5	0	0	0	43	1541	0	0	0	0	0	0	0	3	0	0	0	1071	1322	0	5	0	92	0	11
-input/resources/ConceptMap-mii-cm-kds-icu-isik6-canonicals.json	37329	9	0	0	0	0	0	0	3	328	0	0	0	0	0	0	0	1	0	0	0	168	494	0	1	0	8	0	0
-input/resources/ConceptMap-mii-cm-kds-profile-canonicals-2026-2027.json	98330	15	0	0	0	0	0	0	8	404	0	0	0	0	0	0	0	0	0	0	0	422	373	0	0	0	22	0	0
-input/resources/ConceptMap-mii-cm-kds-vs-canonicals-2026-2027.json	14738	12	0	0	0	0	0	0	1	82	0	0	0	0	0	0	0	0	0	0	0	74	106	0	0	0	5	0	0
-/fsh-generated/includes/fsh-link-references.md	360	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0
+/fsh-generated/resources/ImplementationGuide-de.medizininformatikinitiative.kerndatensatz.complete.json	13974	-	0	0	1	0	0	0	18	41	0	0	0	0	0	0	0	1	0	0	0	197	212	0	0	0	4	0	1
+input/resources/CapabilityStatement-mii-cps-kerndatensatz-complete.json	488664	66	0	0	4	0	0	0	39	2127	0	0	0	0	0	0	0	2	0	0	0	1119	1548	0	5	0	36	0	4
+input/resources/ConceptMap-mii-cm-kds-icu-isik6-canonicals.json	37329	9	0	0	0	0	0	0	2	366	0	0	0	0	0	0	0	1	0	0	0	165	265	0	0	0	4	0	0
+input/resources/ConceptMap-mii-cm-kds-profile-canonicals-2026-2027.json	98330	15	0	0	0	0	0	0	3	376	0	0	0	0	0	0	0	0	0	0	0	355	486	0	0	0	9	0	0
+input/resources/ConceptMap-mii-cm-kds-vs-canonicals-2026-2027.json	14738	5	0	0	0	0	0	0	0	75	0	0	0	0	0	0	0	0	0	0	0	74	110	0	0	0	2	0	0
+/fsh-generated/includes/fsh-link-references.md	360	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	2	0	0	0	0	0	0
 /fsh-generated/includes/menu.xml	1374	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
 /input/pagecontent/ballot.md	14666	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	2	0	0	0	0	0	0
-/input/pagecontent/migration.md	28846	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	3	0	0	0	0	0	0
-/input/pagecontent/entwicklungsstack.md	13279	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0
-/input/pagecontent/index.md	24748	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	3	0	0	0	0	0	0
-/input/pagecontent/testabdeckung.md	79037	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	5	0	0	0	0	0	0
+/input/pagecontent/migration.md	28846	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	2	0	0	0	0	0	0
+/input/pagecontent/entwicklungsstack.md	13279	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	2	0	0	0	0	0	0
+/input/pagecontent/index.md	24748	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	2	0	0	0	0	0	0
+/input/pagecontent/testabdeckung.md	79037	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	6	0	0	0	0	0	0
 /input/pagecontent/versionierung.md	4634	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0
 /template/config	0	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
 /template/config/_config.yml	140	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
@@ -21,7 +21,7 @@ input/resources/ConceptMap-mii-cm-kds-vs-canonicals-2026-2027.json	14738	12	0	0	
 /input/images/dep-graph-2026.png	236361	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
 /input/images/dep-graph-2027.png	276696	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0
 /input/images/dev-stack.svg	26019	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
-/input/images/dep-graph-2027.svg	34156	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-/input/images/dev-stack.png	253622	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0
+/input/images/dep-graph-2027.svg	34156	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0
+/input/images/dev-stack.png	253622	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
 /input/images/dep-graph-2027-extern.png	631212	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0
-/temp/pages/_includes/artifacts.xml	5794	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	1	0	0	0	0	0	0
+/temp/pages/_includes/artifacts.xml	5794	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	2	0	0	0	0	0	0
