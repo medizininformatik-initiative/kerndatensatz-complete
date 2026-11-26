@@ -8,6 +8,7 @@
   },
   "offen_2026": [],
   "auf_rc": [],
+  "publikation": "ig-publisher+feed",
   "extern": {
    "hl7.fhir.r4.core": "4.0.1",
    "de.basisprofil.r4": "1.6.0",
@@ -29,6 +30,7 @@
   },
   "offen_2026": [],
   "auf_rc": [],
+  "publikation": "simplifier-bake",
   "extern": {
    "fhir.dicom": "2025.3.20250714",
    "hl7.fhir.uv.extensions.r4": "5.3.0",
@@ -46,6 +48,7 @@
   },
   "offen_2026": [],
   "auf_rc": [],
+  "publikation": "ig-publisher→simplifier",
   "extern": {
    "hl7.fhir.r4.core": "4.0.1",
    "de.basisprofil.r4": "1.6.0",
@@ -63,6 +66,7 @@
   "deps": {},
   "offen_2026": [],
   "auf_rc": [],
+  "publikation": "ig-publisher→simplifier",
   "extern": {
    "hl7.fhir.r4.core": "4.0.1",
    "de.einwilligungsmanagement": "2.0.4",
@@ -81,6 +85,7 @@
   },
   "offen_2026": [],
   "auf_rc": [],
+  "publikation": "ig-publisher→simplifier",
   "extern": {
    "hl7.fhir.r4.core": "4.0.1",
    "de.basisprofil.r4": "1.6.0",
@@ -104,6 +109,7 @@
   },
   "offen_2026": [],
   "auf_rc": [],
+  "publikation": "ig-publisher→simplifier",
   "extern": {
    "hl7.fhir.r4.core": "4.0.1",
    "de.basisprofil.r4": "1.6.0",
@@ -125,6 +131,7 @@
   },
   "offen_2026": [],
   "auf_rc": [],
+  "publikation": "simplifier-bake",
   "extern": {
    "hl7.terminology.r4": "7.1.0",
    "de.basisprofil.r4": "1.6.0",
@@ -140,6 +147,7 @@
   },
   "offen_2026": [],
   "auf_rc": [],
+  "publikation": "simplifier-bake",
   "extern": {
    "hl7.fhir.r4.core": "4.0.1",
    "hl7.fhir.uv.ips": "2.0.1",
@@ -159,6 +167,7 @@
   },
   "offen_2026": [],
   "auf_rc": [],
+  "publikation": "simplifier-bake",
   "extern": {
    "de.basisprofil.r4": "1.6.0",
    "hl7.fhir.uv.crmi": "2.0.0",
@@ -175,6 +184,7 @@
   },
   "offen_2026": [],
   "auf_rc": [],
+  "publikation": "ig-publisher→simplifier",
   "extern": {
    "hl7.fhir.r4.core": "4.0.1",
    "hl7.fhir.uv.ips": "2.0.0",
@@ -194,6 +204,7 @@
   "deps": {},
   "offen_2026": [],
   "auf_rc": [],
+  "publikation": "ig-publisher→simplifier",
   "extern": {
    "hl7.fhir.r4.core": "4.0.1",
    "hl7.fhir.uv.crmi": "2.0.0",
@@ -211,6 +222,7 @@
   },
   "offen_2026": [],
   "auf_rc": [],
+  "publikation": "simplifier-bake",
   "extern": {
    "hl7.fhir.r4.core": "4.0.1",
    "hl7.fhir.uv.crmi": "2.0.0",
@@ -231,6 +243,7 @@
   },
   "offen_2026": [],
   "auf_rc": [],
+  "publikation": "ig-publisher→simplifier",
   "extern": {
    "hl7.fhir.r4.core": "4.0.1",
    "hl7.fhir.uv.genomics-reporting": "3.0.0",
@@ -256,6 +269,7 @@
   },
   "offen_2026": [],
   "auf_rc": [],
+  "publikation": "ig-publisher→simplifier",
   "extern": {
    "hl7.fhir.r4.core": "4.0.1",
    "de.basisprofil.r4": "1.6.0",
@@ -280,6 +294,7 @@
   },
   "offen_2026": [],
   "auf_rc": [],
+  "publikation": "ig-publisher→simplifier",
   "extern": {
    "hl7.fhir.r4.core": "4.0.1",
    "de.basisprofil.r4": "1.6.0",
@@ -301,6 +316,7 @@
   },
   "offen_2026": [],
   "auf_rc": [],
+  "publikation": "simplifier-bake",
   "extern": {
    "hl7.fhir.r4.core": "4.0.1",
    "de.gematik.isik": "5.1.2",
@@ -317,6 +333,7 @@
   },
   "offen_2026": [],
   "auf_rc": [],
+  "publikation": "simplifier-bake",
   "extern": {
    "de.basisprofil.r4": "1.6.0",
    "de.gematik.isik": "6.0.0",
@@ -340,6 +357,7 @@
   },
   "offen_2026": [],
   "auf_rc": [],
+  "publikation": "ig-publisher→simplifier",
   "extern": {
    "hl7.fhir.r4.core": "4.0.1",
    "de.basisprofil.r4": "1.6.0",
@@ -358,6 +376,7 @@
   },
   "offen_2026": [],
   "auf_rc": [],
+  "publikation": "ig-publisher+feed",
   "extern": {
    "hl7.fhir.r4.core": "4.0.1",
    "hl7.terminology.r4": "7.3.0",
@@ -373,6 +392,7 @@
   },
   "offen_2026": [],
   "auf_rc": [],
+  "publikation": "ig-publisher→simplifier",
   "extern": {
    "hl7.fhir.r4.core": "4.0.1",
    "hl7.fhir.uv.xver-r5.r4": "0.1.0",
@@ -390,6 +410,7 @@
   },
   "offen_2026": [],
   "auf_rc": [],
+  "publikation": "ig-publisher→simplifier",
   "extern": {
    "hl7.fhir.r4.core": "4.0.1",
    "de.basisprofil.r4": "1.6.0",
