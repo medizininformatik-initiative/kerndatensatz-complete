@@ -1,0 +1,35 @@
+[{
+  "id" : "mii-cps-kerndatensatz-complete",
+  "type" : "CapabilityStatement",
+  "url" : "https://www.medizininformatik-initiative.de/fhir/core/complete/CapabilityStatement/mii-cps-kerndatensatz-complete",
+  "version" : "2027.0.0-ballot.19",
+  "name" : "MII_CPS_Kerndatensatz_Complete"
+},
+{
+  "id" : "mii-cm-kds-icu-isik6-canonicals",
+  "type" : "ConceptMap",
+  "url" : "https://www.medizininformatik-initiative.de/fhir/core/complete/ConceptMap/mii-cm-kds-icu-isik6-canonicals",
+  "version" : "2027.0.0-ballot.19",
+  "name" : "mii_cm_kds_icu_isik6_canonicals"
+},
+{
+  "id" : "mii-cm-kds-profile-canonicals-2026-2027",
+  "type" : "ConceptMap",
+  "url" : "https://www.medizininformatik-initiative.de/fhir/core/complete/ConceptMap/mii-cm-kds-profile-canonicals-2026-2027",
+  "version" : "2027.0.0-ballot.19",
+  "name" : "mii_cm_kds_profile_canonicals_2026_2027"
+},
+{
+  "id" : "mii-cm-kds-vs-canonicals-2026-2027",
+  "type" : "ConceptMap",
+  "url" : "https://www.medizininformatik-initiative.de/fhir/core/complete/ConceptMap/mii-cm-kds-vs-canonicals-2026-2027",
+  "version" : "2027.0.0-ballot.19",
+  "name" : "mii_cm_kds_vs_canonicals_2026_2027"
+},
+{
+  "id" : "de.medizininformatikinitiative.kerndatensatz.complete",
+  "type" : "ImplementationGuide",
+  "url" : "https://www.medizininformatik-initiative.de/fhir/core/complete/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.complete",
+  "version" : "2027.0.0-ballot.19",
+  "name" : "MIIKerndatensatzComplete"
+}]

@@ -1,0 +1,418 @@
+{
+  "date" : "Thu, 26 Nov, 2026 21:55:13 +0000",
+  "doco" : "For each file: start is seconds after start activity occurred. Length = milliseconds activity took",
+  "files" : [{
+    "name" : "/fsh-generated/resources/ImplementationGuide-de.medizininformatikinitiative.kerndatensatz.complete.json",
+    "size" : 13974,
+    "processes" : [{
+      "activity" : "load",
+      "start" : 71,
+      "length" : 14
+    },
+    {
+      "activity" : "checkR4R4B",
+      "start" : 72,
+      "length" : 18
+    },
+    {
+      "activity" : "generateNarratives",
+      "start" : 72,
+      "length" : 44
+    },
+    {
+      "activity" : "validate",
+      "start" : 112,
+      "length" : 14750
+    },
+    {
+      "activity" : "scanForUsageStats",
+      "start" : 127,
+      "length" : 1
+    },
+    {
+      "activity" : "generate1",
+      "start" : 127,
+      "length" : 238
+    },
+    {
+      "activity" : "generate2",
+      "start" : 131,
+      "length" : 148
+    },
+    {
+      "activity" : "generateValidationPack",
+      "start" : 173,
+      "length" : 11
+    },
+    {
+      "activity" : "scanExamplesForR5",
+      "start" : 199,
+      "length" : 2
+    }]
+  },
+  {
+    "name" : "input/resources/CapabilityStatement-mii-cps-kerndatensatz-complete.json",
+    "size" : 488664,
+    "processes" : [{
+      "activity" : "loadResources",
+      "start" : 71,
+      "length" : 80
+    },
+    {
+      "activity" : "load",
+      "start" : 71,
+      "length" : 121
+    },
+    {
+      "activity" : "load-configure",
+      "start" : 72,
+      "length" : 6
+    },
+    {
+      "activity" : "loadDepInfo",
+      "start" : 72,
+      "length" : 1
+    },
+    {
+      "activity" : "checkR4R4B",
+      "start" : 72,
+      "length" : 32
+    },
+    {
+      "activity" : "generateNarratives",
+      "start" : 72,
+      "length" : 1500
+    },
+    {
+      "activity" : "validate",
+      "start" : 76,
+      "length" : 36442
+    },
+    {
+      "activity" : "scanForUsageStats",
+      "start" : 127,
+      "length" : 3
+    },
+    {
+      "activity" : "generate1",
+      "start" : 127,
+      "length" : 1076
+    },
+    {
+      "activity" : "generate2",
+      "start" : 131,
+      "length" : 961
+    },
+    {
+      "activity" : "makeDependencies",
+      "start" : 135,
+      "length" : 9
+    },
+    {
+      "activity" : "generateValidationPack",
+      "start" : 173,
+      "length" : 54
+    },
+    {
+      "activity" : "scanExamplesForR5",
+      "start" : 199,
+      "length" : 13
+    }]
+  },
+  {
+    "name" : "input/resources/ConceptMap-mii-cm-kds-icu-isik6-canonicals.json",
+    "size" : 37329,
+    "processes" : [{
+      "activity" : "loadResources",
+      "start" : 71,
+      "length" : 22
+    },
+    {
+      "activity" : "load",
+      "start" : 71,
+      "length" : 46
+    },
+    {
+      "activity" : "load",
+      "start" : 71,
+      "length" : 16
+    },
+    {
+      "activity" : "checkR4R4B",
+      "start" : 72,
+      "length" : 1
+    },
+    {
+      "activity" : "generateNarratives",
+      "start" : 74,
+      "length" : 792
+    },
+    {
+      "activity" : "validate",
+      "start" : 75,
+      "length" : 175
+    },
+    {
+      "activity" : "generate1",
+      "start" : 128,
+      "length" : 128
+    },
+    {
+      "activity" : "generate2",
+      "start" : 132,
+      "length" : 329
+    },
+    {
+      "activity" : "generateValidationPack",
+      "start" : 173,
+      "length" : 5
+    }]
+  },
+  {
+    "name" : "input/resources/ConceptMap-mii-cm-kds-profile-canonicals-2026-2027.json",
+    "size" : 98330,
+    "processes" : [{
+      "activity" : "loadResources",
+      "start" : 71,
+      "length" : 30
+    },
+    {
+      "activity" : "load",
+      "start" : 71,
+      "length" : 43
+    },
+    {
+      "activity" : "load",
+      "start" : 71,
+      "length" : 24
+    },
+    {
+      "activity" : "checkR4R4B",
+      "start" : 72,
+      "length" : 3
+    },
+    {
+      "activity" : "generateNarratives",
+      "start" : 74,
+      "length" : 718
+    },
+    {
+      "activity" : "validate",
+      "start" : 75,
+      "length" : 197
+    },
+    {
+      "activity" : "generate1",
+      "start" : 128,
+      "length" : 293
+    },
+    {
+      "activity" : "generate2",
+      "start" : 132,
+      "length" : 457
+    },
+    {
+      "activity" : "generateValidationPack",
+      "start" : 173,
+      "length" : 9
+    },
+    {
+      "activity" : "scanExamplesForR5",
+      "start" : 199,
+      "length" : 1
+    }]
+  },
+  {
+    "name" : "input/resources/ConceptMap-mii-cm-kds-vs-canonicals-2026-2027.json",
+    "size" : 14738,
+    "processes" : [{
+      "activity" : "loadResources",
+      "start" : 71,
+      "length" : 13
+    },
+    {
+      "activity" : "load",
+      "start" : 71,
+      "length" : 14
+    },
+    {
+      "activity" : "load",
+      "start" : 71,
+      "length" : 7
+    },
+    {
+      "activity" : "checkR4R4B",
+      "start" : 72,
+      "length" : 1
+    },
+    {
+      "activity" : "generateNarratives",
+      "start" : 75,
+      "length" : 157
+    },
+    {
+      "activity" : "validate",
+      "start" : 76,
+      "length" : 57
+    },
+    {
+      "activity" : "generate1",
+      "start" : 129,
+      "length" : 64
+    },
+    {
+      "activity" : "generate2",
+      "start" : 133,
+      "length" : 104
+    },
+    {
+      "activity" : "generateValidationPack",
+      "start" : 173,
+      "length" : 2
+    }]
+  },
+  {
+    "name" : "/fsh-generated/includes/fsh-link-references.md",
+    "size" : 360,
+    "processes" : [{
+      "activity" : "generate2",
+      "start" : 133,
+      "length" : 1
+    }]
+  },
+  {
+    "name" : "/fsh-generated/includes/menu.xml",
+    "size" : 1374,
+    "processes" : [{
+      "activity" : "generate2",
+      "start" : 133,
+      "length" : 1
+    }]
+  },
+  {
+    "name" : "/input/pagecontent/testabdeckung.md",
+    "size" : 79037,
+    "processes" : [{
+      "activity" : "generate2",
+      "start" : 133,
+      "length" : 8
+    }]
+  },
+  {
+    "name" : "/input/pagecontent/migration.md",
+    "size" : 28846,
+    "processes" : [{
+      "activity" : "generate2",
+      "start" : 133,
+      "length" : 3
+    }]
+  },
+  {
+    "name" : "/input/pagecontent/versionierung.md",
+    "size" : 4634,
+    "processes" : [{
+      "activity" : "generate2",
+      "start" : 133,
+      "length" : 1
+    }]
+  },
+  {
+    "name" : "/input/pagecontent/index.md",
+    "size" : 24748,
+    "processes" : [{
+      "activity" : "generate2",
+      "start" : 133,
+      "length" : 2
+    }]
+  },
+  {
+    "name" : "/input/pagecontent/ballot.md",
+    "size" : 14665,
+    "processes" : [{
+      "activity" : "generate2",
+      "start" : 133,
+      "length" : 1
+    }]
+  },
+  {
+    "name" : "/input/pagecontent/entwicklungsstack.md",
+    "size" : 13279
+  },
+  {
+    "name" : "/template/config",
+    "size" : 0,
+    "processes" : [{
+      "activity" : "generate2",
+      "start" : 133,
+      "length" : 1
+    }]
+  },
+  {
+    "name" : "/template/config/_config.yml",
+    "size" : 140
+  },
+  {
+    "name" : "/input/images",
+    "size" : 0
+  },
+  {
+    "name" : "/input/images/migration-2026-2027.svg",
+    "size" : 14358
+  },
+  {
+    "name" : "/input/images/dep-graph-2026.svg",
+    "size" : 30329,
+    "processes" : [{
+      "activity" : "generate2",
+      "start" : 133,
+      "length" : 1
+    }]
+  },
+  {
+    "name" : "/input/images/dep-graph-2027-extern.svg",
+    "size" : 71170
+  },
+  {
+    "name" : "/input/images/dep-graph-2027.svg",
+    "size" : 34156
+  },
+  {
+    "name" : "/input/images/dep-graph-2026.png",
+    "size" : 236361,
+    "processes" : [{
+      "activity" : "generate2",
+      "start" : 133,
+      "length" : 1
+    }]
+  },
+  {
+    "name" : "/input/images/dep-graph-2027-extern.png",
+    "size" : 631212
+  },
+  {
+    "name" : "/input/images/dev-stack.png",
+    "size" : 253622,
+    "processes" : [{
+      "activity" : "generate2",
+      "start" : 133,
+      "length" : 1
+    }]
+  },
+  {
+    "name" : "/input/images/dep-graph-2027.png",
+    "size" : 276696
+  },
+  {
+    "name" : "/input/images/dev-stack.svg",
+    "size" : 26019,
+    "processes" : [{
+      "activity" : "generate2",
+      "start" : 133,
+      "length" : 1
+    }]
+  },
+  {
+    "name" : "/temp/pages/_includes/artifacts.xml",
+    "size" : 5794
+  }]
+}

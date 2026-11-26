@@ -1,0 +1,28 @@
+# de.medizininformatikinitiative.kerndatensatz.complete#2027.0.0-ballot.19: MII Kerndatensatz Complete(de)
+
+## Pages
+
+* [](de/index.md)
+* [Testabdeckung](de/testabdeckung.md)
+* [Migration von v2026](de/migration.md)
+* [Ballotierung 2027.0.0](de/ballot.md)
+* [Versionierung](de/versionierung.md)
+* [Artefaktübersicht](de/artifacts.md)
+* [Entwicklungsstack](de/entwicklungsstack.md)
+* [](de/validate.md)
+
+## Resources
+
+### CapabilityStatements
+
+* [MII CPS Kerndatensatz Complete CapabilityStatement](de/CapabilityStatement-mii-cps-kerndatensatz-complete.md)
+
+### ConceptMaps
+
+* [MII ICU Canonicals auf ISiK 6 (Governance-Uebergang)](de/ConceptMap-mii-cm-kds-icu-isik6-canonicals.md)
+* [MII KDS Profil-Canonicals 2026 auf 2027](de/ConceptMap-mii-cm-kds-profile-canonicals-2026-2027.md)
+* [MII KDS ValueSet-Canonicals 2026 auf 2027](de/ConceptMap-mii-cm-kds-vs-canonicals-2026-2027.md)
+
+### ImplementationGuides
+
+* [MII Kerndatensatz Complete](de/ImplementationGuide-de.medizininformatikinitiative.kerndatensatz.complete.md)

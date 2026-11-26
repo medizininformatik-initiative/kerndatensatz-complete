@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 832 644" font-family="system-ui, -apple-system, Segoe UI, sans-serif">
+<rect width="832" height="644" fill="#ffffff"/>
+<text x="132" y="20" font-size="13" font-weight="600" fill="#0b0b0b">Profil-Übergänge von v2026 in die gepinnte Ballot-Version</text>
+<rect x="132" y="34" width="10" height="10" rx="2" fill="#f0efec" stroke="rgba(11,11,11,0.10)"/>
+<text x="147" y="43" font-size="11" fill="#52514e">identisch</text>
+<rect x="236" y="34" width="10" height="10" rx="2" fill="#5598e7"/>
+<text x="251" y="43" font-size="11" fill="#52514e">erweitert</text>
+<rect x="340" y="34" width="10" height="10" rx="2" fill="#ec835a"/>
+<text x="355" y="43" font-size="11" fill="#52514e">breaking</text>
+<rect x="437" y="34" width="10" height="10" rx="2" fill="#d03b3b"/>
+<text x="452" y="43" font-size="11" fill="#52514e">Canonical-Abriss</text>
+<text x="124" y="71.0" text-anchor="end" font-size="11.5" font-weight="600" fill="#0b0b0b">Gesamt</text>
+<rect x="132.0" y="58" width="149.8" height="18" rx="0" fill="#f0efec" stroke="rgba(11,11,11,0.10)"><title>Gesamt: 79 Profile identisch</title></rect>
+<text x="206.9" y="70.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">79</text>
+<rect x="283.8" y="58" width="395.8" height="18" rx="0" fill="#5598e7"><title>Gesamt: 207 Profile erweitert</title></rect>
+<text x="481.8" y="70.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">207</text>
+<rect x="681.7" y="58" width="76.8" height="18" rx="0" fill="#ec835a"><title>Gesamt: 41 Profile breaking</title></rect>
+<text x="720.1" y="70.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">41</text>
+<rect x="760.5" y="58" width="11.5" height="18" rx="4" fill="#d03b3b"><title>Gesamt: 6 Profile Canonical-Abrisse</title></rect>
+
+<text x="780.0" y="71.0" font-size="11" fill="#898781" style="font-variant-numeric:tabular-nums">333</text>
+<text x="132" y="90" font-size="10" fill="#898781">anteilige Skala · Modulbalken darunter: absolute Profilzahlen</text>
+<text x="124" y="117.0" text-anchor="end" font-size="11.5" fill="#52514e">mikrobiologie</text>
+<rect x="132.0" y="104" width="56.9" height="18" rx="0" fill="#ec835a"><title>mikrobiologie: 7 Profile breaking</title></rect>
+<text x="160.5" y="116.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">7</text>
+<rect x="190.9" y="104" width="50.5" height="18" rx="4" fill="#d03b3b"><title>mikrobiologie: 6 Profile Canonical-Abrisse</title></rect>
+<text x="216.2" y="116.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">6</text>
+<text x="249.5" y="117.0" font-size="11" fill="#898781" style="font-variant-numeric:tabular-nums">13</text>
+<text x="124" y="145.0" text-anchor="end" font-size="11.5" fill="#52514e">onkologie</text>
+<rect x="132.0" y="132" width="124.3" height="18" rx="0" fill="#f0efec" stroke="rgba(11,11,11,0.10)"><title>onkologie: 15 Profile identisch</title></rect>
+<text x="194.2" y="144.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">15</text>
+<rect x="258.3" y="132" width="385.4" height="18" rx="0" fill="#5598e7"><title>onkologie: 46 Profile erweitert</title></rect>
+<text x="451.0" y="144.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">46</text>
+<rect x="645.7" y="132" width="101.1" height="18" rx="4" fill="#ec835a"><title>onkologie: 12 Profile breaking</title></rect>
+<text x="696.2" y="144.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">12</text>
+<text x="754.7" y="145.0" font-size="11" fill="#898781" style="font-variant-numeric:tabular-nums">73</text>
+<text x="124" y="173.0" text-anchor="end" font-size="11.5" fill="#52514e">seltene</text>
+<rect x="132.0" y="160" width="48.5" height="18" rx="0" fill="#f0efec" stroke="rgba(11,11,11,0.10)"><title>seltene: 6 Profile identisch</title></rect>
+<text x="156.3" y="172.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">6</text>
+<rect x="182.5" y="160" width="31.7" height="18" rx="0" fill="#5598e7"><title>seltene: 4 Profile erweitert</title></rect>
+<text x="198.4" y="172.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">4</text>
+<rect x="216.2" y="160" width="58.9" height="18" rx="4" fill="#ec835a"><title>seltene: 7 Profile breaking</title></rect>
+<text x="245.7" y="172.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">7</text>
+<text x="283.2" y="173.0" font-size="11" fill="#898781" style="font-variant-numeric:tabular-nums">17</text>
+<text x="124" y="201.0" text-anchor="end" font-size="11.5" fill="#52514e">icu†</text>
+<rect x="132.0" y="188" width="31.7" height="18" rx="0" fill="#f0efec" stroke="rgba(11,11,11,0.10)"><title>icu: 4 Profile identisch</title></rect>
+<text x="147.8" y="200.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">4</text>
+<rect x="165.7" y="188" width="579.1" height="18" rx="0" fill="#5598e7"><title>icu: 69 Profile erweitert</title></rect>
+<text x="455.2" y="200.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">69</text>
+<rect x="746.7" y="188" width="25.3" height="18" rx="4" fill="#ec835a"><title>icu: 3 Profile breaking</title></rect>
+<text x="759.4" y="200.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">3</text>
+<text x="780.0" y="201.0" font-size="11" fill="#898781" style="font-variant-numeric:tabular-nums">76</text>
+<text x="124" y="229.0" text-anchor="end" font-size="11.5" fill="#52514e">bildgebung</text>
+<rect x="132.0" y="216" width="48.5" height="18" rx="0" fill="#f0efec" stroke="rgba(11,11,11,0.10)"><title>bildgebung: 6 Profile identisch</title></rect>
+<text x="156.3" y="228.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">6</text>
+<rect x="182.5" y="216" width="14.8" height="18" rx="0" fill="#5598e7"><title>bildgebung: 2 Profile erweitert</title></rect>
+
+<rect x="199.4" y="216" width="25.3" height="18" rx="4" fill="#ec835a"><title>bildgebung: 3 Profile breaking</title></rect>
+<text x="212.0" y="228.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">3</text>
+<text x="232.6" y="229.0" font-size="11" fill="#898781" style="font-variant-numeric:tabular-nums">11</text>
+<text x="124" y="257.0" text-anchor="end" font-size="11.5" fill="#52514e">mtb</text>
+<rect x="132.0" y="244" width="14.8" height="18" rx="0" fill="#f0efec" stroke="rgba(11,11,11,0.10)"><title>mtb: 2 Profile identisch</title></rect>
+
+<rect x="148.8" y="244" width="376.9" height="18" rx="0" fill="#5598e7"><title>mtb: 45 Profile erweitert</title></rect>
+<text x="337.3" y="256.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">45</text>
+<rect x="527.8" y="244" width="16.8" height="18" rx="4" fill="#ec835a"><title>mtb: 2 Profile breaking</title></rect>
+<text x="536.2" y="256.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">2</text>
+<text x="552.6" y="257.0" font-size="11" fill="#898781" style="font-variant-numeric:tabular-nums">49</text>
+<text x="124" y="285.0" text-anchor="end" font-size="11.5" fill="#52514e">patho</text>
+<rect x="132.0" y="272" width="115.9" height="18" rx="0" fill="#f0efec" stroke="rgba(11,11,11,0.10)"><title>patho: 14 Profile identisch</title></rect>
+<text x="189.9" y="284.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">14</text>
+<rect x="249.9" y="272" width="6.4" height="18" rx="0" fill="#5598e7"><title>patho: 1 Profile erweitert</title></rect>
+
+<rect x="258.3" y="272" width="16.8" height="18" rx="4" fill="#ec835a"><title>patho: 2 Profile breaking</title></rect>
+<text x="266.7" y="284.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">2</text>
+<text x="283.2" y="285.0" font-size="11" fill="#898781" style="font-variant-numeric:tabular-nums">17</text>
+<text x="124" y="313.0" text-anchor="end" font-size="11.5" fill="#52514e">laborbefund</text>
+<rect x="132.0" y="300" width="6.4" height="18" rx="0" fill="#5598e7"><title>laborbefund: 1 Profile erweitert</title></rect>
+
+<rect x="140.4" y="300" width="16.8" height="18" rx="4" fill="#ec835a"><title>laborbefund: 2 Profile breaking</title></rect>
+<text x="148.8" y="312.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">2</text>
+<text x="165.3" y="313.0" font-size="11" fill="#898781" style="font-variant-numeric:tabular-nums">3</text>
+<text x="124" y="341.0" text-anchor="end" font-size="11.5" fill="#52514e">biobank</text>
+<rect x="132.0" y="328" width="82.2" height="18" rx="0" fill="#5598e7"><title>biobank: 10 Profile erweitert</title></rect>
+<text x="173.1" y="340.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">10</text>
+<rect x="216.2" y="328" width="8.4" height="18" rx="4" fill="#ec835a"><title>biobank: 1 Profile breaking</title></rect>
+
+<text x="232.6" y="341.0" font-size="11" fill="#898781" style="font-variant-numeric:tabular-nums">11</text>
+<text x="124" y="369.0" text-anchor="end" font-size="11.5" fill="#52514e">base</text>
+<rect x="132.0" y="356" width="23.3" height="18" rx="0" fill="#f0efec" stroke="rgba(11,11,11,0.10)"><title>base: 3 Profile identisch</title></rect>
+<text x="143.6" y="368.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">3</text>
+<rect x="157.3" y="356" width="23.3" height="18" rx="0" fill="#5598e7"><title>base: 3 Profile erweitert</title></rect>
+<text x="168.9" y="368.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">3</text>
+<rect x="182.5" y="356" width="8.4" height="18" rx="4" fill="#ec835a"><title>base: 1 Profile breaking</title></rect>
+
+<text x="198.9" y="369.0" font-size="11" fill="#898781" style="font-variant-numeric:tabular-nums">7</text>
+<text x="124" y="397.0" text-anchor="end" font-size="11.5" fill="#52514e">consent</text>
+<rect x="132.0" y="384" width="14.8" height="18" rx="0" fill="#5598e7"><title>consent: 2 Profile erweitert</title></rect>
+
+<rect x="148.8" y="384" width="8.4" height="18" rx="4" fill="#ec835a"><title>consent: 1 Profile breaking</title></rect>
+
+<text x="165.3" y="397.0" font-size="11" fill="#898781" style="font-variant-numeric:tabular-nums">3</text>
+<text x="124" y="425.0" text-anchor="end" font-size="11.5" fill="#52514e">pros</text>
+<rect x="132.0" y="412" width="183.3" height="18" rx="0" fill="#f0efec" stroke="rgba(11,11,11,0.10)"><title>pros: 22 Profile identisch</title></rect>
+<text x="223.6" y="424.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">22</text>
+<rect x="317.3" y="412" width="8.4" height="18" rx="4" fill="#5598e7"><title>pros: 1 Profile erweitert</title></rect>
+
+<text x="333.7" y="425.0" font-size="11" fill="#898781" style="font-variant-numeric:tabular-nums">23</text>
+<text x="124" y="453.0" text-anchor="end" font-size="11.5" fill="#52514e">molgen</text>
+<rect x="132.0" y="440" width="31.7" height="18" rx="0" fill="#f0efec" stroke="rgba(11,11,11,0.10)"><title>molgen: 4 Profile identisch</title></rect>
+<text x="147.8" y="452.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">4</text>
+<rect x="165.7" y="440" width="101.1" height="18" rx="4" fill="#5598e7"><title>molgen: 12 Profile erweitert</title></rect>
+<text x="216.2" y="452.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">12</text>
+<text x="274.7" y="453.0" font-size="11" fill="#898781" style="font-variant-numeric:tabular-nums">16</text>
+<text x="124" y="481.0" text-anchor="end" font-size="11.5" fill="#52514e">studie</text>
+<rect x="132.0" y="468" width="58.9" height="18" rx="4" fill="#5598e7"><title>studie: 7 Profile erweitert</title></rect>
+<text x="161.5" y="480.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">7</text>
+<text x="198.9" y="481.0" font-size="11" fill="#898781" style="font-variant-numeric:tabular-nums">7</text>
+<text x="124" y="509.0" text-anchor="end" font-size="11.5" fill="#52514e">medikation</text>
+<rect x="132.0" y="496" width="23.3" height="18" rx="0" fill="#f0efec" stroke="rgba(11,11,11,0.10)"><title>medikation: 3 Profile identisch</title></rect>
+<text x="143.6" y="508.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">3</text>
+<rect x="157.3" y="496" width="16.8" height="18" rx="4" fill="#5598e7"><title>medikation: 2 Profile erweitert</title></rect>
+<text x="165.7" y="508.5" text-anchor="middle" font-size="10.5" fill="#0b0b0b" style="font-variant-numeric:tabular-nums">2</text>
+<text x="182.1" y="509.0" font-size="11" fill="#898781" style="font-variant-numeric:tabular-nums">5</text>
+<text x="124" y="537.0" text-anchor="end" font-size="11.5" fill="#52514e">dokument</text>
+<rect x="132.0" y="524" width="8.4" height="18" rx="4" fill="#5598e7"><title>dokument: 1 Profile erweitert</title></rect>
+
+<text x="148.4" y="537.0" font-size="11" fill="#898781" style="font-variant-numeric:tabular-nums">1</text>
+<text x="124" y="565.0" text-anchor="end" font-size="11.5" fill="#52514e">meta</text>
+<rect x="132.0" y="552" width="8.4" height="18" rx="4" fill="#5598e7"><title>meta: 1 Profile erweitert</title></rect>
+
+<text x="148.4" y="565.0" font-size="11" fill="#898781" style="font-variant-numeric:tabular-nums">1</text>
+<line x1="132" y1="40" x2="132" y2="576" stroke="#c3c2b7" stroke-width="1"/>
+<text x="132" y="596" font-size="10.5" fill="#898781">† ICU-Canonical-Welle (44 URLs) bereits im stabilen Release 2026.0.3 — hier nicht als Abriss gezählt, siehe Canonical-Kontinuität</text>
+<text x="132" y="612" font-size="10.5" fill="#898781">Neu in 2027 (kein Übergang): kardiologie, lungenfunktion, soziodemographie, symptom</text>
+</svg>
