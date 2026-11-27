@@ -9,6 +9,7 @@
 * [Versionierung](versionierung.md)
 * [Artefaktübersicht](artifacts.md)
 * [Entwicklungsstack](entwicklungsstack.md)
+* [](validate.md)
 
 ## Resources
 
